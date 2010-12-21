@@ -17,8 +17,8 @@ class VarDDT:
 		self.FONT_SIZE = 40
 		self.LINE_WIDTH = 1
 
-		self.PADDING_X = self.FONT_SIZE / 4
-		self.PADDING_Y = self.FONT_SIZE / 4
+		self.CELL_PADDING_X = self.FONT_SIZE / 4
+		self.CELL_PADDING_Y = self.FONT_SIZE / 4
 
 
 	def prepare(self):
@@ -38,10 +38,15 @@ class VarDDT:
 
 
 	def paint(self):
+		"""Paint some stuff."""
 
-		self._boxed_text(10, 10, "omg!!1")
-		self._boxed_text(200, 10, "In a box")
-		self._boxed_text(400, 10, "So very pretty")
+		# Leave a 10px margin around the table
+		x = 10
+		y = 10
+		width = self.WIDTH - (2 * x)
+
+		y += self._paint_cell(x, y, width, 0, "This text goes into a cell")
+		y += self._paint_cell(x, y, width, 0, "This text is a little too long to fit in a single line")
 
 
 	def show(self):
@@ -51,6 +56,7 @@ class VarDDT:
 
 
 	def run(self):
+		"""Prepare and show a DDT."""
 
 		self.prepare()
 		self.paint()
@@ -58,24 +64,38 @@ class VarDDT:
 		self.show()
 
 
-	def _boxed_text(self, x, y, text):
+	def _paint_cell(self, x, y, width, height, text):
+		"""Draw a cell containing some text.
 
+		Parameters:
+		x -- cell horizontal starting point
+		y -- cell vertical starting point
+		width -- width of the cell
+		height -- ignored. The cell height is calculated on the fly
+		text -- text to draw inside the cell
+
+		Returns:
+		cell height
+
+		"""
+
+		# Use a test string to find the right cell height
 		xt = self.cr.text_extents('Pp')
 		adjustment_x = xt[0]
 		adjustment_y = xt[1]
-		line_height = xt[3]
 
-		xt = self.cr.text_extents(text)
-		line_length = xt[2]
+		cell_height = xt[3] + (2 * self.CELL_PADDING_Y)
 
-		text_x = x + self.PADDING_X - adjustment_x
-		text_y = y + self.PADDING_Y - adjustment_y
+		text_x = x + self.CELL_PADDING_X - adjustment_x
+		text_y = y + self.CELL_PADDING_Y - adjustment_y
 
-		self.cr.rectangle(x, y, line_length + 2 * self.PADDING_X, line_height + 2 * self.PADDING_Y)
+		self.cr.rectangle(x, y, width, cell_height)
 		self.cr.stroke()
 
 		self.cr.move_to(text_x, text_y)
 		self.cr.show_text(text)
+
+		return cell_height
 
 
 if __name__ == '__main__':
