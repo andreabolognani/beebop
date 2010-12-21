@@ -46,7 +46,8 @@ class VarDDT:
 		width = self.WIDTH - (2 * x)
 
 		y += self._paint_cell(x, y, width, 0, "This text goes into a cell")
-		y += self._paint_cell(x, y, width, 0, "This other text is a little too long to fit in a single line")
+		y += self._paint_cell(x, y, width, 0, "This other text is a little too long to fit in a single line, but it will easily fit in two lines or more")
+		y += self._paint_cell(x, y, width, 0, "Just like that")
 
 
 	def show(self):
@@ -120,19 +121,22 @@ class VarDDT:
 		xt = self.cr.text_extents('Pp')
 		adjustment_x = xt[0]
 		adjustment_y = xt[1]
+		line_height = xt[3]
 
 		lines = self._split_text(text, width - (2 * self.CELL_PADDING_X))
-
-		cell_height = xt[3] + (2 * self.CELL_PADDING_Y)
 
 		text_x = x + self.CELL_PADDING_X - adjustment_x
 		text_y = y + self.CELL_PADDING_Y - adjustment_y
 
+		for line in lines:
+			self.cr.move_to(text_x, text_y)
+			self.cr.show_text(line)
+			text_y += line_height + self.CELL_PADDING_Y
+
+		cell_height = len(lines) * line_height
+		cell_height += (len(lines) + 1) * self.CELL_PADDING_Y
 		self.cr.rectangle(x, y, width, cell_height)
 		self.cr.stroke()
-
-		self.cr.move_to(text_x, text_y)
-		self.cr.show_text(lines[0])
 
 		return cell_height
 
