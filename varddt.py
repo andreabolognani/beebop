@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# vim: set fileencoding=utf-8 :
 
 import cairo
 import os
@@ -14,11 +15,11 @@ class VarDDT:
 		self.WIDTH = 744.09
 		self.HEIGHT = 1052.36
 
-		self.FONT_SIZE = 40
+		self.FONT_SIZE = 10
 		self.LINE_WIDTH = 1
 
-		self.CELL_PADDING_X = self.FONT_SIZE / 4
-		self.CELL_PADDING_Y = self.FONT_SIZE / 4
+		self.CELL_PADDING_X = self.FONT_SIZE / 2
+		self.CELL_PADDING_Y = self.FONT_SIZE / 2
 
 
 	def prepare(self):
@@ -40,24 +41,13 @@ class VarDDT:
 	def paint(self):
 		"""Paint some stuff."""
 
-		# Leave a 10px margin around the table
 		x = 10
 		y = 10
-		width = self.WIDTH - (2 * x)
+		long_text = 'This is a very long text used to test the text wrapping capabilities of this nice piece of code I\'m writing '
+		widths = [100, 50, self.WIDTH - 320, 50, 100]
+		contents = [["ONE", "1337", "9"], ["TWO", "02/b", "62"], ["THREE", long_text, "Some cool things"], ["FOUR", "???", "?"], ["FIVE", "9001", "3"]]
 
-		height = self._paint_cell(x, y, width, 0, "This text goes into a cell")
-		self.cr.rectangle(x, y, width, height)
-		self.cr.stroke()
-		y += height
-
-		height = self._paint_cell(x, y, width, 0, "This other text is a little too long to fit in a single line, but it will easily fit in two lines or more")
-		self.cr.rectangle(x, y, width, height)
-		self.cr.stroke()
-		y += height
-
-		height = self._paint_cell(x, y, width, 0, "Just like that")
-		self.cr.rectangle(x, y, width, height)
-		self.cr.stroke()
+		self._paint_table(x, y, widths, contents)
 
 
 	def show(self):
@@ -110,6 +100,58 @@ class VarDDT:
 		lines.append(text[start:len(text)])
 
 		return lines
+
+
+	def _paint_table(self, x, y, widths, contents):
+		"""Draw a table.
+
+		Parameters:
+		x -- table horizontal starting point
+		y -- table vertical starting point
+		widths -- list of columns widths
+		contents -- list of columns contents
+
+		"""
+
+		if len(contents) < 1 or len(contents) != len(widths):
+			return
+
+		cell_x = x
+		cell_y = y
+
+		# Calculate the number of rows and columns
+		columns = len(widths)
+		rows = len(contents[0])
+		for i in xrange(0, columns):
+			rows = min(rows, len(contents[i]))
+
+		# Draw one row at a time
+		for i in xrange(0, rows):
+
+			cell_x = x
+			row_height = 0
+
+			# Paint one cell at a time
+			for j in xrange(0, columns):
+
+				# Paint the contents of the cell
+				height = self._paint_cell(cell_x, cell_y, widths[j], 0, contents[j][i])
+
+				# Move to the next column
+				cell_x += widths[j]
+				row_height = max(height, row_height)
+
+			cell_x = x
+
+			# Paint all the cell borders
+			for j in xrange(0, columns):
+
+				self.cr.rectangle(cell_x, cell_y, widths[j], row_height)
+				self.cr.stroke()
+
+				cell_x += widths[j]
+
+			cell_y += row_height
 
 
 	def _paint_cell(self, x, y, width, height, text):
