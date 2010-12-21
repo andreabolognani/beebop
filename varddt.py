@@ -45,9 +45,19 @@ class VarDDT:
 		y = 10
 		width = self.WIDTH - (2 * x)
 
-		y += self._paint_cell(x, y, width, 0, "This text goes into a cell")
-		y += self._paint_cell(x, y, width, 0, "This other text is a little too long to fit in a single line, but it will easily fit in two lines or more")
-		y += self._paint_cell(x, y, width, 0, "Just like that")
+		height = self._paint_cell(x, y, width, 0, "This text goes into a cell")
+		self.cr.rectangle(x, y, width, height)
+		self.cr.stroke()
+		y += height
+
+		height = self._paint_cell(x, y, width, 0, "This other text is a little too long to fit in a single line, but it will easily fit in two lines or more")
+		self.cr.rectangle(x, y, width, height)
+		self.cr.stroke()
+		y += height
+
+		height = self._paint_cell(x, y, width, 0, "Just like that")
+		self.cr.rectangle(x, y, width, height)
+		self.cr.stroke()
 
 
 	def show(self):
@@ -103,7 +113,7 @@ class VarDDT:
 
 
 	def _paint_cell(self, x, y, width, height, text):
-		"""Draw a cell containing some text.
+		"""Draw some text so that it fits a cell.
 
 		Parameters:
 		x -- cell horizontal starting point
@@ -135,8 +145,6 @@ class VarDDT:
 
 		cell_height = len(lines) * line_height
 		cell_height += (len(lines) + 1) * self.CELL_PADDING_Y
-		self.cr.rectangle(x, y, width, cell_height)
-		self.cr.stroke()
 
 		return cell_height
 
