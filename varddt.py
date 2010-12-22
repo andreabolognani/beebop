@@ -2,6 +2,7 @@
 # vim: set fileencoding=utf-8 :
 
 import cairo
+import rsvg
 import os
 import subprocess
 
@@ -11,6 +12,8 @@ class VarDDT:
 
 		self.FILE = 'tmp.pdf'
 		self.VIEWER = '/usr/bin/evince'
+
+		self.TEMPLATE = 'template.svg'
 
 		self.WIDTH = 744.09
 		self.HEIGHT = 1052.36
@@ -41,8 +44,13 @@ class VarDDT:
 	def paint(self):
 		"""Paint some stuff."""
 
+		# Render template
+		template = rsvg.Handle(self.TEMPLATE)
+		template.render_cairo(self.cr)
+
+		# Render a table with sample data
 		x = 10
-		y = 10
+		y = 100
 		long_text = 'This is a very long text used to test the text wrapping capabilities of this nice piece of code I\'m writing '
 		widths = [100, 50, self.WIDTH - 320, 50, 100]
 		contents = [["ONE", "1337", "9"], ["TWO", "02/b", "62"], ["THREE", long_text, "Some cool things"], ["FOUR", "???", "?"], ["FIVE", "9001", "3"]]
