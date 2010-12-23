@@ -20,36 +20,49 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <cairo/cairo.h>
+#include <librsvg/rsvg.h>
+#include <librsvg/rsvg-cairo.h>
 
 #define UI_FILE PKGDATADIR "/ddtbuilder.ui"
+#define TEMPLATE_FILE "template.svg"
 #define TEMP_FILE "out.pdf"
-
-#define SURFACE_WIDTH 744.09
-#define SURFACE_HEIGHT 1052.36
 
 G_MODULE_EXPORT
 gboolean
 on_print_button_clicked (GtkWidget *button,
                          gpointer   data)
 {
+	RsvgHandle *template;
+	RsvgDimensionData dimensions;
+	GError *error;
 	cairo_surface_t *surface;
 	cairo_t *context;
 
-	surface = cairo_pdf_surface_create (TEMP_FILE,
-	                                    SURFACE_WIDTH,
-	                                    SURFACE_HEIGHT);
-	context = cairo_create (surface);
+	error = NULL;
+	template = rsvg_handle_new_from_file (TEMPLATE_FILE,
+	                                      &error);
 
-	cairo_move_to (context, 10, 10);
-	cairo_line_to (context, 10, 100);
-	cairo_line_to (context, 100, 100);
+	rsvg_handle_get_dimensions (template, &dimensions);
+
+	surface = cairo_pdf_surface_create (TEMP_FILE,
+	                                    dimensions.width * 1.0,
+	                                    dimensions.height * 1.0);
+	context = cairo_create (surface);
+	rsvg_handle_render_cairo (template, context);
+
+	cairo_move_to (context, 300.0, 10.0);
+	cairo_line_to (context, 300.0, 100.0);
+	cairo_line_to (context, 500.0, 100.0);
 	cairo_close_path (context);
 	cairo_stroke (context);
 
-	cairo_destroy (context);
-
+	cairo_surface_show_page (surface);
 	cairo_surface_finish (surface);
+
+	cairo_destroy (context);
 	cairo_surface_destroy (surface);
+
+	g_object_unref (template);
 }
 
 gint
@@ -59,6 +72,7 @@ main (gint argc, gchar **argv)
 	GtkWidget *window;
 
 	gtk_init (&argc, &argv);
+	rsvg_init ();
 
 	ui = gtk_builder_new ();
 	gtk_builder_add_from_file (ui, UI_FILE, NULL);
