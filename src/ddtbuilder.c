@@ -19,15 +19,37 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
+#include <cairo/cairo.h>
 
 #define UI_FILE PKGDATADIR "/ddtbuilder.ui"
+#define TEMP_FILE "out.pdf"
+
+#define SURFACE_WIDTH 744.09
+#define SURFACE_HEIGHT 1052.36
 
 G_MODULE_EXPORT
 gboolean
 on_print_button_clicked (GtkWidget *button,
                          gpointer   data)
 {
-	gtk_main_quit ();
+	cairo_surface_t *surface;
+	cairo_t *context;
+
+	surface = cairo_pdf_surface_create (TEMP_FILE,
+	                                    SURFACE_WIDTH,
+	                                    SURFACE_HEIGHT);
+	context = cairo_create (surface);
+
+	cairo_move_to (context, 10, 10);
+	cairo_line_to (context, 10, 100);
+	cairo_line_to (context, 100, 100);
+	cairo_close_path (context);
+	cairo_stroke (context);
+
+	cairo_destroy (context);
+
+	cairo_surface_finish (surface);
+	cairo_surface_destroy (surface);
 }
 
 gint
