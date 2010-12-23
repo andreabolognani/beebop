@@ -1,11 +1,11 @@
 NULL =
 
 SUBDIRS = \
+	data \
 	src \
 	$(NULL)
 
 EXTRA_DIST = \
-	ddtbuilder.ui \
 	$(NULL)
 
 DISTCLEANFILES = \

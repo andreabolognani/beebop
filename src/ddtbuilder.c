@@ -19,7 +19,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#define UI_FILE "ddtbuilder.ui"
+#define UI_FILE PKGDATADIR "/ddtbuilder.ui"
 
 gint
 main (gint argc, gchar **argv)

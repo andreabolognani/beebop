@@ -1,4 +1,4 @@
-AC_INIT([VarDDT], [0.0.1], [andrea.bolognani@roundhousecode.com], [varddt])
+AC_INIT([DDT Builder], [0.0.1], [eof@kiyuko.org], [ddtbuilder])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -19,4 +19,5 @@ AC_SUBST(GTK_LIBS)
 
 AC_OUTPUT([
 	Makefile
+	data/Makefile
 	src/Makefile])
