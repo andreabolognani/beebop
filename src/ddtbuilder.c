@@ -17,27 +17,33 @@
  */
 
 #include <glib.h>
+#include <glib-object.h>
 #include <gtk/gtk.h>
 
 #define UI_FILE PKGDATADIR "/ddtbuilder.ui"
+
+G_MODULE_EXPORT
+gboolean
+on_print_button_clicked (GtkWidget *button,
+                         gpointer   data)
+{
+	gtk_main_quit ();
+}
 
 gint
 main (gint argc, gchar **argv)
 {
 	GtkBuilder *ui;
-	GtkWidget *win;
+	GtkWidget *window;
 
 	gtk_init (&argc, &argv);
 
 	ui = gtk_builder_new ();
 	gtk_builder_add_from_file (ui, UI_FILE, NULL);
+	gtk_builder_connect_signals (ui, NULL);
 
-	win = GTK_WIDGET (gtk_builder_get_object (ui, "window1"));
-	g_signal_connect (win,
-	                  "delete-event",
-	                  G_CALLBACK (gtk_main_quit),
-	                  NULL);
-	gtk_widget_show_all (win);
+	window = GTK_WIDGET (gtk_builder_get_object (ui, "window1"));
+	gtk_widget_show_all (window);
 
 	gtk_main ();
 
