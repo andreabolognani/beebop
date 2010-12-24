@@ -24,7 +24,7 @@
 #include <librsvg/rsvg-cairo.h>
 
 #define UI_FILE PKGDATADIR "/ddtbuilder.ui"
-#define TEMPLATE_FILE "template.svg"
+#define TEMPLATE_FILE PKGDATADIR "/template.svg"
 #define TEMP_FILE "out.pdf"
 
 G_MODULE_EXPORT
