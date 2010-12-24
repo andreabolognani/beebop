@@ -6,5 +6,4 @@ PREFIX="/usr/${TARGET}"
 export PKG_CONFIG_PATH="${PREFIX}/lib/pkgconfig"
 
 `dirname ${0}`/configure \
-	--target=${TARGET} --host=${TARGET} \
-	--prefix=${PREFIX} ${*}
+	--target=${TARGET} --host=${TARGET} ${*}
