@@ -15,7 +15,9 @@ AM_VALAFLAGS = \
 	--pkg librsvg-2.0 \
 	--pkg config \
 	--vapidir "$(top_srcdir)/vapi" \
+	--vapidir "../vapi" \
 	$(NULL)
+# --vapidir "../vapi" is there to support out-of-tree development builds
 
 bin_PROGRAMS = ddtbuilder
 
@@ -29,3 +31,9 @@ ddtbuilder_LDFLAGS = \
 	$(CAIRO_LIBS) \
 	$(LIBRSVG_LIBS) \
 	$(NULL)
+
+# Hack needed for out-of-tree development builds
+$(srcdir)/ddtbuilder_vala.stamp: $(ddtbuilder_SOURCES)
+	$(am__cd) $(srcdir) \
+		&& $(AM_V_VALAC)$(VALAC) $(AM_VALAFLAGS) $(VALAFLAGS) -C $(ddtbuilder_SOURCES)
+	$(AM_V_at)touch $@
