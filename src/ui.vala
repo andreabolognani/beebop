@@ -19,6 +19,7 @@
 using GLib;
 using Gtk;
 using Cairo;
+using Rsvg;
 
 namespace DDTBuilder {
 
@@ -40,7 +41,7 @@ namespace DDTBuilder {
 				builder.add_from_file(UI_FILE);
 				builder.connect_signals(this);
 			}
-			catch (Error e) {
+			catch (GLib.Error e) {
 			}
 		}
 
@@ -69,14 +70,29 @@ namespace DDTBuilder {
 
 			Cairo.Surface surface;
 			Cairo.Context context;
+			Rsvg.Handle template;
+			Rsvg.DimensionData dimensions;
 
-			surface = new Cairo.PdfSurface(TEMP_FILE, 400, 400);
+			try {
+				template = new Rsvg.Handle.from_file(TEMPLATE_FILE);
+			}
+			catch (GLib.Error e) {
+				return false;
+			}
+
+			dimensions = Rsvg.DimensionData();
+			template.get_dimensions(dimensions);
+
+			surface = new Cairo.PdfSurface(TEMP_FILE,
+			                               dimensions.width,
+			                               dimensions.height);
 			context = new Context(surface);
+			template.render_cairo(context);
 
 			/* Draw a little something */
-			context.move_to(10.0, 10.0);
-			context.line_to(10.0, 390.0);
-			context.line_to(390.0, 390.0);
+			context.move_to(300.0, 10.0);
+			context.line_to(300.0, 100.0);
+			context.line_to(500.0, 100.0);
 			context.close_path();
 			context.stroke();
 
