@@ -34,6 +34,7 @@ AC_SUBST(LIBRSVG_LIBS)
 AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
+	vapi/Makefile
 	src/Makefile])
 
 AC_OUTPUT
