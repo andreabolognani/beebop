@@ -18,6 +18,7 @@
 
 using GLib;
 using Gtk;
+using Cairo;
 
 namespace DDTBuilder {
 
@@ -59,6 +60,28 @@ namespace DDTBuilder {
 		public bool close() {
 
 			Gtk.main_quit();
+			return true;
+		}
+
+		[CCode (instance_pos = -1)]
+		[CCode (cname = "G_MODULE_EXPORT ddtbuilder_ui_print")]
+		public bool print() {
+
+			Cairo.Surface surface;
+			Cairo.Context context;
+
+			surface = new Cairo.PdfSurface(TEMP_FILE, 400, 400);
+			context = new Context(surface);
+
+			/* Draw a little something */
+			context.move_to(10.0, 10.0);
+			context.line_to(10.0, 390.0);
+			context.line_to(390.0, 390.0);
+			context.close_path();
+			context.stroke();
+
+			context.show_page();
+
 			return true;
 		}
 
