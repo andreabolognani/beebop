@@ -104,6 +104,7 @@ namespace DDTBuilder {
 		public static int main(string[] args) {
 
 			Gtk.init(ref args);
+			Rsvg.init();
 
 			Environment.set_application_name("DDT Builder");
 
