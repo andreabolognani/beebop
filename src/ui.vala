@@ -17,6 +17,7 @@
  */
 
 using GLib;
+using Gdk;
 using Gtk;
 using Cairo;
 using Rsvg;
@@ -24,6 +25,8 @@ using Rsvg;
 namespace DDTBuilder {
 
 	public class UI : GLib.Object {
+
+		private static string VIEWER = "/usr/bin/evince";
 
 		private static string UI_FILE = Config.PKGDATADIR + "/ddtbuilder.ui";
 		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
@@ -72,6 +75,12 @@ namespace DDTBuilder {
 			Cairo.Context context;
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
+			Pid viewer_pid;
+			string[] view_cmd;
+
+			view_cmd = {VIEWER,
+			            TEMP_FILE,
+			            null};
 
 			try {
 				template = new Rsvg.Handle.from_file(TEMPLATE_FILE);
@@ -98,7 +107,31 @@ namespace DDTBuilder {
 
 			context.show_page();
 
+			try {
+
+				Gdk.spawn_on_screen(Gdk.Screen.get_default(),
+				                    null,
+				                    view_cmd,
+				                    null,
+				                    SpawnFlags.DO_NOT_REAP_CHILD,
+				                    null,
+				                    out viewer_pid);
+			}
+			catch (GLib.Error e) {
+				return false;
+			}
+
+			ChildWatch.add(viewer_pid,
+			               viewer_closed);
+
 			return true;
+		}
+
+		private void viewer_closed(Pid pid, int status){
+
+			/* Remove the temp file and close the pid */
+			FileUtils.unlink(TEMP_FILE);
+			Process.close_pid(pid);
 		}
 
 		public static int main(string[] args) {

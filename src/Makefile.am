@@ -10,6 +10,7 @@ AM_CPPFLAGS = \
 
 AM_VALAFLAGS = \
 	--pkg gmodule-2.0 \
+	--pkg gdk-2.0 \
 	--pkg gtk+-2.0 \
 	--pkg cairo \
 	--pkg librsvg-2.0 \

@@ -18,7 +18,8 @@ AC_SUBST(VALAC)
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED
                         gmodule-2.0 >= $GLIB_REQUIRED
                         gobject-2.0 >= $GLIB_REQUIRED)
-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED)
+PKG_CHECK_MODULES(GTK, gdk-2.0 >= $GTK_REQUIRED
+                       gtk+-2.0 >= $GTK_REQUIRED)
 PKG_CHECK_MODULES(CAIRO, cairo >= $CAIRO_REQUIRED
                          cairo-pdf >= $CAIRO_REQUIRED)
 PKG_CHECK_MODULES(LIBRSVG, librsvg-2.0 >= $LIBRSVG_REQUIRED)
