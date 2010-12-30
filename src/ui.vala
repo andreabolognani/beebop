@@ -33,7 +33,8 @@ namespace DDTBuilder {
 		private static string TEMP_FILE = "out.pdf";
 
 		private Gtk.Builder builder;
-		private Gtk.Window window = null;
+		private Gtk.Window window;
+		private Gtk.Button print_button;
 
 		construct {
 
@@ -42,34 +43,38 @@ namespace DDTBuilder {
 			try {
 
 				builder.add_from_file(UI_FILE);
-				builder.connect_signals(this);
 			}
 			catch (GLib.Error e) {
 			}
+
+			window = builder.get_object("window")
+			         as Gtk.Window;
+			if (window == null) {
+				error("Missing object window in " + UI_FILE);
+			}
+			window.delete_event.connect(close);
+
+			print_button = builder.get_object("print_button")
+			               as Gtk.Button;
+			if (print_button == null) {
+				error("Missing object print_button in " + UI_FILE);
+			}
+			print_button.clicked.connect(print);
 		}
 
 		public void show_all() {
-		
-			if (window == null) {
-				window = builder.get_object("window1")
-				         as Gtk.Window;
-				return_if_fail(window != null);
-			}
 
 			window.show_all();
 		}
 
-		[CCode (instance_pos = -1)]
-		[CCode (cname = "G_MODULE_EXPORT ddtbuilder_ui_close")]
-		public bool close() {
+		private bool close(Gdk.Event ev) {
 
 			Gtk.main_quit();
+
 			return true;
 		}
 
-		[CCode (instance_pos = -1)]
-		[CCode (cname = "G_MODULE_EXPORT ddtbuilder_ui_print")]
-		public bool print() {
+		private void print() {
 
 			Cairo.Surface surface;
 			Cairo.Context context;
@@ -86,7 +91,7 @@ namespace DDTBuilder {
 				template = new Rsvg.Handle.from_file(TEMPLATE_FILE);
 			}
 			catch (GLib.Error e) {
-				return false;
+				return;
 			}
 
 			dimensions = Rsvg.DimensionData();
@@ -96,6 +101,7 @@ namespace DDTBuilder {
 			                               dimensions.width,
 			                               dimensions.height);
 			context = new Context(surface);
+
 			template.render_cairo(context);
 
 			/* Draw a little something */
@@ -118,13 +124,13 @@ namespace DDTBuilder {
 				                    out viewer_pid);
 			}
 			catch (GLib.Error e) {
-				return false;
+				return;
 			}
 
 			ChildWatch.add(viewer_pid,
 			               viewer_closed);
 
-			return true;
+			return;
 		}
 
 		private void viewer_closed(Pid pid, int status){

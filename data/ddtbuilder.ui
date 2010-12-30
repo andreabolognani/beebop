@@ -2,10 +2,9 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkWindow" id="window1">
+  <object class="GtkWindow" id="window">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">DDT Builder</property>
-    <signal name="delete_event" handler="ddtbuilder_ui_close"/>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -698,7 +697,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <signal name="clicked" handler="ddtbuilder_ui_print"/>
               </object>
               <packing>
                 <property name="expand">False</property>
