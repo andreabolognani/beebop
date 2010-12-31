@@ -25,9 +25,9 @@ namespace DDTBuilder {
 	public class Document : GLib.Object {
 
 		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
-		public static string TEMP_FILE = "out.pdf";
+		private static string OUT_FILE = "out.pdf";
 
-		public void draw() throws GLib.Error {
+		public string draw() throws GLib.Error {
 
 			Cairo.Surface surface;
 			Cairo.Context context;
@@ -40,9 +40,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				throw new GLib.Error(e.domain,
-									 e.code,
-									 "Could not load template %s.".printf(TEMPLATE_FILE));
+				throw new FileError.FAILED("Could not load template %s.".printf(TEMPLATE_FILE));
 			}
 
 			/* Get template's dimensions */
@@ -50,7 +48,7 @@ namespace DDTBuilder {
 			template.get_dimensions(dimensions);
 
 			/* Make the target surface as big as the template */
-			surface = new Cairo.PdfSurface(TEMP_FILE,
+			surface = new Cairo.PdfSurface(OUT_FILE,
 										   dimensions.width,
 										   dimensions.height);
 			context = new Context(surface);
@@ -69,8 +67,10 @@ namespace DDTBuilder {
 
 			if (context.status() != Cairo.Status.SUCCESS) {
 
-				throw new GLib.SpawnError.FORK("Drawing error.");
+				throw new FileError.FAILED("Drawing error.");
 			}
+
+			return OUT_FILE;
 		}
 	}
 }

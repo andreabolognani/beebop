@@ -31,6 +31,7 @@ namespace DDTBuilder {
 		private Gtk.Window window;
 		private Gtk.Button print_button;
 
+		private string out_file;
 		public string error;
 
 		construct {
@@ -114,7 +115,7 @@ namespace DDTBuilder {
 
 			try {
 
-				new Document().draw();
+				out_file = new Document().draw();
 			}
 			catch (GLib.Error e) {
 
@@ -125,7 +126,7 @@ namespace DDTBuilder {
 			}
 
 			view_cmd = {VIEWER,
-			            Document.TEMP_FILE,
+			            out_file,
 			            null};
 
 			try {
@@ -159,7 +160,7 @@ namespace DDTBuilder {
 		private void viewer_closed(Pid pid, int status){
 
 			/* Remove the temp file and close the pid */
-			FileUtils.unlink(Document.TEMP_FILE);
+			FileUtils.unlink(out_file);
 			Process.close_pid(pid);
 
 			/* Make the print button clickable again */
