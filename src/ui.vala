@@ -71,7 +71,7 @@ namespace DDTBuilder {
 				}
 
 				/* Print button */
-				print_button = builder.get_object("print_buttn")
+				print_button = builder.get_object("print_button")
 				               as Gtk.Button;
 
 				if (print_button == null) {
@@ -98,6 +98,20 @@ namespace DDTBuilder {
 			return true;
 		}
 
+		public void show_error() {
+
+			Gtk.Dialog dialog;
+
+			dialog = new Gtk.MessageDialog(null,
+			                               0,
+			                               Gtk.MessageType.ERROR,
+			                               Gtk.ButtonsType.CLOSE,
+			                               error);
+
+			dialog.run();
+			dialog.destroy();
+		}
+
 		private void print() {
 
 			Cairo.Surface surface;
@@ -115,6 +129,10 @@ namespace DDTBuilder {
 				template = new Rsvg.Handle.from_file(TEMPLATE_FILE);
 			}
 			catch (GLib.Error e) {
+
+				error = "Could not load template %s.".printf(TEMPLATE_FILE);
+				show_error();
+
 				return;
 			}
 
@@ -137,6 +155,14 @@ namespace DDTBuilder {
 
 			context.show_page();
 
+			if (context.status() != Cairo.Status.SUCCESS) {
+
+				error = "Drawing error.";
+				show_error();
+
+				return;
+			}
+
 			try {
 
 				Gdk.spawn_on_screen(Gdk.Screen.get_default(),
@@ -148,6 +174,10 @@ namespace DDTBuilder {
 				                    out viewer_pid);
 			}
 			catch (GLib.Error e) {
+
+				error = "Could not spawn viewer %s.".printf(VIEWER);
+				show_error();
+
 				return;
 			}
 
@@ -177,11 +207,7 @@ namespace DDTBuilder {
 
 				/* If an error has occurred while constructing the UI,
 				 * display an error dialog and quit the application */
-				new Gtk.MessageDialog(null,
-				                      0,
-				                      Gtk.MessageType.ERROR,
-				                      Gtk.ButtonsType.CLOSE,
-				                      ui.error).run();
+				ui.show_error();
 			}
 			else {
 
