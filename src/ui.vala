@@ -165,7 +165,7 @@ namespace DDTBuilder {
 
 			try {
 
-				Gdk.spawn_on_screen(Gdk.Screen.get_default(),
+				Gdk.spawn_on_screen(window.get_screen(),
 				                    null,
 				                    view_cmd,
 				                    null,
