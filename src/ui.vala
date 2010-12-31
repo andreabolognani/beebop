@@ -36,7 +36,11 @@ namespace DDTBuilder {
 		private Gtk.Window window;
 		private Gtk.Button print_button;
 
+		public string error;
+
 		construct {
+
+			error = null;
 
 			builder = new Gtk.Builder();
 
@@ -45,25 +49,45 @@ namespace DDTBuilder {
 				builder.add_from_file(UI_FILE);
 			}
 			catch (GLib.Error e) {
+
+				error = "Could not load UI from %s.".printf(UI_FILE);
 			}
 
-			window = builder.get_object("window")
-			         as Gtk.Window;
-			if (window == null) {
-				error("Missing object window in " + UI_FILE);
-			}
-			window.delete_event.connect(close);
+			/* If the UI has been loaded succesfully from UI_FILE, lookup
+			 * some objects and connect callbacks to their signals */
+			if (error == null) {
 
-			print_button = builder.get_object("print_button")
-			               as Gtk.Button;
-			if (print_button == null) {
-				error("Missing object print_button in " + UI_FILE);
+				/* Main application window */
+				window = builder.get_object("window")
+				         as Gtk.Window;
+
+				if (window == null) {
+
+					error = "Required object window not found.";
+				}
+				else {
+
+					window.delete_event.connect(close);
+				}
+
+				/* Print button */
+				print_button = builder.get_object("print_buttn")
+				               as Gtk.Button;
+
+				if (print_button == null) {
+
+					error = "Required object print_button not found.";
+				}
+				else {
+
+					print_button.clicked.connect(print);
+				}
 			}
-			print_button.clicked.connect(print);
 		}
 
 		public void show_all() {
 
+			/* Show the main application window */
 			window.show_all();
 		}
 
@@ -148,9 +172,24 @@ namespace DDTBuilder {
 			Environment.set_application_name("DDT Builder");
 
 			UI ui = new UI();
-			ui.show_all();
 
-			Gtk.main();
+			if (ui.error != null) {
+
+				/* If an error has occurred while constructing the UI,
+				 * display an error dialog and quit the application */
+				new Gtk.MessageDialog(null,
+				                      0,
+				                      Gtk.MessageType.ERROR,
+				                      Gtk.ButtonsType.CLOSE,
+				                      ui.error).run();
+			}
+			else {
+
+				/* Show the application window and enter the main loop */
+				ui.show_all();
+				Gtk.main();
+			}
+
 			return 0;
 		}
 	}
