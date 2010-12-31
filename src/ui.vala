@@ -19,18 +19,13 @@
 using GLib;
 using Gdk;
 using Gtk;
-using Cairo;
-using Rsvg;
 
 namespace DDTBuilder {
 
 	public class UI : GLib.Object {
 
 		private static string VIEWER = "/usr/bin/evince";
-
 		private static string UI_FILE = Config.PKGDATADIR + "/ddtbuilder.ui";
-		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
-		private static string TEMP_FILE = "out.pdf";
 
 		private Gtk.Builder builder;
 		private Gtk.Window window;
@@ -114,54 +109,24 @@ namespace DDTBuilder {
 
 		private void print() {
 
-			Cairo.Surface surface;
-			Cairo.Context context;
-			Rsvg.Handle template;
-			Rsvg.DimensionData dimensions;
 			Pid viewer_pid;
 			string[] view_cmd;
 
-			view_cmd = {VIEWER,
-			            TEMP_FILE,
-			            null};
-
 			try {
-				template = new Rsvg.Handle.from_file(TEMPLATE_FILE);
+
+				new Document().draw();
 			}
 			catch (GLib.Error e) {
 
-				error = "Could not load template %s.".printf(TEMPLATE_FILE);
+				error = e.message;
 				show_error();
 
 				return;
 			}
 
-			dimensions = Rsvg.DimensionData();
-			template.get_dimensions(dimensions);
-
-			surface = new Cairo.PdfSurface(TEMP_FILE,
-			                               dimensions.width,
-			                               dimensions.height);
-			context = new Context(surface);
-
-			template.render_cairo(context);
-
-			/* Draw a little something */
-			context.move_to(300.0, 10.0);
-			context.line_to(300.0, 100.0);
-			context.line_to(500.0, 100.0);
-			context.close_path();
-			context.stroke();
-
-			context.show_page();
-
-			if (context.status() != Cairo.Status.SUCCESS) {
-
-				error = "Drawing error.";
-				show_error();
-
-				return;
-			}
+			view_cmd = {VIEWER,
+			            Document.TEMP_FILE,
+			            null};
 
 			try {
 
@@ -194,7 +159,7 @@ namespace DDTBuilder {
 		private void viewer_closed(Pid pid, int status){
 
 			/* Remove the temp file and close the pid */
-			FileUtils.unlink(TEMP_FILE);
+			FileUtils.unlink(Document.TEMP_FILE);
 			Process.close_pid(pid);
 
 			/* Make the print button clickable again */

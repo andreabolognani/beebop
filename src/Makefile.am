@@ -22,6 +22,7 @@ AM_VALAFLAGS = \
 bin_PROGRAMS = ddtbuilder
 
 ddtbuilder_SOURCES = \
+	document.vala \
 	ui.vala \
 	$(NULL)
 ddtbuilder_LDFLAGS = \
