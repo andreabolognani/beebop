@@ -27,6 +27,13 @@ namespace DDTBuilder {
 		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
 		private static string OUT_FILE = "out.pdf";
 
+		public CompanyInfo to { get; set; }
+
+		construct {
+
+			to = new CompanyInfo();
+		}
+
 		public string draw() throws GLib.Error {
 
 			Cairo.Surface surface;
@@ -62,6 +69,10 @@ namespace DDTBuilder {
 			context.line_to(500.0, 100.0);
 			context.close_path();
 			context.stroke();
+
+			/* Print the company name */
+			context.move_to(10.0, 120.0);
+			context.show_text(to.name);
 
 			context.show_page();
 

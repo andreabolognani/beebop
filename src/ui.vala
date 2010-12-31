@@ -110,12 +110,14 @@ namespace DDTBuilder {
 
 		private void print() {
 
+			Document document;
 			Pid viewer_pid;
 			string[] view_cmd;
 
 			try {
 
-				out_file = new Document().draw();
+				document = create_document();
+				out_file = document.draw();
 			}
 			catch (GLib.Error e) {
 
@@ -165,6 +167,53 @@ namespace DDTBuilder {
 
 			/* Make the print button clickable again */
 			print_button.sensitive = true;
+		}
+
+		private Document create_document() throws GLib.Error {
+
+			Document document;
+			CompanyInfo to;
+			Gtk.Entry entry;
+
+			document = new Document();
+			to = document.to;
+
+			entry = builder.get_object("to_name_entry")
+			        as Gtk.Entry;
+			if (entry == null) {
+				throw new FileError.FAILED("Missing required UI element: to_name_entry.");
+			}
+			to.name = entry.text;
+
+			entry = builder.get_object("to_street_entry")
+			        as Gtk.Entry;
+			if (entry == null) {
+				throw new FileError.FAILED("Missing required UI element: to_street_entry.");
+			}
+			to.street = entry.text;
+
+			entry = builder.get_object("to_city_entry")
+			        as Gtk.Entry;
+			if (entry == null) {
+				throw new FileError.FAILED("Missing required UI element: to_city_entry.");
+			}
+			to.city = entry.text;
+
+			entry = builder.get_object("to_company_id_entry")
+			        as Gtk.Entry;
+			if (entry == null) {
+				throw new FileError.FAILED("Missing required UI element: to_company_id_entry.");
+			}
+			to.company_id = entry.text;
+
+			entry = builder.get_object("to_client_code_entry")
+			        as Gtk.Entry;
+			if (entry == null) {
+				throw new FileError.FAILED("Missing required UI element: to_client_code_entry.");
+			}
+			to.client_code = entry.text;
+
+			return document;
 		}
 
 		public static int main(string[] args) {
