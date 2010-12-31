@@ -184,6 +184,10 @@ namespace DDTBuilder {
 			ChildWatch.add(viewer_pid,
 			               viewer_closed);
 
+			/* Prevent the print button from being clicked again until
+			 * the viewer has been closed */
+			print_button.sensitive = false;
+
 			return;
 		}
 
@@ -192,6 +196,9 @@ namespace DDTBuilder {
 			/* Remove the temp file and close the pid */
 			FileUtils.unlink(TEMP_FILE);
 			Process.close_pid(pid);
+
+			/* Make the print button clickable again */
+			print_button.sensitive = true;
 		}
 
 		public static int main(string[] args) {
