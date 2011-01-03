@@ -27,11 +27,11 @@ namespace DDTBuilder {
 		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
 		private static string OUT_FILE = "out.pdf";
 
-		public CompanyInfo to { get; set; }
+		public CompanyInfo recipient { get; set; }
 
 		construct {
 
-			to = new CompanyInfo();
+			recipient = new CompanyInfo();
 		}
 
 		public string draw() throws GLib.Error {
@@ -72,7 +72,7 @@ namespace DDTBuilder {
 
 			/* Print the company name */
 			context.move_to(10.0, 120.0);
-			context.show_text(to.name);
+			context.show_text(recipient.name);
 
 			context.show_page();
 

@@ -172,46 +172,52 @@ namespace DDTBuilder {
 		private Document create_document() throws GLib.Error {
 
 			Document document;
-			CompanyInfo to;
+			CompanyInfo recipient;
 			Gtk.Entry entry;
+			string element;
 
 			document = new Document();
-			to = document.to;
+			recipient = document.recipient;
 
-			entry = builder.get_object("to_name_entry")
+			element = "recipient_name_entry";
+			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: to_name_entry.");
+				throw new FileError.FAILED("Missing required UI element: %s.", element);
 			}
-			to.name = entry.text;
+			recipient.name = entry.text;
 
-			entry = builder.get_object("to_street_entry")
+			element = "recipient_street_entry";
+			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: to_street_entry.");
+				throw new FileError.FAILED("Missing required UI element: %s.", element);
 			}
-			to.street = entry.text;
+			recipient.street = entry.text;
 
-			entry = builder.get_object("to_city_entry")
+			element = "recipient_city_entry";
+			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: to_city_entry.");
+				throw new FileError.FAILED("Missing required UI element: %s.", element);
 			}
-			to.city = entry.text;
+			recipient.city = entry.text;
 
-			entry = builder.get_object("to_company_id_entry")
+			element = "recipient_vatin_entry";
+			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: to_company_id_entry.");
+				throw new FileError.FAILED("Missing required UI element: %s.", element);
 			}
-			to.company_id = entry.text;
+			recipient.vatin = entry.text;
 
-			entry = builder.get_object("to_client_code_entry")
+			element = "recipient_client_code_entry";
+			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: to_client_code_entry.");
+				throw new FileError.FAILED("Missing required UI element: %s.", element);
 			}
-			to.client_code = entry.text;
+			recipient.client_code = entry.text;
 
 			return document;
 		}

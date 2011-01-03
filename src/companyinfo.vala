@@ -25,7 +25,7 @@ namespace DDTBuilder {
 		public string name { get; set; }
 		public string street { get; set; }
 		public string city { get; set; }
-		public string company_id { get; set; }
+		public string vatin { get; set; }
 		public string client_code { get; set; }
 
 		construct {
@@ -33,7 +33,7 @@ namespace DDTBuilder {
 			name = "";
 			street = "";
 			city = "";
-			company_id = "";
+			vatin = "";
 			client_code = "";
 		}
 	}
