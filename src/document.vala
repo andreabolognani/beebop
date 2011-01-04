@@ -137,7 +137,6 @@ namespace DDTBuilder {
 				else {
 
 					/* Calculate width for this chunk of text */
-					extents = Cairo.TextExtents();
 					context.text_extents(text.slice(start, i), out extents);
 
 					/* The text is too wide */
