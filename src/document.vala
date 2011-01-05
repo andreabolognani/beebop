@@ -98,7 +98,7 @@ namespace DDTBuilder {
 			info = "Spett.le Ditta ";
 			info += recipient.name + "\n";
 			info += recipient.street + "\n";
-			info += recipient.city + "\n";
+			info += recipient.city;
 
 			/* Adjust starting point and dimensions to account for padding */
 			text_width = (int) (width - (2 * CELL_PADDING_X));
@@ -112,7 +112,10 @@ namespace DDTBuilder {
 
 			/* Draw a box around the text */
 			layout.get_size(out text_width, out text_height);
-			context.rectangle(x, y, width, text_height / Pango.SCALE);
+			context.rectangle(x,
+			                  y,
+			                  width,
+			                  (text_height / Pango.SCALE) + 2 * CELL_PADDING_Y );
 			context.stroke();
 		}
 	}
