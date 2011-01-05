@@ -38,8 +38,8 @@ namespace DDTBuilder {
 		private static double FONT_SIZE = 8.0;
 		private static double LINE_WIDTH = 1.0;
 
-		private Cairo.Surface surface { get; set; }
-		private Cairo.Context context { get; set; }
+		private Cairo.Surface surface;
+		private Cairo.Context context;
 
 		public CompanyInfo recipient { get; set; }
 

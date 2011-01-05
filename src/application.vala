@@ -36,20 +36,21 @@ namespace DDTBuilder {
 		private Gtk.Window window;
 		private Gtk.Button print_button;
 
-		private Gtk.Entry recipient_name_entry { get; set; }
-		private Gtk.Entry recipient_street_entry { get; set; }
-		private Gtk.Entry recipient_city_entry { get; set; }
-		private Gtk.Entry recipient_vatin_entry { get; set; }
-		private Gtk.Entry recipient_client_code_entry { get; set; }
+		private Gtk.Entry recipient_name_entry;
+		private Gtk.Entry recipient_street_entry;
+		private Gtk.Entry recipient_city_entry;
+		private Gtk.Entry recipient_vatin_entry;
+		private Gtk.Entry recipient_client_code_entry;
 
 		private string out_file;
-		public string error;
+
+		public string error_message { get; private set; }
 
 		construct {
 
 			string element;
 
-			error = null;
+			error_message = null;
 
 			ui = new Gtk.Builder();
 
@@ -59,10 +60,10 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error = "Could not load UI from " + UI_FILE + ".";
+				error_message = "Could not load UI from " + UI_FILE + ".";
 			}
 
-			if (error == null) {
+			if (error_message == null) {
 
 				/* Look up all the required object. If any is missing, throw
 				 * an error and quit the application */
@@ -119,11 +120,11 @@ namespace DDTBuilder {
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
-					error = "Required UI object not found: " + e.message;
+					error_message = "Required UI object not found: " + e.message;
 				}
 			}
 
-			if (error == null) {
+			if (error_message == null) {
 
 				/* Connect signals */
 				window.delete_event.connect(close);
@@ -152,7 +153,7 @@ namespace DDTBuilder {
 			                               0,
 			                               Gtk.MessageType.ERROR,
 			                               Gtk.ButtonsType.CLOSE,
-			                               error);
+			                               error_message);
 
 			dialog.run();
 			dialog.destroy();
@@ -166,7 +167,7 @@ namespace DDTBuilder {
 			                               0,
 			                               Gtk.MessageType.WARNING,
 			                               Gtk.ButtonsType.CLOSE,
-			                               error);
+			                               error_message);
 
 			dialog.run();
 			dialog.destroy();
@@ -185,14 +186,14 @@ namespace DDTBuilder {
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error = "Empty field: " + e.message;
+				error_message = "Empty field: " + e.message;
 				show_warning();
 
 				return;
 			}
 			catch (GLib.Error e) {
 
-				error = e.message;
+				error_message = e.message;
 				show_error();
 
 				return;
@@ -214,7 +215,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error = "Could not spawn viewer %s.".printf(VIEWER);
+				error_message = "Could not spawn viewer %s.".printf(VIEWER);
 				show_error();
 
 				return;
@@ -294,7 +295,7 @@ namespace DDTBuilder {
 
 			Application application = new Application();
 
-			if (application.error != null) {
+			if (application.error_message != null) {
 
 				/* If an error has occurred while constructing the UI,
 				 * display an error dialog and quit the application */
