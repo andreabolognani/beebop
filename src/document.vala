@@ -52,6 +52,7 @@ namespace DDTBuilder {
 
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
+			double offset;
 
 			try {
 
@@ -80,10 +81,10 @@ namespace DDTBuilder {
 			context.set_font_size(FONT_SIZE);
 
 			/* Draw the recipient's information in a right-aligned box */
-			draw_recipient_info(dimensions.width - PAGE_BORDER_X - 400.0,
-			                    PAGE_BORDER_Y,
-			                    400.0,
-			                    -1);
+			offset = draw_recipient_info(dimensions.width - PAGE_BORDER_X - 400.0,
+			                             PAGE_BORDER_Y,
+			                             400.0,
+			                             -1);
 
 			context.show_page();
 
@@ -95,7 +96,7 @@ namespace DDTBuilder {
 			return OUT_FILE;
 		}
 
-		private void draw_recipient_info(double x, double y, double width, double height) {
+		private double draw_recipient_info(double x, double y, double width, double height) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -133,6 +134,8 @@ namespace DDTBuilder {
 			height = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
 			context.rectangle(x, y, width, height);
 			context.stroke();
+
+			return height;
 		}
 	}
 }
