@@ -52,6 +52,10 @@ namespace DDTBuilder {
 
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
+			double address_box_x;
+			double address_box_y;
+			double address_box_width;
+			double address_box_height;
 			double offset;
 
 			try {
@@ -80,11 +84,16 @@ namespace DDTBuilder {
 			context.set_line_width(LINE_WIDTH);
 			context.set_font_size(FONT_SIZE);
 
-			/* Draw the recipient's information in a right-aligned box */
-			offset = draw_recipient_info(dimensions.width - PAGE_BORDER_X - 400.0,
-			                             PAGE_BORDER_Y,
-			                             400.0,
-			                             -1);
+			/* Draw the recipient's address in a right-aligned box */
+			address_box_width = 350.0;
+			address_box_height = -1;
+			address_box_x = dimensions.width - PAGE_BORDER_X - address_box_width;
+			address_box_y = PAGE_BORDER_Y;
+			offset = draw_company_address(recipient,
+			                              address_box_x,
+			                              address_box_y,
+			                              address_box_width,
+			                              address_box_height);
 
 			context.show_page();
 
@@ -96,7 +105,7 @@ namespace DDTBuilder {
 			return OUT_FILE;
 		}
 
-		private double draw_recipient_info(double x, double y, double width, double height) {
+		private double draw_company_address(CompanyInfo company, double x, double y, double width, double height) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -106,9 +115,9 @@ namespace DDTBuilder {
 
 			/* Join all the recipient's information */
 			info = "Spett.le Ditta ";
-			info += recipient.name + "\n";
-			info += recipient.street + "\n";
-			info += recipient.city;
+			info += company.name + "\n";
+			info += company.street + "\n";
+			info += company.city;
 
 			/* Adjust starting point and dimensions to account for padding */
 			text_width = (int) (width - (2 * BOX_PADDING_X));
