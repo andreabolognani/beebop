@@ -159,9 +159,17 @@ namespace DDTBuilder {
 
 			if (error_message == null) {
 
+				/* Sync the form entries */
+				name_changed();
+				street_changed();
+				city_changed();
+
 				/* Connect signals */
 				window.delete_event.connect(close);
 				print_button.clicked.connect(print);
+				recipient_name_entry.changed.connect(name_changed);
+				recipient_street_entry.changed.connect(street_changed);
+				recipient_city_entry.changed.connect(city_changed);
 				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
 			}
 		}
@@ -179,9 +187,36 @@ namespace DDTBuilder {
 			return true;
 		}
 
+		/* The recipient's name has changed */
+		private void name_changed() {
+
+			if (send_to_recipient_checkbutton.active) {
+
+				destination_name_entry.text = recipient_name_entry.text;
+			}
+		}
+
+		/* The recipient's street has changed */
+		private void street_changed() {
+
+			if (send_to_recipient_checkbutton.active) {
+
+				destination_street_entry.text = recipient_street_entry.text;
+			}
+		}
+
+		/* The recipient's city has changed */
+		private void city_changed() {
+
+			if (send_to_recipient_checkbutton.active) {
+
+				destination_city_entry.text = recipient_city_entry.text;
+			}
+		}
+
 		private void toggle_send_to_recipient() {
 
-			if (!send_to_recipient_checkbutton.get_active()) {
+			if (!send_to_recipient_checkbutton.active) {
 
 				/* Enable send destination */
 				destination_name_entry.sensitive = true;
