@@ -23,7 +23,8 @@ using Gtk;
 namespace DDTBuilder {
 
 	public errordomain ApplicationError {
-		OBJECT_NOT_FOUND
+		OBJECT_NOT_FOUND,
+		EMPTY_FIELD
 	}
 
 	public class Application : GLib.Object {
@@ -112,6 +113,20 @@ namespace DDTBuilder {
 			dialog.destroy();
 		}
 
+		public void show_warning() {
+
+			Gtk.Dialog dialog;
+
+			dialog = new Gtk.MessageDialog(null,
+			                               0,
+			                               Gtk.MessageType.WARNING,
+			                               Gtk.ButtonsType.CLOSE,
+			                               error);
+
+			dialog.run();
+			dialog.destroy();
+		}
+
 		private void print() {
 
 			Document document;
@@ -127,6 +142,13 @@ namespace DDTBuilder {
 
 				error = "Required UI object not found: " + e.message + ".";
 				show_error();
+
+				return;
+			}
+			catch (ApplicationError.EMPTY_FIELD e) {
+
+				error = "Empty field: " + e.message + ".";
+				show_warning();
 
 				return;
 			}
@@ -196,6 +218,9 @@ namespace DDTBuilder {
 			if (entry == null) {
 				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
+			}
 			recipient.name = entry.text;
 
 			element = "recipient_street_entry";
@@ -203,6 +228,9 @@ namespace DDTBuilder {
 			        as Gtk.Entry;
 			if (entry == null) {
 				throw new ApplicationError.OBJECT_NOT_FOUND(element);
+			}
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
 			}
 			recipient.street = entry.text;
 
@@ -212,6 +240,9 @@ namespace DDTBuilder {
 			if (entry == null) {
 				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
+			}
 			recipient.city = entry.text;
 
 			element = "recipient_vatin_entry";
@@ -219,6 +250,9 @@ namespace DDTBuilder {
 			        as Gtk.Entry;
 			if (entry == null) {
 				throw new ApplicationError.OBJECT_NOT_FOUND(element);
+			}
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
 			}
 			recipient.vatin = entry.text;
 
