@@ -42,6 +42,7 @@ namespace DDTBuilder {
 		private Cairo.Context context;
 
 		public CompanyInfo recipient { get; set; }
+		public CompanyInfo destination { get; set; }
 
 		construct {
 
@@ -90,6 +91,15 @@ namespace DDTBuilder {
 			address_box_x = dimensions.width - PAGE_BORDER_X - address_box_width;
 			address_box_y = PAGE_BORDER_Y;
 			offset = draw_company_address(recipient,
+			                              address_box_x,
+			                              address_box_y,
+			                              address_box_width,
+			                              address_box_height);
+
+			/* Draw the destination's address in a rigth-aligned box,
+			 * just below the one used for the recipient's address */
+			address_box_y += offset + 5.0;
+			offset = draw_company_address(destination,
 			                              address_box_x,
 			                              address_box_y,
 			                              address_box_width,

@@ -334,15 +334,24 @@ namespace DDTBuilder {
 			print_button.sensitive = true;
 		}
 
-		private Document create_document() throws GLib.Error {
+		private Document create_document() throws ApplicationError.EMPTY_FIELD {
 
 			Document document;
+
+			document = new Document();
+			document.recipient = read_recipient();
+			document.destination = read_destination();
+
+			return document;
+		}
+
+		private CompanyInfo read_recipient() throws ApplicationError.EMPTY_FIELD {
+
 			CompanyInfo recipient;
 			Gtk.Entry entry;
 			string element;
 
-			document = new Document();
-			recipient = document.recipient;
+			recipient = new CompanyInfo();
 
 			element = "recipient_name_entry";
 			entry = recipient_name_entry;
@@ -376,7 +385,39 @@ namespace DDTBuilder {
 			entry = recipient_client_code_entry;
 			recipient.client_code = entry.text;
 
-			return document;
+			return recipient;
+		}
+
+		private CompanyInfo read_destination() throws ApplicationError.EMPTY_FIELD {
+
+			CompanyInfo destination;
+			Gtk.Entry entry;
+			string element;
+
+			destination = new CompanyInfo();
+
+			element = "destination_name_entry";
+			entry = destination_name_entry;
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
+			}
+			destination.name = entry.text;
+
+			element = "destination_street_entry";
+			entry = destination_street_entry;
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
+			}
+			destination.street = entry.text;
+
+			element = "destination_city_entry";
+			entry = destination_city_entry;
+			if (entry.text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(element);
+			}
+			destination.city = entry.text;
+
+			return destination;
 		}
 
 		public static int main(string[] args) {
