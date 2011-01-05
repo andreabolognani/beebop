@@ -227,11 +227,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry9">
+                          <object class="GtkEntry" id="destination_name_entry">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
-                            <property name="editable">False</property>
                             <property name="invisible_char">&#x25CF;</property>
                           </object>
                           <packing>
@@ -241,11 +240,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry2">
+                          <object class="GtkEntry" id="destination_street_entry">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
-                            <property name="editable">False</property>
                             <property name="invisible_char">&#x25CF;</property>
                           </object>
                           <packing>
@@ -257,11 +255,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry3">
+                          <object class="GtkEntry" id="destination_city_entry">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
-                            <property name="editable">False</property>
                             <property name="invisible_char">&#x25CF;</property>
                           </object>
                           <packing>
@@ -273,7 +270,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="checkbutton1">
+                          <object class="GtkCheckButton" id="send_to_recipient_checkbutton">
                             <property name="label" translatable="yes">Spedizione presso il destinatario</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>

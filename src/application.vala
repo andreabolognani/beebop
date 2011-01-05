@@ -42,6 +42,11 @@ namespace DDTBuilder {
 		private Gtk.Entry recipient_vatin_entry;
 		private Gtk.Entry recipient_client_code_entry;
 
+		private Gtk.Entry destination_name_entry;
+		private Gtk.Entry destination_street_entry;
+		private Gtk.Entry destination_city_entry;
+		private Gtk.CheckButton send_to_recipient_checkbutton;
+
 		private string out_file;
 
 		public string error_message { get; private set; }
@@ -117,6 +122,34 @@ namespace DDTBuilder {
 					if (recipient_client_code_entry == null) {
 						throw new ApplicationError.OBJECT_NOT_FOUND(element);
 					}
+
+					element = "destination_name_entry";
+					destination_name_entry = ui.get_object(element)
+					                         as Gtk.Entry;
+					if (destination_name_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "destination_street_entry";
+					destination_street_entry = ui.get_object(element)
+					                           as Gtk.Entry;
+					if (destination_street_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "destination_city_entry";
+					destination_city_entry = ui.get_object(element)
+					                         as Gtk.Entry;
+					if (destination_city_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "send_to_recipient_checkbutton";
+					send_to_recipient_checkbutton = ui.get_object(element)
+					                                as Gtk.CheckButton;
+					if (send_to_recipient_checkbutton == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
@@ -129,6 +162,7 @@ namespace DDTBuilder {
 				/* Connect signals */
 				window.delete_event.connect(close);
 				print_button.clicked.connect(print);
+				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
 			}
 		}
 
@@ -143,6 +177,30 @@ namespace DDTBuilder {
 			Gtk.main_quit();
 
 			return true;
+		}
+
+		private void toggle_send_to_recipient() {
+
+			if (!send_to_recipient_checkbutton.get_active()) {
+
+				/* Enable send destination */
+				destination_name_entry.sensitive = true;
+				destination_name_entry.text = "";
+				destination_street_entry.sensitive = true;
+				destination_street_entry.text = "";
+				destination_city_entry.sensitive = true;
+				destination_city_entry.text = "";
+			}
+			else {
+
+				/* Send to recipient */
+				destination_name_entry.sensitive = false;
+				destination_name_entry.text = recipient_name_entry.text;
+				destination_street_entry.sensitive = false;
+				destination_street_entry.text = recipient_street_entry.text;
+				destination_city_entry.sensitive = false;
+				destination_city_entry.text = recipient_city_entry.text;
+			}
 		}
 
 		public void show_error() {
