@@ -22,16 +22,16 @@ using Gtk;
 
 namespace DDTBuilder {
 
-	public errordomain UIError {
+	public errordomain ApplicationError {
 		OBJECT_NOT_FOUND
 	}
 
-	public class UI : GLib.Object {
+	public class Application : GLib.Object {
 
 		private static string VIEWER = "/usr/bin/evince";
 		private static string UI_FILE = Config.PKGDATADIR + "/ddtbuilder.ui";
 
-		private Gtk.Builder builder;
+		private Gtk.Builder ui;
 		private Gtk.Window window;
 		private Gtk.Button print_button;
 
@@ -42,15 +42,15 @@ namespace DDTBuilder {
 
 			error = null;
 
-			builder = new Gtk.Builder();
+			ui = new Gtk.Builder();
 
 			try {
 
-				builder.add_from_file(UI_FILE);
+				ui.add_from_file(UI_FILE);
 			}
 			catch (GLib.Error e) {
 
-				error = "Could not load UI from %s.".printf(UI_FILE);
+				error = "Could not load UI from " + UI_FILE + ".";
 			}
 
 			/* If the UI has been loaded succesfully from UI_FILE, lookup
@@ -58,7 +58,7 @@ namespace DDTBuilder {
 			if (error == null) {
 
 				/* Main application window */
-				window = builder.get_object("window")
+				window = ui.get_object("window")
 				         as Gtk.Window;
 
 				if (window == null) {
@@ -71,7 +71,7 @@ namespace DDTBuilder {
 				}
 
 				/* Print button */
-				print_button = builder.get_object("print_button")
+				print_button = ui.get_object("print_button")
 				               as Gtk.Button;
 
 				if (print_button == null) {
@@ -123,7 +123,7 @@ namespace DDTBuilder {
 				document = create_document();
 				out_file = document.draw();
 			}
-			catch (UIError.OBJECT_NOT_FOUND e) {
+			catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
 				error = "Required UI object not found: " + e.message + ".";
 				show_error();
@@ -191,42 +191,42 @@ namespace DDTBuilder {
 			recipient = document.recipient;
 
 			element = "recipient_name_entry";
-			entry = builder.get_object(element)
+			entry = ui.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new UIError.OBJECT_NOT_FOUND(element);
+				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.name = entry.text;
 
 			element = "recipient_street_entry";
-			entry = builder.get_object(element)
+			entry = ui.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new UIError.OBJECT_NOT_FOUND(element);
+				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.street = entry.text;
 
 			element = "recipient_city_entry";
-			entry = builder.get_object(element)
+			entry = ui.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new UIError.OBJECT_NOT_FOUND(element);
+				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.city = entry.text;
 
 			element = "recipient_vatin_entry";
-			entry = builder.get_object(element)
+			entry = ui.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new UIError.OBJECT_NOT_FOUND(element);
+				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.vatin = entry.text;
 
 			element = "recipient_client_code_entry";
-			entry = builder.get_object(element)
+			entry = ui.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new UIError.OBJECT_NOT_FOUND(element);
+				throw new ApplicationError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.client_code = entry.text;
 
@@ -240,18 +240,18 @@ namespace DDTBuilder {
 
 			Environment.set_application_name("DDT Builder");
 
-			UI ui = new UI();
+			Application application = new Application();
 
-			if (ui.error != null) {
+			if (application.error != null) {
 
 				/* If an error has occurred while constructing the UI,
 				 * display an error dialog and quit the application */
-				ui.show_error();
+				application.show_error();
 			}
 			else {
 
 				/* Show the application window and enter the main loop */
-				ui.show_all();
+				application.show_all();
 				Gtk.main();
 			}
 

@@ -29,7 +29,7 @@ bin_PROGRAMS = ddtbuilder
 ddtbuilder_SOURCES = \
 	companyinfo.vala \
 	document.vala \
-	ui.vala \
+	application.vala \
 	$(NULL)
 ddtbuilder_LDFLAGS = \
 	-mwindows \
