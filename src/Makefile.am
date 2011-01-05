@@ -6,6 +6,7 @@ AM_CPPFLAGS = \
 	$(GEE_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(CAIRO_CFLAGS) \
+	$(PANGO_CFLAGS) \
 	$(LIBRSVG_CFLAGS) \
 	$(NULL)
 
@@ -14,6 +15,8 @@ AM_VALAFLAGS = \
 	--pkg gdk-2.0 \
 	--pkg gtk+-2.0 \
 	--pkg cairo \
+	--pkg pango \
+	--pkg pangocairo \
 	--pkg librsvg-2.0 \
 	--pkg config \
 	--vapidir "$(top_srcdir)/vapi" \
@@ -34,6 +37,7 @@ ddtbuilder_LDFLAGS = \
 	${GEE_LIBS} \
 	$(GTK_LIBS) \
 	$(CAIRO_LIBS) \
+	$(PANGO_LIBS) \
 	$(LIBRSVG_LIBS) \
 	$(NULL)
 

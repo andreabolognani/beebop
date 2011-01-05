@@ -19,6 +19,7 @@
 using GLib;
 using Gee;
 using Cairo;
+using Pango;
 using Rsvg;
 
 namespace DDTBuilder {
@@ -40,11 +41,14 @@ namespace DDTBuilder {
 
 		public string draw() throws GLib.Error {
 
+			Pango.Layout layout;
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
 			string info;
 			double x;
 			double y;
+			int width;
+			int height;
 
 			try {
 
@@ -61,9 +65,9 @@ namespace DDTBuilder {
 
 			/* Make the target surface as big as the template */
 			surface = new Cairo.PdfSurface(OUT_FILE,
-										   dimensions.width,
-										   dimensions.height);
-			context = new Context(surface);
+			                               dimensions.width,
+			                               dimensions.height);
+			context = new Cairo.Context(surface);
 
 			/* Draw the template on the surface */
 			template.render_cairo(context);
@@ -84,19 +88,23 @@ namespace DDTBuilder {
 			x = 10.0;
 			y = 100.0;
 
+			/* Draw a reference line */
 			context.move_to(x, y);
 			context.line_to(x + 200.0, y);
 			context.stroke();
 
 			y += 20.00;
 
-			foreach (string line in split_text(info, 200)) {
+			context.move_to(x, y);
 
-				context.move_to(x, y);
-				context.show_text(line);
+			layout = Pango.cairo_create_layout(context);
+			layout.set_width(200 * Pango.SCALE);
+			layout.set_text(info, -1);
+			Pango.cairo_show_layout(context, layout);
 
-				y += 20.0;
-			}
+			layout.get_size(out width, out height);
+			context.rectangle(x, y, width / Pango.SCALE, height / Pango.SCALE);
+			context.stroke();
 
 			context.show_page();
 
@@ -106,67 +114,6 @@ namespace DDTBuilder {
 			}
 
 			return OUT_FILE;
-		}
-
-		/**
-		 * Split the text so that it fits a given width.
-		 */
-		private Gee.ArrayList<string> split_text(string text, int width) {
-
-			Gee.ArrayList<string> lines;
-			Cairo.TextExtents extents;
-			long len;
-			int start;
-			int last;
-			int i;
-
-			lines = new Gee.ArrayList<string>();
-			len = text.length;
-			start = 0;
-			last = 0;
-
-			for (i = 0; i < len; i++) {
-
-				if (text.offset(i).get_char() == '\n') {
-
-					/* Always cut on newline, even if the text would fit */
-					lines.add(text.slice(start, i));
-					start = i + 1;
-					last = start;
-				}
-				else {
-
-					/* Calculate width for this chunk of text */
-					context.text_extents(text.slice(start, i), out extents);
-
-					/* The text is too wide */
-					if (extents.width > width) {
-
-						/* Cut only if the current position is at least a word
-						 * away from the last cut. Never cut in the middle of
-						 * a word. This means that, for unreasonably small
-						 * values of the width parameter, a line might be
-						 * wider than allowed */
-						if (start != last) {
-
-							lines.add(text.slice(start, last));
-							start = last + 1;
-							last = start;
-						}
-					}
-
-					/* Keep track of the last space seen, so that it's possible
-					 * to cut on word boundaries */
-					if (text.offset(i).get_char() == ' ') {
-						last = i;
-					}
-				}
-			}
-
-			/* Don't forget the last line */
-			lines.add(text.slice(start,len));
-
-			return lines;
 		}
 	}
 }
