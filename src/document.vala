@@ -29,6 +29,11 @@ namespace DDTBuilder {
 		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
 		private static string OUT_FILE = "out.pdf";
 
+		private static double PAGE_BORDER_X = 10.0;
+		private static double PAGE_BORDER_Y = 10.0;
+		private static double CELL_PADDING_X = 5.0;
+		private static double CELL_PADDING_Y = 5.0;
+
 		private Cairo.Surface surface { get; set; }
 		private Cairo.Context context { get; set; }
 
@@ -41,14 +46,8 @@ namespace DDTBuilder {
 
 		public string draw() throws GLib.Error {
 
-			Pango.Layout layout;
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
-			string info;
-			double x;
-			double y;
-			int width;
-			int height;
 
 			try {
 
@@ -72,39 +71,11 @@ namespace DDTBuilder {
 			/* Draw the template on the surface */
 			template.render_cairo(context);
 
-			/* Draw a little something */
-			context.move_to(300.0, 10.0);
-			context.line_to(300.0, 100.0);
-			context.line_to(500.0, 100.0);
-			context.close_path();
-			context.stroke();
-
-			/* Display the recipient's information */
-			info = "Spett.le Ditta ";
-			info += recipient.name + "\n";
-			info += recipient.street + "\n";
-			info += recipient.city + "\n";
-
-			x = 10.0;
-			y = 100.0;
-
-			/* Draw a reference line */
-			context.move_to(x, y);
-			context.line_to(x + 200.0, y);
-			context.stroke();
-
-			y += 20.00;
-
-			context.move_to(x, y);
-
-			layout = Pango.cairo_create_layout(context);
-			layout.set_width(200 * Pango.SCALE);
-			layout.set_text(info, -1);
-			Pango.cairo_show_layout(context, layout);
-
-			layout.get_size(out width, out height);
-			context.rectangle(x, y, width / Pango.SCALE, height / Pango.SCALE);
-			context.stroke();
+			/* Draw the recipient's information in a right-aligned box */
+			draw_recipient_info(dimensions.width - PAGE_BORDER_X - 400.0,
+			                    PAGE_BORDER_Y,
+			                    400.0,
+			                    -1);
 
 			context.show_page();
 
@@ -114,6 +85,35 @@ namespace DDTBuilder {
 			}
 
 			return OUT_FILE;
+		}
+
+		private void draw_recipient_info(double x, double y, double width, double height) {
+
+			Pango.Layout layout;
+			string info;
+			int text_width;
+			int text_height;
+
+			/* Join all the recipient's information */
+			info = "Spett.le Ditta ";
+			info += recipient.name + "\n";
+			info += recipient.street + "\n";
+			info += recipient.city + "\n";
+
+			/* Adjust starting point and dimensions to account for padding */
+			text_width = (int) (width - (2 * CELL_PADDING_X));
+			context.move_to(x + CELL_PADDING_X, y + CELL_PADDING_Y);
+
+			/* Draw the text */
+			layout = Pango.cairo_create_layout(context);
+			layout.set_width(text_width * Pango.SCALE);
+			layout.set_text(info, -1);
+			Pango.cairo_show_layout(context, layout);
+
+			/* Draw a box around the text */
+			layout.get_size(out text_width, out text_height);
+			context.rectangle(x, y, width, text_height / Pango.SCALE);
+			context.stroke();
 		}
 	}
 }
