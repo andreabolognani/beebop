@@ -22,6 +22,10 @@ using Gtk;
 
 namespace DDTBuilder {
 
+	public errordomain UIError {
+		OBJECT_NOT_FOUND
+	}
+
 	public class UI : GLib.Object {
 
 		private static string VIEWER = "/usr/bin/evince";
@@ -59,7 +63,7 @@ namespace DDTBuilder {
 
 				if (window == null) {
 
-					error = "Required object window not found.";
+					error = "Required UI object not found: window.";
 				}
 				else {
 
@@ -72,7 +76,7 @@ namespace DDTBuilder {
 
 				if (print_button == null) {
 
-					error = "Required object print_button not found.";
+					error = "Required UI object not found: print_button.";
 				}
 				else {
 
@@ -118,6 +122,13 @@ namespace DDTBuilder {
 
 				document = create_document();
 				out_file = document.draw();
+			}
+			catch (UIError.OBJECT_NOT_FOUND e) {
+
+				error = "Required UI object not found: " + e.message + ".";
+				show_error();
+
+				return;
 			}
 			catch (GLib.Error e) {
 
@@ -183,7 +194,7 @@ namespace DDTBuilder {
 			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: %s.", element);
+				throw new UIError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.name = entry.text;
 
@@ -191,7 +202,7 @@ namespace DDTBuilder {
 			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: %s.", element);
+				throw new UIError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.street = entry.text;
 
@@ -199,7 +210,7 @@ namespace DDTBuilder {
 			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: %s.", element);
+				throw new UIError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.city = entry.text;
 
@@ -207,7 +218,7 @@ namespace DDTBuilder {
 			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: %s.", element);
+				throw new UIError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.vatin = entry.text;
 
@@ -215,7 +226,7 @@ namespace DDTBuilder {
 			entry = builder.get_object(element)
 			        as Gtk.Entry;
 			if (entry == null) {
-				throw new FileError.FAILED("Missing required UI element: %s.", element);
+				throw new UIError.OBJECT_NOT_FOUND(element);
 			}
 			recipient.client_code = entry.text;
 
