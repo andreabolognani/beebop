@@ -36,10 +36,18 @@ namespace DDTBuilder {
 		private Gtk.Window window;
 		private Gtk.Button print_button;
 
+		private Gtk.Entry recipient_name_entry { get; set; }
+		private Gtk.Entry recipient_street_entry { get; set; }
+		private Gtk.Entry recipient_city_entry { get; set; }
+		private Gtk.Entry recipient_vatin_entry { get; set; }
+		private Gtk.Entry recipient_client_code_entry { get; set; }
+
 		private string out_file;
 		public string error;
 
 		construct {
+
+			string element;
 
 			error = null;
 
@@ -54,35 +62,72 @@ namespace DDTBuilder {
 				error = "Could not load UI from " + UI_FILE + ".";
 			}
 
-			/* If the UI has been loaded succesfully from UI_FILE, lookup
-			 * some objects and connect callbacks to their signals */
 			if (error == null) {
 
-				/* Main application window */
-				window = ui.get_object("window")
-				         as Gtk.Window;
+				/* Look up all the required object. If any is missing, throw
+				 * an error and quit the application */
+				try {
 
-				if (window == null) {
+					element = "window";
+					window = ui.get_object(element)
+					         as Gtk.Window;
+					if (window == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
 
-					error = "Required UI object not found: window.";
+					element = "print_button";
+					print_button = ui.get_object(element)
+					               as Gtk.Button;
+					if (print_button == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "recipient_name_entry";
+					recipient_name_entry = ui.get_object(element)
+					                       as Gtk.Entry;
+					if (recipient_name_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "recipient_street_entry";
+					recipient_street_entry = ui.get_object(element)
+					                         as Gtk.Entry;
+					if (recipient_street_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "recipient_city_entry";
+					recipient_city_entry = ui.get_object(element)
+					                       as Gtk.Entry;
+					if (recipient_city_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "recipient_vatin_entry";
+					recipient_vatin_entry = ui.get_object(element)
+					                        as Gtk.Entry;
+					if (recipient_vatin_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "recipient_client_code_entry";
+					recipient_client_code_entry = ui.get_object(element)
+					                              as Gtk.Entry;
+					if (recipient_client_code_entry == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
 				}
-				else {
+				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
-					window.delete_event.connect(close);
+					error = "Required UI object not found: " + e.message;
 				}
+			}
 
-				/* Print button */
-				print_button = ui.get_object("print_button")
-				               as Gtk.Button;
+			if (error == null) {
 
-				if (print_button == null) {
-
-					error = "Required UI object not found: print_button.";
-				}
-				else {
-
-					print_button.clicked.connect(print);
-				}
+				/* Connect signals */
+				window.delete_event.connect(close);
+				print_button.clicked.connect(print);
 			}
 		}
 
@@ -138,16 +183,9 @@ namespace DDTBuilder {
 				document = create_document();
 				out_file = document.draw();
 			}
-			catch (ApplicationError.OBJECT_NOT_FOUND e) {
-
-				error = "Required UI object not found: " + e.message + ".";
-				show_error();
-
-				return;
-			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error = "Empty field: " + e.message + ".";
+				error = "Empty field: " + e.message;
 				show_warning();
 
 				return;
@@ -213,55 +251,35 @@ namespace DDTBuilder {
 			recipient = document.recipient;
 
 			element = "recipient_name_entry";
-			entry = ui.get_object(element)
-			        as Gtk.Entry;
-			if (entry == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND(element);
-			}
+			entry = recipient_name_entry;
 			if (entry.text.collate("") == 0) {
 				throw new ApplicationError.EMPTY_FIELD(element);
 			}
 			recipient.name = entry.text;
 
 			element = "recipient_street_entry";
-			entry = ui.get_object(element)
-			        as Gtk.Entry;
-			if (entry == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND(element);
-			}
+			entry = recipient_street_entry;
 			if (entry.text.collate("") == 0) {
 				throw new ApplicationError.EMPTY_FIELD(element);
 			}
 			recipient.street = entry.text;
 
 			element = "recipient_city_entry";
-			entry = ui.get_object(element)
-			        as Gtk.Entry;
-			if (entry == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND(element);
-			}
+			entry = recipient_city_entry;
 			if (entry.text.collate("") == 0) {
 				throw new ApplicationError.EMPTY_FIELD(element);
 			}
 			recipient.city = entry.text;
 
 			element = "recipient_vatin_entry";
-			entry = ui.get_object(element)
-			        as Gtk.Entry;
-			if (entry == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND(element);
-			}
+			entry = recipient_vatin_entry;
 			if (entry.text.collate("") == 0) {
 				throw new ApplicationError.EMPTY_FIELD(element);
 			}
 			recipient.vatin = entry.text;
 
 			element = "recipient_client_code_entry";
-			entry = ui.get_object(element)
-			        as Gtk.Entry;
-			if (entry == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND(element);
-			}
+			entry = recipient_client_code_entry;
 			recipient.client_code = entry.text;
 
 			return document;
