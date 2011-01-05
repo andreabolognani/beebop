@@ -31,8 +31,12 @@ namespace DDTBuilder {
 
 		private static double PAGE_BORDER_X = 10.0;
 		private static double PAGE_BORDER_Y = 10.0;
-		private static double CELL_PADDING_X = 5.0;
-		private static double CELL_PADDING_Y = 5.0;
+		private static double BOX_PADDING_X = 5.0;
+		private static double BOX_PADDING_Y = 5.0;
+
+		private static string FONT_FAMILY = "Sans";
+		private static double FONT_SIZE = 8.0;
+		private static double LINE_WIDTH = 1.0;
 
 		private Cairo.Surface surface { get; set; }
 		private Cairo.Context context { get; set; }
@@ -71,6 +75,10 @@ namespace DDTBuilder {
 			/* Draw the template on the surface */
 			template.render_cairo(context);
 
+			/* Set some appearance properties */
+			context.set_line_width(LINE_WIDTH);
+			context.set_font_size(FONT_SIZE);
+
 			/* Draw the recipient's information in a right-aligned box */
 			draw_recipient_info(dimensions.width - PAGE_BORDER_X - 400.0,
 			                    PAGE_BORDER_Y,
@@ -90,6 +98,7 @@ namespace DDTBuilder {
 		private void draw_recipient_info(double x, double y, double width, double height) {
 
 			Pango.Layout layout;
+			Pango.FontDescription font_description;
 			string info;
 			int text_width;
 			int text_height;
@@ -101,21 +110,28 @@ namespace DDTBuilder {
 			info += recipient.city;
 
 			/* Adjust starting point and dimensions to account for padding */
-			text_width = (int) (width - (2 * CELL_PADDING_X));
-			context.move_to(x + CELL_PADDING_X, y + CELL_PADDING_Y);
+			text_width = (int) (width - (2 * BOX_PADDING_X));
+			context.move_to(x + BOX_PADDING_X, y + BOX_PADDING_Y);
 
-			/* Draw the text */
 			layout = Pango.cairo_create_layout(context);
+
+			/* Set text properties */
+			font_description = new Pango.FontDescription();
+			font_description.set_family(FONT_FAMILY);
+			font_description.set_size((int) (FONT_SIZE * Pango.SCALE));
+
+			/* Set paragraph properties */
+			layout.set_font_description(font_description);
 			layout.set_width(text_width * Pango.SCALE);
 			layout.set_text(info, -1);
+
+			/* Draw the text */
 			Pango.cairo_show_layout(context, layout);
 
 			/* Draw a box around the text */
 			layout.get_size(out text_width, out text_height);
-			context.rectangle(x,
-			                  y,
-			                  width,
-			                  (text_height / Pango.SCALE) + 2 * CELL_PADDING_Y );
+			height = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
+			context.rectangle(x, y, width, height);
 			context.stroke();
 		}
 	}
