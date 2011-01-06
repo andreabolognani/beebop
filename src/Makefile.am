@@ -3,7 +3,6 @@ NULL =
 AM_CPPFLAGS = \
 	-DPKGDATADIR='"$(pkgdatadir)"' \
 	$(GLIB_CFLAGS) \
-	$(GEE_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(CAIRO_CFLAGS) \
 	$(PANGO_CFLAGS) \
@@ -11,7 +10,6 @@ AM_CPPFLAGS = \
 	$(NULL)
 
 AM_VALAFLAGS = \
-	--pkg gee-1.0 \
 	--pkg gdk-2.0 \
 	--pkg gtk+-2.0 \
 	--pkg cairo \
@@ -34,7 +32,6 @@ ddtbuilder_SOURCES = \
 ddtbuilder_LDFLAGS = \
 	-mwindows \
 	$(GLIB_LIBS) \
-	${GEE_LIBS} \
 	$(GTK_LIBS) \
 	$(CAIRO_LIBS) \
 	$(PANGO_LIBS) \

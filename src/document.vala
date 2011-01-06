@@ -17,7 +17,6 @@
  */
 
 using GLib;
-using Gee;
 using Cairo;
 using Pango;
 using Rsvg;
