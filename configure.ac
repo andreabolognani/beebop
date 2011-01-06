@@ -1,6 +1,7 @@
 AC_INIT([DDT Builder], [0.0.1], [eof@kiyuko.org], [ddtbuilder])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
+AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE
 
 VALA_REQUIRED=0.7.0
