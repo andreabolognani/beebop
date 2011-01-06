@@ -2,12 +2,14 @@ NULL =
 
 AM_CPPFLAGS = \
 	-DPKGDATADIR='"$(pkgdatadir)"' \
+	-DLOCALEDIR='"$(localedir)"' \
 	$(GLIB_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(CAIRO_CFLAGS) \
 	$(PANGO_CFLAGS) \
 	$(LIBRSVG_CFLAGS) \
 	$(NULL)
+
 
 AM_VALAFLAGS = \
 	--pkg gdk-2.0 \

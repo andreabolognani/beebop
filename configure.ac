@@ -14,8 +14,18 @@ LIBRSVG_REQUIRED=2.14.0
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_LIBTOOL
+AC_PROG_INTLTOOL
 AM_PROG_VALAC($VALA_REQUIRED)
 AC_SUBST(VALAC)
+
+dnl Internazionalization
+
+GETTEXT_PACKAGE=ddtbuilder
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [gettext package])
+
+AM_GLIB_GNU_GETTEXT
+
 
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED
                         gobject-2.0 >= $GLIB_REQUIRED)
@@ -41,6 +51,7 @@ AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
 	vapi/Makefile
+	po/Makefile.in
 	src/Makefile])
 
 AC_OUTPUT

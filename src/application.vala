@@ -65,7 +65,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error_message = "Could not load UI from " + UI_FILE + ".";
+				error_message = _("Could not load UI from ") + UI_FILE + ".";
 			}
 
 			if (error_message == null) {
@@ -153,7 +153,7 @@ namespace DDTBuilder {
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
-					error_message = "Required UI object not found: " + e.message;
+					error_message = _("Required UI object not found: ") + e.message;
 				}
 			}
 
@@ -279,7 +279,7 @@ namespace DDTBuilder {
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error_message = "Empty field: " + e.message;
+				error_message = _("Empty field: ") + e.message;
 				show_warning();
 
 				return;
@@ -308,7 +308,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error_message = "Could not spawn viewer %s.".printf(VIEWER);
+				error_message = _("Could not spawn viewer: ") + VIEWER;
 				show_error();
 
 				return;
@@ -421,6 +421,10 @@ namespace DDTBuilder {
 		}
 
 		public static int main(string[] args) {
+
+			Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+			Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
+			Intl.textdomain(Config.GETTEXT_PACKAGE);
 
 			Gtk.init(ref args);
 			Rsvg.init();

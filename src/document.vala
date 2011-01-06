@@ -64,7 +64,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				throw new FileError.FAILED("Could not load template %s.".printf(TEMPLATE_FILE));
+				throw new FileError.FAILED(_("Could not load template: ") + TEMPLATE_FILE);
 			}
 
 			/* Get template's dimensions */
@@ -108,7 +108,7 @@ namespace DDTBuilder {
 
 			if (context.status() != Cairo.Status.SUCCESS) {
 
-				throw new FileError.FAILED("Drawing error.");
+				throw new FileError.FAILED(_("Drawing error."));
 			}
 
 			return OUT_FILE;
@@ -123,7 +123,7 @@ namespace DDTBuilder {
 			int text_height;
 
 			/* Join all the recipient's information */
-			info = "Spett.le Ditta ";
+			info = _("Spett.le Ditta ");
 			info += company.name + "\n";
 			info += company.street + "\n";
 			info += company.city;

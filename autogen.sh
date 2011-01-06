@@ -5,6 +5,8 @@ ACLOCAL="aclocal"
 AUTOHEADER="autoheader -f"
 AUTOCONF="autoconf -f"
 AUTOMAKE="automake -f -a -c --foreign"
+GETTEXTIZE="glib-gettextize -f"
+INTLTOOLIZE="intltoolize -f --automake"
 
 runcmd()
 {
@@ -27,3 +29,5 @@ runcmd "${ACLOCAL}"
 runcmd "${AUTOHEADER}"
 runcmd "${AUTOCONF}"
 runcmd "${AUTOMAKE}"
+runcmd "${GETTEXTIZE}"
+runcmd "${INTLTOOLIZE}"

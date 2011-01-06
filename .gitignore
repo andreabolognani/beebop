@@ -13,6 +13,7 @@ config.h.in
 configure
 depcomp
 install-sh
+mkinstalldirs
 ltmain.sh
 missing
 build/
