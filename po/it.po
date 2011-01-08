@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-08 20:48+0100\n"
+"POT-Creation-Date: 2011-01-08 21:41+0100\n"
 "PO-Revision-Date: 2011-01-08 21:15+0100\n"
 "Last-Translator: Andrea Bolognani <eof@kiyuko.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -29,7 +29,7 @@ msgstr "Codice cliente"
 msgid "Code"
 msgstr "Codice"
 
-#: ../data/ddtbuilder.ui.h:4
+#: ../data/ddtbuilder.ui.h:4 ../src/application.vala:438
 msgid "DDT Builder"
 msgstr "DDT Builder"
 
@@ -106,30 +106,29 @@ msgid "Weight"
 msgstr "Peso"
 
 #: ../src/application.vala:68
-msgid "Could not load UI from "
-msgstr "Impossibile caricare UI da "
+#, c-format
+msgid "Could not load UI file: %s"
+msgstr "Impossibile caricare il file di interfaccia: %s "
 
 #: ../src/application.vala:156
-msgid "Required UI object not found: "
-msgstr "Oggetto non trovato: "
+#, c-format
+msgid "Required UI object not found: %s"
+msgstr "Oggetto non trovato: %s"
 
 #: ../src/application.vala:288
-msgid "Empty field: "
-msgstr "Campo vuoto: "
+#, c-format
+msgid "Empty field: %s"
+msgstr "Campo vuoto: %s"
 
 #: ../src/application.vala:317
-msgid "Could not spawn viewer: "
-msgstr "Impossibile eseguire: "
+msgid "Could not spawn viewer."
+msgstr "Impossibile eseguire il visualizzatore."
 
 #: ../src/document.vala:67
-msgid "Could not load template: "
-msgstr "Impossibile caricare il template: "
+#, c-format
+msgid "Could not load template file: %s"
+msgstr "Impossibile caricare il template: %s"
 
 #: ../src/document.vala:111
 msgid "Drawing error."
 msgstr "Errore di disegno."
-
-#. Join all the recipient's information
-#: ../src/document.vala:126
-msgid "Spett.le Ditta "
-msgstr "Spett.le Ditta "

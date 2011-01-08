@@ -65,7 +65,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error_message = _("Could not load UI from ") + UI_FILE + ".";
+				error_message = _("Could not load UI file: %s").printf(UI_FILE);
 			}
 
 			if (error_message == null) {
@@ -153,7 +153,7 @@ namespace DDTBuilder {
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
-					error_message = _("Required UI object not found: ") + e.message;
+					error_message = _("Required UI object not found: %s").printf(e.message);
 				}
 			}
 
@@ -285,7 +285,7 @@ namespace DDTBuilder {
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error_message = _("Empty field: ") + e.message;
+				error_message = _("Empty field: %s").printf(e.message);
 				show_warning();
 
 				return;
@@ -314,7 +314,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error_message = _("Could not spawn viewer: ") + VIEWER;
+				error_message = _("Could not spawn viewer.");
 				show_error();
 
 				return;
@@ -435,7 +435,7 @@ namespace DDTBuilder {
 			Gtk.init(ref args);
 			Rsvg.init();
 
-			Environment.set_application_name("DDT Builder");
+			Environment.set_application_name(_("DDT Builder");
 
 			Application application = new Application();
 
