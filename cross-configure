@@ -1,9 +1,8 @@
 #!/bin/sh
 
-TARGET="i586-mingw32msvc"
+HOST="i586-mingw32msvc"
 
-PREFIX="/usr/${TARGET}"
+export PREFIX="/usr/${HOST}"
 export PKG_CONFIG_PATH="${PREFIX}/lib/pkgconfig"
 
-`dirname ${0}`/configure \
-	--target=${TARGET} --host=${TARGET} ${*}
+`dirname ${0}`/configure --host=${HOST} ${*}
