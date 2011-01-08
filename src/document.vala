@@ -52,6 +52,8 @@ namespace DDTBuilder {
 
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
+			string contents;
+			size_t contents_length;
 			double address_box_x;
 			double address_box_y;
 			double address_box_width;
@@ -60,7 +62,9 @@ namespace DDTBuilder {
 
 			try {
 
-				template = new Rsvg.Handle.from_file(TEMPLATE_FILE);
+				/* Read and parse the contents of the template file */
+				FileUtils.get_contents(TEMPLATE_FILE, out contents, out contents_length);
+				template = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
 			}
 			catch (GLib.Error e) {
 
@@ -123,7 +127,7 @@ namespace DDTBuilder {
 			int text_height;
 
 			/* Join all the recipient's information */
-			info += company.name + "\n";
+			info = company.name + "\n";
 			info += company.street + "\n";
 			info += company.city;
 
