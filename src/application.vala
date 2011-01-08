@@ -159,6 +159,12 @@ namespace DDTBuilder {
 
 			if (error_message == null) {
 
+				/* Add some dummy data */
+				recipient_name_entry.text = "Random Company";
+				recipient_street_entry.text = "Fleet Street, 15";
+				recipient_city_entry.text = "London (UK)";
+				recipient_vatin_entry.text = "0830192809";
+
 				/* Sync the form entries */
 				name_changed();
 				street_changed();

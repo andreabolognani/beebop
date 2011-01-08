@@ -69,7 +69,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="text" translatable="yes">Random Company</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -82,7 +81,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="text" translatable="yes">Fleet Street, 15</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -97,7 +95,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="text" translatable="yes">London (UK)</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -112,7 +109,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="text" translatable="yes">0830192809</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
