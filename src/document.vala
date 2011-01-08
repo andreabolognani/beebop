@@ -94,6 +94,7 @@ namespace DDTBuilder {
 			address_box_x = dimensions.width - PAGE_BORDER_X - address_box_width;
 			address_box_y = PAGE_BORDER_Y;
 			offset = draw_company_address(recipient,
+			                              _("Recipient"),
 			                              address_box_x,
 			                              address_box_y,
 			                              address_box_width,
@@ -103,6 +104,7 @@ namespace DDTBuilder {
 			 * just below the one used for the recipient's address */
 			address_box_y += offset + 5.0;
 			offset = draw_company_address(destination,
+			                              _("Destination"),
 			                              address_box_x,
 			                              address_box_y,
 			                              address_box_width,
@@ -118,7 +120,7 @@ namespace DDTBuilder {
 			return OUT_FILE;
 		}
 
-		private double draw_company_address(CompanyInfo company, double x, double y, double width, double height) {
+		private double draw_company_address(CompanyInfo company, string title, double x, double y, double width, double height) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -127,7 +129,8 @@ namespace DDTBuilder {
 			int text_height;
 
 			/* Join all the recipient's information */
-			info = company.name + "\n";
+			info = "<b>" + title + "</b>\n";
+			info += company.name + "\n";
 			info += company.street + "\n";
 			info += company.city;
 
@@ -145,7 +148,7 @@ namespace DDTBuilder {
 			/* Set paragraph properties */
 			layout.set_font_description(font_description);
 			layout.set_width(text_width * Pango.SCALE);
-			layout.set_text(info, -1);
+			layout.set_markup(info, -1);
 
 			/* Draw the text */
 			Pango.cairo_show_layout(context, layout);
