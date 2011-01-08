@@ -1,15 +1,13 @@
 NULL =
 
 AM_CPPFLAGS = \
-	-DPKGDATADIR='"$(pkgdatadir)"' \
-	-DLOCALEDIR='"$(localedir)"' \
+	$(OS_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(CAIRO_CFLAGS) \
 	$(PANGO_CFLAGS) \
 	$(LIBRSVG_CFLAGS) \
 	$(NULL)
-
 
 AM_VALAFLAGS = \
 	--pkg gdk-2.0 \
@@ -32,7 +30,7 @@ ddtbuilder_SOURCES = \
 	application.vala \
 	$(NULL)
 ddtbuilder_LDFLAGS = \
-	-mwindows \
+	$(OS_LDFLAGS) \
 	$(GLIB_LIBS) \
 	$(GTK_LIBS) \
 	$(CAIRO_LIBS) \
