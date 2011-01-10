@@ -80,10 +80,10 @@ namespace DDTBuilder {
 			Rsvg.DimensionData dimensions;
 			string contents;
 			size_t contents_length;
-			double address_box_x;
-			double address_box_y;
-			double address_box_width;
-			double address_box_height;
+			double box_x;
+			double box_y;
+			double box_width;
+			double box_height;
 			double offset;
 
 			try {
@@ -115,37 +115,37 @@ namespace DDTBuilder {
 			context.set_font_size(FONT_SIZE);
 
 			/* Draw the recipient's address in a right-aligned box */
-			address_box_width = 350.0;
-			address_box_height = -1;
-			address_box_x = dimensions.width - PAGE_BORDER_X - address_box_width;
-			address_box_y = PAGE_BORDER_Y;
-			offset = draw_company_address(recipient,
-			                              _("Recipient"),
-			                              address_box_x,
-			                              address_box_y,
-			                              address_box_width,
-			                              address_box_height);
+			box_width = 350.0;
+			box_height = -1.0;
+			box_x = dimensions.width - PAGE_BORDER_X - box_width;
+			box_y = PAGE_BORDER_Y;
+			offset = draw_company_address(_("Recipient"),
+			                              recipient,
+			                              box_x,
+			                              box_y,
+			                              box_width,
+			                              box_height);
 
 			/* Draw the destination's address in a rigth-aligned box,
 			 * just below the one used for the recipient's address */
-			address_box_y += offset + 5.0;
-			offset = draw_company_address(destination,
-			                              _("Destination"),
-			                              address_box_x,
-			                              address_box_y,
-			                              address_box_width,
-			                              address_box_height);
+			box_y += offset + 5.0;
+			offset = draw_company_address(_("Destination"),
+			                              destination,
+			                              box_x,
+			                              box_y,
+			                              box_width,
+			                              box_height);
 
 			/* Draw the goods table */
-			address_box_width = dimensions.width - (2 * PAGE_BORDER_X);
-			address_box_height = -1;
-			address_box_x = 10.0;
-			address_box_y += offset + 5.0;
+			box_width = dimensions.width - (2 * PAGE_BORDER_X);
+			box_height = -1;
+			box_x = 10.0;
+			box_y += offset + 10.0;
 			offset = draw_table(goods,
-			                    address_box_x,
-			                    address_box_y,
-			                    address_box_width,
-			                    address_box_height);
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
 
 			context.show_page();
 
@@ -157,44 +157,77 @@ namespace DDTBuilder {
 			return OUT_FILE;
 		}
 
-		private double draw_company_address(CompanyInfo company, string title, double x, double y, double width, double height) {
+		private double draw_text(string title, string text, double x, double y, double width, double height) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
-			string info;
+			string contents;
 			int text_width;
 			int text_height;
 
-			/* Join all the recipient's information */
-			info = "<b>" + title + "</b>\n";
-			info += company.name + "\n";
-			info += company.street + "\n";
-			info += company.city;
+			contents = "";
 
-			/* Adjust starting point and dimensions to account for padding */
-			text_width = (int) (width - (2 * BOX_PADDING_X));
-			context.move_to(x + BOX_PADDING_X, y + BOX_PADDING_Y);
+			/* Add the title, in bold, on a line before the text */
+			if (title.collate("") != 0) {
+				contents += "<b>" + title + "</b>\n";
+			}
 
-			layout = Pango.cairo_create_layout(context);
+			contents += text;
 
 			/* Set text properties */
 			font_description = new Pango.FontDescription();
 			font_description.set_family(FONT_FAMILY);
 			font_description.set_size((int) (FONT_SIZE * Pango.SCALE));
 
-			/* Set paragraph properties */
-			layout.set_font_description(font_description);
-			layout.set_width(text_width * Pango.SCALE);
-			layout.set_markup(info, -1);
+			/* Create a new layout in the selected spot */
+			context.move_to(x, y);
+			layout = Pango.cairo_create_layout(context);
 
-			/* Draw the text */
+			/* Set layout properties */
+			layout.set_font_description(font_description);
+			layout.set_width((int) (width * Pango.SCALE));
+			layout.set_markup(contents, -1);
+
+			/* Show contents */
 			Pango.cairo_show_layout(context, layout);
 
-			/* Draw a box around the text */
 			layout.get_size(out text_width, out text_height);
-			height = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
+
+			return (text_height / Pango.SCALE);
+		}
+
+		private double draw_boxed_text(string title, string text, double x, double y, double width, double height) {
+
+			height = draw_text(title,
+			                   text,
+			                   x + BOX_PADDING_X,
+			                   y + BOX_PADDING_Y,
+			                   width - (2 * BOX_PADDING_X),
+			                   height);
+
+			/* Add vertical padding to the text height */
+			height += (2 * BOX_PADDING_Y);
+
 			context.rectangle(x, y, width, height);
 			context.stroke();
+
+			return height;
+		}
+
+		private double draw_company_address(string title, CompanyInfo company, double x, double y, double width, double height) {
+
+			string text;
+
+			text = company.name + "\n";
+			text += company.street + "\n";
+			text += company.city;
+
+			height = draw_boxed_text(title,
+			                         text,
+			                         x,
+			                         y,
+			                         width,
+			                         height);
 
 			return height;
 		}
@@ -209,8 +242,8 @@ namespace DDTBuilder {
 
 			len = (int) table.rows.length();
 
-			/* Use a temporary variable so that the array length is passed
-			 * correctly to draw_row */
+			/* XXX Use a temporary variable so that the array length is
+			 * passed correctly to draw_row */
 			tmp = table.sizes;
 
 			for (i = 0; i < len; i++) {
@@ -233,10 +266,10 @@ namespace DDTBuilder {
 
 		private double draw_row(Row row, double[] sizes, double x, double y, double width, double height) {
 
-			Pango.Layout layout;
-			Pango.FontDescription font_description;
-			double box_height;
 			double box_x;
+			double box_y;
+			double box_width;
+			double box_height;
 			double text_x;
 			double text_y;
 			int text_width;
@@ -244,62 +277,45 @@ namespace DDTBuilder {
 			double offset;
 			int i;
 
+			box_y = y;
+			box_height = -1.0;
+			text_y = box_y + BOX_PADDING_Y;
+			text_height = -1.0;
+
+			/* Column 1: code */
+
 			box_x = x;
-			box_height = 0.0;
-
-			/* Text vertical offset */
-			text_y = y + BOX_PADDING_Y;
-
-			/* Common text properties */
-			font_description = new Pango.FontDescription();
-			font_description.set_family(FONT_FAMILY);
-			font_description.set_size((int) (FONT_SIZE * Pango.SCALE));
-
-			/* CODE */
+			box_width = sizes[0];
 
 			text_x = box_x + BOX_PADDING_X;
-			text_width = (int) (sizes[0] - (2 * BOX_PADDING_X));
+			text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
-			context.move_to(text_x, text_y);
-
-			layout = Pango.cairo_create_layout(context);
-
-			/* Set paragraph properties */
-			layout.set_font_description(font_description);
-			layout.set_width(text_width * Pango.SCALE);
-			layout.set_text(row.code, -1);
-
-			/* Draw the text */
-			Pango.cairo_show_layout(context, layout);
-
-			layout.get_size(out text_width, out text_height);
-			offset = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
+			offset = draw_text("",
+			                   row.code,
+			                   text_x,
+			                   text_y,
+			                   text_width,
+			                   text_height);
 			box_height = Math.fmax(box_height, offset);
 
-			box_x += sizes[0];
+			/* Column 2: reference */
 
-			/* REFERENCE */
+			box_x += box_width;
+			box_width = sizes[1];
 
 			text_x = box_x + BOX_PADDING_X;
-			text_width = (int) (sizes[1] - (2 * BOX_PADDING_X));
+			text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
-			context.move_to(text_x, text_y);
-
-			layout = Pango.cairo_create_layout(context);
-
-			/* Set paragraph properties */
-			layout.set_font_description(font_description);
-			layout.set_width(text_width * Pango.SCALE);
-			layout.set_text(row.reference, -1);
-
-			/* Draw the text */
-			Pango.cairo_show_layout(context, layout);
-
-			layout.get_size(out text_width, out text_height);
-			offset = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
+			offset = draw_text("",
+			                   row.reference,
+			                   text_x,
+			                   text_y,
+			                   text_width,
+			                   text_height);
 			box_height = Math.fmax(box_height, offset);
 
-			box_x += sizes[1];
+			/* Take box vertical padding into account */
+			box_height += (2 * BOX_PADDING_Y);
 
 			/* Draw the borders around all the boxes */
 
