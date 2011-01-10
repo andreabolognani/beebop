@@ -26,7 +26,7 @@ namespace DDTBuilder {
 		public string reference { get; set; }
 		public string description { get; set; }
 		public string unit { get; set; }
-		public int quantity { get; set; }
+		public string quantity { get; set; }
 
 		construct {
 
@@ -34,7 +34,7 @@ namespace DDTBuilder {
 			reference = "";
 			description = "";
 			unit = "";
-			quantity = 0;
+			quantity = "0";
 		}
 	}
 }

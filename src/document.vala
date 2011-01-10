@@ -62,7 +62,7 @@ namespace DDTBuilder {
 			row.reference = "order 0329";
 			row.description = "Some stuff";
 			row.unit = "N";
-			row.quantity = 1;
+			row.quantity = "1";
 			goods.add_row(row);
 
 			row = new Row();
@@ -70,7 +70,7 @@ namespace DDTBuilder {
 			row.reference = "order 9189";
 			row.description = "More interesting stuff";
 			row.unit = "N";
-			row.quantity = 5;
+			row.quantity = "5";
 			goods.add_row(row);
 		}
 
