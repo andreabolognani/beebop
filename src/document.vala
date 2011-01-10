@@ -280,7 +280,7 @@ namespace DDTBuilder {
 			box_y = y;
 			box_height = -1.0;
 			text_y = box_y + BOX_PADDING_Y;
-			text_height = -1.0;
+			text_height = -1;
 
 			/* Column 1: code */
 
