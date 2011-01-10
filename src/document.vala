@@ -42,10 +42,36 @@ namespace DDTBuilder {
 
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
+		public Table goods { get; set; }
 
 		construct {
 
+			Row row;
+
 			recipient = new CompanyInfo();
+			destination = new CompanyInfo();
+
+			goods = new Table();
+
+			/* Set columns size */
+			goods.sizes = {100.0, 100.0, 200.0, 100.0, 100.0};
+
+			/* Add some test data */
+			row = new Row();
+			row.code = "928374";
+			row.reference = "order 0329";
+			row.description = "Some stuff";
+			row.unit = "N";
+			row.quantity = 1;
+			goods.add_row(row);
+
+			row = new Row();
+			row.code = "727269";
+			row.reference = "order 9189";
+			row.description = "More interesting stuff";
+			row.unit = "N";
+			row.quantity = 5;
+			goods.add_row(row);
 		}
 
 		public string draw() throws GLib.Error {
@@ -110,6 +136,17 @@ namespace DDTBuilder {
 			                              address_box_width,
 			                              address_box_height);
 
+			/* Draw the goods table */
+			address_box_width = dimensions.width - (2 * PAGE_BORDER_X);
+			address_box_height = -1;
+			address_box_x = 10.0;
+			address_box_y += offset + 5.0;
+			offset = draw_table(goods,
+			                    address_box_x,
+			                    address_box_y,
+			                    address_box_width,
+			                    address_box_height);
+
 			context.show_page();
 
 			if (context.status() != Cairo.Status.SUCCESS) {
@@ -160,6 +197,121 @@ namespace DDTBuilder {
 			context.stroke();
 
 			return height;
+		}
+
+		private double draw_table(Table table, double x, double y, double width, double height) {
+
+			Row row;
+			double[] tmp;
+			double offset;
+			int len;
+			int i;
+
+			len = (int) table.rows.length();
+
+			/* Use a temporary variable so that the array length is passed
+			 * correctly to draw_row */
+			tmp = table.sizes;
+
+			for (i = 0; i < len; i++) {
+
+				/* Draw a row */
+				row = table.rows.nth_data(i);
+				offset = draw_row(row,
+				                  tmp,
+				                  x,
+				                  y,
+				                  width,
+				                  height);
+
+				/* Update the vertical offset */
+				y += offset;
+			}
+
+			return y;
+		}
+
+		private double draw_row(Row row, double[] sizes, double x, double y, double width, double height) {
+
+			Pango.Layout layout;
+			Pango.FontDescription font_description;
+			double box_height;
+			double box_x;
+			double text_x;
+			double text_y;
+			int text_width;
+			int text_height;
+			double offset;
+			int i;
+
+			box_x = x;
+			box_height = 0.0;
+
+			/* Text vertical offset */
+			text_y = y + BOX_PADDING_Y;
+
+			/* Common text properties */
+			font_description = new Pango.FontDescription();
+			font_description.set_family(FONT_FAMILY);
+			font_description.set_size((int) (FONT_SIZE * Pango.SCALE));
+
+			/* CODE */
+
+			text_x = box_x + BOX_PADDING_X;
+			text_width = (int) (sizes[0] - (2 * BOX_PADDING_X));
+
+			context.move_to(text_x, text_y);
+
+			layout = Pango.cairo_create_layout(context);
+
+			/* Set paragraph properties */
+			layout.set_font_description(font_description);
+			layout.set_width(text_width * Pango.SCALE);
+			layout.set_text(row.code, -1);
+
+			/* Draw the text */
+			Pango.cairo_show_layout(context, layout);
+
+			layout.get_size(out text_width, out text_height);
+			offset = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
+			box_height = Math.fmax(box_height, offset);
+
+			box_x += sizes[0];
+
+			/* REFERENCE */
+
+			text_x = box_x + BOX_PADDING_X;
+			text_width = (int) (sizes[1] - (2 * BOX_PADDING_X));
+
+			context.move_to(text_x, text_y);
+
+			layout = Pango.cairo_create_layout(context);
+
+			/* Set paragraph properties */
+			layout.set_font_description(font_description);
+			layout.set_width(text_width * Pango.SCALE);
+			layout.set_text(row.reference, -1);
+
+			/* Draw the text */
+			Pango.cairo_show_layout(context, layout);
+
+			layout.get_size(out text_width, out text_height);
+			offset = (text_height / Pango.SCALE) + (2 * BOX_PADDING_Y);
+			box_height = Math.fmax(box_height, offset);
+
+			box_x += sizes[1];
+
+			/* Draw the borders around all the boxes */
+
+			for (i = 0; i < sizes.length; i++) {
+
+				context.rectangle(x, y, sizes[i], box_height);
+				context.stroke();
+
+				x += sizes[i];
+			}
+
+			return box_height;
 		}
 	}
 }
