@@ -22,19 +22,30 @@ namespace DDTBuilder {
 
 	public class Row : GLib.Object {
 
-		public string code { get; set; }
-		public string reference { get; set; }
-		public string description { get; set; }
-		public string unit { get; set; }
-		public string quantity { get; set; }
+		private int columns = 5;
+		private string[] _data;
+
+		public string[] data {
+
+			get {
+				return _data;
+			}
+
+			set {
+				if (value.length == columns) {
+					_data = value;
+				}
+			}
+		}
 
 		construct {
 
-			code = "";
-			reference = "";
-			description = "";
-			unit = "";
-			quantity = "0";
+			int i;
+
+			data = new string[columns];
+			for (i = 0; i < columns; i++) {
+				data[i] = "";
+			}
 		}
 	}
 }

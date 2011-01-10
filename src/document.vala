@@ -67,19 +67,19 @@ namespace DDTBuilder {
 
 			/* Add some test data */
 			row = new Row();
-			row.code = "928374";
-			row.reference = "order 0329";
-			row.description = "Some stuff";
-			row.unit = "N";
-			row.quantity = "1";
+			row.data = {"928374",
+			            "order 0329",
+			            "Some stuff",
+			            "N",
+			            "1"};
 			goods.add_row(row);
 
 			row = new Row();
-			row.code = "727269";
-			row.reference = "order 9189";
-			row.description = "More interesting stuff";
-			row.unit = "N";
-			row.quantity = "5";
+			row.data = {"727269",
+			            "order 9189",
+			            "More interesting stuff",
+			            "N",
+			            "5"};
 			goods.add_row(row);
 		}
 
@@ -282,11 +282,11 @@ namespace DDTBuilder {
 
 			/* Create headings row */
 			row = new Row();
-			row.code = "<b>" + table.headings[0] + "</b>";
-			row.reference = "<b>" + table.headings[1] + "</b>";
-			row.description = "<b>" + table.headings[2] + "</b>";
-			row.unit = "<b>" + table.headings[3] + "</b>";
-			row.quantity = "<b>" + table.headings[4] + "</b>";
+			row.data = {"<b>" + table.headings[0] + "</b>",
+			            "<b>" + table.headings[1] + "</b>",
+			            "<b>" + table.headings[2] + "</b>",
+			            "<b>" + table.headings[3] + "</b>",
+			            "<b>" + table.headings[4] + "</b>"};
 
 			offset = draw_row(row,
 			                  sizes,
@@ -344,7 +344,7 @@ namespace DDTBuilder {
 			text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
 			offset = draw_text("",
-			                   row.code,
+			                   row.data[0],
 			                   text_x,
 			                   text_y,
 			                   text_width,
@@ -360,7 +360,7 @@ namespace DDTBuilder {
 			text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
 			offset = draw_text("",
-			                   row.reference,
+			                   row.data[1],
 			                   text_x,
 			                   text_y,
 			                   text_width,
