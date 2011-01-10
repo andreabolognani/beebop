@@ -328,56 +328,50 @@ namespace DDTBuilder {
 			int text_width;
 			int text_height;
 			double offset;
+			int len;
 			int i;
+
+			len = sizes.length;
 
 			box_y = y;
 			box_height = -1.0;
 			text_y = box_y + BOX_PADDING_Y;
 			text_height = -1;
 
-			/* Column 1: code */
-
 			box_x = x;
-			box_width = sizes[0];
 
-			text_x = box_x + BOX_PADDING_X;
-			text_width = (int) (box_width - (2 * BOX_PADDING_X));
+			for (i = 0; i < len; i++) {
 
-			offset = draw_text("",
-			                   row.data[0],
-			                   text_x,
-			                   text_y,
-			                   text_width,
-			                   text_height);
-			box_height = Math.fmax(box_height, offset);
+				box_width = sizes[i];
 
-			/* Column 2: reference */
+				text_x = box_x + BOX_PADDING_X;
+				text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
-			box_x += box_width;
-			box_width = sizes[1];
+				offset = draw_text("",
+				                   row.data[i],
+				                   text_x,
+				                   text_y,
+				                   text_width,
+				                   text_height);
+				box_height = Math.fmax(box_height, offset);
 
-			text_x = box_x + BOX_PADDING_X;
-			text_width = (int) (box_width - (2 * BOX_PADDING_X));
-
-			offset = draw_text("",
-			                   row.data[1],
-			                   text_x,
-			                   text_y,
-			                   text_width,
-			                   text_height);
-			box_height = Math.fmax(box_height, offset);
+				/* Move to the next column */
+				box_x += box_width;
+			}
 
 			/* Take box vertical padding into account */
 			box_height += (2 * BOX_PADDING_Y);
 
 			/* Draw the borders around all the boxes */
+			for (i = 0; i < len; i++) {
 
-			for (i = 0; i < sizes.length; i++) {
+				box_width = sizes[i];
 
-				context.rectangle(x, y, sizes[i], box_height);
+				context.rectangle(x, y, box_width, box_height);
 				context.stroke();
 
-				x += sizes[i];
+				/* Move to the next column */
+				x += box_width;
 			}
 
 			return box_height;
