@@ -24,6 +24,7 @@ namespace DDTBuilder {
 
 		private int columns = 5;
 		private double[] _sizes;
+		private string[] _headings;
 
 		public unowned List<Row> rows { get; set; }
 
@@ -40,6 +41,19 @@ namespace DDTBuilder {
 			}
 		}
 
+		public string[] headings {
+
+			get {
+				return _headings;
+			}
+
+			set {
+				if (value.length == columns) {
+					_headings = value;
+				}
+			}
+		}
+
 		construct {
 
 			int i;
@@ -47,6 +61,11 @@ namespace DDTBuilder {
 			sizes = new double[columns];
 			for (i = 0; i < columns; i++) {
 				sizes[i] = 0;
+			}
+
+			headings = new string[columns];
+			for (i = 0; i < columns; i++) {
+				headings[i] = "";
 			}
 
 			rows = new List<Row>();

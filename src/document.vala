@@ -53,8 +53,17 @@ namespace DDTBuilder {
 
 			goods = new Table();
 
-			/* Set columns size */
-			goods.sizes = {100.0, 100.0, 200.0, 100.0, 100.0};
+			/* Set size and heading for each column */
+			goods.sizes = {70.0,
+			               100.0,
+			               -1.0,   /* Fill all free space */
+			               40.0,
+			               100.0};
+			goods.headings = {_("Code"),
+			                  _("Reference"),
+			                  _("Description"),
+			                  _("U.M."),
+			                  _("Quantity")};
 
 			/* Add some test data */
 			row = new Row();
@@ -236,22 +245,66 @@ namespace DDTBuilder {
 
 			Row row;
 			double[] tmp;
+			double[] sizes;
 			double offset;
 			int len;
 			int i;
 
-			len = (int) table.rows.length();
-
-			/* XXX Use a temporary variable so that the array length is
-			 * passed correctly to draw_row */
+			/* XXX Use a temporary variable here because Vala doesn't
+			 * seem to like direct access to an array property */
 			tmp = table.sizes;
+
+			len = tmp.length;
+			sizes = new double[len];
+			offset = 0.0;
+
+			for (i = 0; i < len; i++) {
+
+				sizes[i] = tmp[i];
+
+				/* If the size of the column is not zero or less, add it
+				 * to the accumulator */
+				if (sizes[i] > 0.0) {
+					offset += sizes[i];
+				}
+			}
+
+			for (i = 0; i < len; i++) {
+
+				/* -1.0 is used as a placeholder size: the actual size
+				 * of the column is calculated at draw time so that it
+				 * fills all the horizontal space not used by the
+				 * other columns */
+				if (sizes[i] <= 0) {
+					sizes[i] = width - offset;
+				}
+			}
+
+			/* Create headings row */
+			row = new Row();
+			row.code = "<b>" + table.headings[0] + "</b>";
+			row.reference = "<b>" + table.headings[1] + "</b>";
+			row.description = "<b>" + table.headings[2] + "</b>";
+			row.unit = "<b>" + table.headings[3] + "</b>";
+			row.quantity = "<b>" + table.headings[4] + "</b>";
+
+			offset = draw_row(row,
+			                  sizes,
+			                  x,
+			                  y,
+			                  width,
+			                  height);
+			y += offset;
+
+			/* Get the number of data rows */
+			len = (int) table.rows.length();
 
 			for (i = 0; i < len; i++) {
 
 				/* Draw a row */
 				row = table.rows.nth_data(i);
 				offset = draw_row(row,
-				                  tmp,
+				                  sizes,
 				                  x,
 				                  y,
 				                  width,
