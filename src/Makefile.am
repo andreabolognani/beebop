@@ -26,6 +26,8 @@ bin_PROGRAMS = ddtbuilder
 
 ddtbuilder_SOURCES = \
 	companyinfo.vala \
+	row.vala \
+	table.vala \
 	document.vala \
 	application.vala \
 	$(NULL)
