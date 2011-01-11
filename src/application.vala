@@ -468,6 +468,7 @@ namespace DDTBuilder {
 			document = new Document();
 			document.recipient = read_recipient();
 			document.destination = read_destination();
+			document.goods.rows = read_goods().rows;
 
 			return document;
 		}
@@ -545,6 +546,52 @@ namespace DDTBuilder {
 			destination.city = entry.text;
 
 			return destination;
+		}
+
+		private Table read_goods() throws ApplicationError.EMPTY_FIELD {
+
+			Gtk.Entry entry;
+			Gtk.SpinButton spin_button;
+			Table goods;
+			Row row;
+			WidgetRow widget_row;
+			int len;
+			int i;
+
+			goods = new Table();
+
+			len = (int) table_widgets.length();
+
+			/* Read the table from the bottom of the stack to the top */
+			for (i = len - 1; i >= 0; i--) {
+
+				row = new Row();
+				widget_row = table_widgets.nth_data(i);
+
+				/* Code */
+				entry = widget_row.widgets[0] as Gtk.Entry;
+				row.data[0] = entry.text;
+
+				/* Reference */
+				entry = widget_row.widgets[1] as Gtk.Entry;
+				row.data[1] = entry.text;
+
+				/* Description */
+				entry = widget_row.widgets[2] as Gtk.Entry;
+				row.data[2] = entry.text;
+
+				/* Unit of measurement */
+				entry = widget_row.widgets[3] as Gtk.Entry;
+				row.data[3] = entry.text;
+
+				/* Quantity */
+				spin_button = widget_row.widgets[4] as Gtk.SpinButton;
+				row.data[4] = "%d".printf(spin_button.get_value_as_int());
+
+				goods.add_row(row);
+			}
+
+			return goods;
 		}
 
 		public static int main(string[] args) {

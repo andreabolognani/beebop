@@ -64,23 +64,6 @@ namespace DDTBuilder {
 			                  _("Description"),
 			                  _("U.M."),
 			                  _("Quantity")};
-
-			/* Add some test data */
-			row = new Row();
-			row.data = {"928374",
-			            "order 0329",
-			            "Some stuff",
-			            "N",
-			            "1"};
-			goods.add_row(row);
-
-			row = new Row();
-			row.data = {"727269",
-			            "order 9189",
-			            "More interesting stuff",
-			            "N",
-			            "5"};
-			goods.add_row(row);
 		}
 
 		public string draw() throws GLib.Error {
