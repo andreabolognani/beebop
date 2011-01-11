@@ -18,9 +18,9 @@ AM_VALAFLAGS = \
 	--pkg librsvg-2.0 \
 	--pkg config \
 	--vapidir "$(top_srcdir)/vapi" \
-	--vapidir "../vapi" \
+	--vapidir "$(abs_top_srcdir)/vapi" \
 	$(NULL)
-# --vapidir "../vapi" is there to support out-of-tree development builds
+# --vapidir "$(abs_top_srcdir)/vapi" is there to support out-of-tree development builds
 
 bin_PROGRAMS = ddtbuilder
 
