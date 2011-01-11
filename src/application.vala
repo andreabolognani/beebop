@@ -47,6 +47,13 @@ namespace DDTBuilder {
 		private Gtk.Entry destination_city_entry;
 		private Gtk.CheckButton send_to_recipient_checkbutton;
 
+		private Gtk.Table goods_table;
+		private Gtk.ButtonBox table_buttonbox;
+		private Gtk.Button add_button;
+		private Gtk.Button remove_button;
+
+		private List<WidgetRow> table_widgets;
+
 		private string out_file;
 
 		public string error_message { get; private set; }
@@ -56,6 +63,8 @@ namespace DDTBuilder {
 			string element;
 
 			error_message = null;
+
+			table_widgets = new List<WidgetRow>();
 
 			ui = new Gtk.Builder();
 
@@ -150,11 +159,52 @@ namespace DDTBuilder {
 					if (send_to_recipient_checkbutton == null) {
 						throw new ApplicationError.OBJECT_NOT_FOUND(element);
 					}
+
+					element = "goods_table";
+					goods_table = ui.get_object(element)
+					              as Gtk.Table;
+					if (goods_table == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "table_buttonbox";
+					table_buttonbox = ui.get_object(element)
+					                  as Gtk.ButtonBox;
+					if (table_buttonbox == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "add_button";
+					add_button = ui.get_object(element)
+					             as Gtk.Button;
+					if (add_button == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "remove_button";
+					remove_button = ui.get_object(element)
+					                as Gtk.Button;
+					if (remove_button == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
 					error_message = _("Required UI object not found: %s").printf(e.message);
 				}
+			}
+
+			if (error_message == null) {
+
+				/* Connect signals */
+				window.delete_event.connect(close);
+				print_button.clicked.connect(print);
+				recipient_name_entry.changed.connect(name_changed);
+				recipient_street_entry.changed.connect(street_changed);
+				recipient_city_entry.changed.connect(city_changed);
+				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
+				add_button.clicked.connect(add_row);
+				remove_button.clicked.connect(remove_row);
 			}
 
 			if (error_message == null) {
@@ -170,13 +220,8 @@ namespace DDTBuilder {
 				street_changed();
 				city_changed();
 
-				/* Connect signals */
-				window.delete_event.connect(close);
-				print_button.clicked.connect(print);
-				recipient_name_entry.changed.connect(name_changed);
-				recipient_street_entry.changed.connect(street_changed);
-				recipient_city_entry.changed.connect(city_changed);
-				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
+				/* Create a first row of widgets */
+				add_row();
 			}
 		}
 
@@ -242,6 +287,86 @@ namespace DDTBuilder {
 				destination_city_entry.sensitive = false;
 				destination_city_entry.text = recipient_city_entry.text;
 			}
+		}
+
+		public void add_row() {
+
+			Gtk.Entry code_entry;
+			Gtk.Entry reference_entry;
+			Gtk.Entry description_entry;
+			Gtk.Entry unit_entry;
+			Gtk.SpinButton quantity_spinbutton;
+			WidgetRow row;
+			int len;
+			int i;
+
+			/* Increase the number of rows */
+			goods_table.resize(goods_table.n_rows + 1,
+			                   goods_table.n_columns);
+
+			/* Move the table buttons one row down */
+			goods_table.remove(table_buttonbox);
+			goods_table.attach(table_buttonbox,
+			                   0,
+			                   goods_table.n_columns,
+			                   goods_table.n_rows - 1,
+			                   goods_table.n_rows,
+			                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
+			                   0,
+			                   0,
+			                   0);
+
+			/* Create all the widgets needed for a new row */
+			code_entry = new Gtk.Entry();
+			reference_entry = new Gtk.Entry();
+			description_entry = new Gtk.Entry();
+			unit_entry = new Gtk.Entry();
+			quantity_spinbutton = new Gtk.SpinButton.with_range(0.0,
+			                                                    999.0,
+			                                                    1.0);
+
+			/* Keep track of the widgets */
+			row = new WidgetRow();
+			row.widgets = {code_entry,
+			               reference_entry,
+			               description_entry,
+			               unit_entry,
+			               quantity_spinbutton};
+			table_widgets.prepend(row);
+
+			len = (int) goods_table.n_columns;
+
+			/* Attach the widgets to the table */
+			for (i = 0; i < len; i++) {
+
+				goods_table.attach(row.widgets[i],
+				                   i,
+				                   i + 1,
+				                   goods_table.n_rows - 2,
+				                   goods_table.n_rows - 1,
+				                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
+				                   0,
+				                   0,
+				                   0);
+				row.widgets[i].show();
+			}
+		}
+
+		public void remove_row() {
+
+			WidgetRow row;
+			int len;
+			int i;
+
+			row = table_widgets.data;
+			len = (int) goods_table.n_columns;
+
+			for (i = 0; i < len; i++) {
+
+				goods_table.remove(row.widgets[i]);
+			}
+
+			table_widgets.delete_link(table_widgets);
 		}
 
 		public void show_error() {
