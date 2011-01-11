@@ -48,7 +48,6 @@ namespace DDTBuilder {
 		private Gtk.CheckButton send_to_recipient_checkbutton;
 
 		private Gtk.Table goods_table;
-		private Gtk.ButtonBox table_buttonbox;
 		private Gtk.Button add_button;
 		private Gtk.Button remove_button;
 
@@ -164,13 +163,6 @@ namespace DDTBuilder {
 					goods_table = ui.get_object(element)
 					              as Gtk.Table;
 					if (goods_table == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "table_buttonbox";
-					table_buttonbox = ui.get_object(element)
-					                  as Gtk.ButtonBox;
-					if (table_buttonbox == null) {
 						throw new ApplicationError.OBJECT_NOT_FOUND(element);
 					}
 
@@ -304,18 +296,6 @@ namespace DDTBuilder {
 			goods_table.resize(goods_table.n_rows + 1,
 			                   goods_table.n_columns);
 
-			/* Move the table buttons one row down */
-			goods_table.remove(table_buttonbox);
-			goods_table.attach(table_buttonbox,
-			                   0,
-			                   goods_table.n_columns,
-			                   goods_table.n_rows - 1,
-			                   goods_table.n_rows,
-			                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
-			                   0,
-			                   0,
-			                   0);
-
 			/* Create all the widgets needed for a new row */
 			code_entry = new Gtk.Entry();
 			reference_entry = new Gtk.Entry();
@@ -342,8 +322,8 @@ namespace DDTBuilder {
 				goods_table.attach(row.widgets[i],
 				                   i,
 				                   i + 1,
-				                   goods_table.n_rows - 2,
 				                   goods_table.n_rows - 1,
+				                   goods_table.n_rows,
 				                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
 				                   0,
 				                   0,
@@ -374,18 +354,6 @@ namespace DDTBuilder {
 
 			/* Remove widgets row from the stack */
 			table_widgets.delete_link(table_widgets);
-
-			/* Move the buttons one row up */
-			goods_table.remove(table_buttonbox);
-			goods_table.attach(table_buttonbox,
-			                   0,
-			                   goods_table.n_columns,
-			                   goods_table.n_rows - 2,
-			                   goods_table.n_rows - 1,
-			                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
-			                   0,
-			                   0,
-			                   0);
 
 			/* Resize the table */
 			goods_table.resize(goods_table.n_rows - 1,
