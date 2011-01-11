@@ -350,6 +350,11 @@ namespace DDTBuilder {
 				                   0);
 				row.widgets[i].show();
 			}
+
+			/* Rows can be removed if there are more than two of them */
+			if (table_widgets.length() >= 2) {
+				remove_button.sensitive = true;
+			}
 		}
 
 		public void remove_row() {
@@ -364,9 +369,32 @@ namespace DDTBuilder {
 			for (i = 0; i < len; i++) {
 
 				goods_table.remove(row.widgets[i]);
+				row.widgets[i].destroy();
 			}
 
+			/* Remove widgets row from the stack */
 			table_widgets.delete_link(table_widgets);
+
+			/* Move the buttons one row up */
+			goods_table.remove(table_buttonbox);
+			goods_table.attach(table_buttonbox,
+			                   0,
+			                   goods_table.n_columns,
+			                   goods_table.n_rows - 2,
+			                   goods_table.n_rows - 1,
+			                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
+			                   0,
+			                   0,
+			                   0);
+
+			/* Resize the table */
+			goods_table.resize(goods_table.n_rows - 1,
+			                   goods_table.n_columns);
+
+			/* Don't allow the user to remove the last row */
+			if (table_widgets.length() <= 1) {
+				remove_button.sensitive = false;
+			}
 		}
 
 		public void show_error() {
