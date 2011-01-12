@@ -47,6 +47,7 @@ namespace DDTBuilder {
 		private Gtk.Entry destination_city_entry;
 		private Gtk.CheckButton send_to_recipient_checkbutton;
 
+		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
 		private Gtk.Button add_button;
 		private Gtk.Button remove_button;
@@ -159,6 +160,13 @@ namespace DDTBuilder {
 					send_to_recipient_checkbutton = ui.get_object(element)
 					                                as Gtk.CheckButton;
 					if (send_to_recipient_checkbutton == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+
+					element = "table_viewport";
+					table_viewport = ui.get_object(element)
+					                 as Gtk.Viewport;
+					if (table_viewport == null) {
 						throw new ApplicationError.OBJECT_NOT_FOUND(element);
 					}
 
@@ -332,6 +340,7 @@ namespace DDTBuilder {
 			Gtk.Entry description_entry;
 			Gtk.Entry unit_entry;
 			Gtk.SpinButton quantity_spinbutton;
+			Gtk.Adjustment adjustment;
 			Gtk.AttachOptions x_options;
 			Gtk.AttachOptions y_options;
 			WidgetRow row;
@@ -394,6 +403,13 @@ namespace DDTBuilder {
 			if (table_widgets.length() >= 2) {
 				remove_button.sensitive = true;
 			}
+
+			/* Give focus to the first widget in the new row */
+			row.widgets[0].is_focus = true;
+
+			/* Scroll the table all the way down */
+			adjustment = table_viewport.vadjustment;
+			adjustment.value = adjustment.upper;
 		}
 
 		public void remove_row() {
@@ -423,6 +439,10 @@ namespace DDTBuilder {
 			if (table_widgets.length() <= 1) {
 				remove_button.sensitive = false;
 			}
+
+			/* Give focus to the first widget in the last row */
+			row = table_widgets.data;
+			row.widgets[0].is_focus = true;
 		}
 
 		public void show_error() {

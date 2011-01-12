@@ -516,7 +516,7 @@
                         <property name="vscrollbar_policy">automatic</property>
                         <property name="window_placement_set">True</property>
                         <child>
-                          <object class="GtkViewport" id="viewport1">
+                          <object class="GtkViewport" id="table_viewport">
                             <property name="visible">True</property>
                             <property name="resize_mode">queue</property>
                             <child>
