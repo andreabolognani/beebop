@@ -114,7 +114,7 @@ namespace DDTBuilder {
 					send_to_recipient_checkbutton = get_widget("send_to_recipient_checkbutton")
 					                                as Gtk.CheckButton;
 					document_number_entry = get_widget("document_number_entry")
-					                        as Gtk.SpinButton;
+					                        as Gtk.Entry;
 					document_date_entry = get_widget("document_date_entry")
 					                      as Gtk.Entry;
 					document_reason_entry = get_widget("document_reason_entry")
@@ -503,12 +503,23 @@ namespace DDTBuilder {
 			Document document;
 
 			document = new Document();
+			collect_info(document);
 			document.recipient = read_recipient();
 			document.destination = read_destination();
 			document.goods_info = read_goods_info();
 			document.goods.rows = read_goods().rows;
 
 			return document;
+		}
+
+		private void collect_info(Document document) throws ApplicationError.EMPTY_FIELD {
+
+			document.number = get_entry_text(document_number_entry,
+			                                 "document_number_entry");
+			document.date = get_entry_text(document_date_entry,
+			                               "document_date_entry");
+			document.reason = get_entry_text(document_reason_entry,
+			                                 "document_reason_entry");
 		}
 
 		private CompanyInfo read_recipient() throws ApplicationError.EMPTY_FIELD {

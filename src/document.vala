@@ -40,6 +40,9 @@ namespace DDTBuilder {
 		private Cairo.Surface surface;
 		private Cairo.Context context;
 
+		public string number { get; set; }
+		public string date { get; set; }
+		public string reason { get; set; }
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
 		public GoodsInfo goods_info { get; set; }
@@ -47,7 +50,9 @@ namespace DDTBuilder {
 
 		construct {
 
-			Row row;
+			number = "";
+			date = "";
+			reason = "";
 
 			recipient = new CompanyInfo();
 			destination = new CompanyInfo();
