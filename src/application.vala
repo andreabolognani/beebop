@@ -504,10 +504,10 @@ namespace DDTBuilder {
 
 			document = new Document();
 			collect_info(document);
-			document.recipient = read_recipient();
-			document.destination = read_destination();
-			document.goods_info = read_goods_info();
-			document.goods.rows = read_goods().rows;
+			collect_recipient(document);
+			collect_destination(document);
+			collect_goods_info(document);
+			collect_goods(document);
 
 			return document;
 		}
@@ -522,11 +522,11 @@ namespace DDTBuilder {
 			                                 "document_reason_entry");
 		}
 
-		private CompanyInfo read_recipient() throws ApplicationError.EMPTY_FIELD {
+		private void collect_recipient(Document document) throws ApplicationError.EMPTY_FIELD {
 
 			CompanyInfo recipient;
 
-			recipient = new CompanyInfo();
+			recipient = document.recipient;
 
 			recipient.name = get_entry_text(recipient_name_entry,
 			                                "recipient_name_entry");
@@ -537,15 +537,13 @@ namespace DDTBuilder {
 			recipient.vatin = get_entry_text(recipient_vatin_entry,
 			                                 "recipient_vatin_entry");
 			recipient.client_code = recipient_client_code_entry.text;
-
-			return recipient;
 		}
 
-		private CompanyInfo read_destination() throws ApplicationError.EMPTY_FIELD {
+		private void collect_destination(Document document) throws ApplicationError.EMPTY_FIELD {
 
 			CompanyInfo destination;
 
-			destination = new CompanyInfo();
+			destination = document.destination;
 
 			destination.name = get_entry_text(destination_name_entry,
 			                                  "destination_name_entry");
@@ -553,26 +551,22 @@ namespace DDTBuilder {
 			                                    "destination_street_entry");
 			destination.city = get_entry_text(destination_city_entry,
 			                                  "destination_city_entry");
-
-			return destination;
 		}
 
-		private GoodsInfo read_goods_info() throws ApplicationError.EMPTY_FIELD {
+		private void collect_goods_info(Document document) throws ApplicationError.EMPTY_FIELD {
 
 			GoodsInfo info;
 
-			info = new GoodsInfo();
+			info = document.goods_info;
 
 			info.appearance = get_entry_text(goods_appearance_entry,
 			                                 "goods_appearance_entry");
 			info.units = "%d".printf(goods_units_spinbutton.get_value_as_int());
 			info.weight = get_entry_text(goods_weight_entry,
 			                             "goods_weight_entry");
-
-			return info;
 		}
 
-		private Table read_goods() throws ApplicationError.EMPTY_FIELD {
+		private void collect_goods(Document document) throws ApplicationError.EMPTY_FIELD {
 
 			Gtk.Entry entry;
 			Gtk.SpinButton spin_button;
@@ -582,7 +576,7 @@ namespace DDTBuilder {
 			int len;
 			int i;
 
-			goods = new Table();
+			goods = document.goods;
 
 			len = (int) table_widgets.length();
 
@@ -614,8 +608,6 @@ namespace DDTBuilder {
 
 				goods.add_row(row);
 			}
-
-			return goods;
 		}
 
 		public static int main(string[] args) {
