@@ -29,7 +29,7 @@
                         <property name="n_rows">5</property>
                         <property name="n_columns">2</property>
                         <property name="column_spacing">5</property>
-                        <property name="row_spacing">5</property>
+                        <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label1">
                             <property name="visible">True</property>
@@ -189,7 +189,7 @@
                         <property name="n_rows">4</property>
                         <property name="n_columns">2</property>
                         <property name="column_spacing">5</property>
-                        <property name="row_spacing">5</property>
+                        <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label9">
                             <property name="visible">True</property>
@@ -316,7 +316,7 @@
                         <property name="n_rows">6</property>
                         <property name="n_columns">2</property>
                         <property name="column_spacing">5</property>
-                        <property name="row_spacing">5</property>
+                        <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label12">
                             <property name="visible">True</property>
@@ -525,58 +525,61 @@
                                 <property name="border_width">5</property>
                                 <property name="n_columns">5</property>
                                 <property name="column_spacing">5</property>
-                                <property name="row_spacing">5</property>
+                                <property name="row_spacing">2</property>
                                 <child>
-                                  <object class="GtkLabel" id="label4">
+                                  <object class="GtkLabel" id="code_label">
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Code</property>
                                   </object>
                                   <packing>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label6">
+                                  <object class="GtkLabel" id="description_label">
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Description</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">2</property>
                                     <property name="right_attach">3</property>
-                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label5">
+                                  <object class="GtkLabel" id="reference_label">
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Reference</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
                                     <property name="right_attach">2</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label7">
+                                  <object class="GtkLabel" id="unit_label">
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Unit of measurement</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">3</property>
                                     <property name="right_attach">4</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label8">
+                                  <object class="GtkLabel" id="quantity_label">
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Quantity</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">4</property>
                                     <property name="right_attach">5</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>

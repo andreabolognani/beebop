@@ -51,6 +51,7 @@ namespace DDTBuilder {
 		private Gtk.Button add_button;
 		private Gtk.Button remove_button;
 
+		private List<Gtk.Label> table_labels;
 		private List<WidgetRow> table_widgets;
 
 		private string out_file;
@@ -59,10 +60,12 @@ namespace DDTBuilder {
 
 		construct {
 
+			Gtk.Label label;
 			string element;
 
 			error_message = null;
 
+			table_labels = new List<Gtk.Label>();
 			table_widgets = new List<WidgetRow>();
 
 			ui = new Gtk.Builder();
@@ -165,6 +168,46 @@ namespace DDTBuilder {
 					if (goods_table == null) {
 						throw new ApplicationError.OBJECT_NOT_FOUND(element);
 					}
+
+					element = "code_label";
+					label = ui.get_object(element)
+					        as Gtk.Label;
+					if (label == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+					table_labels.append(label);
+
+					element = "reference_label";
+					label = ui.get_object(element)
+					        as Gtk.Label;
+					if (label == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+					table_labels.append(label);
+
+					element = "description_label";
+					label = ui.get_object(element)
+					        as Gtk.Label;
+					if (label == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+					table_labels.append(label);
+
+					element = "unit_label";
+					label = ui.get_object(element)
+					        as Gtk.Label;
+					if (label == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+					table_labels.append(label);
+
+					element = "quantity_label";
+					label = ui.get_object(element)
+					        as Gtk.Label;
+					if (label == null) {
+						throw new ApplicationError.OBJECT_NOT_FOUND(element);
+					}
+					table_labels.append(label);
 
 					element = "add_button";
 					add_button = ui.get_object(element)
@@ -283,11 +326,14 @@ namespace DDTBuilder {
 
 		public void add_row() {
 
+			Gtk.Label label;
 			Gtk.Entry code_entry;
 			Gtk.Entry reference_entry;
 			Gtk.Entry description_entry;
 			Gtk.Entry unit_entry;
 			Gtk.SpinButton quantity_spinbutton;
+			Gtk.AttachOptions x_options;
+			Gtk.AttachOptions y_options;
 			WidgetRow row;
 			int len;
 			int i;
@@ -319,15 +365,28 @@ namespace DDTBuilder {
 			/* Attach the widgets to the table */
 			for (i = 0; i < len; i++) {
 
+				/* Get attach options for the column label */
+				label = table_labels.nth_data(i);
+				goods_table.child_get(label,
+				                      "x-options",
+				                      out x_options,
+				                      "y-options",
+				                      out y_options,
+				                      null);
+
+				/* Attach the widget using the same attach options
+				 * used for the column label */
 				goods_table.attach(row.widgets[i],
 				                   i,
 				                   i + 1,
 				                   goods_table.n_rows - 1,
 				                   goods_table.n_rows,
-				                   Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
-				                   0,
+				                   x_options,
+				                   y_options,
 				                   0,
 				                   0);
+
+				/* Show the widget */
 				row.widgets[i].show();
 			}
 
@@ -348,6 +407,7 @@ namespace DDTBuilder {
 
 			for (i = 0; i < len; i++) {
 
+				/* Remove and destroy widgets */
 				goods_table.remove(row.widgets[i]);
 				row.widgets[i].destroy();
 			}
