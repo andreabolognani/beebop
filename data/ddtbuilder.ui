@@ -354,7 +354,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="document_appearance_entry">
+                          <object class="GtkEntry" id="goods_appearance_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -404,7 +404,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="document_weight_entry">
+                          <object class="GtkEntry" id="goods_weight_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -430,7 +430,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="document_units_spinbutton">
+                          <object class="GtkSpinButton" id="goods_units_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -456,7 +456,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="document_number_spinbutton">
+                          <object class="GtkEntry" id="document_number_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>

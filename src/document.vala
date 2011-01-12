@@ -42,6 +42,7 @@ namespace DDTBuilder {
 
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
+		public GoodsInfo goods_info { get; set; }
 		public Table goods { get; set; }
 
 		construct {
@@ -50,6 +51,7 @@ namespace DDTBuilder {
 
 			recipient = new CompanyInfo();
 			destination = new CompanyInfo();
+			goods_info = new GoodsInfo();
 
 			goods = new Table();
 

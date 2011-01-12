@@ -47,12 +47,12 @@ namespace DDTBuilder {
 		private Gtk.Entry destination_city_entry;
 		private Gtk.CheckButton send_to_recipient_checkbutton;
 
-		private Gtk.SpinButton document_number_spinbutton;
+		private Gtk.Entry document_number_entry;
 		private Gtk.Entry document_date_entry;
 		private Gtk.Entry document_reason_entry;
-		private Gtk.Entry document_appearance_entry;
-		private Gtk.SpinButton document_units_spinbutton;
-		private Gtk.Entry document_weight_entry;
+		private Gtk.Entry goods_appearance_entry;
+		private Gtk.SpinButton goods_units_spinbutton;
+		private Gtk.Entry goods_weight_entry;
 
 		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
@@ -113,18 +113,18 @@ namespace DDTBuilder {
 					                         as Gtk.Entry;
 					send_to_recipient_checkbutton = get_widget("send_to_recipient_checkbutton")
 					                                as Gtk.CheckButton;
-					document_number_spinbutton = get_widget("document_number_spinbutton")
-					                             as Gtk.SpinButton;
+					document_number_entry = get_widget("document_number_entry")
+					                        as Gtk.SpinButton;
 					document_date_entry = get_widget("document_date_entry")
 					                      as Gtk.Entry;
 					document_reason_entry = get_widget("document_reason_entry")
 					                        as Gtk.Entry;
-					document_appearance_entry = get_widget("document_appearance_entry")
-					                            as Gtk.Entry;
-					document_units_spinbutton = get_widget("document_units_spinbutton")
-					                            as Gtk.SpinButton;
-					document_weight_entry = get_widget("document_weight_entry")
-					                        as Gtk.Entry;
+					goods_appearance_entry = get_widget("goods_appearance_entry")
+					                         as Gtk.Entry;
+					goods_units_spinbutton = get_widget("goods_units_spinbutton")
+					                         as Gtk.SpinButton;
+					goods_weight_entry = get_widget("goods_weight_entry")
+					                     as Gtk.Entry;
 					table_viewport = get_widget("table_viewport")
 					                 as Gtk.Viewport;
 					goods_table = get_widget("goods_table")
@@ -505,6 +505,7 @@ namespace DDTBuilder {
 			document = new Document();
 			document.recipient = read_recipient();
 			document.destination = read_destination();
+			document.goods_info = read_goods_info();
 			document.goods.rows = read_goods().rows;
 
 			return document;
@@ -545,7 +546,19 @@ namespace DDTBuilder {
 			return destination;
 		}
 
+		private GoodsInfo read_goods_info() throws ApplicationError.EMPTY_FIELD {
 
+			GoodsInfo info;
+
+			info = new GoodsInfo();
+
+			info.appearance = get_entry_text(goods_appearance_entry,
+			                                 "goods_appearance_entry");
+			info.units = "%d".printf(goods_units_spinbutton.get_value_as_int());
+			info.weight = get_entry_text(goods_weight_entry,
+			                             "goods_weight_entry");
+
+			return info;
 		}
 
 		private Table read_goods() throws ApplicationError.EMPTY_FIELD {
