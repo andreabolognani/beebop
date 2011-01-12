@@ -210,6 +210,21 @@ namespace DDTBuilder {
 			return widget;
 		}
 
+		/* Get the text from an entry, raising an exception if it's empty */
+		private string get_entry_text(Gtk.Entry entry, string name) throws ApplicationError.EMPTY_FIELD {
+
+			string text;
+
+			text = entry.text;
+
+			/* If the entry contains no text, throw an exception */
+			if (text.collate("") == 0) {
+				throw new ApplicationError.EMPTY_FIELD(name);
+			}
+
+			return text;
+		}
+
 		public void show_all() {
 
 			/* Show the main application window */
@@ -498,42 +513,18 @@ namespace DDTBuilder {
 		private CompanyInfo read_recipient() throws ApplicationError.EMPTY_FIELD {
 
 			CompanyInfo recipient;
-			Gtk.Entry entry;
-			string element;
 
 			recipient = new CompanyInfo();
 
-			element = "recipient_name_entry";
-			entry = recipient_name_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			recipient.name = entry.text;
-
-			element = "recipient_street_entry";
-			entry = recipient_street_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			recipient.street = entry.text;
-
-			element = "recipient_city_entry";
-			entry = recipient_city_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			recipient.city = entry.text;
-
-			element = "recipient_vatin_entry";
-			entry = recipient_vatin_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			recipient.vatin = entry.text;
-
-			element = "recipient_client_code_entry";
-			entry = recipient_client_code_entry;
-			recipient.client_code = entry.text;
+			recipient.name = get_entry_text(recipient_name_entry,
+			                                "recipient_name_entry");
+			recipient.street = get_entry_text(recipient_street_entry,
+			                                  "recipient_street_entry");
+			recipient.city = get_entry_text(recipient_city_entry,
+			                                "recipient_city_entry");
+			recipient.vatin = get_entry_text(recipient_vatin_entry,
+			                                 "recipient_vatin_entry");
+			recipient.client_code = recipient_client_code_entry.text;
 
 			return recipient;
 		}
@@ -541,33 +532,20 @@ namespace DDTBuilder {
 		private CompanyInfo read_destination() throws ApplicationError.EMPTY_FIELD {
 
 			CompanyInfo destination;
-			Gtk.Entry entry;
-			string element;
 
 			destination = new CompanyInfo();
 
-			element = "destination_name_entry";
-			entry = destination_name_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			destination.name = entry.text;
-
-			element = "destination_street_entry";
-			entry = destination_street_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			destination.street = entry.text;
-
-			element = "destination_city_entry";
-			entry = destination_city_entry;
-			if (entry.text.collate("") == 0) {
-				throw new ApplicationError.EMPTY_FIELD(element);
-			}
-			destination.city = entry.text;
+			destination.name = get_entry_text(destination_name_entry,
+			                                  "destination_name_entry");
+			destination.street = get_entry_text(destination_street_entry,
+			                                    "destination_street_entry");
+			destination.city = get_entry_text(destination_city_entry,
+			                                  "destination_city_entry");
 
 			return destination;
+		}
+
+
 		}
 
 		private Table read_goods() throws ApplicationError.EMPTY_FIELD {
