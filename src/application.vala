@@ -356,7 +356,7 @@ namespace DDTBuilder {
 			reference_entry = new Gtk.Entry();
 			description_entry = new Gtk.Entry();
 			unit_entry = new Gtk.Entry();
-			quantity_spinbutton = new Gtk.SpinButton.with_range(0.0,
+			quantity_spinbutton = new Gtk.SpinButton.with_range(1.0,
 			                                                    999.0,
 			                                                    1.0);
 
