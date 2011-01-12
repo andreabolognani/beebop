@@ -297,6 +297,22 @@ namespace DDTBuilder {
 				y += offset;
 			}
 
+			/* Create closing row */
+			row = new Row();
+			row.data = {"*****",
+			            "*****",
+			            "********************",
+			            "*****",
+		                "*****"};
+
+			offset = draw_row(row,
+			                  sizes,
+			                  x,
+			                  y,
+			                  width,
+			                  height);
+			y += offset;
+
 			return y;
 		}
 
