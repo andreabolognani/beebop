@@ -47,6 +47,13 @@ namespace DDTBuilder {
 		private Gtk.Entry destination_city_entry;
 		private Gtk.CheckButton send_to_recipient_checkbutton;
 
+		private Gtk.SpinButton document_number_spinbutton;
+		private Gtk.Entry document_date_entry;
+		private Gtk.Entry document_reason_entry;
+		private Gtk.Entry document_appearance_entry;
+		private Gtk.SpinButton document_units_spinbutton;
+		private Gtk.Entry document_weight_entry;
+
 		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
 		private Gtk.Button add_button;
@@ -86,150 +93,68 @@ namespace DDTBuilder {
 				 * an error and quit the application */
 				try {
 
-					element = "window";
-					window = ui.get_object(element)
+					window = get_widget("window")
 					         as Gtk.Window;
-					if (window == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "print_button";
-					print_button = ui.get_object(element)
-					               as Gtk.Button;
-					if (print_button == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "recipient_name_entry";
-					recipient_name_entry = ui.get_object(element)
+					recipient_name_entry = get_widget("recipient_name_entry")
 					                       as Gtk.Entry;
-					if (recipient_name_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "recipient_street_entry";
-					recipient_street_entry = ui.get_object(element)
+					recipient_street_entry = get_widget("recipient_street_entry")
 					                         as Gtk.Entry;
-					if (recipient_street_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "recipient_city_entry";
-					recipient_city_entry = ui.get_object(element)
+					recipient_city_entry = get_widget("recipient_city_entry")
 					                       as Gtk.Entry;
-					if (recipient_city_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "recipient_vatin_entry";
-					recipient_vatin_entry = ui.get_object(element)
+					recipient_vatin_entry = get_widget("recipient_vatin_entry")
 					                        as Gtk.Entry;
-					if (recipient_vatin_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "recipient_client_code_entry";
-					recipient_client_code_entry = ui.get_object(element)
+					recipient_client_code_entry = get_widget("recipient_client_code_entry")
 					                              as Gtk.Entry;
-					if (recipient_client_code_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "destination_name_entry";
-					destination_name_entry = ui.get_object(element)
+					destination_name_entry = get_widget("destination_name_entry")
 					                         as Gtk.Entry;
-					if (destination_name_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "destination_street_entry";
-					destination_street_entry = ui.get_object(element)
+					destination_street_entry = get_widget("destination_street_entry")
 					                           as Gtk.Entry;
-					if (destination_street_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "destination_city_entry";
-					destination_city_entry = ui.get_object(element)
+					destination_city_entry = get_widget("destination_city_entry")
 					                         as Gtk.Entry;
-					if (destination_city_entry == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "send_to_recipient_checkbutton";
-					send_to_recipient_checkbutton = ui.get_object(element)
+					send_to_recipient_checkbutton = get_widget("send_to_recipient_checkbutton")
 					                                as Gtk.CheckButton;
-					if (send_to_recipient_checkbutton == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "table_viewport";
-					table_viewport = ui.get_object(element)
+					document_number_spinbutton = get_widget("document_number_spinbutton")
+					                             as Gtk.SpinButton;
+					document_date_entry = get_widget("document_date_entry")
+					                      as Gtk.Entry;
+					document_reason_entry = get_widget("document_reason_entry")
+					                        as Gtk.Entry;
+					document_appearance_entry = get_widget("document_appearance_entry")
+					                            as Gtk.Entry;
+					document_units_spinbutton = get_widget("document_units_spinbutton")
+					                            as Gtk.SpinButton;
+					document_weight_entry = get_widget("document_weight_entry")
+					                        as Gtk.Entry;
+					table_viewport = get_widget("table_viewport")
 					                 as Gtk.Viewport;
-					if (table_viewport == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "goods_table";
-					goods_table = ui.get_object(element)
+					goods_table = get_widget("goods_table")
 					              as Gtk.Table;
-					if (goods_table == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "code_label";
-					label = ui.get_object(element)
-					        as Gtk.Label;
-					if (label == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-					table_labels.append(label);
-
-					element = "reference_label";
-					label = ui.get_object(element)
-					        as Gtk.Label;
-					if (label == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-					table_labels.append(label);
-
-					element = "description_label";
-					label = ui.get_object(element)
-					        as Gtk.Label;
-					if (label == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-					table_labels.append(label);
-
-					element = "unit_label";
-					label = ui.get_object(element)
-					        as Gtk.Label;
-					if (label == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-					table_labels.append(label);
-
-					element = "quantity_label";
-					label = ui.get_object(element)
-					        as Gtk.Label;
-					if (label == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-					table_labels.append(label);
-
-					element = "add_button";
-					add_button = ui.get_object(element)
+					add_button = get_widget("add_button")
 					             as Gtk.Button;
-					if (add_button == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
-
-					element = "remove_button";
-					remove_button = ui.get_object(element)
+					remove_button = get_widget("remove_button")
 					                as Gtk.Button;
-					if (remove_button == null) {
-						throw new ApplicationError.OBJECT_NOT_FOUND(element);
-					}
+					print_button = get_widget("print_button")
+					               as Gtk.Button;
+
+					label = get_widget("code_label")
+					        as Gtk.Label;
+					table_labels.append(label);
+
+					label = get_widget("reference_label")
+					        as Gtk.Label;
+					table_labels.append(label);
+
+					label = get_widget("description_label")
+					        as Gtk.Label;
+					table_labels.append(label);
+
+					label = get_widget("unit_label")
+					        as Gtk.Label;
+					table_labels.append(label);
+
+					label = get_widget("quantity_label")
+					        as Gtk.Label;
+					table_labels.append(label);
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
@@ -266,6 +191,23 @@ namespace DDTBuilder {
 				/* Create a first row of widgets */
 				add_row();
 			}
+		}
+
+		/* Get a widget out of the UI, checking it exists */
+		private Gtk.Widget get_widget(string name) throws ApplicationError.OBJECT_NOT_FOUND {
+
+			Gtk.Widget widget;
+
+			/* Look up the widget */
+			widget = ui.get_object(name)
+			         as Gtk.Widget;
+
+			/* If the widget is not there, throw an exception */
+			if (widget == null) {
+				throw new ApplicationError.OBJECT_NOT_FOUND(name);
+			}
+
+			return widget;
 		}
 
 		public void show_all() {

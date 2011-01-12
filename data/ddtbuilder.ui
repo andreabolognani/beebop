@@ -340,19 +340,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry12">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">&#x25CF;</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="y_options"></property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="entry11">
+                          <object class="GtkEntry" id="document_reason_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -366,7 +354,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry19">
+                          <object class="GtkEntry" id="document_appearance_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -416,7 +404,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry6">
+                          <object class="GtkEntry" id="document_weight_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -442,7 +430,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton1">
+                          <object class="GtkSpinButton" id="document_units_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -455,7 +443,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry5">
+                          <object class="GtkEntry" id="document_date_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -465,6 +453,17 @@
                             <property name="right_attach">2</property>
                             <property name="top_attach">1</property>
                             <property name="bottom_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="document_number_spinbutton">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">&#x25CF;</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
                           </packing>
                         </child>
                       </object>
