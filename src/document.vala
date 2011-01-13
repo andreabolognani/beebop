@@ -261,6 +261,7 @@ namespace DDTBuilder {
 			double offset;
 			int len;
 			int i;
+			bool draw_headings;
 
 			/* XXX Use a temporary variable here because Vala doesn't
 			 * seem to like direct access to an array property */
@@ -292,20 +293,32 @@ namespace DDTBuilder {
 				}
 			}
 
+			draw_headings = false;
+
 			/* Create headings row */
 			row = new Row(len);
 			for (i = 0; i < len; i++) {
 
 				row.cells[i].title = table.headings[i];
+
+				/* If at least one of the headings is not empty,
+				 * draw all headings */
+				if (table.headings[i].collate("") != 0) {
+
+					draw_headings = true;
+				}
 			}
 
-			offset = draw_row(row,
-			                  sizes,
-			                  x,
-			                  y,
-			                  width,
-			                  height);
-			y += offset;
+			if (draw_headings) {
+
+				offset = draw_row(row,
+				                  sizes,
+				                  x,
+				                  y,
+				                  width,
+				                  height);
+				y += offset;
+			}
 
 			/* Get the number of data rows */
 			len = (int) table.rows.length();
