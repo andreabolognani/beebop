@@ -588,23 +588,23 @@ namespace DDTBuilder {
 
 				/* Code */
 				entry = widget_row.widgets[0] as Gtk.Entry;
-				row.data[0] = entry.text;
+				row.cells[0].text = entry.text;
 
 				/* Reference */
 				entry = widget_row.widgets[1] as Gtk.Entry;
-				row.data[1] = entry.text;
+				row.cells[1].text = entry.text;
 
 				/* Description */
 				entry = widget_row.widgets[2] as Gtk.Entry;
-				row.data[2] = entry.text;
+				row.cells[2].text = entry.text;
 
 				/* Unit of measurement */
 				entry = widget_row.widgets[3] as Gtk.Entry;
-				row.data[3] = entry.text;
+				row.cells[3].text = entry.text;
 
 				/* Quantity */
 				spin_button = widget_row.widgets[4] as Gtk.SpinButton;
-				row.data[4] = "%d".printf(spin_button.get_value_as_int());
+				row.cells[4].text = "%d".printf(spin_button.get_value_as_int());
 
 				goods.add_row(row);
 			}

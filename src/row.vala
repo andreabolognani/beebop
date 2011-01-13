@@ -22,19 +22,19 @@ namespace DDTBuilder {
 
 	public class Row : GLib.Object {
 
-		private string[] _data;
+		private Cell[] _cells;
 
 		public int columns { get; construct set; }
 
-		public string[] data {
+		public Cell[] cells {
 
 			get {
-				return _data;
+				return _cells;
 			}
 
 			set {
 				return_if_fail (value.length == columns);
-				_data = value;
+				_cells = value;
 			}
 		}
 
@@ -42,9 +42,9 @@ namespace DDTBuilder {
 
 			int i;
 
-			data = new string[columns];
+			cells = new Cell[columns];
 			for (i = 0; i < columns; i++) {
-				data[i] = "";
+				cells[i] = new Cell();
 			}
 		}
 

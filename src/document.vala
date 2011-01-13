@@ -64,7 +64,7 @@ namespace DDTBuilder {
 			goods.sizes = {70.0,
 			               100.0,
 			               -1.0,   /* Fill all free space */
-			               40.0,
+			               50.0,
 			               100.0};
 			goods.headings = {_("Code"),
 			                  _("Reference"),
@@ -291,12 +291,11 @@ namespace DDTBuilder {
 			}
 
 			/* Create headings row */
-			row = new Row(5);
-			row.data = {"<b>" + table.headings[0] + "</b>",
-			            "<b>" + table.headings[1] + "</b>",
-			            "<b>" + table.headings[2] + "</b>",
-			            "<b>" + table.headings[3] + "</b>",
-			            "<b>" + table.headings[4] + "</b>"};
+			row = new Row(len);
+			for (i = 0; i < len; i++) {
+
+				row.cells[i].title = table.headings[i];
+			}
 
 			offset = draw_row(row,
 			                  sizes,
@@ -324,13 +323,14 @@ namespace DDTBuilder {
 				y += offset;
 			}
 
+			len = tmp.length;
+
 			/* Create closing row */
-			row = new Row(5);
-			row.data = {"*****",
-			            "*****",
-			            "********************",
-			            "*****",
-		                "*****"};
+			row = new Row(len);
+			for (i = 0; i < len; i++) {
+
+				row.cells[i].text = "*****";
+			}
 
 			offset = draw_row(row,
 			                  sizes,
@@ -373,7 +373,7 @@ namespace DDTBuilder {
 				text_x = box_x + BOX_PADDING_X;
 				text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
-				offset = draw_text(row.data[i],
+				offset = draw_cell(row.cells[i],
 				                   text_x,
 				                   text_y,
 				                   text_width,
