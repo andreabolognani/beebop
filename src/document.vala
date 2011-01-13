@@ -79,6 +79,7 @@ namespace DDTBuilder {
 
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
+			Table table;
 			Row row;
 			string contents;
 			size_t contents_length;
@@ -153,6 +154,36 @@ namespace DDTBuilder {
 			box_x = 10.0;
 			box_y += offset + 10.0;
 			offset = draw_table(goods,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+			/* Create a table to store document info */
+			table = new Table(4);
+			table.sizes = {AUTOMATIC_SIZE,
+			               150.0,
+			               150.0,
+			               150.0};
+
+			row = new Row(4);
+			row.cells[0].title = _("Document type");
+			row.cells[0].text = _("BOP");
+			row.cells[1].title = _("Number");
+			row.cells[1].text = number;
+			row.cells[2].title = _("Date");
+			row.cells[2].text = date;
+			row.cells[3].title = _("Page");
+			row.cells[3].text = "1";
+
+			table.add_row(row);
+
+			/* Draw document info */
+			box_width = dimensions.width - (2 * PAGE_BORDER_X);
+			box_height = AUTOMATIC_SIZE;
+			box_x = PAGE_BORDER_X;
+			box_y += offset + 10.0;
+			offset = draw_table(table,
 			                    box_x,
 			                    box_y,
 			                    box_width,
