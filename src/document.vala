@@ -156,22 +156,12 @@ namespace DDTBuilder {
 			return OUT_FILE;
 		}
 
-		private double draw_text(string title, string text, double x, double y, double width, double height) {
+		private double draw_text(string text, double x, double y, double width, double height) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
-			string contents;
 			int text_width;
 			int text_height;
-
-			contents = "";
-
-			/* Add the title, in bold, on a line before the text */
-			if (title.collate("") != 0) {
-				contents += "<b>" + title + "</b>\n";
-			}
-
-			contents += text;
 
 			/* Set text properties */
 			font_description = new Pango.FontDescription();
@@ -185,7 +175,7 @@ namespace DDTBuilder {
 			/* Set layout properties */
 			layout.set_font_description(font_description);
 			layout.set_width((int) (width * Pango.SCALE));
-			layout.set_markup(contents, -1);
+			layout.set_markup(text, -1);
 
 			/* Show contents */
 			Pango.cairo_show_layout(context, layout);
@@ -195,10 +185,26 @@ namespace DDTBuilder {
 			return (text_height / Pango.SCALE);
 		}
 
-		private double draw_boxed_text(string title, string text, double x, double y, double width, double height) {
+		private double draw_cell(Cell cell, double x, double y, double width, double height) {
 
-			height = draw_text(title,
-			                   text,
+			string text;
+
+			text = "";
+
+			/* Add the title before the text, if a title is set */
+			if (cell.title.collate("") != 0) {
+
+				text += "<b>" + cell.title + "</b>";
+
+				/* Start a new line after the title only if there is some text */
+				if (cell.text.collate("") != 0) {
+					text += "\n";
+				}
+			}
+
+			text += cell.text;
+
+			height = draw_text(text,
 			                   x + BOX_PADDING_X,
 			                   y + BOX_PADDING_Y,
 			                   width - (2 * BOX_PADDING_X),
@@ -207,6 +213,18 @@ namespace DDTBuilder {
 			/* Add vertical padding to the text height */
 			height += (2 * BOX_PADDING_Y);
 
+			return height;
+		}
+
+		private double draw_cell_with_border(Cell cell, double x, double y, double width, double height) {
+
+			height = draw_cell(cell,
+			                   x,
+			                   y,
+			                   width,
+			                   height);
+
+			/* Draw the border */
 			context.rectangle(x, y, width, height);
 			context.stroke();
 
@@ -215,18 +233,20 @@ namespace DDTBuilder {
 
 		private double draw_company_address(string title, CompanyInfo company, double x, double y, double width, double height) {
 
-			string text;
+			Cell cell;
 
-			text = company.name + "\n";
-			text += company.street + "\n";
-			text += company.city;
+			cell = new Cell();
 
-			height = draw_boxed_text(title,
-			                         text,
-			                         x,
-			                         y,
-			                         width,
-			                         height);
+			cell.title = title;
+			cell.text = company.name + "\n";
+			cell.text += company.street + "\n";
+			cell.text += company.city;
+
+			height = draw_cell_with_border(cell,
+			                               x,
+			                               y,
+			                               width,
+			                               height);
 
 			return height;
 		}
@@ -353,8 +373,7 @@ namespace DDTBuilder {
 				text_x = box_x + BOX_PADDING_X;
 				text_width = (int) (box_width - (2 * BOX_PADDING_X));
 
-				offset = draw_text("",
-				                   row.data[i],
+				offset = draw_text(row.data[i],
 				                   text_x,
 				                   text_y,
 				                   text_width,

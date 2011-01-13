@@ -27,6 +27,7 @@ bin_PROGRAMS = ddtbuilder
 ddtbuilder_SOURCES = \
 	companyinfo.vala \
 	goodsinfo.vala \
+	cell.vala \
 	row.vala \
 	table.vala \
 	document.vala \
