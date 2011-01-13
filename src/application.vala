@@ -177,6 +177,15 @@ namespace DDTBuilder {
 
 			if (error_message == null) {
 
+				/* Reset units SpinButton value */
+				goods_units_spinbutton.value = goods_units_spinbutton.adjustment.lower;
+
+				/* Create a first row of widgets */
+				add_row();
+			}
+
+			if (error_message == null) {
+
 				/* Add some dummy data */
 				recipient_name_entry.text = "Random Company";
 				recipient_street_entry.text = "Fleet Street, 15";
@@ -192,9 +201,6 @@ namespace DDTBuilder {
 				name_changed();
 				street_changed();
 				city_changed();
-
-				/* Create a first row of widgets */
-				add_row();
 			}
 		}
 
