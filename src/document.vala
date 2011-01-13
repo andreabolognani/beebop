@@ -311,6 +311,7 @@ namespace DDTBuilder {
 			len = tmp.length;
 			sizes = new double[len];
 			offset = 0.0;
+			height = 0.0;
 
 			for (i = 0; i < len; i++) {
 
@@ -359,6 +360,7 @@ namespace DDTBuilder {
 				                  width,
 				                  height);
 				y += offset;
+				height += offset;
 			}
 
 			/* Get the number of data rows */
@@ -377,9 +379,10 @@ namespace DDTBuilder {
 
 				/* Update the vertical offset */
 				y += offset;
+				height += offset;
 			}
 
-			return y;
+			return height;
 		}
 
 		private double draw_row(Row row, double[] sizes, double x, double y, double width, double height) {
