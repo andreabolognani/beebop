@@ -349,10 +349,6 @@ namespace DDTBuilder {
 			double box_y;
 			double box_width;
 			double box_height;
-			double text_x;
-			double text_y;
-			int text_width;
-			int text_height;
 			double offset;
 			int len;
 			int i;
@@ -361,8 +357,6 @@ namespace DDTBuilder {
 
 			box_y = y;
 			box_height = -1.0;
-			text_y = box_y + BOX_PADDING_Y;
-			text_height = -1;
 
 			box_x = x;
 
@@ -370,22 +364,16 @@ namespace DDTBuilder {
 
 				box_width = sizes[i];
 
-				text_x = box_x + BOX_PADDING_X;
-				text_width = (int) (box_width - (2 * BOX_PADDING_X));
-
 				offset = draw_cell(row.cells[i],
-				                   text_x,
-				                   text_y,
-				                   text_width,
-				                   text_height);
+				                   box_x,
+				                   box_y,
+				                   box_width,
+				                   box_height);
 				box_height = Math.fmax(box_height, offset);
 
 				/* Move to the next column */
 				box_x += box_width;
 			}
-
-			/* Take box vertical padding into account */
-			box_height += (2 * BOX_PADDING_Y);
 
 			/* Draw the borders around all the boxes */
 			for (i = 0; i < len; i++) {
