@@ -182,6 +182,11 @@ namespace DDTBuilder {
 				recipient_street_entry.text = "Fleet Street, 15";
 				recipient_city_entry.text = "London (UK)";
 				recipient_vatin_entry.text = "0830192809";
+				document_number_entry.text = "42/2011";
+				document_date_entry.text = "13/01/2011";
+				document_reason_entry.text = "Replacement";
+				goods_appearance_entry.text = "Box";
+				goods_weight_entry.text = "3.2 Kg";
 
 				/* Sync the form entries */
 				name_changed();
