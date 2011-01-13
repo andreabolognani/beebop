@@ -69,6 +69,8 @@ namespace DDTBuilder {
 		construct {
 
 			Gtk.Label label;
+			Date today;
+			Time now;
 			string element;
 
 			error_message = null;
@@ -177,6 +179,16 @@ namespace DDTBuilder {
 
 			if (error_message == null) {
 
+				now = Time();
+				today = Date();
+
+				/* Get current time and date */
+				today.set_time_val(TimeVal());
+				today.to_time(out now);
+
+				/* Initialize the date field with the current date */
+				document_date_entry.text = now.format("%d/%m/%Y");
+
 				/* Reset units SpinButton value */
 				goods_units_spinbutton.value = goods_units_spinbutton.adjustment.lower;
 
@@ -192,7 +204,6 @@ namespace DDTBuilder {
 				recipient_city_entry.text = "London (UK)";
 				recipient_vatin_entry.text = "0830192809";
 				document_number_entry.text = "42/2011";
-				document_date_entry.text = "13/01/2011";
 				document_reason_entry.text = "Replacement";
 				goods_appearance_entry.text = "Box";
 				goods_weight_entry.text = "3.2 Kg";
