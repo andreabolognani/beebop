@@ -128,7 +128,8 @@ namespace DDTBuilder {
 			                              box_x,
 			                              box_y,
 			                              box_width,
-			                              box_height);
+			                              box_height,
+			                              true);
 
 			/* Draw the destination's address in a rigth-aligned box,
 			 * just below the one used for the recipient's address */
@@ -138,7 +139,8 @@ namespace DDTBuilder {
 			                              box_x,
 			                              box_y,
 			                              box_width,
-			                              box_height);
+			                              box_height,
+			                              true);
 
 			/* Create a table to store document info */
 			table = new Table(4);
@@ -168,7 +170,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			table = new Table(3);
 			table.sizes = {200.0,
@@ -191,7 +194,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			/* Add a closing row to the goods table */
 			row = new Row(goods.columns);
@@ -207,7 +211,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			/* Create a table to store notes */
 			table = new Table(1);
@@ -225,7 +230,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			/* Create another info table */
 			table = new Table(4);
@@ -252,7 +258,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			/* Create yet another info table */
 			table = new Table(4);
@@ -279,7 +286,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			/* Create a table for signatures */
 			table = new Table(3);
@@ -303,7 +311,8 @@ namespace DDTBuilder {
 			                    box_x,
 			                    box_y,
 			                    box_width,
-			                    box_height);
+			                    box_height,
+			                    true);
 
 			context.show_page();
 
@@ -315,7 +324,7 @@ namespace DDTBuilder {
 			return OUT_FILE;
 		}
 
-		private double draw_text(string text, double x, double y, double width, double height) {
+		private double draw_text(string text, double x, double y, double width, double height, bool really) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -336,15 +345,18 @@ namespace DDTBuilder {
 			layout.set_width((int) (width * Pango.SCALE));
 			layout.set_markup(text, -1);
 
-			/* Show contents */
-			Pango.cairo_show_layout(context, layout);
+			if (really) {
+
+				/* Show contents */
+				Pango.cairo_show_layout(context, layout);
+			}
 
 			layout.get_size(out text_width, out text_height);
 
 			return (text_height / Pango.SCALE);
 		}
 
-		private double draw_cell(Cell cell, double x, double y, double width, double height) {
+		private double draw_cell(Cell cell, double x, double y, double width, double height, bool really) {
 
 			string text;
 
@@ -367,7 +379,8 @@ namespace DDTBuilder {
 			                   x + BOX_PADDING_X,
 			                   y + BOX_PADDING_Y,
 			                   width - (2 * BOX_PADDING_X),
-			                   height);
+			                   height,
+			                   really);
 
 			/* Add vertical padding to the text height */
 			height += (2 * BOX_PADDING_Y);
@@ -375,22 +388,29 @@ namespace DDTBuilder {
 			return height;
 		}
 
-		private double draw_cell_with_border(Cell cell, double x, double y, double width, double height) {
+		private double draw_cell_with_border(Cell cell, double x, double y, double width, double height, bool really) {
 
 			height = draw_cell(cell,
 			                   x,
 			                   y,
 			                   width,
-			                   height);
+			                   height,
+			                   really);
 
-			/* Draw the border */
-			context.rectangle(x, y, width, height);
-			context.stroke();
+			if (really) {
+
+				/* Draw the border */
+				context.rectangle(x,
+				                  y,
+				                  width,
+				                  height);
+				context.stroke();
+			}
 
 			return height;
 		}
 
-		private double draw_company_address(string title, CompanyInfo company, double x, double y, double width, double height) {
+		private double draw_company_address(string title, CompanyInfo company, double x, double y, double width, double height, bool really) {
 
 			Cell cell;
 
@@ -405,12 +425,13 @@ namespace DDTBuilder {
 			                               x,
 			                               y,
 			                               width,
-			                               height);
+			                               height,
+			                               really);
 
 			return height;
 		}
 
-		private double draw_table(Table table, double x, double y, double width, double height) {
+		private double draw_table(Table table, double x, double y, double width, double height, bool really) {
 
 			Row row;
 			double[] tmp;
@@ -474,7 +495,8 @@ namespace DDTBuilder {
 				                  x,
 				                  y,
 				                  width,
-				                  height);
+				                  height,
+				                  really);
 				y += offset;
 				height += offset;
 			}
@@ -491,7 +513,8 @@ namespace DDTBuilder {
 				                  x,
 				                  y,
 				                  width,
-				                  height);
+				                  height,
+				                  really);
 
 				/* Update the vertical offset */
 				y += offset;
@@ -501,7 +524,7 @@ namespace DDTBuilder {
 			return height;
 		}
 
-		private double draw_row(Row row, double[] sizes, double x, double y, double width, double height) {
+		private double draw_row(Row row, double[] sizes, double x, double y, double width, double height, bool really) {
 
 			double box_x;
 			double box_y;
@@ -526,7 +549,9 @@ namespace DDTBuilder {
 				                   box_x,
 				                   box_y,
 				                   box_width,
-				                   box_height);
+				                   box_height,
+				                   really);
+
 				box_height = Math.fmax(box_height, offset);
 
 				/* Move to the next column */
@@ -538,8 +563,14 @@ namespace DDTBuilder {
 
 				box_width = sizes[i];
 
-				context.rectangle(x, y, box_width, box_height);
-				context.stroke();
+				if (really) {
+
+					context.rectangle(x,
+					                  y,
+					                  box_width,
+					                  box_height);
+					context.stroke();
+				}
 
 				/* Move to the next column */
 				x += box_width;
