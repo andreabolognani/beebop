@@ -140,25 +140,6 @@ namespace DDTBuilder {
 			                              box_width,
 			                              box_height);
 
-			/* Add a closing row to the goods table */
-			row = new Row(goods.columns);
-			for (i = 0; i < goods.columns; i++) {
-
-				row.cells[i].text = "*****";
-			}
-			goods.add_row(row);
-
-			/* Draw the goods table */
-			box_width = dimensions.width - (2 * PAGE_BORDER_X);
-			box_height = AUTOMATIC_SIZE;
-			box_x = 10.0;
-			box_y += offset + 10.0;
-			offset = draw_table(goods,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height);
-
 			/* Create a table to store document info */
 			table = new Table(4);
 			table.sizes = {AUTOMATIC_SIZE,
@@ -178,12 +159,53 @@ namespace DDTBuilder {
 
 			table.add_row(row);
 
-			/* Draw document info */
+			/* Draw first part of document info */
 			box_width = dimensions.width - (2 * PAGE_BORDER_X);
 			box_height = AUTOMATIC_SIZE;
-			box_x = PAGE_BORDER_X;
+			box_x = 10.0;
 			box_y += offset + 10.0;
 			offset = draw_table(table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+			table = new Table(3);
+			table.sizes = {200.0,
+			               AUTOMATIC_SIZE,
+			               150.0};
+
+			row = new Row(3);
+			row.cells[0].title = _("Client code");
+			row.cells[0].text = recipient.client_code;
+			row.cells[1].title = _("VATIN");
+			row.cells[1].text = recipient.vatin;
+			row.cells[2].title = _("Porto");
+			row.cells[2].text = "Franco";
+
+			table.add_row(row);
+
+			/* Draw second part of document info */
+			box_y += offset;
+			offset = draw_table(table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+
+
+			/* Add a closing row to the goods table */
+			row = new Row(goods.columns);
+			for (i = 0; i < goods.columns; i++) {
+
+				row.cells[i].text = "*****";
+			}
+			goods.add_row(row);
+
+			/* Draw the goods table */
+			box_y += offset + 10.0;
+			offset = draw_table(goods,
 			                    box_x,
 			                    box_y,
 			                    box_width,
