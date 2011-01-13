@@ -23,6 +23,8 @@ using Rsvg;
 
 namespace DDTBuilder {
 
+	public const double AUTOMATIC_SIZE = -1.0;
+
 	public class Document : GLib.Object {
 
 		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
@@ -63,7 +65,7 @@ namespace DDTBuilder {
 			/* Set size and heading for each column */
 			goods.sizes = {70.0,
 			               100.0,
-			               -1.0,   /* Fill all free space */
+			               AUTOMATIC_SIZE,   /* Fill all free space */
 			               50.0,
 			               100.0};
 			goods.headings = {_("Code"),
@@ -115,7 +117,7 @@ namespace DDTBuilder {
 
 			/* Draw the recipient's address in a right-aligned box */
 			box_width = 350.0;
-			box_height = -1.0;
+			box_height = AUTOMATIC_SIZE;
 			box_x = dimensions.width - PAGE_BORDER_X - box_width;
 			box_y = PAGE_BORDER_Y;
 			offset = draw_company_address(_("Recipient"),
@@ -137,7 +139,7 @@ namespace DDTBuilder {
 
 			/* Draw the goods table */
 			box_width = dimensions.width - (2 * PAGE_BORDER_X);
-			box_height = -1;
+			box_height = AUTOMATIC_SIZE;
 			box_x = 10.0;
 			box_y += offset + 10.0;
 			offset = draw_table(goods,
@@ -356,7 +358,7 @@ namespace DDTBuilder {
 			len = sizes.length;
 
 			box_y = y;
-			box_height = -1.0;
+			box_height = AUTOMATIC_SIZE;
 
 			box_x = x;
 
