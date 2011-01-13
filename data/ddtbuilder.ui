@@ -473,7 +473,7 @@
                 <child type="label">
                   <object class="GtkLabel" id="label17">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Document</property>
+                    <property name="label" translatable="yes">Document &amp; goods</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -492,157 +492,82 @@
           </packing>
         </child>
         <child>
-          <object class="GtkFrame" id="frame4">
+          <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="height_request">100</property>
             <property name="visible">True</property>
-            <property name="label_xalign">0</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">never</property>
+            <property name="window_placement_set">True</property>
             <child>
-              <object class="GtkAlignment" id="alignment1">
+              <object class="GtkViewport" id="table_viewport">
                 <property name="visible">True</property>
-                <property name="top_padding">5</property>
-                <property name="bottom_padding">5</property>
-                <property name="left_padding">10</property>
-                <property name="right_padding">5</property>
+                <property name="resize_mode">queue</property>
                 <child>
-                  <object class="GtkVBox" id="vbox2">
+                  <object class="GtkTable" id="goods_table">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">5</property>
+                    <property name="border_width">5</property>
+                    <property name="n_columns">5</property>
+                    <property name="column_spacing">5</property>
+                    <property name="row_spacing">2</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="scrolledwindow1">
+                      <object class="GtkLabel" id="code_label">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">never</property>
-                        <property name="vscrollbar_policy">automatic</property>
-                        <property name="window_placement_set">True</property>
-                        <child>
-                          <object class="GtkViewport" id="table_viewport">
-                            <property name="visible">True</property>
-                            <property name="resize_mode">queue</property>
-                            <child>
-                              <object class="GtkTable" id="goods_table">
-                                <property name="visible">True</property>
-                                <property name="border_width">5</property>
-                                <property name="n_columns">5</property>
-                                <property name="column_spacing">5</property>
-                                <property name="row_spacing">2</property>
-                                <child>
-                                  <object class="GtkLabel" id="code_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Code</property>
-                                  </object>
-                                  <packing>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="description_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Description</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">2</property>
-                                    <property name="right_attach">3</property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="reference_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Reference</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="unit_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Unit of measurement</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">3</property>
-                                    <property name="right_attach">4</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="quantity_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Quantity</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">4</property>
-                                    <property name="right_attach">5</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
+                        <property name="label" translatable="yes">Code</property>
                       </object>
                       <packing>
-                        <property name="position">0</property>
+                        <property name="x_options"></property>
+                        <property name="y_options"></property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkHButtonBox" id="table_buttonbox">
+                      <object class="GtkLabel" id="description_label">
                         <property name="visible">True</property>
-                        <property name="spacing">5</property>
-                        <property name="layout_style">end</property>
-                        <child>
-                          <object class="GtkButton" id="add_button">
-                            <property name="label">gtk-add</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="use_stock">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="remove_button">
-                            <property name="label">gtk-remove</property>
-                            <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="use_stock">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
+                        <property name="label" translatable="yes">Description</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">1</property>
+                        <property name="left_attach">2</property>
+                        <property name="right_attach">3</property>
+                        <property name="y_options"></property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="reference_label">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Reference</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="x_options"></property>
+                        <property name="y_options"></property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="unit_label">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Unit of measurement</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="right_attach">4</property>
+                        <property name="x_options"></property>
+                        <property name="y_options"></property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="quantity_label">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Quantity</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">4</property>
+                        <property name="right_attach">5</property>
+                        <property name="x_options"></property>
+                        <property name="y_options"></property>
                       </packing>
                     </child>
                   </object>
                 </child>
-              </object>
-            </child>
-            <child type="label">
-              <object class="GtkLabel" id="label14">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Goods</property>
-                <attributes>
-                  <attribute name="weight" value="bold"/>
-                </attributes>
               </object>
             </child>
           </object>
@@ -651,22 +576,69 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHButtonBox" id="hbuttonbox2">
+          <object class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="print_button">
-                <property name="label">gtk-print</property>
+              <object class="GtkHButtonBox" id="hbuttonbox1">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="spacing">5</property>
+                <property name="layout_style">start</property>
+                <child>
+                  <object class="GtkButton" id="add_button">
+                    <property name="label">gtk-add</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="remove_button">
+                    <property name="label">gtk-remove</property>
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="pack_type">end</property>
                 <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHButtonBox" id="hbuttonbox2">
+                <property name="visible">True</property>
+                <property name="spacing">5</property>
+                <property name="layout_style">end</property>
+                <child>
+                  <object class="GtkButton" id="print_button">
+                    <property name="label">gtk-print</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>
