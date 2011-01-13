@@ -23,9 +23,9 @@ namespace DDTBuilder {
 
 	public class WidgetRow : GLib.Object {
 
-		private int columns = 5;
 		private Gtk.Widget[] _widgets;
 
+		public int columns { get; construct set; }
 		public Gtk.Widget[] widgets {
 
 			get {
@@ -33,9 +33,8 @@ namespace DDTBuilder {
 			}
 
 			set {
-				if (value.length == columns) {
-					_widgets = value;
-				}
+				return_if_fail(value.length == columns);
+				_widgets = value;
 			}
 		}
 
@@ -47,6 +46,11 @@ namespace DDTBuilder {
 			for (i = 0; i < columns; i++) {
 				widgets[i] = null;
 			}
+		}
+
+		public WidgetRow(int columns) {
+
+			GLib.Object(columns: columns);
 		}
 	}
 }

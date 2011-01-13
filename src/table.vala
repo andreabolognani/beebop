@@ -22,10 +22,10 @@ namespace DDTBuilder {
 
 	public class Table : GLib.Object {
 
-		private int columns = 5;
 		private double[] _sizes;
 		private string[] _headings;
 
+		public int columns { get; construct set; }
 		public unowned List<Row> rows { get; set; }
 
 		public double[] sizes {
@@ -35,9 +35,8 @@ namespace DDTBuilder {
 			}
 
 			set {
-				if (value.length == columns) {
-					_sizes = value;
-				}
+				return_if_fail(value.length == columns);
+				_sizes = value;
 			}
 		}
 
@@ -48,9 +47,8 @@ namespace DDTBuilder {
 			}
 
 			set {
-				if (value.length == columns) {
-					_headings = value;
-				}
+				return_if_fail(value.length == columns);
+				_headings = value;
 			}
 		}
 
@@ -69,6 +67,11 @@ namespace DDTBuilder {
 			}
 
 			rows = new List<Row>();
+		}
+
+		public Table(int columns) {
+
+			GLib.Object(columns: columns);
 		}
 
 		public void add_row(Row row) {

@@ -58,7 +58,7 @@ namespace DDTBuilder {
 			destination = new CompanyInfo();
 			goods_info = new GoodsInfo();
 
-			goods = new Table();
+			goods = new Table(5);
 
 			/* Set size and heading for each column */
 			goods.sizes = {70.0,
@@ -271,7 +271,7 @@ namespace DDTBuilder {
 			}
 
 			/* Create headings row */
-			row = new Row();
+			row = new Row(5);
 			row.data = {"<b>" + table.headings[0] + "</b>",
 			            "<b>" + table.headings[1] + "</b>",
 			            "<b>" + table.headings[2] + "</b>",
@@ -305,7 +305,7 @@ namespace DDTBuilder {
 			}
 
 			/* Create closing row */
-			row = new Row();
+			row = new Row(5);
 			row.data = {"*****",
 			            "*****",
 			            "********************",

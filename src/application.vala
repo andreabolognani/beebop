@@ -318,7 +318,7 @@ namespace DDTBuilder {
 			                                                    1.0);
 
 			/* Keep track of the widgets */
-			row = new WidgetRow();
+			row = new WidgetRow(5);
 			row.widgets = {code_entry,
 			               reference_entry,
 			               description_entry,
@@ -583,7 +583,7 @@ namespace DDTBuilder {
 			/* Read the table from the bottom of the stack to the top */
 			for (i = len - 1; i >= 0; i--) {
 
-				row = new Row();
+				row = new Row(5);
 				widget_row = table_widgets.nth_data(i);
 
 				/* Code */
