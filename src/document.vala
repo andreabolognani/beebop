@@ -79,6 +79,7 @@ namespace DDTBuilder {
 
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
+			Row row;
 			string contents;
 			size_t contents_length;
 			double box_x;
@@ -86,6 +87,7 @@ namespace DDTBuilder {
 			double box_width;
 			double box_height;
 			double offset;
+			int i;
 
 			try {
 
@@ -136,6 +138,14 @@ namespace DDTBuilder {
 			                              box_y,
 			                              box_width,
 			                              box_height);
+
+			/* Add a closing row to the goods table */
+			row = new Row(5);
+			for (i = 0; i < 5; i++) {
+
+				row.cells[i].text = "*****";
+			}
+			goods.add_row(row);
 
 			/* Draw the goods table */
 			box_width = dimensions.width - (2 * PAGE_BORDER_X);
@@ -337,23 +347,6 @@ namespace DDTBuilder {
 				/* Update the vertical offset */
 				y += offset;
 			}
-
-			len = tmp.length;
-
-			/* Create closing row */
-			row = new Row(len);
-			for (i = 0; i < len; i++) {
-
-				row.cells[i].text = "*****";
-			}
-
-			offset = draw_row(row,
-			                  sizes,
-			                  x,
-			                  y,
-			                  width,
-			                  height);
-			y += offset;
 
 			return y;
 		}
