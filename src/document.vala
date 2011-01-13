@@ -147,7 +147,7 @@ namespace DDTBuilder {
 			               150.0,
 			               150.0};
 
-			row = new Row(4);
+			row = new Row(table.columns);
 			row.cells[0].title = _("Document type");
 			row.cells[0].text = _("BOP");
 			row.cells[1].title = _("Number");
@@ -175,7 +175,7 @@ namespace DDTBuilder {
 			               AUTOMATIC_SIZE,
 			               150.0};
 
-			row = new Row(3);
+			row = new Row(table.columns);
 			row.cells[0].title = _("Client code");
 			row.cells[0].text = recipient.client_code;
 			row.cells[1].title = _("VATIN");
@@ -193,8 +193,6 @@ namespace DDTBuilder {
 			                    box_width,
 			                    box_height);
 
-
-
 			/* Add a closing row to the goods table */
 			row = new Row(goods.columns);
 			for (i = 0; i < goods.columns; i++) {
@@ -206,6 +204,102 @@ namespace DDTBuilder {
 			/* Draw the goods table */
 			box_y += offset + 10.0;
 			offset = draw_table(goods,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+			/* Create a table to store notes */
+			table = new Table(1);
+			table.sizes = {AUTOMATIC_SIZE};
+
+			row = new Row(table.columns);
+			row.cells[0].title = _("Notes");
+			row.cells[0].text = "\n";
+
+			table.add_row(row);
+
+			/* Draw the notes table */
+			box_y += offset + 10.0;
+			offset = draw_table(table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+			/* Create another info table */
+			table = new Table(4);
+			table.sizes = {200.0,
+			               150.0,
+			               AUTOMATIC_SIZE,
+			               150.0};
+
+			row = new Row(table.columns);
+			row.cells[0].title = _("Reason");
+			row.cells[0].text = reason;
+			row.cells[1].title = _("Trasporto a mezzo");
+			row.cells[1].text = _("Sender");
+			row.cells[2].title = _("Outside appearance");
+			row.cells[2].text = goods_info.appearance;
+			row.cells[3].title = _("Vettore");
+			row.cells[3].text = "SDA";
+
+			table.add_row(row);
+
+			/* Draw the info table */
+			box_y += offset;
+			offset = draw_table(table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+			/* Create yet another info table */
+			table = new Table(4);
+			table.sizes = {200.0,
+			               200.0,
+			               AUTOMATIC_SIZE,
+			               150.0};
+
+			row = new Row(table.columns);
+			row.cells[0].title = _("Data e ora inizio trasporto");
+			row.cells[0].text = " ";
+			row.cells[1].title = _("Data e ora fine trasporto");
+			row.cells[1].text = " ";
+			row.cells[2].title = _("Number of units");
+			row.cells[2].text = goods_info.units;
+			row.cells[3].title = _("Weight");
+			row.cells[3].text = goods_info.weight;
+
+			table.add_row(row);
+
+			/* Draw yet another info table */
+			box_y += offset;
+			offset = draw_table(table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height);
+
+			/* Create a table for signatures */
+			table = new Table(3);
+			table.sizes = {200.0,
+			               200.0,
+			               AUTOMATIC_SIZE};
+
+			row = new Row(table.columns);
+			row.cells[0].title = _("Driver’s signature");
+			row.cells[0].text = " ";
+			row.cells[1].title = _("Firma vettore");
+			row.cells[1].text = " ";
+			row.cells[2].title = _("Recipient’s signature");
+			row.cells[2].text = " ";
+
+			table.add_row(row);
+
+			/* Draw the signature table */
+			box_y += offset;
+			offset = draw_table(table,
 			                    box_x,
 			                    box_y,
 			                    box_width,
