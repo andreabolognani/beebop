@@ -406,7 +406,7 @@ namespace DDTBuilder {
 
 			Gtk.Dialog dialog;
 
-			dialog = new Gtk.MessageDialog(null,
+			dialog = new Gtk.MessageDialog(window,
 			                               0,
 			                               Gtk.MessageType.ERROR,
 			                               Gtk.ButtonsType.CLOSE,
@@ -420,7 +420,7 @@ namespace DDTBuilder {
 
 			Gtk.Dialog dialog;
 
-			dialog = new Gtk.MessageDialog(null,
+			dialog = new Gtk.MessageDialog(window,
 			                               0,
 			                               Gtk.MessageType.WARNING,
 			                               Gtk.ButtonsType.CLOSE,
