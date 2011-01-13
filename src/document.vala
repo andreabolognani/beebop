@@ -140,8 +140,8 @@ namespace DDTBuilder {
 			                              box_height);
 
 			/* Add a closing row to the goods table */
-			row = new Row(5);
-			for (i = 0; i < 5; i++) {
+			row = new Row(goods.columns);
+			for (i = 0; i < goods.columns; i++) {
 
 				row.cells[i].text = "*****";
 			}
