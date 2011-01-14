@@ -23,6 +23,10 @@ using Rsvg;
 
 namespace DDTBuilder {
 
+	public errordomain DocumentError {
+		IO
+	}
+
 	public const double AUTOMATIC_SIZE = -1.0;
 
 	public class Document : GLib.Object {
@@ -102,7 +106,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				throw new FileError.FAILED(_("Could not load template file: %s").printf(TEMPLATE_FILE));
+				throw new DocumentError.IO(_("Could not load template file: %s").printf(TEMPLATE_FILE));
 			}
 
 			/* Get template's dimensions */
@@ -349,7 +353,7 @@ namespace DDTBuilder {
 
 			if (context.status() != Cairo.Status.SUCCESS) {
 
-				throw new FileError.FAILED(_("Drawing error."));
+				throw new DocumentError.IO(_("Drawing error."));
 			}
 
 			return OUT_FILE;
