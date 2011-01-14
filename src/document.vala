@@ -80,6 +80,10 @@ namespace DDTBuilder {
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
 			Table table;
+			Table notes_table;
+			Table reason_table;
+			Table date_table;
+			Table signatures_table;
 			Row row;
 			string contents;
 			size_t contents_length;
@@ -215,32 +219,23 @@ namespace DDTBuilder {
 			                    true);
 
 			/* Create a table to store notes */
-			table = new Table(1);
-			table.sizes = {AUTOMATIC_SIZE};
+			notes_table = new Table(1);
+			notes_table.sizes = {AUTOMATIC_SIZE};
 
-			row = new Row(table.columns);
+			row = new Row(notes_table.columns);
 			row.cells[0].title = _("Notes");
 			row.cells[0].text = "\n";
 
-			table.add_row(row);
-
-			/* Draw the notes table */
-			box_y += offset + 10.0;
-			offset = draw_table(table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			notes_table.add_row(row);
 
 			/* Create another info table */
-			table = new Table(4);
-			table.sizes = {200.0,
-			               150.0,
-			               AUTOMATIC_SIZE,
-			               150.0};
+			reason_table = new Table(4);
+			reason_table.sizes = {200.0,
+			                      150.0,
+			                      AUTOMATIC_SIZE,
+			                      150.0};
 
-			row = new Row(table.columns);
+			row = new Row(reason_table.columns);
 			row.cells[0].title = _("Reason");
 			row.cells[0].text = reason;
 			row.cells[1].title = _("Trasporto a mezzo");
@@ -250,25 +245,16 @@ namespace DDTBuilder {
 			row.cells[3].title = _("Vettore");
 			row.cells[3].text = "SDA";
 
-			table.add_row(row);
-
-			/* Draw the info table */
-			box_y += offset;
-			offset = draw_table(table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			reason_table.add_row(row);
 
 			/* Create yet another info table */
-			table = new Table(4);
-			table.sizes = {200.0,
-			               200.0,
-			               AUTOMATIC_SIZE,
-			               150.0};
+			date_table = new Table(4);
+			date_table.sizes = {200.0,
+			                    200.0,
+			                    AUTOMATIC_SIZE,
+			                    150.0};
 
-			row = new Row(table.columns);
+			row = new Row(date_table.columns);
 			row.cells[0].title = _("Data e ora inizio trasporto");
 			row.cells[0].text = " ";
 			row.cells[1].title = _("Data e ora fine trasporto");
@@ -278,24 +264,15 @@ namespace DDTBuilder {
 			row.cells[3].title = _("Weight");
 			row.cells[3].text = goods_info.weight;
 
-			table.add_row(row);
-
-			/* Draw yet another info table */
-			box_y += offset;
-			offset = draw_table(table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			date_table.add_row(row);
 
 			/* Create a table for signatures */
-			table = new Table(3);
-			table.sizes = {200.0,
-			               200.0,
-			               AUTOMATIC_SIZE};
+			signatures_table = new Table(3);
+			signatures_table.sizes = {200.0,
+			                          200.0,
+			                          AUTOMATIC_SIZE};
 
-			row = new Row(table.columns);
+			row = new Row(signatures_table.columns);
 			row.cells[0].title = _("Driver’s signature");
 			row.cells[0].text = " ";
 			row.cells[1].title = _("Firma vettore");
@@ -303,11 +280,65 @@ namespace DDTBuilder {
 			row.cells[2].title = _("Recipient’s signature");
 			row.cells[2].text = " ";
 
-			table.add_row(row);
+			signatures_table.add_row(row);
 
-			/* Draw the signature table */
+			/* Calculate the total sizes of all these info tables */
+			box_x = PAGE_BORDER_X;
+			box_y = PAGE_BORDER_Y;
+			box_width = dimensions.width - (2 * PAGE_BORDER_X);
+			box_height = AUTOMATIC_SIZE;
+			offset = 0.0;
+			offset += draw_table(notes_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     false);
+			offset += draw_table(reason_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     false);
+			offset += draw_table(date_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     false);
+			offset += draw_table(signatures_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     false);
+
+			/* Calculate the correct starting point */
+			box_y = dimensions.height - offset - PAGE_BORDER_Y;
+
+			/* Actually draw the tables */
+			offset = draw_table(notes_table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height,
+			                    true);
 			box_y += offset;
-			offset = draw_table(table,
+			offset = draw_table(reason_table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height,
+			                    true);
+			box_y += offset;
+			offset = draw_table(date_table,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height,
+			                    true);
+			box_y += offset;
+			offset = draw_table(signatures_table,
 			                    box_x,
 			                    box_y,
 			                    box_width,
