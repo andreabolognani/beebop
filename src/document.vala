@@ -24,7 +24,8 @@ using Rsvg;
 namespace DDTBuilder {
 
 	public errordomain DocumentError {
-		IO
+		IO,
+		TOO_MANY_GOODS
 	}
 
 	public const double AUTOMATIC_SIZE = -1.0;
@@ -287,10 +288,7 @@ namespace DDTBuilder {
 			signatures_table.add_row(row);
 
 			/* Calculate the total sizes of all these info tables */
-			box_x = PAGE_BORDER_X;
-			box_y = PAGE_BORDER_Y;
-			box_width = dimensions.width - (2 * PAGE_BORDER_X);
-			box_height = AUTOMATIC_SIZE;
+			box_y += offset + 10.0;
 			offset = 0.0;
 			offset += draw_table(notes_table,
 			                     box_x,
@@ -316,6 +314,16 @@ namespace DDTBuilder {
 			                     box_width,
 			                     box_height,
 			                     false);
+
+			/* Make sure the contents don't overflow the page height.
+			 *
+			 * Future versions will deal with the problem by splitting the goods
+			 * table into several pages; in the meantime, just make sure the
+			 * document can be drawn without overlapping stuff */
+			if (box_y + offset + PAGE_BORDER_Y > dimensions.height) {
+
+				throw new DocumentError.TOO_MANY_GOODS(_("Too many goods. Please remove some."));
+			}
 
 			/* Calculate the correct starting point */
 			box_y = dimensions.height - offset - PAGE_BORDER_Y;
