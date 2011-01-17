@@ -256,8 +256,8 @@ namespace DDTBuilder {
 			row.cells[0].text = " ";
 			row.cells[1].title = _("Data e ora fine trasporto");
 			row.cells[1].text = " ";
-			row.cells[2].title = _("Number of units");
-			row.cells[2].text = goods_info.units;
+			row.cells[2].title = _("Number of parcels");
+			row.cells[2].text = goods_info.parcels;
 			row.cells[3].title = _("Weight");
 			row.cells[3].text = goods_info.weight;
 

@@ -23,13 +23,13 @@ namespace DDTBuilder {
 	public class GoodsInfo : GLib.Object {
 
 		public string appearance { get; set; }
-		public string units { get; set; }
+		public string parcels { get; set; }
 		public string weight { get; set; }
 
 		construct {
 
 			appearance = "";
-			units = "";
+			parcels = "";
 			weight = "";
 		}
 	}

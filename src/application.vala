@@ -50,7 +50,7 @@ namespace DDTBuilder {
 		private Gtk.Entry document_date_entry;
 		private Gtk.Entry document_reason_entry;
 		private Gtk.Entry goods_appearance_entry;
-		private Gtk.SpinButton goods_units_spinbutton;
+		private Gtk.SpinButton goods_parcels_spinbutton;
 		private Gtk.Entry goods_weight_entry;
 
 		private Gtk.Viewport table_viewport;
@@ -124,7 +124,7 @@ namespace DDTBuilder {
 					                        as Gtk.Entry;
 					goods_appearance_entry = get_widget("goods_appearance_entry")
 					                         as Gtk.Entry;
-					goods_units_spinbutton = get_widget("goods_units_spinbutton")
+					goods_parcels_spinbutton = get_widget("goods_parcels_spinbutton")
 					                         as Gtk.SpinButton;
 					goods_weight_entry = get_widget("goods_weight_entry")
 					                     as Gtk.Entry;
@@ -190,8 +190,8 @@ namespace DDTBuilder {
 				/* Initialize the date field with the current date */
 				document_date_entry.text = now.format("%d/%m/%Y");
 
-				/* Reset units SpinButton value */
-				goods_units_spinbutton.value = goods_units_spinbutton.adjustment.lower;
+				/* Reset parcels SpinButton value */
+				goods_parcels_spinbutton.value = goods_parcels_spinbutton.adjustment.lower;
 
 				/* Create a first row of widgets */
 				add_row();
@@ -584,7 +584,7 @@ namespace DDTBuilder {
 
 			info.appearance = get_entry_text(goods_appearance_entry,
 			                                 "goods_appearance_entry");
-			info.units = "%d".printf(goods_units_spinbutton.get_value_as_int());
+			info.parcels = "%d".printf(goods_parcels_spinbutton.get_value_as_int());
 			info.weight = get_entry_text(goods_weight_entry,
 			                             "goods_weight_entry");
 		}

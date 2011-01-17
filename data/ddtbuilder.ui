@@ -395,7 +395,7 @@
                           <object class="GtkLabel" id="label22">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">Number of units</property>
+                            <property name="label" translatable="yes">Number of parcels</property>
                           </object>
                           <packing>
                             <property name="top_attach">4</property>
@@ -430,7 +430,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="goods_units_spinbutton">
+                          <object class="GtkSpinButton" id="goods_parcels_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
