@@ -26,6 +26,7 @@ AM_VALAFLAGS = \
 bin_PROGRAMS = ddtbuilder
 
 ddtbuilder_SOURCES = \
+	preferences.vala \
 	companyinfo.vala \
 	goodsinfo.vala \
 	cell.vala \

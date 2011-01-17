@@ -32,17 +32,7 @@ namespace DDTBuilder {
 
 	public class Document : GLib.Object {
 
-		private static string TEMPLATE_FILE = Config.PKGDATADIR + "/template.svg";
-		private static string OUT_FILE = "out.pdf";
-
-		private static double PAGE_BORDER_X = 10.0;
-		private static double PAGE_BORDER_Y = 10.0;
-		private static double BOX_PADDING_X = 5.0;
-		private static double BOX_PADDING_Y = 5.0;
-
-		private static string FONT_FAMILY = "Sans";
-		private static double FONT_SIZE = 8.0;
-		private static double LINE_WIDTH = 1.0;
+		private Preferences preferences;
 
 		private Cairo.Surface surface;
 		private Cairo.Context context;
@@ -56,6 +46,8 @@ namespace DDTBuilder {
 		public Table goods { get; set; }
 
 		construct {
+
+			preferences = Preferences.get_instance();
 
 			number = "";
 			date = "";
@@ -102,12 +94,12 @@ namespace DDTBuilder {
 			try {
 
 				/* Read and parse the contents of the template file */
-				FileUtils.get_contents(TEMPLATE_FILE, out contents, out contents_length);
+				FileUtils.get_contents(preferences.template_file, out contents, out contents_length);
 				template = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
 			}
 			catch (GLib.Error e) {
 
-				throw new DocumentError.IO(_("Could not load template file: %s").printf(TEMPLATE_FILE));
+				throw new DocumentError.IO(_("Could not load template file: %s").printf(preferences.template_file));
 			}
 
 			/* Get template's dimensions */
@@ -115,7 +107,7 @@ namespace DDTBuilder {
 			template.get_dimensions(dimensions);
 
 			/* Make the target surface as big as the template */
-			surface = new Cairo.PdfSurface(OUT_FILE,
+			surface = new Cairo.PdfSurface(preferences.out_file,
 			                               dimensions.width,
 			                               dimensions.height);
 			context = new Cairo.Context(surface);
@@ -124,14 +116,14 @@ namespace DDTBuilder {
 			template.render_cairo(context);
 
 			/* Set some appearance properties */
-			context.set_line_width(LINE_WIDTH);
-			context.set_font_size(FONT_SIZE);
+			context.set_line_width(preferences.line_width);
+			context.set_font_size(preferences.font_size);
 
 			/* Draw the recipient's address in a right-aligned box */
 			box_width = 350.0;
 			box_height = AUTOMATIC_SIZE;
-			box_x = dimensions.width - PAGE_BORDER_X - box_width;
-			box_y = PAGE_BORDER_Y;
+			box_x = dimensions.width - preferences.page_border_x - box_width;
+			box_y = preferences.page_border_y;
 			offset = draw_company_address(_("Recipient"),
 			                              recipient,
 			                              box_x,
@@ -171,7 +163,7 @@ namespace DDTBuilder {
 			table.add_row(row);
 
 			/* Draw first part of document info */
-			box_width = dimensions.width - (2 * PAGE_BORDER_X);
+			box_width = dimensions.width - (2 * preferences.page_border_x);
 			box_height = AUTOMATIC_SIZE;
 			box_x = 10.0;
 			box_y += offset + 10.0;
@@ -320,13 +312,13 @@ namespace DDTBuilder {
 			 * Future versions will deal with the problem by splitting the goods
 			 * table into several pages; in the meantime, just make sure the
 			 * document can be drawn without overlapping stuff */
-			if (box_y + offset + PAGE_BORDER_Y > dimensions.height) {
+			if (box_y + offset + preferences.page_border_y > dimensions.height) {
 
 				throw new DocumentError.TOO_MANY_GOODS(_("Too many goods. Please remove some."));
 			}
 
 			/* Calculate the correct starting point */
-			box_y = dimensions.height - offset - PAGE_BORDER_Y;
+			box_y = dimensions.height - offset - preferences.page_border_y;
 
 			/* Actually draw the tables */
 			offset = draw_table(notes_table,
@@ -364,7 +356,7 @@ namespace DDTBuilder {
 				throw new DocumentError.IO(_("Drawing error."));
 			}
 
-			return OUT_FILE;
+			return preferences.out_file;
 		}
 
 		private double draw_text(string text, double x, double y, double width, double height, bool really) {
@@ -376,8 +368,8 @@ namespace DDTBuilder {
 
 			/* Set text properties */
 			font_description = new Pango.FontDescription();
-			font_description.set_family(FONT_FAMILY);
-			font_description.set_size((int) (FONT_SIZE * Pango.SCALE));
+			font_description.set_family(preferences.font_family);
+			font_description.set_size((int) (preferences.font_size * Pango.SCALE));
 
 			/* Create a new layout in the selected spot */
 			context.move_to(x, y);
@@ -419,14 +411,14 @@ namespace DDTBuilder {
 			text += cell.text;
 
 			height = draw_text(text,
-			                   x + BOX_PADDING_X,
-			                   y + BOX_PADDING_Y,
-			                   width - (2 * BOX_PADDING_X),
+			                   x + preferences.cell_padding_x,
+			                   y + preferences.cell_padding_y,
+			                   width - (2 * preferences.cell_padding_x),
 			                   height,
 			                   really);
 
 			/* Add vertical padding to the text height */
-			height += (2 * BOX_PADDING_Y);
+			height += (2 * preferences.cell_padding_y);
 
 			return height;
 		}

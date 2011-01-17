@@ -29,8 +29,7 @@ namespace DDTBuilder {
 
 	public class Application : GLib.Object {
 
-		private static string VIEWER = "/usr/bin/evince";
-		private static string UI_FILE = Config.PKGDATADIR + "/ddtbuilder.ui";
+		private Preferences preferences;
 
 		private Gtk.Builder ui;
 		private Gtk.Window window;
@@ -75,6 +74,8 @@ namespace DDTBuilder {
 
 			error_message = null;
 
+			preferences = Preferences.get_instance();
+
 			table_labels = new List<Gtk.Label>();
 			table_widgets = new List<WidgetRow>();
 
@@ -82,11 +83,11 @@ namespace DDTBuilder {
 
 			try {
 
-				ui.add_from_file(UI_FILE);
+				ui.add_from_file(preferences.ui_file);
 			}
 			catch (GLib.Error e) {
 
-				error_message = _("Could not load UI file: %s").printf(UI_FILE);
+				error_message = _("Could not load UI file: %s").printf(preferences.ui_file);
 			}
 
 			if (error_message == null) {
@@ -478,7 +479,7 @@ namespace DDTBuilder {
 				return;
 			}
 
-			view_cmd = {VIEWER,
+			view_cmd = {preferences.viewer,
 			            out_file,
 			            null};
 
