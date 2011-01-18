@@ -39,6 +39,7 @@ namespace DDTBuilder {
 
 		public string number { get; set; }
 		public string date { get; set; }
+		public string page { get; set; }
 		public string reason { get; set; }
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
@@ -51,6 +52,7 @@ namespace DDTBuilder {
 
 			number = "";
 			date = "";
+			page = "";
 			reason = "";
 
 			recipient = new CompanyInfo();
@@ -183,7 +185,7 @@ namespace DDTBuilder {
 			row.cells[2].title = _("Date");
 			row.cells[2].text = date;
 			row.cells[3].title = _("Page");
-			row.cells[3].text = "1";
+			row.cells[3].text = page;
 
 			table.add_row(row);
 

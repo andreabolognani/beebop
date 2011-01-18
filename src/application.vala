@@ -47,6 +47,7 @@ namespace DDTBuilder {
 
 		private Gtk.Entry document_number_entry;
 		private Gtk.Entry document_date_entry;
+		private Gtk.Entry document_page_entry;
 		private Gtk.Entry document_reason_entry;
 		private Gtk.Entry goods_appearance_entry;
 		private Gtk.SpinButton goods_parcels_spinbutton;
@@ -126,6 +127,8 @@ namespace DDTBuilder {
 					document_number_entry = get_object("document_number_entry")
 					                        as Gtk.Entry;
 					document_date_entry = get_object("document_date_entry")
+					                      as Gtk.Entry;
+					document_page_entry = get_object("document_page_entry")
 					                      as Gtk.Entry;
 					document_reason_entry = get_object("document_reason_entry")
 					                        as Gtk.Entry;
@@ -210,6 +213,9 @@ namespace DDTBuilder {
 
 				/* Initialize the date field with the current date */
 				document_date_entry.text = now.format("%d/%m/%Y");
+
+				/* Initialize the page number */
+				document_page_entry.text = _("1 of 1");
 
 				/* Reset parcels SpinButton value */
 				goods_parcels_spinbutton.value = goods_parcels_spinbutton.adjustment.lower;
@@ -602,6 +608,8 @@ namespace DDTBuilder {
 			                                 "document_number_entry");
 			document.date = get_entry_text(document_date_entry,
 			                               "document_date_entry");
+			document.page = get_entry_text(document_page_entry,
+			                               "document_page_entry");
 			document.reason = get_entry_text(document_reason_entry,
 			                                 "document_reason_entry");
 		}
