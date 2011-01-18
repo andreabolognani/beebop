@@ -58,6 +58,7 @@ namespace DDTBuilder {
 		private Gtk.Action add_action;
 		private Gtk.Action remove_action;
 		private Gtk.Action print_action;
+		private Gtk.Action quit_action;
 
 		private List<Gtk.Label> table_labels;
 		private List<WidgetRow> table_widgets;
@@ -142,6 +143,8 @@ namespace DDTBuilder {
 					                as Gtk.Action;
 					print_action = get_object("print_action")
 					               as Gtk.Action;
+					quit_action = get_object("quit_action")
+					              as Gtk.Action;
 
 					label = get_object("code_label")
 					        as Gtk.Label;
@@ -181,6 +184,7 @@ namespace DDTBuilder {
 				add_action.activate.connect(add_row);
 				remove_action.activate.connect(remove_row);
 				print_action.activate.connect(print);
+				quit_action.activate.connect(quit);
 			}
 
 			if (error_message == null) {
@@ -263,9 +267,14 @@ namespace DDTBuilder {
 
 		private bool close(Gdk.Event ev) {
 
-			Gtk.main_quit();
+			quit();
 
 			return true;
+		}
+
+		private void quit() {
+
+			Gtk.main_quit();
 		}
 
 		/* The recipient's name has changed */
