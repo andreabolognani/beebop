@@ -55,10 +55,13 @@ namespace DDTBuilder {
 		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
 
-		private Gtk.Action add_action;
-		private Gtk.Action remove_action;
 		private Gtk.Action print_action;
 		private Gtk.Action quit_action;
+		private Gtk.Action cut_action;
+		private Gtk.Action copy_action;
+		private Gtk.Action paste_action;
+		private Gtk.Action add_action;
+		private Gtk.Action remove_action;
 
 		private List<Gtk.Label> table_labels;
 		private List<WidgetRow> table_widgets;
@@ -137,14 +140,20 @@ namespace DDTBuilder {
 					goods_table = get_object("goods_table")
 					              as Gtk.Table;
 
-					add_action = get_object("add_action")
-					             as Gtk.Action;
-					remove_action = get_object("remove_action")
-					                as Gtk.Action;
 					print_action = get_object("print_action")
 					               as Gtk.Action;
 					quit_action = get_object("quit_action")
 					              as Gtk.Action;
+					cut_action = get_object("cut_action")
+					             as Gtk.Action;
+					copy_action = get_object("copy_action")
+					              as Gtk.Action;
+					paste_action = get_object("paste_action")
+					               as Gtk.Action;
+					add_action = get_object("add_action")
+					             as Gtk.Action;
+					remove_action = get_object("remove_action")
+					                as Gtk.Action;
 
 					label = get_object("code_label")
 					        as Gtk.Label;
@@ -181,10 +190,13 @@ namespace DDTBuilder {
 				recipient_city_entry.changed.connect(city_changed);
 				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
 
-				add_action.activate.connect(add_row);
-				remove_action.activate.connect(remove_row);
 				print_action.activate.connect(print);
 				quit_action.activate.connect(quit);
+				cut_action.activate.connect(cut);
+				copy_action.activate.connect(copy);
+				paste_action.activate.connect(paste);
+				add_action.activate.connect(add_row);
+				remove_action.activate.connect(remove_row);
 			}
 
 			if (error_message == null) {
@@ -275,6 +287,39 @@ namespace DDTBuilder {
 		private void quit() {
 
 			Gtk.main_quit();
+		}
+
+		private void cut() {
+
+			Gtk.Widget widget;
+
+			if (window.get_focus() is Gtk.Editable) {
+
+				widget = window.get_focus() as Gtk.Widget;
+				(widget as Gtk.Editable).cut_clipboard();
+			}
+		}
+
+		private void copy() {
+
+			Gtk.Widget widget;
+
+			if (window.get_focus() is Gtk.Editable) {
+
+				widget = window.get_focus() as Gtk.Widget;
+				(widget as Gtk.Editable).copy_clipboard();
+			}
+		}
+
+		private void paste() {
+
+			Gtk.Widget widget;
+
+			if (window.get_focus() is Gtk.Editable) {
+
+				widget = window.get_focus() as Gtk.Widget;
+				(widget as Gtk.Editable).paste_clipboard();
+			}
 		}
 
 		/* The recipient's name has changed */

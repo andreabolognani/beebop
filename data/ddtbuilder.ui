@@ -58,6 +58,38 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menuitem4">
                         <property name="visible">True</property>
+                        <property name="related_action">cut_action</property>
+                        <property name="use_action_appearance">True</property>
+                        <property name="use_stock">True</property>
+                        <accelerator key="x" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="menuitem5">
+                        <property name="visible">True</property>
+                        <property name="related_action">copy_action</property>
+                        <property name="use_action_appearance">True</property>
+                        <property name="use_stock">True</property>
+                        <accelerator key="c" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem1">
+                        <property name="visible">True</property>
+                        <property name="related_action">paste_action</property>
+                        <property name="use_action_appearance">True</property>
+                        <property name="use_stock">True</property>
+                        <accelerator key="v" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
+                        <property name="visible">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem2">
+                        <property name="visible">True</property>
                         <property name="related_action">add_action</property>
                         <property name="use_action_appearance">True</property>
                         <property name="use_stock">True</property>
@@ -65,7 +97,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="menuitem5">
+                      <object class="GtkImageMenuItem" id="imagemenuitem3">
                         <property name="visible">True</property>
                         <property name="related_action">remove_action</property>
                         <property name="use_action_appearance">True</property>
@@ -748,5 +780,14 @@
   </object>
   <object class="GtkAction" id="print_action">
     <property name="stock_id">gtk-print</property>
+  </object>
+  <object class="GtkAction" id="cut_action">
+    <property name="stock_id">gtk-cut</property>
+  </object>
+  <object class="GtkAction" id="copy_action">
+    <property name="stock_id">gtk-copy</property>
+  </object>
+  <object class="GtkAction" id="paste_action">
+    <property name="stock_id">gtk-paste</property>
   </object>
 </interface>
