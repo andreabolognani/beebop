@@ -33,7 +33,6 @@ namespace DDTBuilder {
 
 		private Gtk.Builder ui;
 		private Gtk.Window window;
-		private Gtk.Button print_button;
 
 		private Gtk.Entry recipient_name_entry;
 		private Gtk.Entry recipient_street_entry;
@@ -55,8 +54,10 @@ namespace DDTBuilder {
 
 		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
-		private Gtk.Button add_button;
-		private Gtk.Button remove_button;
+
+		private Gtk.Action add_action;
+		private Gtk.Action remove_action;
+		private Gtk.Action print_action;
 
 		private List<Gtk.Label> table_labels;
 		private List<WidgetRow> table_widgets;
@@ -68,9 +69,11 @@ namespace DDTBuilder {
 		construct {
 
 			Gtk.Label label;
+			Gdk.ModifierType accel_mods;
 			Date today;
 			Time now;
 			string element;
+			uint accel_key;
 
 			error_message = null;
 
@@ -96,66 +99,67 @@ namespace DDTBuilder {
 				 * an error and quit the application */
 				try {
 
-					window = get_widget("window")
+					window = get_object("window")
 					         as Gtk.Window;
-					recipient_name_entry = get_widget("recipient_name_entry")
+					recipient_name_entry = get_object("recipient_name_entry")
 					                       as Gtk.Entry;
-					recipient_street_entry = get_widget("recipient_street_entry")
+					recipient_street_entry = get_object("recipient_street_entry")
 					                         as Gtk.Entry;
-					recipient_city_entry = get_widget("recipient_city_entry")
+					recipient_city_entry = get_object("recipient_city_entry")
 					                       as Gtk.Entry;
-					recipient_vatin_entry = get_widget("recipient_vatin_entry")
+					recipient_vatin_entry = get_object("recipient_vatin_entry")
 					                        as Gtk.Entry;
-					recipient_client_code_entry = get_widget("recipient_client_code_entry")
+					recipient_client_code_entry = get_object("recipient_client_code_entry")
 					                              as Gtk.Entry;
-					destination_name_entry = get_widget("destination_name_entry")
+					destination_name_entry = get_object("destination_name_entry")
 					                         as Gtk.Entry;
-					destination_street_entry = get_widget("destination_street_entry")
+					destination_street_entry = get_object("destination_street_entry")
 					                           as Gtk.Entry;
-					destination_city_entry = get_widget("destination_city_entry")
+					destination_city_entry = get_object("destination_city_entry")
 					                         as Gtk.Entry;
-					send_to_recipient_checkbutton = get_widget("send_to_recipient_checkbutton")
+					send_to_recipient_checkbutton = get_object("send_to_recipient_checkbutton")
 					                                as Gtk.CheckButton;
-					document_number_entry = get_widget("document_number_entry")
+					document_number_entry = get_object("document_number_entry")
 					                        as Gtk.Entry;
-					document_date_entry = get_widget("document_date_entry")
+					document_date_entry = get_object("document_date_entry")
 					                      as Gtk.Entry;
-					document_reason_entry = get_widget("document_reason_entry")
+					document_reason_entry = get_object("document_reason_entry")
 					                        as Gtk.Entry;
-					goods_appearance_entry = get_widget("goods_appearance_entry")
+					goods_appearance_entry = get_object("goods_appearance_entry")
 					                         as Gtk.Entry;
-					goods_parcels_spinbutton = get_widget("goods_parcels_spinbutton")
+					goods_parcels_spinbutton = get_object("goods_parcels_spinbutton")
 					                         as Gtk.SpinButton;
-					goods_weight_entry = get_widget("goods_weight_entry")
+					goods_weight_entry = get_object("goods_weight_entry")
 					                     as Gtk.Entry;
-					table_viewport = get_widget("table_viewport")
+					table_viewport = get_object("table_viewport")
 					                 as Gtk.Viewport;
-					goods_table = get_widget("goods_table")
+					goods_table = get_object("goods_table")
 					              as Gtk.Table;
-					add_button = get_widget("add_button")
-					             as Gtk.Button;
-					remove_button = get_widget("remove_button")
-					                as Gtk.Button;
-					print_button = get_widget("print_button")
-					               as Gtk.Button;
 
-					label = get_widget("code_label")
+					add_action = get_object("add_action")
+					             as Gtk.Action;
+					remove_action = get_object("remove_action")
+					                as Gtk.Action;
+					print_action = get_object("print_action")
+					               as Gtk.Action;
+
+					label = get_object("code_label")
 					        as Gtk.Label;
 					table_labels.append(label);
 
-					label = get_widget("reference_label")
+					label = get_object("reference_label")
 					        as Gtk.Label;
 					table_labels.append(label);
 
-					label = get_widget("description_label")
+					label = get_object("description_label")
 					        as Gtk.Label;
 					table_labels.append(label);
 
-					label = get_widget("unit_label")
+					label = get_object("unit_label")
 					        as Gtk.Label;
 					table_labels.append(label);
 
-					label = get_widget("quantity_label")
+					label = get_object("quantity_label")
 					        as Gtk.Label;
 					table_labels.append(label);
 				}
@@ -169,13 +173,14 @@ namespace DDTBuilder {
 
 				/* Connect signals */
 				window.delete_event.connect(close);
-				print_button.clicked.connect(print);
 				recipient_name_entry.changed.connect(name_changed);
 				recipient_street_entry.changed.connect(street_changed);
 				recipient_city_entry.changed.connect(city_changed);
 				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
-				add_button.clicked.connect(add_row);
-				remove_button.clicked.connect(remove_row);
+
+				add_action.activate.connect(add_row);
+				remove_action.activate.connect(remove_row);
+				print_action.activate.connect(print);
 			}
 
 			if (error_message == null) {
@@ -195,6 +200,9 @@ namespace DDTBuilder {
 
 				/* Create a first row of widgets */
 				add_row();
+
+				/* Disable remove action */
+				remove_action.sensitive = false;
 			}
 
 			if (error_message == null) {
@@ -216,21 +224,20 @@ namespace DDTBuilder {
 			}
 		}
 
-		/* Get a widget out of the UI, checking it exists */
-		private Gtk.Widget get_widget(string name) throws ApplicationError.OBJECT_NOT_FOUND {
+		/* Get an object out of the UI, checking it exists */
+		private GLib.Object get_object(string name) throws ApplicationError.OBJECT_NOT_FOUND {
 
-			Gtk.Widget widget;
+			GLib.Object obj;
 
-			/* Look up the widget */
-			widget = ui.get_object(name)
-			         as Gtk.Widget;
+			/* Look up the object */
+			obj = ui.get_object(name);
 
-			/* If the widget is not there, throw an exception */
-			if (widget == null) {
+			/* If the object is not there, throw an exception */
+			if (obj == null) {
 				throw new ApplicationError.OBJECT_NOT_FOUND(name);
 			}
 
-			return widget;
+			return obj;
 		}
 
 		/* Get the text from an entry, raising an exception if it's empty */
@@ -381,7 +388,7 @@ namespace DDTBuilder {
 
 			/* Rows can be removed if there are more than two of them */
 			if (table_widgets.length() >= 2) {
-				remove_button.sensitive = true;
+				remove_action.sensitive = true;
 			}
 
 			/* Give focus to the first widget in the new row */
@@ -417,7 +424,7 @@ namespace DDTBuilder {
 
 			/* Don't allow the user to remove the last row */
 			if (table_widgets.length() <= 1) {
-				remove_button.sensitive = false;
+				remove_action.sensitive = false;
 			}
 
 			/* Give focus to the first widget in the last row */
@@ -506,7 +513,7 @@ namespace DDTBuilder {
 
 			/* Prevent the print button from being clicked again until
 			 * the viewer has been closed */
-			print_button.sensitive = false;
+			print_action.sensitive = false;
 
 			return;
 		}
@@ -518,7 +525,7 @@ namespace DDTBuilder {
 			Process.close_pid(pid);
 
 			/* Make the print button clickable again */
-			print_button.sensitive = true;
+			print_action.sensitive = true;
 		}
 
 		private Document create_document() throws ApplicationError.EMPTY_FIELD {
