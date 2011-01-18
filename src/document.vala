@@ -82,6 +82,7 @@ namespace DDTBuilder {
 			Table date_table;
 			Table signatures_table;
 			Row row;
+			Cell cell;
 			string contents;
 			size_t contents_length;
 			double box_x;
@@ -89,6 +90,7 @@ namespace DDTBuilder {
 			double box_width;
 			double box_height;
 			double offset;
+			double starting_point;
 			int i;
 
 			try {
@@ -119,8 +121,27 @@ namespace DDTBuilder {
 			context.set_line_width(preferences.line_width);
 			context.set_font_size(preferences.font_size);
 
+			cell = new Cell();
+			cell.text = preferences.header_text;
+
+			/* Draw the header (usually sender's info) */
+			box_width = preferences.header_width;
+			box_height = preferences.header_height;
+			box_x = preferences.header_x;
+			box_y = preferences.header_y;
+			offset = draw_cell(cell,
+			                   box_x,
+			                   box_y,
+			                   box_width,
+			                   box_height,
+			                   true);
+
+			/* This will be the new starting point if the address
+			 * boxes are not taller */
+			starting_point = box_y + offset - preferences.cell_padding_y;
+
 			/* Draw the recipient's address in a right-aligned box */
-			box_width = 350.0;
+			box_width = 340.0;
 			box_height = AUTOMATIC_SIZE;
 			box_x = dimensions.width - preferences.page_border_x - box_width;
 			box_y = preferences.page_border_y;
@@ -142,6 +163,10 @@ namespace DDTBuilder {
 			                              box_width,
 			                              box_height,
 			                              true);
+
+			/* The starting point is either below the address boxes or
+			 * below the header, depending on which one is taller */
+			starting_point = Math.fmax(starting_point, box_y + offset);
 
 			/* Create a table to store document info */
 			table = new Table(4);
@@ -166,7 +191,7 @@ namespace DDTBuilder {
 			box_width = dimensions.width - (2 * preferences.page_border_x);
 			box_height = AUTOMATIC_SIZE;
 			box_x = 10.0;
-			box_y += offset + 10.0;
+			box_y = starting_point + 10.0;
 			offset = draw_table(table,
 			                    box_x,
 			                    box_y,

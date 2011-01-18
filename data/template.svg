@@ -34,15 +34,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="125.32113"
-     inkscape:cy="1047.8586"
+     inkscape:cx="115.07432"
+     inkscape:cy="972.07234"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1278"
-     inkscape:window-height="783"
+     inkscape:window-width="1280"
+     inkscape:window-height="721"
      inkscape:window-x="0"
-     inkscape:window-y="15"
-     inkscape:window-maximized="0" />
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata4">
     <rdf:RDF>
@@ -51,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -70,61 +70,25 @@
          x="220"
          y="40.933613" /></text>
     <g
-       id="g3994">
-      <g
-         id="g3986">
-        <text
-           xml:space="preserve"
-           style="font-size:10;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
-           x="147.37845"
-           y="35.658066"
-           id="text3751"><tspan
-             sodipodi:role="line"
-             id="tspan3753"
-             x="147.37845"
-             y="35.658066">Company Name</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:10;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
-           x="147.25638"
-           y="53.730942"
-           id="text3755"><tspan
-             sodipodi:role="line"
-             id="tspan3757"
-             x="147.25638"
-             y="53.730942">Street name</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:10;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
-           x="147.37845"
-           y="72.023544"
-           id="text3759"><tspan
-             sodipodi:role="line"
-             id="tspan3761"
-             x="147.37845"
-             y="72.023544">City name</tspan></text>
-      </g>
-      <g
-         transform="translate(-9.5,-10.431428)"
-         id="g3795">
-        <rect
-           style="fill:#007cff;fill-opacity:1;stroke:#0026e3;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none"
-           id="rect3655"
-           width="122.85714"
-           height="80"
-           x="20"
-           y="20.933611" />
-        <text
-           xml:space="preserve"
-           style="font-size:30px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
-           x="36.365494"
+       id="g3795"
+       transform="translate(-9.5,-10.431428)">
+      <rect
+         y="20.933611"
+         x="20"
+         height="80"
+         width="122.85714"
+         id="rect3655"
+         style="fill:#007cff;fill-opacity:1;stroke:#0026e3;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         id="text3763"
+         y="70.493912"
+         x="36.365494"
+         style="font-size:30px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+         xml:space="preserve"><tspan
            y="70.493912"
-           id="text3763"><tspan
-             sodipodi:role="line"
-             id="tspan3765"
-             x="36.365494"
-             y="70.493912">LOGO</tspan></text>
-      </g>
+           x="36.365494"
+           id="tspan3765"
+           sodipodi:role="line">LOGO</tspan></text>
     </g>
   </g>
 </svg>

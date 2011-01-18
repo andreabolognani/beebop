@@ -40,6 +40,12 @@ namespace DDTBuilder {
 
 		public double line_width { get; private set; }
 
+		public string header_text { get; private set; }
+		public double header_x { get; private set; }
+		public double header_y { get; private set; }
+		public double header_width { get; private set; }
+		public double header_height { get; private set; }
+
 		private Preferences() {}
 
 		private void load() {
@@ -59,6 +65,12 @@ namespace DDTBuilder {
 			font_size = 8.0;
 
 			line_width = 1.0;
+
+			header_text = "<b>A Nice Company, If There Ever Was One</b>\n<i>We do no evil</i>\n\n<u>Promise</u>";
+			header_x = 140.0;
+			header_y = 5.0;
+			header_width = 250.0;
+			header_height = -1.0;
 		}
 
 		public static Preferences get_instance() {
