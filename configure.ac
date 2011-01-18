@@ -83,7 +83,7 @@ case "$host" in
 	;;
 	*)
 		win32_build=no
-		OS_CFLAGS="-DPKGDATADIR='\"\$(pkgdatadir)\"' -DLOCALEDIR='\"$localedir\"'"
+		OS_CFLAGS="-DPKGDATADIR='\"\$(pkgdatadir)\"' -DLOCALEDIR='\"\$(localedir)\"'"
 		OS_LDFLAGS=
 	;;
 esac
