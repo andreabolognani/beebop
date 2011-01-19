@@ -206,7 +206,7 @@ namespace DDTBuilder {
 			/* Draw first part of document info */
 			box_width = dimensions.width - (2 * preferences.page_padding_x);
 			box_height = AUTOMATIC_SIZE;
-			box_x = 10.0;
+			box_x = preferences.page_padding_x;
 			box_y = starting_point + 10.0;
 			offset = draw_table(table,
 			                    box_x,
