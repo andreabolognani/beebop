@@ -27,6 +27,7 @@ namespace DDTBuilder {
 		private static string KEY_VIEWER = "viewer";
 		private static string KEY_PAGE_PADDING = "page_padding";
 		private static string KEY_CELL_PADDING = "cell_padding";
+		private static string KEY_ELEMENTS_SPACING = "elements_spacing";
 		private static string KEY_FONT_FAMILY = "font_family";
 		private static string KEY_FONT_SIZE = "font_size";
 		private static string KEY_LINE_WIDTH = "line_width";
@@ -46,6 +47,8 @@ namespace DDTBuilder {
 		public double page_padding_y { get; private set; }
 		public double cell_padding_x { get; private set; }
 		public double cell_padding_y { get; private set; }
+
+		public double elements_spacing { get; private set; }
 
 		public string font_family { get; private set; }
 		public double font_size { get; private set; }
@@ -71,6 +74,8 @@ namespace DDTBuilder {
 			page_padding_y = 10.0;
 			cell_padding_x = 5.0;
 			cell_padding_y = 5.0;
+
+			elements_spacing = 10.0;
 
 			font_family = "Sans";
 			font_size = 8.0;
@@ -124,6 +129,8 @@ namespace DDTBuilder {
 
 			cell_padding_x = dimensions[0];
 			cell_padding_y = dimensions[1];
+
+			elements_spacing = pref.get_double(GROUP, KEY_ELEMENTS_SPACING);
 
 			font_family = pref.get_string(GROUP, KEY_FONT_FAMILY);
 			font_size = pref.get_double(GROUP, KEY_FONT_SIZE);
