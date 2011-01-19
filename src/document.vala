@@ -138,13 +138,13 @@ namespace DDTBuilder {
 			/* Draw the header (usually sender's info). The width of the cell
 			 * is chosen not to overlap with the address boxes */
 			box_width = dimensions.width -
-			            preferences.header_x -
+			            preferences.header_position_x -
 			            preferences.address_box_width -
 			            preferences.page_padding_x -
 			            preferences.cell_padding_x;
 			box_height = AUTOMATIC_SIZE;
-			box_x = preferences.header_x;
-			box_y = preferences.header_y;
+			box_x = preferences.header_position_x;
+			box_y = preferences.page_padding_y - preferences.cell_padding_y;
 			offset = draw_cell(cell,
 			                   box_x,
 			                   box_y,

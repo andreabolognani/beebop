@@ -53,8 +53,7 @@ namespace DDTBuilder {
 		public double line_width { get; private set; }
 
 		public string header_text { get; private set; }
-		public double header_x { get; private set; }
-		public double header_y { get; private set; }
+		public double header_position_x { get; private set; }
 
 		public double address_box_width { get; private set; }
 
@@ -79,8 +78,7 @@ namespace DDTBuilder {
 			line_width = 1.0;
 
 			header_text = "<b>Sample text</b>\nInsert <i>your own</i> text here";
-			header_x = 140.0;
-			header_y = 5.0;
+			header_position_x = 140.0;
 
 			address_box_width = 350.0;
 		}
@@ -133,13 +131,7 @@ namespace DDTBuilder {
 			line_width = pref.get_double(GROUP, KEY_LINE_WIDTH);
 
 			header_text = pref.get_string(GROUP, KEY_HEADER_TEXT);
-
-			dimensions = pref.get_double_list(GROUP, KEY_HEADER_POSITION);
-
-			if (dimensions.length != 2) {
-
-				throw new KeyFileError.INVALID_VALUE(_("Too many values for key '%s'.".printf(KEY_HEADER_POSITION)));
-			}
+			header_position_x = pref.get_double(GROUP, KEY_HEADER_POSITION);
 
 			address_box_width = pref.get_double(GROUP, KEY_ADDRESS_BOX_WIDTH);
 		}
