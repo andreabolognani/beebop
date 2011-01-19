@@ -48,7 +48,16 @@ namespace DDTBuilder {
 
 		construct {
 
-			preferences = Preferences.get_instance();
+			try {
+
+				preferences = Preferences.get_instance();
+			}
+			catch (GLib.Error e) {
+
+				/* If the preferences can't be loaded the execution doesn't
+				 * go as far as creating a Document, so this branch is
+				 * never reached */
+			}
 
 			number = "";
 			date = "";
@@ -126,9 +135,14 @@ namespace DDTBuilder {
 			cell = new Cell();
 			cell.text = preferences.header_text;
 
-			/* Draw the header (usually sender's info) */
-			box_width = preferences.header_width;
-			box_height = preferences.header_height;
+			/* Draw the header (usually sender's info). The width of the cell
+			 * is chosen not to overlap with the address boxes */
+			box_width = dimensions.width -
+			            preferences.header_x -
+			            preferences.address_box_width -
+			            preferences.page_padding_x -
+			            preferences.cell_padding_x;
+			box_height = AUTOMATIC_SIZE;
 			box_x = preferences.header_x;
 			box_y = preferences.header_y;
 			offset = draw_cell(cell,
@@ -143,10 +157,10 @@ namespace DDTBuilder {
 			starting_point = box_y + offset - preferences.cell_padding_y;
 
 			/* Draw the recipient's address in a right-aligned box */
-			box_width = 340.0;
+			box_width = preferences.address_box_width;
 			box_height = AUTOMATIC_SIZE;
-			box_x = dimensions.width - preferences.page_border_x - box_width;
-			box_y = preferences.page_border_y;
+			box_x = dimensions.width - preferences.page_padding_x - box_width;
+			box_y = preferences.page_padding_y;
 			offset = draw_company_address(_("Recipient"),
 			                              recipient,
 			                              box_x,
@@ -190,7 +204,7 @@ namespace DDTBuilder {
 			table.add_row(row);
 
 			/* Draw first part of document info */
-			box_width = dimensions.width - (2 * preferences.page_border_x);
+			box_width = dimensions.width - (2 * preferences.page_padding_x);
 			box_height = AUTOMATIC_SIZE;
 			box_x = 10.0;
 			box_y = starting_point + 10.0;
@@ -339,13 +353,13 @@ namespace DDTBuilder {
 			 * Future versions will deal with the problem by splitting the goods
 			 * table into several pages; in the meantime, just make sure the
 			 * document can be drawn without overlapping stuff */
-			if (box_y + offset + preferences.page_border_y > dimensions.height) {
+			if (box_y + offset + preferences.page_padding_y > dimensions.height) {
 
 				throw new DocumentError.TOO_MANY_GOODS(_("Too many goods. Please remove some."));
 			}
 
 			/* Calculate the correct starting point */
-			box_y = dimensions.height - offset - preferences.page_border_y;
+			box_y = dimensions.height - offset - preferences.page_padding_y;
 
 			/* Actually draw the tables */
 			offset = draw_table(notes_table,

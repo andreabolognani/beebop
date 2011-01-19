@@ -22,6 +22,18 @@ namespace DDTBuilder {
 
 	public class Preferences : GLib.Object {
 
+		private static string FILE = "ddtbuilder.conf";
+		private static string GROUP = "DDT Builder";
+		private static string KEY_VIEWER = "viewer";
+		private static string KEY_PAGE_PADDING = "page_padding";
+		private static string KEY_CELL_PADDING = "cell_padding";
+		private static string KEY_FONT_FAMILY = "font_family";
+		private static string KEY_FONT_SIZE = "font_size";
+		private static string KEY_LINE_WIDTH = "line_width";
+		private static string KEY_HEADER_TEXT = "header_text";
+		private static string KEY_HEADER_POSITION = "header_position";
+		private static string KEY_ADDRESS_BOX_WIDTH = "address_box_width";
+
 		private static Preferences singleton = null;
 
 		public string template_file { get; private set; }
@@ -30,8 +42,8 @@ namespace DDTBuilder {
 
 		public string viewer { get; private set; }
 
-		public double page_border_x { get; private set; }
-		public double page_border_y { get; private set; }
+		public double page_padding_x { get; private set; }
+		public double page_padding_y { get; private set; }
 		public double cell_padding_x { get; private set; }
 		public double cell_padding_y { get; private set; }
 
@@ -43,21 +55,21 @@ namespace DDTBuilder {
 		public string header_text { get; private set; }
 		public double header_x { get; private set; }
 		public double header_y { get; private set; }
-		public double header_width { get; private set; }
-		public double header_height { get; private set; }
+
+		public double address_box_width { get; private set; }
 
 		private Preferences() {}
 
-		private void load() {
+		construct {
 
 			template_file = Config.PKGDATADIR + "/template.svg";
-			out_file = "out.pdf";
+			out_file = Environment.get_tmp_dir() + "/out.pdf";
 			ui_file = Config.PKGDATADIR + "/ddtbuilder.ui";
 
 			viewer = "/usr/bin/evince";
 
-			page_border_x = 10.0;
-			page_border_y = 10.0;
+			page_padding_x = 10.0;
+			page_padding_y = 10.0;
 			cell_padding_x = 5.0;
 			cell_padding_y = 5.0;
 
@@ -66,14 +78,73 @@ namespace DDTBuilder {
 
 			line_width = 1.0;
 
-			header_text = "<b>A Nice Company, If There Ever Was One</b>\n<i>We do no evil</i>\n\n<u>Promise</u>";
+			header_text = "<b>Sample text</b>\nInsert <i>your own</i> text here";
 			header_x = 140.0;
 			header_y = 5.0;
-			header_width = 250.0;
-			header_height = -1.0;
+
+			address_box_width = 350.0;
 		}
 
-		public static Preferences get_instance() {
+		private void load() throws GLib.Error {
+
+			KeyFile pref;
+			double[] dimensions;
+
+			pref = new KeyFile();
+
+			try {
+
+				pref.load_from_file(Environment.get_user_config_dir() + "/" + FILE,
+				                    KeyFileFlags.NONE);
+			}
+			catch (FileError.NOENT e) {
+
+				/* If there is no config file, just use the default values */
+				return;
+			}
+
+			/* Get all the config values */
+
+			viewer = pref.get_string(GROUP, KEY_VIEWER);
+
+			dimensions = pref.get_double_list(GROUP, KEY_PAGE_PADDING);
+
+			if (dimensions.length != 2) {
+
+				throw new KeyFileError.INVALID_VALUE(_("Too many values for key '%s'.".printf(KEY_PAGE_PADDING)));
+			}
+
+			page_padding_x = dimensions[0];
+			page_padding_y = dimensions[1];
+
+			dimensions = pref.get_double_list(GROUP, KEY_CELL_PADDING);
+
+			if (dimensions.length != 2) {
+
+				throw new KeyFileError.INVALID_VALUE(_("Too many values for key '%s'.".printf(KEY_CELL_PADDING)));
+			}
+
+			cell_padding_x = dimensions[0];
+			cell_padding_y = dimensions[1];
+
+			font_family = pref.get_string(GROUP, KEY_FONT_FAMILY);
+			font_size = pref.get_double(GROUP, KEY_FONT_SIZE);
+
+			line_width = pref.get_double(GROUP, KEY_LINE_WIDTH);
+
+			header_text = pref.get_string(GROUP, KEY_HEADER_TEXT);
+
+			dimensions = pref.get_double_list(GROUP, KEY_HEADER_POSITION);
+
+			if (dimensions.length != 2) {
+
+				throw new KeyFileError.INVALID_VALUE(_("Too many values for key '%s'.".printf(KEY_HEADER_POSITION)));
+			}
+
+			address_box_width = pref.get_double(GROUP, KEY_ADDRESS_BOX_WIDTH);
+		}
+
+		public static Preferences get_instance() throws GLib.Error {
 
 			if (singleton == null) {
 

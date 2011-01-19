@@ -82,20 +82,29 @@ namespace DDTBuilder {
 
 			error_message = null;
 
-			preferences = Preferences.get_instance();
-
 			table_labels = new List<Gtk.Label>();
 			table_widgets = new List<WidgetRow>();
 
-			ui = new Gtk.Builder();
-
 			try {
 
-				ui.add_from_file(preferences.ui_file);
+				preferences = Preferences.get_instance();
 			}
 			catch (GLib.Error e) {
 
-				error_message = _("Could not load UI file: %s").printf(preferences.ui_file);
+				error_message = _("Could not load preferences: %s".printf(e.message));
+			}
+
+			if (error_message == null) {
+
+				try {
+
+					ui = new Gtk.Builder();
+					ui.add_from_file(preferences.ui_file);
+				}
+				catch (GLib.Error e) {
+
+					error_message = _("Could not load UI file: %s").printf(preferences.ui_file);
+				}
 			}
 
 			if (error_message == null) {
@@ -235,7 +244,7 @@ namespace DDTBuilder {
 				recipient_city_entry.text = "London (UK)";
 				recipient_vatin_entry.text = "0830192809";
 				document_number_entry.text = "42/2011";
-				document_reason_entry.text = "Replacement";
+				document_reason_entry.text = "Sostituzione";
 				goods_appearance_entry.text = "Box";
 				goods_weight_entry.text = "3.2 Kg";
 
