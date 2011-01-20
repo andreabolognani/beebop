@@ -311,11 +311,11 @@ namespace DDTBuilder {
 			                          AUTOMATIC_SIZE};
 
 			row = new Row(signatures_table.columns);
-			row.cells[0].title = _("Driver’s signature");
+			row.cells[0].title = _("Driver\xe2\x80\x99s signature");
 			row.cells[0].text = " ";
 			row.cells[1].title = _("Firma vettore");
 			row.cells[1].text = " ";
-			row.cells[2].title = _("Recipient’s signature");
+			row.cells[2].title = _("Recipient\xe2\x80\x99s signature");
 			row.cells[2].text = " ";
 
 			signatures_table.add_row(row);
