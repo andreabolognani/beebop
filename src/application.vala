@@ -614,9 +614,9 @@ namespace DDTBuilder {
 			Document document;
 
 			document = new Document();
-			collect_info(document);
 			collect_recipient(document);
 			collect_destination(document);
+			collect_info(document);
 			collect_goods_info(document);
 			collect_goods(document);
 
