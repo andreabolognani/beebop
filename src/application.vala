@@ -239,6 +239,12 @@ namespace DDTBuilder {
 				/* Reset parcels SpinButton value */
 				goods_parcels_spinbutton.value = goods_parcels_spinbutton.adjustment.lower;
 
+				/* Fill in other default values */
+				shipment_reason_entry.text = preferences.default_reason;
+				shipment_transported_by_entry.text = preferences.default_transported_by;
+				shipment_carrier_entry.text = preferences.default_carrier;
+				shipment_duties_entry.text = preferences.default_duties;
+
 				/* Create a first row of widgets */
 				add_row();
 
@@ -437,6 +443,9 @@ namespace DDTBuilder {
 			quantity_spinbutton = new Gtk.SpinButton.with_range(1.0,
 			                                                    999.0,
 			                                                    1.0);
+
+			/* Set default values */
+			unit_entry.text = preferences.default_unit;
 
 			/* Keep track of the widgets */
 			row = new WidgetRow(5);

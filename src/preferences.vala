@@ -34,6 +34,11 @@ namespace DDTBuilder {
 		private static string KEY_HEADER_TEXT = "header_text";
 		private static string KEY_HEADER_POSITION = "header_position";
 		private static string KEY_ADDRESS_BOX_WIDTH = "address_box_width";
+		private static string KEY_DEFAULT_UNIT = "default_unit";
+		private static string KEY_DEFAULT_REASON = "default_reason";
+		private static string KEY_DEFAULT_TRANSPORTED_BY = "default_transported_by";
+		private static string KEY_DEFAULT_CARRIER = "default_carrier";
+		private static string KEY_DEFAULT_DUTIES = "default_duties";
 
 		private static Preferences singleton = null;
 
@@ -60,6 +65,12 @@ namespace DDTBuilder {
 
 		public double address_box_width { get; private set; }
 
+		public string default_unit { get; private set; }
+		public string default_reason { get; private set; }
+		public string default_transported_by { get; private set; }
+		public string default_carrier { get; private set; }
+		public string default_duties { get; private set; }
+
 		private Preferences() {}
 
 		construct {
@@ -82,10 +93,16 @@ namespace DDTBuilder {
 
 			line_width = 1.0;
 
-			header_text = "<b>Sample text</b>\nInsert <i>your own</i> text here";
+			header_text = "";
 			header_position_x = 140.0;
 
 			address_box_width = 350.0;
+
+			default_unit = "";
+			default_reason = "";
+			default_transported_by = "";
+			default_carrier = "";
+			default_duties = "";
 		}
 
 		private void load() throws GLib.Error {
@@ -141,6 +158,12 @@ namespace DDTBuilder {
 			header_position_x = pref.get_double(GROUP, KEY_HEADER_POSITION);
 
 			address_box_width = pref.get_double(GROUP, KEY_ADDRESS_BOX_WIDTH);
+
+			default_unit = pref.get_string(GROUP, KEY_DEFAULT_UNIT);
+			default_reason = pref.get_string(GROUP, KEY_DEFAULT_REASON);
+			default_transported_by = pref.get_string(GROUP, KEY_DEFAULT_TRANSPORTED_BY);
+			default_carrier = pref.get_string(GROUP, KEY_DEFAULT_CARRIER);
+			default_duties = pref.get_string(GROUP, KEY_DEFAULT_DUTIES);
 		}
 
 		public static Preferences get_instance() throws GLib.Error {
