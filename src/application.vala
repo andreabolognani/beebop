@@ -48,10 +48,14 @@ namespace DDTBuilder {
 		private Gtk.Entry document_number_entry;
 		private Gtk.Entry document_date_entry;
 		private Gtk.Entry document_page_entry;
-		private Gtk.Entry document_reason_entry;
 		private Gtk.Entry goods_appearance_entry;
 		private Gtk.SpinButton goods_parcels_spinbutton;
 		private Gtk.Entry goods_weight_entry;
+
+		private Gtk.Entry shipment_reason_entry;
+		private Gtk.Entry shipment_transported_by_entry;
+		private Gtk.Entry shipment_carrier_entry;
+		private Gtk.Entry shipment_duties_entry;
 
 		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
@@ -139,14 +143,20 @@ namespace DDTBuilder {
 					                      as Gtk.Entry;
 					document_page_entry = get_object("document_page_entry")
 					                      as Gtk.Entry;
-					document_reason_entry = get_object("document_reason_entry")
-					                        as Gtk.Entry;
 					goods_appearance_entry = get_object("goods_appearance_entry")
 					                         as Gtk.Entry;
 					goods_parcels_spinbutton = get_object("goods_parcels_spinbutton")
 					                         as Gtk.SpinButton;
 					goods_weight_entry = get_object("goods_weight_entry")
 					                     as Gtk.Entry;
+					shipment_reason_entry = get_object("shipment_reason_entry")
+					                        as Gtk.Entry;
+					shipment_transported_by_entry = get_object("shipment_transported_by_entry")
+					                                as Gtk.Entry;
+					shipment_carrier_entry = get_object("shipment_carrier_entry")
+					                         as Gtk.Entry;
+					shipment_duties_entry = get_object("shipment_duties_entry")
+					                        as Gtk.Entry;
 					table_viewport = get_object("table_viewport")
 					                 as Gtk.Viewport;
 					goods_table = get_object("goods_table")
@@ -244,9 +254,9 @@ namespace DDTBuilder {
 				recipient_city_entry.text = "London (UK)";
 				recipient_vatin_entry.text = "0830192809";
 				document_number_entry.text = "42/2011";
-				document_reason_entry.text = "Replacement";
 				goods_appearance_entry.text = "Box";
 				goods_weight_entry.text = "3.2 Kg";
+				shipment_reason_entry.text = "Replacement";
 
 				/* Sync the form entries */
 				name_changed();
@@ -618,6 +628,7 @@ namespace DDTBuilder {
 			collect_destination(document);
 			collect_info(document);
 			collect_goods_info(document);
+			collect_shipment_info(document);
 			collect_goods(document);
 
 			return document;
@@ -631,8 +642,22 @@ namespace DDTBuilder {
 			                               "document_date_entry");
 			document.page = get_entry_text(document_page_entry,
 			                               "document_page_entry");
-			document.reason = get_entry_text(document_reason_entry,
-			                                 "document_reason_entry");
+		}
+
+		private void collect_shipment_info(Document document) throws ApplicationError.EMPTY_FIELD {
+
+			ShipmentInfo info;
+
+			info = document.shipment_info;
+
+			info.reason = get_entry_text(shipment_reason_entry,
+			                             "shipment_reason_entry");
+			info.transported_by = get_entry_text(shipment_transported_by_entry,
+			                                     "shipment_transported_by_entry");
+			info.carrier = get_entry_text(shipment_carrier_entry,
+			                              "shipment_carrier_entry");
+			info.duties = get_entry_text(shipment_duties_entry,
+			                             "shipment_duties_entry");
 		}
 
 		private void collect_recipient(Document document) throws ApplicationError.EMPTY_FIELD {
@@ -772,14 +797,23 @@ namespace DDTBuilder {
 			else if (name.collate("document_page_entry") == 0) {
 				description = _("document\xe2\x80\x99s page number");
 			}
-			else if (name.collate("document_reason_entry") == 0) {
-				description = _("document\xe2\x80\x99s reason");
-			}
 			else if (name.collate("goods_appearance_entry") == 0) {
 				description = _("goods\xe2\x80\x99 outside appearance");
 			}
 			else if (name.collate("goods_weight_entry") == 0) {
 				description = _("goods\xe2\x80\x99 weight");
+			}
+			else if (name.collate("shipment_reason_entry") == 0) {
+				description = _("shipment\xe2\x80\x99s reason");
+			}
+			else if (name.collate("shipment_transported_by_entry") == 0) {
+				description = _("transported by");
+			}
+			else if (name.collate("shipment_carrier_entry") == 0) {
+				description = _("shipment\xe2\x80\x99s carrier");
+			}
+			else if (name.collate("shipment_duties_entry") == 0) {
+				description = _("delivery duties");
 			}
 			else if (name.collate("good_code_entry") == 0) {
 				description = _("good\xe2\x80\x99s code");

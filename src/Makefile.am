@@ -34,6 +34,7 @@ ddtbuilder_SOURCES = \
 	preferences.vala \
 	companyinfo.vala \
 	goodsinfo.vala \
+	shipmentinfo.vala \
 	cell.vala \
 	row.vala \
 	table.vala \

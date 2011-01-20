@@ -40,10 +40,10 @@ namespace DDTBuilder {
 		public string number { get; set; }
 		public string date { get; set; }
 		public string page { get; set; }
-		public string reason { get; set; }
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
 		public GoodsInfo goods_info { get; set; }
+		public ShipmentInfo shipment_info { get; set; }
 		public Table goods { get; set; }
 
 		construct {
@@ -62,11 +62,11 @@ namespace DDTBuilder {
 			number = "";
 			date = "";
 			page = "";
-			reason = "";
 
 			recipient = new CompanyInfo();
 			destination = new CompanyInfo();
 			goods_info = new GoodsInfo();
+			shipment_info = new ShipmentInfo();
 
 			goods = new Table(5);
 
@@ -225,8 +225,8 @@ namespace DDTBuilder {
 			row.cells[0].text = recipient.client_code;
 			row.cells[1].title = _("VATIN");
 			row.cells[1].text = recipient.vatin;
-			row.cells[2].title = _("Porto");
-			row.cells[2].text = "Franco";
+			row.cells[2].title = _("Delivery duties");
+			row.cells[2].text = shipment_info.duties;
 
 			table.add_row(row);
 
@@ -275,13 +275,13 @@ namespace DDTBuilder {
 
 			row = new Row(reason_table.columns);
 			row.cells[0].title = _("Reason");
-			row.cells[0].text = reason;
-			row.cells[1].title = _("Trasporto a mezzo");
-			row.cells[1].text = _("Sender");
+			row.cells[0].text = shipment_info.reason;
+			row.cells[1].title = _("Transported by");
+			row.cells[1].text = shipment_info.transported_by;
 			row.cells[2].title = _("Outside appearance");
 			row.cells[2].text = goods_info.appearance;
-			row.cells[3].title = _("Vettore");
-			row.cells[3].text = "SDA";
+			row.cells[3].title = _("Carrier");
+			row.cells[3].text = shipment_info.carrier;
 
 			reason_table.add_row(row);
 
@@ -293,9 +293,9 @@ namespace DDTBuilder {
 			                    150.0};
 
 			row = new Row(date_table.columns);
-			row.cells[0].title = _("Data e ora inizio trasporto");
+			row.cells[0].title = _("Shipping date and time");
 			row.cells[0].text = " ";
-			row.cells[1].title = _("Data e ora fine trasporto");
+			row.cells[1].title = _("Delivery date and time");
 			row.cells[1].text = " ";
 			row.cells[2].title = _("Number of parcels");
 			row.cells[2].text = goods_info.parcels;
@@ -313,7 +313,7 @@ namespace DDTBuilder {
 			row = new Row(signatures_table.columns);
 			row.cells[0].title = _("Driver\xe2\x80\x99s signature");
 			row.cells[0].text = " ";
-			row.cells[1].title = _("Firma vettore");
+			row.cells[1].title = _("Carrier\xe2\x80\x99s signature");
 			row.cells[1].text = " ";
 			row.cells[2].title = _("Recipient\xe2\x80\x99s signature");
 			row.cells[2].text = " ";
