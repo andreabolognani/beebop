@@ -554,7 +554,7 @@ namespace DDTBuilder {
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error_message = _("Empty field: %s").printf(widget_description(e.message));
+				error_message = _("Empty field: %s").printf(field_description(e.message));
 				show_warning();
 
 				return;
@@ -723,7 +723,10 @@ namespace DDTBuilder {
 			}
 		}
 
-		private string widget_description(string name) {
+		/* Get human-readable field description.
+		 *
+		 * The field description is displayed to the user in error messages. */
+		private string field_description(string name) {
 
 			string description;
 
@@ -731,6 +734,48 @@ namespace DDTBuilder {
 
 			if (name.collate("recipient_name_entry") == 0) {
 				description = _("recipient\xe2\x80\x99s name");
+			}
+			else if (name.collate("recipient_street_entry") == 0) {
+				description = _("recipient\xe2\x80\x99s street");
+			}
+			else if (name.collate("recipient_city_entry") == 0) {
+				description = _("recipient\xe2\x80\x99s city");
+			}
+			else if (name.collate("recipient_vatin_entry") == 0) {
+				description = _("recipient\xe2\x80\x99s VATIN");
+			}
+			else if (name.collate("recipient_client_code_entry") == 0) {
+				description = _("recipient\xe2\x80\x99s client code");
+			}
+			else if (name.collate("destination_name_entry") == 0) {
+				description = _("destination\xe2\x80\x99s name");
+			}
+			else if (name.collate("destination_name_entry") == 0) {
+				description = _("destination\xe2\x80\x99s name");
+			}
+			else if (name.collate("destination_street_entry") == 0) {
+				description = _("destination\xe2\x80\x99s street");
+			}
+			else if (name.collate("destination_city_entry") == 0) {
+				description = _("destination\xe2\x80\x99s city");
+			}
+			else if (name.collate("document_number_entry") == 0) {
+				description = _("document\xe2\x80\x99s number");
+			}
+			else if (name.collate("document_date_entry") == 0) {
+				description = _("document\xe2\x80\x99s date");
+			}
+			else if (name.collate("document_page_entry") == 0) {
+				description = _("document\xe2\x80\x99s page number");
+			}
+			else if (name.collate("document_reason_entry") == 0) {
+				description = _("document\xe2\x80\x99s reason");
+			}
+			else if (name.collate("goods_appearance_entry") == 0) {
+				description = _("goods\xe2\x80\x99 outside appearance");
+			}
+			else if (name.collate("goods_weight_entry") == 0) {
+				description = _("goods\xe2\x80\x99 weight");
 			}
 
 			return description;
