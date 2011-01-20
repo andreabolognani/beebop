@@ -701,19 +701,23 @@ namespace DDTBuilder {
 
 				/* Code */
 				entry = widget_row.widgets[0] as Gtk.Entry;
-				row.cells[0].text = entry.text;
+				row.cells[0].text = get_entry_text(entry,
+				                                   "good_code_entry");
 
 				/* Reference */
 				entry = widget_row.widgets[1] as Gtk.Entry;
-				row.cells[1].text = entry.text;
+				row.cells[1].text = get_entry_text(entry,
+				                                   "good_reference_entry");
 
 				/* Description */
 				entry = widget_row.widgets[2] as Gtk.Entry;
-				row.cells[2].text = entry.text;
+				row.cells[2].text = get_entry_text(entry,
+				                                   "good_description_entry");
 
 				/* Unit of measurement */
 				entry = widget_row.widgets[3] as Gtk.Entry;
-				row.cells[3].text = entry.text;
+				row.cells[3].text = get_entry_text(entry,
+				                                   "good_unit_entry");
 
 				/* Quantity */
 				spin_button = widget_row.widgets[4] as Gtk.SpinButton;
@@ -776,6 +780,18 @@ namespace DDTBuilder {
 			}
 			else if (name.collate("goods_weight_entry") == 0) {
 				description = _("goods\xe2\x80\x99 weight");
+			}
+			else if (name.collate("good_code_entry") == 0) {
+				description = _("good\xe2\x80\x99s code");
+			}
+			else if (name.collate("good_reference_entry") == 0) {
+				description = _("good\xe2\x80\x99s reference");
+			}
+			else if (name.collate("good_description_entry") == 0) {
+				description = _("good\xe2\x80\x99s description");
+			}
+			else if (name.collate("good_unit_entry") == 0) {
+				description = _("good\xe2\x80\x99s unit of measurement");
 			}
 
 			return description;
