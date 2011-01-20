@@ -244,7 +244,7 @@ namespace DDTBuilder {
 				recipient_city_entry.text = "London (UK)";
 				recipient_vatin_entry.text = "0830192809";
 				document_number_entry.text = "42/2011";
-				document_reason_entry.text = "Sostituzione";
+				document_reason_entry.text = "Replacement";
 				goods_appearance_entry.text = "Box";
 				goods_weight_entry.text = "3.2 Kg";
 
@@ -280,6 +280,18 @@ namespace DDTBuilder {
 
 			/* If the entry contains no text, throw an exception */
 			if (text.collate("") == 0) {
+
+				/* Make the entry grab the focus to make corrections faster.
+				 *
+				 * XXX This is not the correct place to grab the focus.
+				 * Ideally, there would be a name_to_widget method which
+				 * takes the name of a widget and returns the widget itself,
+				 * so that focus can be grabbed when catching an EMPTY_FIELD
+				 * error. Because many widgets are created at runtime,
+				 * however, implementing such a method is a little bit
+				 * tricky. In the meantime, this will do. */
+				entry.grab_focus();
+
 				throw new ApplicationError.EMPTY_FIELD(name);
 			}
 
@@ -461,7 +473,7 @@ namespace DDTBuilder {
 			}
 
 			/* Give focus to the first widget in the new row */
-			row.widgets[0].is_focus = true;
+			row.widgets[0].grab_focus();
 
 			/* Scroll the table all the way down */
 			adjustment = table_viewport.vadjustment;
@@ -498,7 +510,7 @@ namespace DDTBuilder {
 
 			/* Give focus to the first widget in the last row */
 			row = table_widgets.data;
-			row.widgets[0].is_focus = true;
+			row.widgets[0].grab_focus();
 		}
 
 		public void show_error() {
@@ -542,7 +554,7 @@ namespace DDTBuilder {
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error_message = _("Empty field: %s").printf(e.message);
+				error_message = _("Empty field: %s").printf(widget_description(e.message));
 				show_warning();
 
 				return;
@@ -709,6 +721,19 @@ namespace DDTBuilder {
 
 				goods.add_row(row);
 			}
+		}
+
+		private string widget_description(string name) {
+
+			string description;
+
+			description = _("Unknown");
+
+			if (name.collate("recipient_name_entry") == 0) {
+				description = _("recipient\xe2\x80\x99s name");
+			}
+
+			return description;
 		}
 
 		public static int main(string[] args) {
