@@ -45,30 +45,30 @@ namespace DDTBuilder {
 		public string out_file { get; private set; }
 		public string ui_file { get; private set; }
 
-		public string viewer { get; private set; }
+		public string viewer { get; set; }
 
-		public double page_padding_x { get; private set; }
-		public double page_padding_y { get; private set; }
-		public double cell_padding_x { get; private set; }
-		public double cell_padding_y { get; private set; }
+		public double page_padding_x { get; set; }
+		public double page_padding_y { get; set; }
+		public double cell_padding_x { get; set; }
+		public double cell_padding_y { get; set; }
 
-		public double elements_spacing { get; private set; }
+		public double elements_spacing { get; set; }
 
-		public string font_family { get; private set; }
-		public double font_size { get; private set; }
+		public string font_family { get; set; }
+		public double font_size { get; set; }
 
-		public double line_width { get; private set; }
+		public double line_width { get; set; }
 
-		public string header_text { get; private set; }
-		public double header_position_x { get; private set; }
+		public string header_text { get; set; }
+		public double header_position_x { get; set; }
 
-		public double address_box_width { get; private set; }
+		public double address_box_width { get; set; }
 
-		public string default_unit { get; private set; }
-		public string default_reason { get; private set; }
-		public string default_transported_by { get; private set; }
-		public string default_carrier { get; private set; }
-		public string default_duties { get; private set; }
+		public string default_unit { get; set; }
+		public string default_reason { get; set; }
+		public string default_transported_by { get; set; }
+		public string default_carrier { get; set; }
+		public string default_duties { get; set; }
 
 		private Preferences() {}
 
@@ -142,7 +142,7 @@ namespace DDTBuilder {
 
 				/* Parse the contents of the preferences file */
 				pref.load_from_data(data,
-				                    -1,
+				                    data.len(),
 				                    KeyFileFlags.NONE);
 			}
 			catch (IOError.NOT_FOUND e) {
@@ -192,6 +192,66 @@ namespace DDTBuilder {
 			default_transported_by = pref.get_string(GROUP, KEY_DEFAULT_TRANSPORTED_BY);
 			default_carrier = pref.get_string(GROUP, KEY_DEFAULT_CARRIER);
 			default_duties = pref.get_string(GROUP, KEY_DEFAULT_DUTIES);
+		}
+
+		public void save() throws Error {
+
+			File handle;
+			OutputStream base_stream;
+			DataOutputStream stream;
+			KeyFile pref;
+			double[] dimensions;
+			string data;
+			size_t len;
+
+			pref = new KeyFile();
+			dimensions = new double[2];
+
+			/* Set preferences */
+			pref.set_string(GROUP, KEY_VIEWER, viewer);
+
+			dimensions[0] = page_padding_x;
+			dimensions[1] = page_padding_y;
+			pref.set_double_list(GROUP, KEY_PAGE_PADDING, dimensions);
+
+			dimensions[0] = cell_padding_x;
+			dimensions[1] = cell_padding_y;
+			pref.set_double_list(GROUP, KEY_CELL_PADDING, dimensions);
+
+			pref.set_double(GROUP, KEY_ELEMENTS_SPACING, elements_spacing);
+
+			pref.set_string(GROUP, KEY_FONT_FAMILY, font_family);
+			pref.set_double(GROUP, KEY_FONT_SIZE, font_size);
+
+			pref.set_double(GROUP, KEY_LINE_WIDTH, line_width);
+
+			pref.set_string(GROUP, KEY_HEADER_TEXT, header_text);
+			pref.set_double(GROUP, KEY_HEADER_POSITION, header_position_x);
+
+			pref.set_double(GROUP, KEY_ADDRESS_BOX_WIDTH, address_box_width);
+
+			pref.set_string(GROUP, KEY_DEFAULT_UNIT, default_unit);
+			pref.set_string(GROUP, KEY_DEFAULT_REASON, default_reason);
+			pref.set_string(GROUP, KEY_DEFAULT_TRANSPORTED_BY, default_transported_by);
+			pref.set_string(GROUP, KEY_DEFAULT_CARRIER, default_carrier);
+			pref.set_string(GROUP, KEY_DEFAULT_DUTIES, default_duties);
+
+			/* Get textual representation of the keyfile */
+			data = pref.to_data(out len);
+
+			/* Build file path */
+			handle = File.new_for_path(Environment.get_user_config_dir());
+			handle = handle.get_child(DIR);
+			handle = handle.get_child(FILE);
+
+			/* Replace the old preferences file (if any) */
+			base_stream = handle.replace(null,    /* No etag */
+			                             true,    /* Create backup */
+			                             FileCreateFlags.NONE,
+			                             null);
+			stream = new DataOutputStream(base_stream);
+			stream.put_string(data, null);
+			stream.close(null);
 		}
 
 		public static Preferences get_instance() throws Error {
