@@ -178,16 +178,21 @@ namespace DDTBuilder {
 			cell = new Cell();
 			cell.text = preferences.header_text;
 
-			/* Draw the header (usually sender's info). The width of the cell
-			 * is chosen not to overlap with the address boxes */
+			/* Draw the header (usually sender's info). The width of the cell,
+			 * as well as its horizontal starting point, is chosen not to
+			 * overlap with either the address boxes or the logo */
+			box_x = preferences.page_padding_x +
+			        logo_width +
+			        preferences.elements_spacing_x -
+			        preferences.cell_padding_x;
+			box_y = preferences.page_padding_y - preferences.cell_padding_y;
 			box_width = page_width -
-			            preferences.header_position_x -
+			            box_x -
 			            preferences.address_box_width -
 			            preferences.page_padding_x -
+						preferences.elements_spacing_x +
 			            preferences.cell_padding_x;
 			box_height = AUTOMATIC_SIZE;
-			box_x = preferences.header_position_x;
-			box_y = preferences.page_padding_y - preferences.cell_padding_y;
 			offset = draw_cell(cell,
 			                   box_x,
 			                   box_y,

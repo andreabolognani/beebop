@@ -31,7 +31,6 @@ namespace DDTBuilder {
 		private static string KEY_FONT_SIZE = "font_size";
 		private static string KEY_LINE_WIDTH = "line_width";
 		private static string KEY_HEADER_TEXT = "header_text";
-		private static string KEY_HEADER_POSITION = "header_position";
 		private static string KEY_ADDRESS_BOX_WIDTH = "address_box_width";
 		private static string KEY_DEFAULT_UNIT = "default_unit";
 		private static string KEY_DEFAULT_REASON = "default_reason";
@@ -62,7 +61,6 @@ namespace DDTBuilder {
 		public double line_width { get; set; }
 
 		public string header_text { get; set; }
-		public double header_position_x { get; set; }
 
 		public double address_box_width { get; set; }
 
@@ -97,7 +95,6 @@ namespace DDTBuilder {
 			line_width = 1.0;
 
 			header_text = "";
-			header_position_x = 140.0;
 
 			address_box_width = 350.0;
 
@@ -184,7 +181,6 @@ namespace DDTBuilder {
 			line_width = pref.get_double(GROUP, KEY_LINE_WIDTH);
 
 			header_text = pref.get_string(GROUP, KEY_HEADER_TEXT);
-			header_position_x = pref.get_double(GROUP, KEY_HEADER_POSITION);
 
 			address_box_width = pref.get_double(GROUP, KEY_ADDRESS_BOX_WIDTH);
 
@@ -227,7 +223,6 @@ namespace DDTBuilder {
 			pref.set_double(GROUP, KEY_LINE_WIDTH, line_width);
 
 			pref.set_string(GROUP, KEY_HEADER_TEXT, header_text);
-			pref.set_double(GROUP, KEY_HEADER_POSITION, header_position_x);
 
 			pref.set_double(GROUP, KEY_ADDRESS_BOX_WIDTH, address_box_width);
 
