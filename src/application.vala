@@ -16,10 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using GLib;
-using Gdk;
-using Gtk;
-
 namespace DDTBuilder {
 
 	public errordomain ApplicationError {
@@ -93,7 +89,7 @@ namespace DDTBuilder {
 
 				preferences = Preferences.get_instance();
 			}
-			catch (GLib.Error e) {
+			catch (Error e) {
 
 				error_message = _("Could not load preferences: %s".printf(e.message));
 			}
@@ -105,7 +101,7 @@ namespace DDTBuilder {
 					ui = new Gtk.Builder();
 					ui.add_from_file(preferences.ui_file);
 				}
-				catch (GLib.Error e) {
+				catch (Error e) {
 
 					error_message = _("Could not load UI file: %s").printf(preferences.ui_file);
 				}
@@ -577,7 +573,7 @@ namespace DDTBuilder {
 
 				return;
 			}
-			catch (GLib.Error e) {
+			catch (Error e) {
 
 				show_warning(e.message);
 
@@ -598,7 +594,7 @@ namespace DDTBuilder {
 				                    null,
 				                    out viewer_pid);
 			}
-			catch (GLib.Error e) {
+			catch (Error e) {
 
 				show_error(_("Could not spawn viewer."));
 

@@ -16,11 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using GLib;
-using Cairo;
-using Pango;
-using Rsvg;
-
 namespace DDTBuilder {
 
 	public errordomain DocumentError {
@@ -52,7 +47,7 @@ namespace DDTBuilder {
 
 				preferences = Preferences.get_instance();
 			}
-			catch (GLib.Error e) {
+			catch (Error e) {
 
 				/* If the preferences can't be loaded the execution doesn't
 				 * go as far as creating a Document, so this branch is
@@ -83,7 +78,7 @@ namespace DDTBuilder {
 			                  _("Quantity")};
 		}
 
-		public string draw() throws GLib.Error {
+		public string draw() throws Error {
 
 			Rsvg.Handle template;
 			Rsvg.DimensionData dimensions;
@@ -110,7 +105,7 @@ namespace DDTBuilder {
 				FileUtils.get_contents(preferences.template_file, out contents, out contents_length);
 				template = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
 			}
-			catch (GLib.Error e) {
+			catch (Error e) {
 
 				throw new DocumentError.IO(_("Could not load template file: %s").printf(preferences.template_file));
 			}

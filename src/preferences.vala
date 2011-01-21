@@ -16,8 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using GLib;
-
 namespace DDTBuilder {
 
 	public class Preferences : GLib.Object {
@@ -105,7 +103,7 @@ namespace DDTBuilder {
 			default_duties = "";
 		}
 
-		private void load() throws GLib.Error {
+		private void load() throws Error {
 
 			KeyFile pref;
 			double[] dimensions;
@@ -166,7 +164,7 @@ namespace DDTBuilder {
 			default_duties = pref.get_string(GROUP, KEY_DEFAULT_DUTIES);
 		}
 
-		public static Preferences get_instance() throws GLib.Error {
+		public static Preferences get_instance() throws Error {
 
 			if (singleton == null) {
 
