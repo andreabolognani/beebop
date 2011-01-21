@@ -214,7 +214,7 @@ namespace DDTBuilder {
 
 			/* Draw the destination's address in a rigth-aligned box,
 			 * just below the one used for the recipient's address */
-			box_y += offset + preferences.elements_spacing;
+			box_y += offset + preferences.elements_spacing_y;
 			offset = draw_company_address(_("Destination"),
 			                              destination,
 			                              box_x,
@@ -250,7 +250,7 @@ namespace DDTBuilder {
 			box_width = page_width - (2 * preferences.page_padding_x);
 			box_height = AUTOMATIC_SIZE;
 			box_x = preferences.page_padding_x;
-			box_y = starting_point + preferences.elements_spacing;
+			box_y = starting_point + preferences.elements_spacing_y;
 			offset = draw_table(table,
 			                    box_x,
 			                    box_y,
@@ -291,7 +291,7 @@ namespace DDTBuilder {
 			goods.add_row(row);
 
 			/* Draw the goods table */
-			box_y += offset + preferences.elements_spacing;
+			box_y += offset + preferences.elements_spacing_y;
 			offset = draw_table(goods,
 			                    box_x,
 			                    box_y,
@@ -364,7 +364,7 @@ namespace DDTBuilder {
 			signatures_table.add_row(row);
 
 			/* Calculate the total sizes of all these info tables */
-			box_y += offset + preferences.elements_spacing;
+			box_y += offset + preferences.elements_spacing_y;
 			offset = 0.0;
 			offset += draw_table(notes_table,
 			                     box_x,

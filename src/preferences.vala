@@ -53,7 +53,8 @@ namespace DDTBuilder {
 		public double cell_padding_x { get; set; }
 		public double cell_padding_y { get; set; }
 
-		public double elements_spacing { get; set; }
+		public double elements_spacing_x { get; set; }
+		public double elements_spacing_y { get; set; }
 
 		public string font_family { get; set; }
 		public double font_size { get; set; }
@@ -87,7 +88,8 @@ namespace DDTBuilder {
 			cell_padding_x = 5.0;
 			cell_padding_y = 5.0;
 
-			elements_spacing = 10.0;
+			elements_spacing_x = 10.0;
+			elements_spacing_y = 10.0;
 
 			font_family = "Sans";
 			font_size = 8.0;
@@ -150,7 +152,7 @@ namespace DDTBuilder {
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE(_("Too many values for key '%s'.".printf(KEY_PAGE_PADDING)));
+				throw new KeyFileError.INVALID_VALUE(_("Wrong number of values for key '%s'.".printf(KEY_PAGE_PADDING)));
 			}
 
 			page_padding_x = dimensions[0];
@@ -160,13 +162,21 @@ namespace DDTBuilder {
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE(_("Too many values for key '%s'.".printf(KEY_CELL_PADDING)));
+				throw new KeyFileError.INVALID_VALUE(_("Wrong number of values for key '%s'.".printf(KEY_CELL_PADDING)));
 			}
 
 			cell_padding_x = dimensions[0];
 			cell_padding_y = dimensions[1];
 
-			elements_spacing = pref.get_double(GROUP, KEY_ELEMENTS_SPACING);
+			dimensions = pref.get_double_list(GROUP, KEY_ELEMENTS_SPACING);
+
+			if (dimensions.length != 2) {
+
+				throw new KeyFileError.INVALID_VALUE(_("Wrong number of values for key '%s'.".printf(KEY_ELEMENTS_SPACING)));
+			}
+
+			elements_spacing_x = dimensions[0];
+			elements_spacing_y = dimensions[1];
 
 			font_family = pref.get_string(GROUP, KEY_FONT_FAMILY);
 			font_size = pref.get_double(GROUP, KEY_FONT_SIZE);
@@ -207,7 +217,9 @@ namespace DDTBuilder {
 			dimensions[1] = cell_padding_y;
 			pref.set_double_list(GROUP, KEY_CELL_PADDING, dimensions);
 
-			pref.set_double(GROUP, KEY_ELEMENTS_SPACING, elements_spacing);
+			dimensions[0] = elements_spacing_x;
+			dimensions[1] = elements_spacing_y;
+			pref.set_double_list(GROUP, KEY_ELEMENTS_SPACING, dimensions);
 
 			pref.set_string(GROUP, KEY_FONT_FAMILY, font_family);
 			pref.set_double(GROUP, KEY_FONT_SIZE, font_size);
