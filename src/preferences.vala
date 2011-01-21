@@ -239,9 +239,17 @@ namespace DDTBuilder {
 			/* Get textual representation of the keyfile */
 			data = pref.to_data(out len);
 
-			/* Build file path */
+			/* Build directory path */
 			handle = File.new_for_path(Environment.get_user_config_dir());
 			handle = handle.get_child(DIR);
+
+			/* Create the configuration directory (if it doesn't already exist) */
+			if (!handle.query_exists(null)) {
+
+				handle.make_directory_with_parents(null);
+			}
+
+			/* Build file path */
 			handle = handle.get_child(FILE);
 
 			/* Replace the old preferences file (if any) */
