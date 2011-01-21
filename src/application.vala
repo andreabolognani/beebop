@@ -532,7 +532,7 @@ namespace DDTBuilder {
 			row.widgets[0].grab_focus();
 		}
 
-		public void show_error() {
+		public void show_error(string message) {
 
 			Gtk.Dialog dialog;
 
@@ -540,13 +540,13 @@ namespace DDTBuilder {
 			                               0,
 			                               Gtk.MessageType.ERROR,
 			                               Gtk.ButtonsType.CLOSE,
-			                               error_message);
+			                               message);
 
 			dialog.run();
 			dialog.destroy();
 		}
 
-		public void show_warning() {
+		public void show_warning(string message) {
 
 			Gtk.Dialog dialog;
 
@@ -554,7 +554,7 @@ namespace DDTBuilder {
 			                               0,
 			                               Gtk.MessageType.WARNING,
 			                               Gtk.ButtonsType.CLOSE,
-			                               error_message);
+			                               message);
 
 			dialog.run();
 			dialog.destroy();
@@ -573,15 +573,13 @@ namespace DDTBuilder {
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				error_message = _("Empty field: %s").printf(field_description(e.message));
-				show_warning();
+				show_warning(_("Empty field: %s").printf(field_description(e.message)));
 
 				return;
 			}
 			catch (GLib.Error e) {
 
-				error_message = e.message;
-				show_error();
+				show_warning(e.message);
 
 				return;
 			}
@@ -602,8 +600,7 @@ namespace DDTBuilder {
 			}
 			catch (GLib.Error e) {
 
-				error_message = _("Could not spawn viewer.");
-				show_error();
+				show_error(_("Could not spawn viewer."));
 
 				return;
 			}
@@ -857,7 +854,7 @@ namespace DDTBuilder {
 
 				/* If an error has occurred while constructing the UI,
 				 * display an error dialog and quit the application */
-				application.show_error();
+				application.show_error(application.error_message);
 			}
 			else {
 
