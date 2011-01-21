@@ -30,6 +30,8 @@ namespace DDTBuilder {
 		private Gtk.Builder ui;
 		private Gtk.Window window;
 
+		private Gtk.Notebook notebook;
+
 		private Gtk.Entry recipient_name_entry;
 		private Gtk.Entry recipient_street_entry;
 		private Gtk.Entry recipient_city_entry;
@@ -115,6 +117,8 @@ namespace DDTBuilder {
 
 					window = get_object("window")
 					         as Gtk.Window;
+					notebook = get_object("notebook")
+					           as Gtk.Notebook;
 					recipient_name_entry = get_object("recipient_name_entry")
 					                       as Gtk.Entry;
 					recipient_street_entry = get_object("recipient_street_entry")
@@ -302,7 +306,7 @@ namespace DDTBuilder {
 				 * error. Because many widgets are created at runtime,
 				 * however, implementing such a method is a little bit
 				 * tricky. In the meantime, this will do. */
-				entry.grab_focus();
+				focus_widget(entry);
 
 				throw new ApplicationError.EMPTY_FIELD(name);
 			}
@@ -752,6 +756,90 @@ namespace DDTBuilder {
 
 				goods.add_row(row);
 			}
+		}
+
+		/* Make a widget grab the focus.
+		 *
+		 * If the widget is contained in a notebook page which is not the
+		 * current one, switch to that page before grabbing focus. */
+		private void focus_widget(Gtk.Widget widget) {
+
+			Gtk.Widget page;
+
+			page = find_notebook_page(notebook, widget);
+
+			if (page != null) {
+
+				notebook.set_current_page(notebook.page_num(page));
+			}
+
+			widget.grab_focus();
+		}
+
+		/* Find the notebook page containing a widget.
+		 *
+		 * Return the notebook page, or null if the widget is not inside
+		 * the notebook. */
+		private Gtk.Widget find_notebook_page(Gtk.Notebook notebook, Gtk.Widget widget) {
+
+			Gtk.Widget page;
+			Gtk.Widget tmp;
+			int len;
+			int i;
+
+			page = null;
+			len = notebook.get_n_pages();
+
+			for (i = 0; i < len; i++) {
+
+				tmp = notebook.get_nth_page(i);
+
+				if (contains_widget(tmp, widget)) {
+
+					page = tmp;
+				}
+			}
+
+			return page;
+		}
+
+		/* Check whether a contanier contains another widget.
+		 *
+		 * Return true if the container is the widget, or it contains the
+		 * widget, or one of its descendants contains the widget.
+		 */
+		private bool contains_widget(Gtk.Widget container, Gtk.Widget widget) {
+
+			List<weak Gtk.Widget> children;
+			Gtk.Widget child;
+			bool success;
+			int len;
+			int i;
+
+			child = null;
+			success = false;
+
+			if (widget == container) {
+
+				/* The container *is* the widget */
+				success = true;
+			}
+			else if (container is Gtk.Container) {
+
+				/* Get che container's children */
+				children = (container as Gtk.Container).get_children();
+				len = (int) children.length();
+
+				for (i = 0; i < len; i++) {
+
+					child = children.nth_data(i);
+
+					/* Recursively search for the widget */
+					success = success || contains_widget(child, widget);
+				}
+			}
+
+			return success;
 		}
 
 		/* Get human-readable field description.
