@@ -45,7 +45,8 @@ dnl Check for required packages
 dnl ---------------------------
 
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED
-                        gobject-2.0 >= $GLIB_REQUIRED)
+                        gobject-2.0 >= $GLIB_REQUIRED
+                        gio-2.0 >= $GLIB_REQUIRED)
 PKG_CHECK_MODULES(GTK, gdk-2.0 >= $GTK_REQUIRED
                        gtk+-2.0 >= $GTK_REQUIRED)
 PKG_CHECK_MODULES(CAIRO, cairo >= $CAIRO_REQUIRED

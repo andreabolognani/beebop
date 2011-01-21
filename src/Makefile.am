@@ -16,6 +16,7 @@ AM_CPPFLAGS = \
 	$(NULL)
 
 AM_VALAFLAGS = \
+	--pkg gio-2.0 \
 	--pkg gdk-2.0 \
 	--pkg gtk+-2.0 \
 	--pkg cairo \

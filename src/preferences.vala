@@ -106,17 +106,46 @@ namespace DDTBuilder {
 
 		private void load() throws Error {
 
+			File handle;
+			DataInputStream stream;
 			KeyFile pref;
 			double[] dimensions;
+			string data;
+			string line;
+			size_t len;
 
 			pref = new KeyFile();
 
+			data = "";
+			line = null;
+
 			try {
 
-				pref.load_from_file(Environment.get_user_config_dir() + "/" + DIR + "/" + FILE,
+				/* Build the path */
+				handle = File.new_for_path(Environment.get_user_config_dir());
+				handle = handle.get_child(DIR);
+				handle = handle.get_child(FILE);
+
+				stream = new DataInputStream(handle.read(null));
+
+				do {
+
+					line = stream.read_line(out len, null);
+
+					if (line != null) {
+
+						data += line + "\n";
+					}
+				} while (line != null);
+
+				stream.close(null);
+
+				/* Parse the contents of the preferences file */
+				pref.load_from_data(data,
+				                    -1,
 				                    KeyFileFlags.NONE);
 			}
-			catch (FileError.NOENT e) {
+			catch (IOError.NOT_FOUND e) {
 
 				/* If there is no config file, just use the default values */
 				return;
