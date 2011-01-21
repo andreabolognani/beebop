@@ -20,6 +20,7 @@ namespace DDTBuilder {
 
 	public class Preferences : GLib.Object {
 
+		private static string DIR = "ddtbuilder";
 		private static string FILE = "ddtbuilder.conf";
 		private static string GROUP = "DDT Builder";
 		private static string KEY_VIEWER = "viewer";
@@ -112,7 +113,7 @@ namespace DDTBuilder {
 
 			try {
 
-				pref.load_from_file(Environment.get_user_config_dir() + "/" + FILE,
+				pref.load_from_file(Environment.get_user_config_dir() + "/" + DIR + "/" + FILE,
 				                    KeyFileFlags.NONE);
 			}
 			catch (FileError.NOENT e) {
