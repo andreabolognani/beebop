@@ -34,7 +34,7 @@ namespace DDTBuilder {
 
 		public string number { get; set; }
 		public string date { get; set; }
-		public string page { get; set; }
+		public string page_number { get; set; }
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
 		public GoodsInfo goods_info { get; set; }
@@ -56,7 +56,7 @@ namespace DDTBuilder {
 
 			number = "";
 			date = "";
-			page = "";
+			page_number = "";
 
 			recipient = new CompanyInfo();
 			destination = new CompanyInfo();
@@ -80,7 +80,10 @@ namespace DDTBuilder {
 
 		public string draw() throws Error {
 
-			Rsvg.Handle template;
+			Cairo.Surface logo_surface;
+			Cairo.Context logo_context;
+			Rsvg.Handle page;
+			Rsvg.Handle logo;
 			Rsvg.DimensionData dimensions;
 			Table table;
 			Table notes_table;
@@ -91,6 +94,10 @@ namespace DDTBuilder {
 			Cell cell;
 			string contents;
 			size_t contents_length;
+			double page_width;
+			double page_height;
+			double logo_width;
+			double logo_height;
 			double box_x;
 			double box_y;
 			double box_width;
@@ -101,27 +108,68 @@ namespace DDTBuilder {
 
 			try {
 
-				/* Read and parse the contents of the template file */
-				FileUtils.get_contents(preferences.template_file, out contents, out contents_length);
-				template = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
+				/* Read and parse the contents of the page file */
+				FileUtils.get_contents(preferences.page_file, out contents, out contents_length);
+				page = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO(_("Could not load template file: %s").printf(preferences.template_file));
+				throw new DocumentError.IO(_("Could not load page template file: %s").printf(preferences.page_file));
 			}
 
-			/* Get template's dimensions */
-			dimensions = Rsvg.DimensionData();
-			template.get_dimensions(dimensions);
+			try {
 
-			/* Make the target surface as big as the template */
+				/* Read and parse the contents of the template file */
+				FileUtils.get_contents(preferences.logo_file, out contents, out contents_length);
+				logo = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
+			}
+			catch (Error e) {
+
+				throw new DocumentError.IO(_("Could not load logo file: %s").printf(preferences.logo_file));
+			}
+
+			/* Get templates' dimensions */
+			dimensions = Rsvg.DimensionData();
+
+			page.get_dimensions(dimensions);
+			page_width = dimensions.width;
+			page_height = dimensions.height;
+
+			logo.get_dimensions(dimensions);
+			logo_width = dimensions.width;
+			logo_height = dimensions.height;
+
+			/* Make the target surface as big as the page template */
 			surface = new Cairo.PdfSurface(preferences.out_file,
-			                               dimensions.width,
-			                               dimensions.height);
+			                               page_width,
+			                               page_height);
 			context = new Cairo.Context(surface);
 
-			/* Draw the template on the surface */
-			template.render_cairo(context);
+			/* Draw the page template on the surface */
+			page.render_cairo(context);
+
+			/* Create a surface to store the logo on.
+			 *
+			 * XXX Passing null as the first parameter is actually correct,
+			 * despite the fact that valac reports a warning */
+			logo_surface = new Cairo.PdfSurface(null,
+			                                    logo_width,
+			                                    logo_height);
+			logo_context = new Cairo.Context(logo_surface);
+
+			logo.render_cairo(logo_context);
+
+			/* Copy the contents of the logo surface to the target surface */
+			context.save();
+			context.set_source_surface(logo_surface,
+			                           preferences.page_padding_x,
+			                           preferences.page_padding_y);
+			context.rectangle(preferences.page_padding_x,
+			                  preferences.page_padding_y,
+			                  logo_width,
+			                  logo_height);
+			context.fill();
+			context.restore();
 
 			/* Set some appearance properties */
 			context.set_line_width(preferences.line_width);
@@ -132,7 +180,7 @@ namespace DDTBuilder {
 
 			/* Draw the header (usually sender's info). The width of the cell
 			 * is chosen not to overlap with the address boxes */
-			box_width = dimensions.width -
+			box_width = page_width -
 			            preferences.header_position_x -
 			            preferences.address_box_width -
 			            preferences.page_padding_x -
@@ -154,7 +202,7 @@ namespace DDTBuilder {
 			/* Draw the recipient's address in a right-aligned box */
 			box_width = preferences.address_box_width;
 			box_height = AUTOMATIC_SIZE;
-			box_x = dimensions.width - preferences.page_padding_x - box_width;
+			box_x = page_width - preferences.page_padding_x - box_width;
 			box_y = preferences.page_padding_y;
 			offset = draw_company_address(_("Recipient"),
 			                              recipient,
@@ -194,12 +242,12 @@ namespace DDTBuilder {
 			row.cells[2].title = _("Date");
 			row.cells[2].text = date;
 			row.cells[3].title = _("Page");
-			row.cells[3].text = page;
+			row.cells[3].text = page_number;
 
 			table.add_row(row);
 
 			/* Draw first part of document info */
-			box_width = dimensions.width - (2 * preferences.page_padding_x);
+			box_width = page_width - (2 * preferences.page_padding_x);
 			box_height = AUTOMATIC_SIZE;
 			box_x = preferences.page_padding_x;
 			box_y = starting_point + preferences.elements_spacing;
@@ -348,13 +396,13 @@ namespace DDTBuilder {
 			 * Future versions will deal with the problem by splitting the goods
 			 * table into several pages; in the meantime, just make sure the
 			 * document can be drawn without overlapping stuff */
-			if (box_y + offset + preferences.page_padding_y > dimensions.height) {
+			if (box_y + offset + preferences.page_padding_y > page_height) {
 
 				throw new DocumentError.TOO_MANY_GOODS(_("Too many goods. Please remove some."));
 			}
 
 			/* Calculate the correct starting point */
-			box_y = dimensions.height - offset - preferences.page_padding_y;
+			box_y = page_height - offset - preferences.page_padding_y;
 
 			/* Actually draw the tables */
 			offset = draw_table(notes_table,

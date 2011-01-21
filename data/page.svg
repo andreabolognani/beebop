@@ -31,17 +31,17 @@
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
      inkscape:cx="115.07432"
-     inkscape:cy="972.07234"
+     inkscape:cy="970.64376"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="721"
+     inkscape:window-height="725"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="25"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata4">
@@ -69,26 +69,5 @@
          id="tspan3749"
          x="220"
          y="40.933613" /></text>
-    <g
-       id="g3795"
-       transform="translate(-9.5,-10.431428)">
-      <rect
-         y="20.933611"
-         x="20"
-         height="80"
-         width="122.85714"
-         id="rect3655"
-         style="fill:#007cff;fill-opacity:1;stroke:#0026e3;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         id="text3763"
-         y="70.493912"
-         x="36.365494"
-         style="font-size:30px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
-         xml:space="preserve"><tspan
-           y="70.493912"
-           x="36.365494"
-           id="tspan3765"
-           sodipodi:role="line">LOGO</tspan></text>
-    </g>
   </g>
 </svg>

@@ -41,7 +41,8 @@ namespace DDTBuilder {
 
 		private static Preferences singleton = null;
 
-		public string template_file { get; private set; }
+		public string page_file { get; private set; }
+		public string logo_file { get; private set; }
 		public string out_file { get; private set; }
 		public string ui_file { get; private set; }
 
@@ -74,7 +75,8 @@ namespace DDTBuilder {
 
 		construct {
 
-			template_file = Config.PKGDATADIR + "/template.svg";
+			page_file = Config.PKGDATADIR + "/page.svg";
+			logo_file = Config.PKGDATADIR + "/logo.svg";
 			out_file = Environment.get_tmp_dir() + "/out.pdf";
 			ui_file = Config.PKGDATADIR + "/ddtbuilder.ui";
 

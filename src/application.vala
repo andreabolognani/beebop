@@ -642,8 +642,8 @@ namespace DDTBuilder {
 			                                 "document_number_entry");
 			document.date = get_entry_text(document_date_entry,
 			                               "document_date_entry");
-			document.page = get_entry_text(document_page_entry,
-			                               "document_page_entry");
+			document.page_number = get_entry_text(document_page_entry,
+			                                      "document_page_entry");
 		}
 
 		private void collect_shipment_info(Document document) throws ApplicationError.EMPTY_FIELD {

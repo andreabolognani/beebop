@@ -2,7 +2,8 @@ NULL =
 
 pkgdata_DATA = \
 	ddtbuilder.ui \
-	template.svg \
+	page.svg \
+	logo.svg \
 	$(NULL)
 
 EXTRA_DIST = \
