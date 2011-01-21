@@ -107,17 +107,14 @@ namespace DDTBuilder {
 		private void load() throws Error {
 
 			File handle;
-			DataInputStream stream;
 			KeyFile pref;
 			double[] dimensions;
 			string data;
-			string line;
 			size_t len;
 
 			pref = new KeyFile();
 
 			data = "";
-			line = null;
 
 			try {
 
@@ -126,19 +123,11 @@ namespace DDTBuilder {
 				handle = handle.get_child(DIR);
 				handle = handle.get_child(FILE);
 
-				stream = new DataInputStream(handle.read(null));
-
-				do {
-
-					line = stream.read_line(out len, null);
-
-					if (line != null) {
-
-						data += line + "\n";
-					}
-				} while (line != null);
-
-				stream.close(null);
+				/* Load file contents */
+				handle.load_contents(null,
+				                     out data,
+				                     out len,
+				                     null);    /* No etag */
 
 				/* Parse the contents of the preferences file */
 				pref.load_from_data(data,
@@ -197,8 +186,6 @@ namespace DDTBuilder {
 		public void save() throws Error {
 
 			File handle;
-			OutputStream base_stream;
-			DataOutputStream stream;
 			KeyFile pref;
 			double[] dimensions;
 			string data;
@@ -253,13 +240,13 @@ namespace DDTBuilder {
 			handle = handle.get_child(FILE);
 
 			/* Replace the old preferences file (if any) */
-			base_stream = handle.replace(null,    /* No etag */
-			                             true,    /* Create backup */
-			                             FileCreateFlags.NONE,
-			                             null);
-			stream = new DataOutputStream(base_stream);
-			stream.put_string(data, null);
-			stream.close(null);
+			handle.replace_contents(data,
+			                        data.len(),
+			                        null,    /* No etag */
+			                        true,    /* Create backup */
+			                        FileCreateFlags.NONE,
+			                        null,    /* No new etag */
+			                        null);
 		}
 
 		public static Preferences get_instance() throws Error {
