@@ -275,6 +275,10 @@ namespace DDTBuilder {
 				add_action.activate.connect(add_row);
 				remove_action.activate.connect(remove_row);
 				preferences_action.activate.connect(show_preferences);
+
+				preferences_window.delete_event.connect((e) => { hide_preferences(); return true; });
+				preferences_cancel_button.clicked.connect(hide_preferences);
+				preferences_ok_button.clicked.connect(save_preferences);
 			}
 
 			if (error_message == null) {
@@ -819,6 +823,49 @@ namespace DDTBuilder {
 			fill_preferences_window();
 
 			preferences_window.show_all();
+		}
+
+		private void hide_preferences() {
+
+			preferences_window.hide();
+		}
+
+		private void save_preferences() {
+
+			Gtk.TextIter start;
+			Gtk.TextIter end;
+
+			/* Get header text */
+			header_text_view.buffer.get_bounds(out start, out end);
+			preferences.header_text = header_text_view.buffer.get_text(start,
+			                                                           end,
+			                                                           false);
+
+			/* Get other values */
+			preferences.page_padding_x = page_padding_x_spinbutton.value;
+			preferences.page_padding_y = page_padding_y_spinbutton.value;
+			preferences.cell_padding_x = cell_padding_x_spinbutton.value;
+			preferences.cell_padding_y = cell_padding_y_spinbutton.value;
+			preferences.elements_spacing_x = elements_spacing_x_spinbutton.value;
+			preferences.elements_spacing_y = elements_spacing_y_spinbutton.value;
+			preferences.address_box_width = address_boxes_width_spinbutton.value;
+			preferences.line_width = line_width_spinbutton.value;
+			preferences.default_unit = default_unit_entry.text;
+			preferences.default_reason = default_reason_entry.text;
+			preferences.default_transported_by = default_transported_by_entry.text;
+			preferences.default_carrier = default_carrier_entry.text;
+			preferences.default_duties = default_duties_entry.text;
+
+			try {
+
+				preferences.save();
+			}
+			catch (Error e) {
+
+				show_error(_("Could not save preferences: %s").printf(e.message));
+			}
+
+			hide_preferences();
 		}
 
 		/* Update the preferences window.
