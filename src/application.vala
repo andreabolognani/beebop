@@ -67,6 +67,7 @@ namespace DDTBuilder {
 		private Gtk.SpinButton elements_spacing_x_spinbutton;
 		private Gtk.SpinButton elements_spacing_y_spinbutton;
 		private Gtk.SpinButton address_boxes_width_spinbutton;
+		private Gtk.FontButton fontbutton;
 		private Gtk.SpinButton line_width_spinbutton;
 		private Gtk.Entry default_unit_entry;
 		private Gtk.Entry default_reason_entry;
@@ -198,6 +199,8 @@ namespace DDTBuilder {
 					                                as Gtk.SpinButton;
 					address_boxes_width_spinbutton = get_object("address_boxes_width_spinbutton")
 					                                 as Gtk.SpinButton;
+					fontbutton = get_object("fontbutton")
+					             as Gtk.FontButton;
 					line_width_spinbutton = get_object("line_width_spinbutton")
 					                        as Gtk.SpinButton;
 					default_unit_entry = get_object("default_unit_entry")
@@ -849,6 +852,7 @@ namespace DDTBuilder {
 			preferences.elements_spacing_x = elements_spacing_x_spinbutton.value;
 			preferences.elements_spacing_y = elements_spacing_y_spinbutton.value;
 			preferences.address_box_width = address_boxes_width_spinbutton.value;
+			preferences.font = fontbutton.font_name;
 			preferences.line_width = line_width_spinbutton.value;
 			preferences.default_unit = default_unit_entry.text;
 			preferences.default_reason = default_reason_entry.text;
@@ -882,6 +886,7 @@ namespace DDTBuilder {
 			elements_spacing_y_spinbutton.value = preferences.elements_spacing_y;
 			address_boxes_width_spinbutton.value = preferences.address_box_width;
 
+			fontbutton.font_name = preferences.font;
 			line_width_spinbutton.value = preferences.line_width;
 
 			default_unit_entry.text = preferences.default_unit;

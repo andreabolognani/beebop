@@ -173,7 +173,6 @@ namespace DDTBuilder {
 
 			/* Set some appearance properties */
 			context.set_line_width(preferences.line_width);
-			context.set_font_size(preferences.font_size);
 
 			cell = new Cell();
 			cell.text = preferences.header_text;
@@ -456,9 +455,7 @@ namespace DDTBuilder {
 			int text_height;
 
 			/* Set text properties */
-			font_description = new Pango.FontDescription();
-			font_description.set_family(preferences.font_family);
-			font_description.set_size((int) (preferences.font_size * Pango.SCALE));
+			font_description = new Pango.FontDescription().from_string(preferences.font);
 
 			/* Create a new layout in the selected spot */
 			context.move_to(x, y);

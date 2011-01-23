@@ -1314,7 +1314,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFontButton" id="fontbutton1">
+                          <object class="GtkFontButton" id="fontbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
