@@ -29,6 +29,7 @@ namespace DDTBuilder {
 
 		private Gtk.Builder ui;
 		private Gtk.Window window;
+		private Gtk.Window preferences_window;
 
 		private Gtk.Notebook notebook;
 
@@ -65,6 +66,7 @@ namespace DDTBuilder {
 		private Gtk.Action paste_action;
 		private Gtk.Action add_action;
 		private Gtk.Action remove_action;
+		private Gtk.Action preferences_action;
 
 		private List<Gtk.Label> table_labels;
 		private List<WidgetRow> table_widgets;
@@ -117,6 +119,8 @@ namespace DDTBuilder {
 
 					window = get_object("window")
 					         as Gtk.Window;
+					preferences_window = get_object("preferences_window")
+					                     as Gtk.Window;
 					notebook = get_object("notebook")
 					           as Gtk.Notebook;
 					recipient_name_entry = get_object("recipient_name_entry")
@@ -176,6 +180,8 @@ namespace DDTBuilder {
 					             as Gtk.Action;
 					remove_action = get_object("remove_action")
 					                as Gtk.Action;
+					preferences_action = get_object("preferences_action")
+					                     as Gtk.Action;
 
 					label = get_object("code_label")
 					        as Gtk.Label;
@@ -219,6 +225,7 @@ namespace DDTBuilder {
 				paste_action.activate.connect(paste);
 				add_action.activate.connect(add_row);
 				remove_action.activate.connect(remove_row);
+				preferences_action.activate.connect(show_preferences);
 			}
 
 			if (error_message == null) {
@@ -756,6 +763,11 @@ namespace DDTBuilder {
 
 				goods.add_row(row);
 			}
+		}
+
+		private void show_preferences() {
+
+			preferences_window.show_all();
 		}
 
 		/* Make a widget grab the focus.
