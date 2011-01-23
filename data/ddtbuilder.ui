@@ -1000,7 +1000,7 @@
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="shadow_type">etched-in</property>
                         <child>
-                          <object class="GtkTextView" id="textview1">
+                          <object class="GtkTextView" id="header_text_view">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
@@ -1030,7 +1030,7 @@
                         <property name="visible">True</property>
                         <property name="n_rows">5</property>
                         <property name="n_columns">3</property>
-                        <property name="column_spacing">2</property>
+                        <property name="column_spacing">5</property>
                         <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label16">
@@ -1057,10 +1057,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton1">
+                          <object class="GtkSpinButton" id="page_padding_x_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment2</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1071,10 +1074,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton2">
+                          <object class="GtkSpinButton" id="page_padding_y_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment3</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1085,10 +1091,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton3">
+                          <object class="GtkSpinButton" id="cell_padding_x_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment4</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1099,10 +1108,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton4">
+                          <object class="GtkSpinButton" id="cell_padding_y_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment5</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1155,10 +1167,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton5">
+                          <object class="GtkSpinButton" id="elements_spacing_x_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment6</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1169,10 +1184,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton6">
+                          <object class="GtkSpinButton" id="elements_spacing_y_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment7</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
@@ -1195,10 +1213,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton9">
+                          <object class="GtkSpinButton" id="address_boxes_width_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment8</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1249,7 +1270,7 @@
                         <property name="visible">True</property>
                         <property name="n_rows">2</property>
                         <property name="n_columns">2</property>
-                        <property name="column_spacing">2</property>
+                        <property name="column_spacing">5</property>
                         <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label36">
@@ -1264,10 +1285,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="spinbutton7">
+                          <object class="GtkSpinButton" id="line_width_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment9</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1307,12 +1331,12 @@
                   </packing>
                 </child>
                 <child type="tab">
-                  <object class="GtkLabel" id="label47">
+                  <object class="GtkLabel" id="label31">
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">Appearance</property>
                   </object>
                   <packing>
-                    <property name="position">4</property>
+                    <property name="position">2</property>
                     <property name="tab_fill">False</property>
                   </packing>
                 </child>
@@ -1328,7 +1352,7 @@
                         <property name="visible">True</property>
                         <property name="n_rows">5</property>
                         <property name="n_columns">2</property>
-                        <property name="column_spacing">2</property>
+                        <property name="column_spacing">5</property>
                         <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label39">
@@ -1389,7 +1413,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry1">
+                          <object class="GtkEntry" id="default_unit_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -1401,7 +1425,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry2">
+                          <object class="GtkEntry" id="default_reason_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -1415,7 +1439,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry3">
+                          <object class="GtkEntry" id="default_transported_by_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -1429,7 +1453,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry4">
+                          <object class="GtkEntry" id="default_carrier_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -1443,7 +1467,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry5">
+                          <object class="GtkEntry" id="default_duties_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
@@ -1473,58 +1497,6 @@
                     <property name="tab_fill">False</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkAlignment" id="alignment9">
-                    <property name="visible">True</property>
-                    <property name="top_padding">5</property>
-                    <property name="bottom_padding">5</property>
-                    <property name="left_padding">5</property>
-                    <property name="right_padding">5</property>
-                    <child>
-                      <object class="GtkTable" id="table7">
-                        <property name="visible">True</property>
-                        <property name="n_columns">2</property>
-                        <property name="column_spacing">2</property>
-                        <property name="row_spacing">2</property>
-                        <child>
-                          <object class="GtkFileChooserButton" id="filechooserbutton1">
-                            <property name="visible">True</property>
-                            <property name="create_folders">False</property>
-                            <property name="preview_widget_active">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="y_options"></property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label33">
-                            <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="label" translatable="yes">Viewer</property>
-                          </object>
-                          <packing>
-                            <property name="y_options"></property>
-                          </packing>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="label44">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">External commands</property>
-                  </object>
-                  <packing>
-                    <property name="position">4</property>
-                    <property name="tab_fill">False</property>
-                  </packing>
-                </child>
               </object>
               <packing>
                 <property name="position">0</property>
@@ -1533,10 +1505,11 @@
             <child>
               <object class="GtkHButtonBox" id="hbuttonbox1">
                 <property name="visible">True</property>
+                <property name="spacing">5</property>
                 <property name="layout_style">end</property>
                 <child>
-                  <object class="GtkButton" id="button1">
-                    <property name="label">gtk-apply</property>
+                  <object class="GtkButton" id="preferences_cancel_button">
+                    <property name="label">gtk-cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -1548,8 +1521,24 @@
                     <property name="position">0</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkButton" id="preferences_ok_button">
+                    <property name="label">gtk-ok</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -1560,5 +1549,53 @@
   </object>
   <object class="GtkAction" id="preferences_action">
     <property name="stock_id">gtk-preferences</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment2">
+    <property name="value">5</property>
+    <property name="upper">99</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment3">
+    <property name="value">5</property>
+    <property name="upper">100</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment4">
+    <property name="value">5</property>
+    <property name="upper">100</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment5">
+    <property name="value">5</property>
+    <property name="upper">100</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment6">
+    <property name="value">5</property>
+    <property name="upper">100</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment7">
+    <property name="value">5</property>
+    <property name="upper">100</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment8">
+    <property name="value">300</property>
+    <property name="upper">999</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment9">
+    <property name="value">1</property>
+    <property name="upper">100</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">10</property>
   </object>
 </interface>

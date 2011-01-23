@@ -59,6 +59,23 @@ namespace DDTBuilder {
 		private Gtk.Viewport table_viewport;
 		private Gtk.Table goods_table;
 
+		private Gtk.TextView header_text_view;
+		private Gtk.SpinButton page_padding_x_spinbutton;
+		private Gtk.SpinButton page_padding_y_spinbutton;
+		private Gtk.SpinButton cell_padding_x_spinbutton;
+		private Gtk.SpinButton cell_padding_y_spinbutton;
+		private Gtk.SpinButton elements_spacing_x_spinbutton;
+		private Gtk.SpinButton elements_spacing_y_spinbutton;
+		private Gtk.SpinButton address_boxes_width_spinbutton;
+		private Gtk.SpinButton line_width_spinbutton;
+		private Gtk.Entry default_unit_entry;
+		private Gtk.Entry default_reason_entry;
+		private Gtk.Entry default_transported_by_entry;
+		private Gtk.Entry default_carrier_entry;
+		private Gtk.Entry default_duties_entry;
+		private Gtk.Button preferences_ok_button;
+		private Gtk.Button preferences_cancel_button;
+
 		private Gtk.Action print_action;
 		private Gtk.Action quit_action;
 		private Gtk.Action cut_action;
@@ -165,6 +182,38 @@ namespace DDTBuilder {
 					                 as Gtk.Viewport;
 					goods_table = get_object("goods_table")
 					              as Gtk.Table;
+					header_text_view = get_object("header_text_view")
+					                   as Gtk.TextView;
+					page_padding_x_spinbutton = get_object("page_padding_x_spinbutton")
+					                            as Gtk.SpinButton;
+					page_padding_y_spinbutton = get_object("page_padding_y_spinbutton")
+					                            as Gtk.SpinButton;
+					cell_padding_x_spinbutton = get_object("cell_padding_x_spinbutton")
+					                            as Gtk.SpinButton;
+					cell_padding_y_spinbutton = get_object("cell_padding_y_spinbutton")
+					                            as Gtk.SpinButton;
+					elements_spacing_x_spinbutton = get_object("elements_spacing_x_spinbutton")
+					                                as Gtk.SpinButton;
+					elements_spacing_y_spinbutton = get_object("elements_spacing_y_spinbutton")
+					                                as Gtk.SpinButton;
+					address_boxes_width_spinbutton = get_object("address_boxes_width_spinbutton")
+					                                 as Gtk.SpinButton;
+					line_width_spinbutton = get_object("line_width_spinbutton")
+					                        as Gtk.SpinButton;
+					default_unit_entry = get_object("default_unit_entry")
+					                     as Gtk.Entry;
+					default_reason_entry = get_object("default_reason_entry")
+					                       as Gtk.Entry;
+					default_transported_by_entry = get_object("default_transported_by_entry")
+					                               as Gtk.Entry;
+					default_carrier_entry = get_object("default_carrier_entry")
+					                        as Gtk.Entry;
+					default_duties_entry = get_object("default_duties_entry")
+					                       as Gtk.Entry;
+					preferences_ok_button = get_object("preferences_ok_button")
+					                        as Gtk.Button;
+					preferences_cancel_button = get_object("preferences_cancel_button")
+					                            as Gtk.Button;
 
 					print_action = get_object("print_action")
 					               as Gtk.Action;
@@ -767,7 +816,32 @@ namespace DDTBuilder {
 
 		private void show_preferences() {
 
+			fill_preferences_window();
+
 			preferences_window.show_all();
+		}
+
+		/* Update the preferences window.
+		 */
+		private void fill_preferences_window() {
+
+			header_text_view.buffer.text = preferences.header_text;
+
+			page_padding_x_spinbutton.value = preferences.page_padding_x;
+			page_padding_y_spinbutton.value = preferences.page_padding_y;
+			cell_padding_x_spinbutton.value = preferences.cell_padding_x;
+			cell_padding_y_spinbutton.value = preferences.cell_padding_y;
+			elements_spacing_x_spinbutton.value = preferences.elements_spacing_x;
+			elements_spacing_y_spinbutton.value = preferences.elements_spacing_y;
+			address_boxes_width_spinbutton.value = preferences.address_box_width;
+
+			line_width_spinbutton.value = preferences.line_width;
+
+			default_unit_entry.text = preferences.default_unit;
+			default_reason_entry.text = preferences.default_reason;
+			default_transported_by_entry.text = preferences.default_transported_by;
+			default_carrier_entry.text = preferences.default_carrier;
+			default_duties_entry.text = preferences.default_duties;
 		}
 
 		/* Make a widget grab the focus.
