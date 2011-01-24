@@ -625,13 +625,18 @@ namespace DDTBuilder {
 		private void print () {
 
 			Document document;
+			DocumentPainter painter;
 			Pid viewer_pid;
 			string[] view_cmd;
 
 			try {
 
 				document = create_document ();
-				out_file = document.draw ();
+
+				painter = new DocumentPainter();
+				painter.document = document;
+
+				out_file = painter.draw ();
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
