@@ -26,6 +26,7 @@ namespace DDTBuilder {
 	public class Application : GLib.Object {
 
 		private Preferences preferences;
+		private Document document;
 
 		private Gtk.Builder ui;
 		private Gtk.Window window;
@@ -77,6 +78,7 @@ namespace DDTBuilder {
 		private Gtk.Button preferences_ok_button;
 		private Gtk.Button preferences_cancel_button;
 
+		private Gtk.Action open_action;
 		private Gtk.Action print_action;
 		private Gtk.Action quit_action;
 		private Gtk.Action cut_action;
@@ -110,6 +112,7 @@ namespace DDTBuilder {
 			try {
 
 				preferences = Preferences.get_instance ();
+				document = new Document ();
 			}
 			catch (Error e) {
 
@@ -218,6 +221,8 @@ namespace DDTBuilder {
 					preferences_cancel_button = get_object ("preferences_cancel_button")
 					                            as Gtk.Button;
 
+					open_action = get_object ("open_action")
+					              as Gtk.Action;
 					print_action = get_object ("print_action")
 					               as Gtk.Action;
 					quit_action = get_object ("quit_action")
@@ -270,6 +275,7 @@ namespace DDTBuilder {
 				recipient_city_entry.changed.connect (city_changed);
 				send_to_recipient_checkbutton.toggled.connect (toggle_send_to_recipient);
 
+				open_action.activate.connect (open);
 				print_action.activate.connect (print);
 				quit_action.activate.connect (quit);
 				cut_action.activate.connect (cut);
@@ -620,6 +626,48 @@ namespace DDTBuilder {
 
 			dialog.run ();
 			dialog.destroy ();
+		}
+
+		/* Open a file and load its contents */
+		private void open () {
+
+			Gtk.FileChooserDialog dialog;
+			Document tmp;
+
+			dialog = new Gtk.FileChooserDialog (_("Open file"),
+			                                    window,
+			                                    Gtk.FileChooserAction.OPEN,
+			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+
+			/* Display the dialog */
+			if (dialog.run () == Gtk.ResponseType.ACCEPT) {
+
+				/* Create a new document */
+				tmp = new Document ();
+				tmp.filename = dialog.get_filename ();
+
+				/* Destroy the dialog */
+				dialog.destroy ();
+
+				try {
+
+					/* Read and parse the file */
+					tmp.load ();
+
+					show_warning ("Loaded document %s".printf (tmp.number));
+				}
+				catch (DocumentError e) {
+
+					/* Show an error */
+					show_error (_("Could not load document: %s").printf (e.message));
+				}
+			}
+			else {
+
+				/* Destroy the dialog */
+				dialog.destroy ();
+			}
 		}
 
 		private void print () {
