@@ -162,7 +162,7 @@ namespace DDTBuilder {
 		}
 
 		/* Parse the contents of the document tag */
-		private void parse_document (Xml.Node *parent) throws DocumentError.FORMAT {
+		private void parse_document (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -205,7 +205,7 @@ namespace DDTBuilder {
 		}
 
 		/* Parse the contents of the recipient tag */
-		private void parse_recipient (Xml.Node *parent) throws DocumentError.FORMAT {
+		private void parse_recipient (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -244,7 +244,7 @@ namespace DDTBuilder {
 		}
 
 		/* Parse the contents of the destination tag */
-		private void parse_destination (Xml.Node *parent) throws DocumentError.FORMAT {
+		private void parse_destination (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -276,7 +276,7 @@ namespace DDTBuilder {
 		}
 
 		/* Parse the contents of the shipment tag */
-		private void parse_shipment (Xml.Node *parent) throws DocumentError.FORMAT {
+		private void parse_shipment (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -311,7 +311,7 @@ namespace DDTBuilder {
 		}
 
 		/* Parse the contents of the goods tag */
-		private void parse_goods (Xml.Node *parent) throws DocumentError.FORMAT {
+		private void parse_goods (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 			Row row;
@@ -342,7 +342,7 @@ namespace DDTBuilder {
 						row = parse_good (node);
 						goods.add_row (row);
 					}
-					catch (Error e) {
+					catch (DocumentError e) {
 
 						throw e;
 					}
