@@ -56,6 +56,7 @@ namespace DDTBuilder {
 
 		private Preferences preferences;
 
+		public string filename { get; set; }
 		public string number { get; set; }
 		public string date { get; set; }
 		public string page_number { get; set; }
@@ -86,6 +87,8 @@ namespace DDTBuilder {
 		 * Reset all information stored in a document to default values.
 		 */
 		public void clear () {
+
+			filename = "";
 
 			number = "";
 			date = "";
@@ -123,7 +126,7 @@ namespace DDTBuilder {
 			string data;
 			size_t len;
 
-			handle = File.new_for_path ("test.xml");
+			handle = File.new_for_path (filename);
 
 			try {
 
