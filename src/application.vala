@@ -1065,6 +1065,7 @@ namespace DDTBuilder {
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
 			Gtk.init (ref args);
+			Xml.Parser.init ();
 			Rsvg.init ();
 
 			Environment.set_application_name (_("DDT Builder"));

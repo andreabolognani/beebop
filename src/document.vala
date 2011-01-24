@@ -20,12 +20,39 @@ namespace DDTBuilder {
 
 	public errordomain DocumentError {
 		IO,
+		FORMAT,
 		TOO_MANY_GOODS
 	}
 
 	public class Document : GLib.Object {
 
 		public const double AUTOMATIC_SIZE = -1.0;
+
+		public const string TAG_DOCUMENT = "document";
+		public const string TAG_NUMBER = "number";
+		public const string TAG_DATE = "date";
+		public const string TAG_RECIPIENT = "recipient";
+		public const string TAG_DESTINATION = "destination";
+		public const string TAG_SHIPMENT = "shipment";
+		public const string TAG_GOODS = "goods";
+		public const string TAG_NAME = "name";
+		public const string TAG_STREET = "street";
+		public const string TAG_CITY = "city";
+		public const string TAG_VATIN = "vatin";
+		public const string TAG_CLIENT_CODE = "client_code";
+		public const string TAG_REASON = "reason";
+		public const string TAG_TRANSPORTED_BY = "transported_by";
+		public const string TAG_CARRIER = "carrier";
+		public const string TAG_DELIVERY_DUTIES = "delivery_duties";
+		public const string TAG_OUTSIDE_APPEARANCE = "outside_appearance";
+		public const string TAG_NUMBER_OF_PARCELS = "number_of_parcels";
+		public const string TAG_WEIGHT = "weight";
+		public const string TAG_GOOD = "good";
+		public const string TAG_CODE = "code";
+		public const string TAG_REFERENCE = "reference";
+		public const string TAG_DESCRIPTION = "description";
+		public const string TAG_UNIT_OF_MEASUREMENT = "unit_of_measurement";
+		public const string TAG_QUANTITY = "quantity";
 
 		private Preferences preferences;
 
@@ -76,6 +103,299 @@ namespace DDTBuilder {
 			                  _("Description"),
 			                  _("U.M."),
 			                  _("Quantity")};
+		}
+
+		/* Load a document from file.
+		 *
+		 * A document can be saved in XML form so that it can be loaded
+		 * and edited at a later time. */
+		public void load () throws DocumentError {
+
+			File handle;
+			Xml.Doc *doc;
+			Xml.Node *node;
+			string data;
+			size_t len;
+
+			handle = File.new_for_path ("test.xml");
+
+			try {
+
+				/* Load file contents */
+				handle.load_contents (null,
+				                      out data,
+				                      out len,
+				                      null);
+			}
+			catch (Error e) {
+
+				throw new DocumentError.IO (e.message);
+			}
+
+			/* Parse the file */
+			doc = Xml.Parser.parse_doc (data);
+
+			if (doc == null) {
+
+				throw new DocumentError.IO (_("Malformed document"));
+			}
+
+			/* Get root element */
+			node = doc->get_root_element ();
+
+			if (node == null) {
+
+				delete doc;
+				throw new DocumentError.FORMAT (_("No root element"));
+			}
+
+			if ((node->name).collate (TAG_DOCUMENT) != 0) {
+
+				delete doc;
+				throw new DocumentError.FORMAT (_("Invalid root element"));
+			}
+
+			/* Navigate the tree structure and extract all needed information */
+			parse_document (node);
+
+			delete doc;
+		}
+
+		/* Parse the contents of the document tag */
+		private void parse_document (Xml.Node *parent) throws DocumentError.FORMAT {
+
+			Xml.Node *node;
+
+			for (node = parent->children; node != null; node = node->next) {
+
+				/* Skip non-node contents */
+				if (node->type != Xml.ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if ((node->name).collate (TAG_NUMBER) == 0) {
+
+					number = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_DATE) == 0) {
+
+					date = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_RECIPIENT) == 0) {
+
+					parse_recipient (node);
+				}
+				else if ((node->name).collate (TAG_DESTINATION) == 0) {
+
+					parse_destination (node);
+				}
+				else if ((node->name).collate (TAG_SHIPMENT) == 0) {
+
+					parse_shipment (node);
+				}
+				else if ((node->name).collate (TAG_GOODS) == 0) {
+
+					parse_goods (node);
+				}
+				else {
+
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'".printf (TAG_DOCUMENT)));
+				}
+			}
+		}
+
+		/* Parse the contents of the recipient tag */
+		private void parse_recipient (Xml.Node *parent) throws DocumentError.FORMAT {
+
+			Xml.Node *node;
+
+			for (node = parent->children; node != null; node = node->next) {
+
+				/* Skip non-node contents */
+				if (node->type != Xml.ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if ((node->name).collate (TAG_NAME) == 0) {
+
+					recipient.name = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_STREET) == 0) {
+
+					recipient.street = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_CITY) == 0) {
+
+					recipient.city = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_VATIN) == 0) {
+
+					recipient.vatin = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_CLIENT_CODE) == 0) {
+
+					recipient.client_code = node->get_content ();
+				}
+				else {
+
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_RECIPIENT));
+				}
+			}
+		}
+
+		/* Parse the contents of the destination tag */
+		private void parse_destination (Xml.Node *parent) throws DocumentError.FORMAT {
+
+			Xml.Node *node;
+
+			for (node = parent->children; node != null; node = node->next) {
+
+				/* Skip non-node contents */
+				if (node->type != Xml.ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if ((node->name).collate (TAG_NAME) == 0) {
+
+					destination.name = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_STREET) == 0) {
+
+					destination.street = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_CITY) == 0) {
+
+					destination.city = node->get_content ();
+				}
+				else {
+
+					warning ("%s", node->name);
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_DESTINATION));
+				}
+			}
+		}
+
+		/* Parse the contents of the shipment tag */
+		private void parse_shipment (Xml.Node *parent) throws DocumentError.FORMAT {
+
+			Xml.Node *node;
+
+			for (node = parent->children; node != null; node = node->next) {
+
+				/* Skip non-node contents */
+				if (node->type != Xml.ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if ((node->name).collate (TAG_REASON) == 0) {
+
+					shipment_info.reason = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_TRANSPORTED_BY) == 0) {
+
+					shipment_info.transported_by = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_CARRIER) == 0) {
+
+					shipment_info.carrier = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_DELIVERY_DUTIES) == 0) {
+
+					shipment_info.duties = node->get_content ();
+				}
+				else {
+
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_SHIPMENT));
+				}
+			}
+		}
+
+		/* Parse the contents of the goods tag */
+		private void parse_goods (Xml.Node *parent) throws DocumentError.FORMAT {
+
+			Xml.Node *node;
+			Row row;
+
+			for (node = parent->children; node != null; node = node->next) {
+
+				/* Skip non-node contents */
+				if (node->type != Xml.ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if ((node->name).collate (TAG_OUTSIDE_APPEARANCE) == 0) {
+
+					goods_info.appearance = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_NUMBER_OF_PARCELS) == 0) {
+
+					goods_info.parcels = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_WEIGHT) == 0) {
+
+					goods_info.weight = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_GOOD) == 0) {
+
+					try {
+
+						row = parse_good (node);
+						goods.add_row (row);
+					}
+					catch (Error e) {
+
+						throw e;
+					}
+				}
+				else {
+
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_GOODS));
+				}
+			}
+		}
+
+		/* Parse the contents of the good tag */
+		private Row parse_good (Xml.Node *parent) throws DocumentError {
+
+			Xml.Node *node;
+			Row row;
+
+			row = new Row (5);
+
+			for (node = parent->children; node != null; node = node->next) {
+
+				/* Skip non-node contents */
+				if (node->type != Xml.ElementType.ELEMENT_NODE) {
+					continue;
+				}
+
+				if ((node->name).collate (TAG_CODE) == 0) {
+
+					row.cells[0].text = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_REFERENCE) == 0) {
+
+					row.cells[1].text = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_DESCRIPTION) == 0) {
+
+					row.cells[2].text = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_UNIT_OF_MEASUREMENT) == 0) {
+
+					row.cells[3].text = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_QUANTITY) == 0) {
+
+					row.cells[4].text = node->get_content ();
+				}
+				else {
+
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_GOOD));
+				}
+			}
+
+			return row;
 		}
 
 		public string draw () throws Error {
