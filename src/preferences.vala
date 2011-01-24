@@ -21,7 +21,7 @@ namespace DDTBuilder {
 	public class Preferences : GLib.Object {
 
 		private static string DIR = "ddtbuilder";
-		private static string FILE = "ddtbuilder.conf";
+		private static string FILE = "preferences";
 		private static string GROUP = "DDT Builder";
 		private static string KEY_VIEWER = "viewer";
 		private static string KEY_HEADER_TEXT = "header_text";

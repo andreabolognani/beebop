@@ -179,6 +179,7 @@ namespace DDTBuilder {
 
 			/* Set some appearance properties */
 			context.set_line_width (preferences.line_width);
+			context.set_source_rgb (0.0, 0.0, 0.0);
 
 			cell = new Cell ();
 			cell.text = preferences.header_text;
@@ -465,6 +466,7 @@ namespace DDTBuilder {
 			font_description = font_description.from_string (preferences.font);
 
 			/* Create a new layout in the selected spot */
+			context.save ();
 			context.move_to (x, y);
 			layout = Pango.cairo_create_layout (context);
 
@@ -478,6 +480,7 @@ namespace DDTBuilder {
 				/* Show contents */
 				Pango.cairo_show_layout (context, layout);
 			}
+			context.restore ();
 
 			layout.get_size (out text_width,
 			                 out text_height);
