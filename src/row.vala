@@ -42,13 +42,13 @@ namespace DDTBuilder {
 
 			cells = new Cell[columns];
 			for (i = 0; i < columns; i++) {
-				cells[i] = new Cell();
+				cells[i] = new Cell ();
 			}
 		}
 
-		public Row(int columns) {
+		public Row (int columns) {
 
-			GLib.Object(columns: columns);
+			GLib.Object (columns: columns);
 		}
 	}
 }

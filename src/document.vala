@@ -23,9 +23,9 @@ namespace DDTBuilder {
 		TOO_MANY_GOODS
 	}
 
-	public const double AUTOMATIC_SIZE = -1.0;
-
 	public class Document : GLib.Object {
+
+		public const double AUTOMATIC_SIZE = -1.0;
 
 		private Preferences preferences;
 
@@ -45,7 +45,7 @@ namespace DDTBuilder {
 
 			try {
 
-				preferences = Preferences.get_instance();
+				preferences = Preferences.get_instance ();
 			}
 			catch (Error e) {
 
@@ -58,12 +58,12 @@ namespace DDTBuilder {
 			date = "";
 			page_number = "";
 
-			recipient = new CompanyInfo();
-			destination = new CompanyInfo();
-			goods_info = new GoodsInfo();
-			shipment_info = new ShipmentInfo();
+			recipient = new CompanyInfo ();
+			destination = new CompanyInfo ();
+			goods_info = new GoodsInfo ();
+			shipment_info = new ShipmentInfo ();
 
-			goods = new Table(5);
+			goods = new Table (5);
 
 			/* Set size and heading for each column */
 			goods.sizes = {70.0,
@@ -78,7 +78,7 @@ namespace DDTBuilder {
 			                  _("Quantity")};
 		}
 
-		public string draw() throws Error {
+		public string draw () throws Error {
 
 			Cairo.Surface logo_surface;
 			Cairo.Context logo_context;
@@ -109,72 +109,78 @@ namespace DDTBuilder {
 			try {
 
 				/* Read and parse the contents of the page file */
-				FileUtils.get_contents(preferences.page_file, out contents, out contents_length);
-				page = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
+				FileUtils.get_contents (preferences.page_file,
+				                        out contents,
+				                        out contents_length);
+				page = new Rsvg.Handle.from_data ((uchar[]) contents,
+				                                  contents_length);
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO(_("Could not load page template file: %s").printf(preferences.page_file));
+				throw new DocumentError.IO (_("Could not load page template file: %s").printf (preferences.page_file));
 			}
 
 			try {
 
 				/* Read and parse the contents of the template file */
-				FileUtils.get_contents(preferences.logo_file, out contents, out contents_length);
-				logo = new Rsvg.Handle.from_data((uchar[]) contents, contents_length);
+				FileUtils.get_contents (preferences.logo_file,
+				                        out contents,
+				                        out contents_length);
+				logo = new Rsvg.Handle.from_data ((uchar[]) contents,
+				                                  contents_length);
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO(_("Could not load logo file: %s").printf(preferences.logo_file));
+				throw new DocumentError.IO (_("Could not load logo file: %s").printf (preferences.logo_file));
 			}
 
 			/* Get templates' dimensions */
-			dimensions = Rsvg.DimensionData();
+			dimensions = Rsvg.DimensionData ();
 
-			page.get_dimensions(dimensions);
+			page.get_dimensions (dimensions);
 			page_width = dimensions.width;
 			page_height = dimensions.height;
 
-			logo.get_dimensions(dimensions);
+			logo.get_dimensions (dimensions);
 			logo_width = dimensions.width;
 			logo_height = dimensions.height;
 
 			/* Make the target surface as big as the page template */
-			surface = new Cairo.PdfSurface(preferences.out_file,
-			                               page_width,
-			                               page_height);
-			context = new Cairo.Context(surface);
+			surface = new Cairo.PdfSurface (preferences.out_file,
+			                                page_width,
+			                                page_height);
+			context = new Cairo.Context (surface);
 
 			/* Draw the page template on the surface */
-			page.render_cairo(context);
+			page.render_cairo (context);
 
 			/* Create a surface to store the logo on.
 			 *
 			 * XXX Passing null as the first parameter is actually correct,
 			 * despite the fact that valac reports a warning */
-			logo_surface = new Cairo.PdfSurface(null,
-			                                    logo_width,
-			                                    logo_height);
-			logo_context = new Cairo.Context(logo_surface);
+			logo_surface = new Cairo.PdfSurface (null,
+			                                     logo_width,
+			                                     logo_height);
+			logo_context = new Cairo.Context (logo_surface);
 
-			logo.render_cairo(logo_context);
+			logo.render_cairo (logo_context);
 
 			/* Copy the contents of the logo surface to the target surface */
-			context.save();
-			context.set_source_surface(logo_surface,
-			                           preferences.page_padding_x,
-			                           preferences.page_padding_y);
-			context.rectangle(preferences.page_padding_x,
-			                  preferences.page_padding_y,
-			                  logo_width,
-			                  logo_height);
-			context.fill();
-			context.restore();
+			context.save ();
+			context.set_source_surface (logo_surface,
+			                            preferences.page_padding_x,
+			                            preferences.page_padding_y);
+			context.rectangle (preferences.page_padding_x,
+			                   preferences.page_padding_y,
+			                   logo_width,
+			                   logo_height);
+			context.fill ();
+			context.restore ();
 
 			/* Set some appearance properties */
-			context.set_line_width(preferences.line_width);
+			context.set_line_width (preferences.line_width);
 
-			cell = new Cell();
+			cell = new Cell ();
 			cell.text = preferences.header_text;
 
 			/* Draw the header (usually sender's info). The width of the cell,
@@ -192,12 +198,12 @@ namespace DDTBuilder {
 						preferences.elements_spacing_x +
 			            preferences.cell_padding_x;
 			box_height = AUTOMATIC_SIZE;
-			offset = draw_cell(cell,
-			                   box_x,
-			                   box_y,
-			                   box_width,
-			                   box_height,
-			                   true);
+			offset = draw_cell (cell,
+			                    box_x,
+			                    box_y,
+			                    box_width,
+			                    box_height,
+			                    true);
 
 			/* This will be the new starting point if the address
 			 * boxes are not taller */
@@ -208,37 +214,37 @@ namespace DDTBuilder {
 			box_height = AUTOMATIC_SIZE;
 			box_x = page_width - preferences.page_padding_x - box_width;
 			box_y = preferences.page_padding_y;
-			offset = draw_company_address(_("Recipient"),
-			                              recipient,
-			                              box_x,
-			                              box_y,
-			                              box_width,
-			                              box_height,
-			                              true);
+			offset = draw_company_address (_("Recipient"),
+			                               recipient,
+			                               box_x,
+			                               box_y,
+			                               box_width,
+			                               box_height,
+			                               true);
 
 			/* Draw the destination's address in a rigth-aligned box,
 			 * just below the one used for the recipient's address */
 			box_y += offset + preferences.elements_spacing_y;
-			offset = draw_company_address(_("Destination"),
-			                              destination,
-			                              box_x,
-			                              box_y,
-			                              box_width,
-			                              box_height,
-			                              true);
+			offset = draw_company_address (_("Destination"),
+			                               destination,
+			                               box_x,
+			                               box_y,
+			                               box_width,
+			                               box_height,
+			                               true);
 
 			/* The starting point is either below the address boxes or
 			 * below the header, depending on which one is taller */
-			starting_point = Math.fmax(starting_point, box_y + offset);
+			starting_point = Math.fmax (starting_point, box_y + offset);
 
 			/* Create a table to store document info */
-			table = new Table(4);
+			table = new Table (4);
 			table.sizes = {AUTOMATIC_SIZE,
 			               150.0,
 			               150.0,
 			               150.0};
 
-			row = new Row(table.columns);
+			row = new Row (table.columns);
 			row.cells[0].title = _("Document type");
 			row.cells[0].text = _("BOP");
 			row.cells[1].title = _("Number");
@@ -248,26 +254,26 @@ namespace DDTBuilder {
 			row.cells[3].title = _("Page");
 			row.cells[3].text = page_number;
 
-			table.add_row(row);
+			table.add_row (row);
 
 			/* Draw first part of document info */
 			box_width = page_width - (2 * preferences.page_padding_x);
 			box_height = AUTOMATIC_SIZE;
 			box_x = preferences.page_padding_x;
 			box_y = starting_point + preferences.elements_spacing_y;
-			offset = draw_table(table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 
-			table = new Table(3);
+			table = new Table (3);
 			table.sizes = {200.0,
 			               AUTOMATIC_SIZE,
 			               150.0};
 
-			row = new Row(table.columns);
+			row = new Row (table.columns);
 			row.cells[0].title = _("Client code");
 			row.cells[0].text = recipient.client_code;
 			row.cells[1].title = _("VATIN");
@@ -275,52 +281,52 @@ namespace DDTBuilder {
 			row.cells[2].title = _("Delivery duties");
 			row.cells[2].text = shipment_info.duties;
 
-			table.add_row(row);
+			table.add_row (row);
 
 			/* Draw second part of document info */
 			box_y += offset;
-			offset = draw_table(table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 
 			/* Add a closing row to the goods table */
-			row = new Row(goods.columns);
+			row = new Row (goods.columns);
 			for (i = 0; i < goods.columns; i++) {
 
 				row.cells[i].text = "*****";
 			}
-			goods.add_row(row);
+			goods.add_row (row);
 
 			/* Draw the goods table */
 			box_y += offset + preferences.elements_spacing_y;
-			offset = draw_table(goods,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (goods,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 
 			/* Create a table to store notes */
-			notes_table = new Table(1);
+			notes_table = new Table (1);
 			notes_table.sizes = {AUTOMATIC_SIZE};
 
-			row = new Row(notes_table.columns);
+			row = new Row (notes_table.columns);
 			row.cells[0].title = _("Notes");
 			row.cells[0].text = "\n";
 
-			notes_table.add_row(row);
+			notes_table.add_row (row);
 
 			/* Create another info table */
-			reason_table = new Table(4);
+			reason_table = new Table (4);
 			reason_table.sizes = {200.0,
 			                      150.0,
 			                      AUTOMATIC_SIZE,
 			                      150.0};
 
-			row = new Row(reason_table.columns);
+			row = new Row (reason_table.columns);
 			row.cells[0].title = _("Reason");
 			row.cells[0].text = shipment_info.reason;
 			row.cells[1].title = _("Transported by");
@@ -330,16 +336,16 @@ namespace DDTBuilder {
 			row.cells[3].title = _("Carrier");
 			row.cells[3].text = shipment_info.carrier;
 
-			reason_table.add_row(row);
+			reason_table.add_row (row);
 
 			/* Create yet another info table */
-			date_table = new Table(4);
+			date_table = new Table (4);
 			date_table.sizes = {200.0,
 			                    200.0,
 			                    AUTOMATIC_SIZE,
 			                    150.0};
 
-			row = new Row(date_table.columns);
+			row = new Row (date_table.columns);
 			row.cells[0].title = _("Shipping date and time");
 			row.cells[0].text = " ";
 			row.cells[1].title = _("Delivery date and time");
@@ -349,15 +355,15 @@ namespace DDTBuilder {
 			row.cells[3].title = _("Weight");
 			row.cells[3].text = goods_info.weight;
 
-			date_table.add_row(row);
+			date_table.add_row (row);
 
 			/* Create a table for signatures */
-			signatures_table = new Table(3);
+			signatures_table = new Table (3);
 			signatures_table.sizes = {200.0,
 			                          200.0,
 			                          AUTOMATIC_SIZE};
 
-			row = new Row(signatures_table.columns);
+			row = new Row (signatures_table.columns);
 			row.cells[0].title = _("Driver\xe2\x80\x99s signature");
 			row.cells[0].text = " ";
 			row.cells[1].title = _("Carrier\xe2\x80\x99s signature");
@@ -365,35 +371,35 @@ namespace DDTBuilder {
 			row.cells[2].title = _("Recipient\xe2\x80\x99s signature");
 			row.cells[2].text = " ";
 
-			signatures_table.add_row(row);
+			signatures_table.add_row (row);
 
 			/* Calculate the total sizes of all these info tables */
 			box_y += offset + preferences.elements_spacing_y;
 			offset = 0.0;
-			offset += draw_table(notes_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     false);
-			offset += draw_table(reason_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     false);
-			offset += draw_table(date_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     false);
-			offset += draw_table(signatures_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     false);
+			offset += draw_table (notes_table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      false);
+			offset += draw_table (reason_table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      false);
+			offset += draw_table (date_table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      false);
+			offset += draw_table (signatures_table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      false);
 
 			/* Make sure the contents don't overflow the page height.
 			 *
@@ -402,52 +408,52 @@ namespace DDTBuilder {
 			 * document can be drawn without overlapping stuff */
 			if (box_y + offset + preferences.page_padding_y > page_height) {
 
-				throw new DocumentError.TOO_MANY_GOODS(_("Too many goods. Please remove some."));
+				throw new DocumentError.TOO_MANY_GOODS (_("Too many goods. Please remove some."));
 			}
 
 			/* Calculate the correct starting point */
 			box_y = page_height - offset - preferences.page_padding_y;
 
 			/* Actually draw the tables */
-			offset = draw_table(notes_table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (notes_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 			box_y += offset;
-			offset = draw_table(reason_table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (reason_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 			box_y += offset;
-			offset = draw_table(date_table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (date_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 			box_y += offset;
-			offset = draw_table(signatures_table,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    true);
+			offset = draw_table (signatures_table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     true);
 
-			context.show_page();
+			context.show_page ();
 
-			if (context.status() != Cairo.Status.SUCCESS) {
+			if (context.status () != Cairo.Status.SUCCESS) {
 
-				throw new DocumentError.IO(_("Drawing error."));
+				throw new DocumentError.IO (_("Drawing error."));
 			}
 
 			return preferences.out_file;
 		}
 
-		private double draw_text(string text, double x, double y, double width, double height, bool really) {
+		private double draw_text (string text, double x, double y, double width, double height, bool really) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -455,53 +461,55 @@ namespace DDTBuilder {
 			int text_height;
 
 			/* Set text properties */
-			font_description = new Pango.FontDescription().from_string(preferences.font);
+			font_description = new Pango.FontDescription ();
+			font_description = font_description.from_string (preferences.font);
 
 			/* Create a new layout in the selected spot */
-			context.move_to(x, y);
-			layout = Pango.cairo_create_layout(context);
+			context.move_to (x, y);
+			layout = Pango.cairo_create_layout (context);
 
 			/* Set layout properties */
-			layout.set_font_description(font_description);
-			layout.set_width((int) (width * Pango.SCALE));
-			layout.set_markup(text, -1);
+			layout.set_font_description (font_description);
+			layout.set_width ((int) (width * Pango.SCALE));
+			layout.set_markup (text, -1);
 
 			if (really) {
 
 				/* Show contents */
-				Pango.cairo_show_layout(context, layout);
+				Pango.cairo_show_layout (context, layout);
 			}
 
-			layout.get_size(out text_width, out text_height);
+			layout.get_size (out text_width,
+			                 out text_height);
 
 			return (text_height / Pango.SCALE);
 		}
 
-		private double draw_cell(Cell cell, double x, double y, double width, double height, bool really) {
+		private double draw_cell (Cell cell, double x, double y, double width, double height, bool really) {
 
 			string text;
 
 			text = "";
 
 			/* Add the title before the text, if a title is set */
-			if (cell.title.collate("") != 0) {
+			if (cell.title.collate ("") != 0) {
 
 				text += "<b>" + cell.title + "</b>";
 
 				/* Start a new line after the title only if there is some text */
-				if (cell.text.collate("") != 0) {
+				if (cell.text.collate ("") != 0) {
 					text += "\n";
 				}
 			}
 
 			text += cell.text;
 
-			height = draw_text(text,
-			                   x + preferences.cell_padding_x,
-			                   y + preferences.cell_padding_y,
-			                   width - (2 * preferences.cell_padding_x),
-			                   height,
-			                   really);
+			height = draw_text (text,
+			                    x + preferences.cell_padding_x,
+			                    y + preferences.cell_padding_y,
+			                    width - (2 * preferences.cell_padding_x),
+			                    height,
+			                    really);
 
 			/* Add vertical padding to the text height */
 			height += (2 * preferences.cell_padding_y);
@@ -509,50 +517,50 @@ namespace DDTBuilder {
 			return height;
 		}
 
-		private double draw_cell_with_border(Cell cell, double x, double y, double width, double height, bool really) {
+		private double draw_cell_with_border (Cell cell, double x, double y, double width, double height, bool really) {
 
-			height = draw_cell(cell,
-			                   x,
-			                   y,
-			                   width,
-			                   height,
-			                   really);
+			height = draw_cell (cell,
+			                    x,
+			                    y,
+			                    width,
+			                    height,
+			                    really);
 
 			if (really) {
 
 				/* Draw the border */
-				context.rectangle(x,
-				                  y,
-				                  width,
-				                  height);
-				context.stroke();
+				context.rectangle (x,
+				                   y,
+				                   width,
+				                   height);
+				context.stroke ();
 			}
 
 			return height;
 		}
 
-		private double draw_company_address(string title, CompanyInfo company, double x, double y, double width, double height, bool really) {
+		private double draw_company_address (string title, CompanyInfo company, double x, double y, double width, double height, bool really) {
 
 			Cell cell;
 
-			cell = new Cell();
+			cell = new Cell ();
 
 			cell.title = title;
 			cell.text = company.name + "\n";
 			cell.text += company.street + "\n";
 			cell.text += company.city;
 
-			height = draw_cell_with_border(cell,
-			                               x,
-			                               y,
-			                               width,
-			                               height,
-			                               really);
+			height = draw_cell_with_border (cell,
+			                                x,
+			                                y,
+			                                width,
+			                                height,
+			                                really);
 
 			return height;
 		}
 
-		private double draw_table(Table table, double x, double y, double width, double height, bool really) {
+		private double draw_table (Table table, double x, double y, double width, double height, bool really) {
 
 			Row row;
 			double[] tmp;
@@ -596,14 +604,14 @@ namespace DDTBuilder {
 			draw_headings = false;
 
 			/* Create headings row */
-			row = new Row(len);
+			row = new Row (len);
 			for (i = 0; i < len; i++) {
 
 				row.cells[i].title = table.headings[i];
 
 				/* If at least one of the headings is not empty,
 				 * draw all headings */
-				if (table.headings[i].collate("") != 0) {
+				if (table.headings[i].collate ("") != 0) {
 
 					draw_headings = true;
 				}
@@ -611,31 +619,31 @@ namespace DDTBuilder {
 
 			if (draw_headings) {
 
-				offset = draw_row(row,
-				                  sizes,
-				                  x,
-				                  y,
-				                  width,
-				                  height,
-				                  really);
+				offset = draw_row (row,
+				                   sizes,
+				                   x,
+				                   y,
+				                   width,
+				                   height,
+				                   really);
 				y += offset;
 				height += offset;
 			}
 
 			/* Get the number of data rows */
-			len = (int) table.rows.length();
+			len = (int) table.rows.length ();
 
 			for (i = 0; i < len; i++) {
 
 				/* Draw a row */
-				row = table.rows.nth_data(i);
-				offset = draw_row(row,
-				                  sizes,
-				                  x,
-				                  y,
-				                  width,
-				                  height,
-				                  really);
+				row = table.rows.nth_data (i);
+				offset = draw_row (row,
+				                   sizes,
+				                   x,
+				                   y,
+				                   width,
+				                   height,
+				                   really);
 
 				/* Update the vertical offset */
 				y += offset;
@@ -645,7 +653,7 @@ namespace DDTBuilder {
 			return height;
 		}
 
-		private double draw_row(Row row, double[] sizes, double x, double y, double width, double height, bool really) {
+		private double draw_row (Row row, double[] sizes, double x, double y, double width, double height, bool really) {
 
 			double box_x;
 			double box_y;
@@ -666,14 +674,14 @@ namespace DDTBuilder {
 
 				box_width = sizes[i];
 
-				offset = draw_cell(row.cells[i],
-				                   box_x,
-				                   box_y,
-				                   box_width,
-				                   box_height,
-				                   really);
+				offset = draw_cell (row.cells[i],
+				                    box_x,
+				                    box_y,
+				                    box_width,
+				                    box_height,
+				                    really);
 
-				box_height = Math.fmax(box_height, offset);
+				box_height = Math.fmax (box_height, offset);
 
 				/* Move to the next column */
 				box_x += box_width;
@@ -686,11 +694,11 @@ namespace DDTBuilder {
 
 				if (really) {
 
-					context.rectangle(x,
-					                  y,
-					                  box_width,
-					                  box_height);
-					context.stroke();
+					context.rectangle (x,
+					                   y,
+					                   box_width,
+					                   box_height);
+					context.stroke ();
 				}
 
 				/* Move to the next column */

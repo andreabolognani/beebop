@@ -104,28 +104,28 @@ namespace DDTBuilder {
 
 			error_message = null;
 
-			table_labels = new List<Gtk.Label>();
-			table_widgets = new List<WidgetRow>();
+			table_labels = new List<Gtk.Label> ();
+			table_widgets = new List<WidgetRow> ();
 
 			try {
 
-				preferences = Preferences.get_instance();
+				preferences = Preferences.get_instance ();
 			}
 			catch (Error e) {
 
-				error_message = _("Could not load preferences: %s".printf(e.message));
+				error_message = _("Could not load preferences: %s".printf (e.message));
 			}
 
 			if (error_message == null) {
 
 				try {
 
-					ui = new Gtk.Builder();
-					ui.add_from_file(preferences.ui_file);
+					ui = new Gtk.Builder ();
+					ui.add_from_file (preferences.ui_file);
 				}
 				catch (Error e) {
 
-					error_message = _("Could not load UI file: %s").printf(preferences.ui_file);
+					error_message = _("Could not load UI file: %s").printf (preferences.ui_file);
 				}
 			}
 
@@ -135,166 +135,166 @@ namespace DDTBuilder {
 				 * an error and quit the application */
 				try {
 
-					window = get_object("window")
+					window = get_object ("window")
 					         as Gtk.Window;
-					preferences_window = get_object("preferences_window")
+					preferences_window = get_object ("preferences_window")
 					                     as Gtk.Window;
-					notebook = get_object("notebook")
+					notebook = get_object ("notebook")
 					           as Gtk.Notebook;
-					recipient_name_entry = get_object("recipient_name_entry")
+					recipient_name_entry = get_object ("recipient_name_entry")
 					                       as Gtk.Entry;
-					recipient_street_entry = get_object("recipient_street_entry")
+					recipient_street_entry = get_object ("recipient_street_entry")
 					                         as Gtk.Entry;
-					recipient_city_entry = get_object("recipient_city_entry")
+					recipient_city_entry = get_object ("recipient_city_entry")
 					                       as Gtk.Entry;
-					recipient_vatin_entry = get_object("recipient_vatin_entry")
+					recipient_vatin_entry = get_object ("recipient_vatin_entry")
 					                        as Gtk.Entry;
-					recipient_client_code_entry = get_object("recipient_client_code_entry")
+					recipient_client_code_entry = get_object ("recipient_client_code_entry")
 					                              as Gtk.Entry;
-					destination_name_entry = get_object("destination_name_entry")
+					destination_name_entry = get_object ("destination_name_entry")
 					                         as Gtk.Entry;
-					destination_street_entry = get_object("destination_street_entry")
+					destination_street_entry = get_object ("destination_street_entry")
 					                           as Gtk.Entry;
-					destination_city_entry = get_object("destination_city_entry")
+					destination_city_entry = get_object ("destination_city_entry")
 					                         as Gtk.Entry;
-					send_to_recipient_checkbutton = get_object("send_to_recipient_checkbutton")
+					send_to_recipient_checkbutton = get_object ("send_to_recipient_checkbutton")
 					                                as Gtk.CheckButton;
-					document_number_entry = get_object("document_number_entry")
+					document_number_entry = get_object ("document_number_entry")
 					                        as Gtk.Entry;
-					document_date_entry = get_object("document_date_entry")
+					document_date_entry = get_object ("document_date_entry")
 					                      as Gtk.Entry;
-					document_page_entry = get_object("document_page_entry")
+					document_page_entry = get_object ("document_page_entry")
 					                      as Gtk.Entry;
-					goods_appearance_entry = get_object("goods_appearance_entry")
+					goods_appearance_entry = get_object ("goods_appearance_entry")
 					                         as Gtk.Entry;
-					goods_parcels_spinbutton = get_object("goods_parcels_spinbutton")
+					goods_parcels_spinbutton = get_object ("goods_parcels_spinbutton")
 					                         as Gtk.SpinButton;
-					goods_weight_entry = get_object("goods_weight_entry")
+					goods_weight_entry = get_object ("goods_weight_entry")
 					                     as Gtk.Entry;
-					shipment_reason_entry = get_object("shipment_reason_entry")
+					shipment_reason_entry = get_object ("shipment_reason_entry")
 					                        as Gtk.Entry;
-					shipment_transported_by_entry = get_object("shipment_transported_by_entry")
+					shipment_transported_by_entry = get_object ("shipment_transported_by_entry")
 					                                as Gtk.Entry;
-					shipment_carrier_entry = get_object("shipment_carrier_entry")
+					shipment_carrier_entry = get_object ("shipment_carrier_entry")
 					                         as Gtk.Entry;
-					shipment_duties_entry = get_object("shipment_duties_entry")
+					shipment_duties_entry = get_object ("shipment_duties_entry")
 					                        as Gtk.Entry;
-					table_viewport = get_object("table_viewport")
+					table_viewport = get_object ("table_viewport")
 					                 as Gtk.Viewport;
-					goods_table = get_object("goods_table")
+					goods_table = get_object ("goods_table")
 					              as Gtk.Table;
-					header_text_view = get_object("header_text_view")
+					header_text_view = get_object ("header_text_view")
 					                   as Gtk.TextView;
-					page_padding_x_spinbutton = get_object("page_padding_x_spinbutton")
+					page_padding_x_spinbutton = get_object ("page_padding_x_spinbutton")
 					                            as Gtk.SpinButton;
-					page_padding_y_spinbutton = get_object("page_padding_y_spinbutton")
+					page_padding_y_spinbutton = get_object ("page_padding_y_spinbutton")
 					                            as Gtk.SpinButton;
-					cell_padding_x_spinbutton = get_object("cell_padding_x_spinbutton")
+					cell_padding_x_spinbutton = get_object ("cell_padding_x_spinbutton")
 					                            as Gtk.SpinButton;
-					cell_padding_y_spinbutton = get_object("cell_padding_y_spinbutton")
+					cell_padding_y_spinbutton = get_object ("cell_padding_y_spinbutton")
 					                            as Gtk.SpinButton;
-					elements_spacing_x_spinbutton = get_object("elements_spacing_x_spinbutton")
+					elements_spacing_x_spinbutton = get_object ("elements_spacing_x_spinbutton")
 					                                as Gtk.SpinButton;
-					elements_spacing_y_spinbutton = get_object("elements_spacing_y_spinbutton")
+					elements_spacing_y_spinbutton = get_object ("elements_spacing_y_spinbutton")
 					                                as Gtk.SpinButton;
-					address_boxes_width_spinbutton = get_object("address_boxes_width_spinbutton")
+					address_boxes_width_spinbutton = get_object ("address_boxes_width_spinbutton")
 					                                 as Gtk.SpinButton;
-					fontbutton = get_object("fontbutton")
+					fontbutton = get_object ("fontbutton")
 					             as Gtk.FontButton;
-					line_width_spinbutton = get_object("line_width_spinbutton")
+					line_width_spinbutton = get_object ("line_width_spinbutton")
 					                        as Gtk.SpinButton;
-					default_unit_entry = get_object("default_unit_entry")
+					default_unit_entry = get_object ("default_unit_entry")
 					                     as Gtk.Entry;
-					default_reason_entry = get_object("default_reason_entry")
+					default_reason_entry = get_object ("default_reason_entry")
 					                       as Gtk.Entry;
-					default_transported_by_entry = get_object("default_transported_by_entry")
+					default_transported_by_entry = get_object ("default_transported_by_entry")
 					                               as Gtk.Entry;
-					default_carrier_entry = get_object("default_carrier_entry")
+					default_carrier_entry = get_object ("default_carrier_entry")
 					                        as Gtk.Entry;
-					default_duties_entry = get_object("default_duties_entry")
+					default_duties_entry = get_object ("default_duties_entry")
 					                       as Gtk.Entry;
-					preferences_ok_button = get_object("preferences_ok_button")
+					preferences_ok_button = get_object ("preferences_ok_button")
 					                        as Gtk.Button;
-					preferences_cancel_button = get_object("preferences_cancel_button")
+					preferences_cancel_button = get_object ("preferences_cancel_button")
 					                            as Gtk.Button;
 
-					print_action = get_object("print_action")
+					print_action = get_object ("print_action")
 					               as Gtk.Action;
-					quit_action = get_object("quit_action")
+					quit_action = get_object ("quit_action")
 					              as Gtk.Action;
-					cut_action = get_object("cut_action")
+					cut_action = get_object ("cut_action")
 					             as Gtk.Action;
-					copy_action = get_object("copy_action")
+					copy_action = get_object ("copy_action")
 					              as Gtk.Action;
-					paste_action = get_object("paste_action")
+					paste_action = get_object ("paste_action")
 					               as Gtk.Action;
-					add_action = get_object("add_action")
+					add_action = get_object ("add_action")
 					             as Gtk.Action;
-					remove_action = get_object("remove_action")
+					remove_action = get_object ("remove_action")
 					                as Gtk.Action;
-					preferences_action = get_object("preferences_action")
+					preferences_action = get_object ("preferences_action")
 					                     as Gtk.Action;
 
-					label = get_object("code_label")
+					label = get_object ("code_label")
 					        as Gtk.Label;
-					table_labels.append(label);
+					table_labels.append (label);
 
-					label = get_object("reference_label")
+					label = get_object ("reference_label")
 					        as Gtk.Label;
-					table_labels.append(label);
+					table_labels.append (label);
 
-					label = get_object("description_label")
+					label = get_object ("description_label")
 					        as Gtk.Label;
-					table_labels.append(label);
+					table_labels.append (label);
 
-					label = get_object("unit_label")
+					label = get_object ("unit_label")
 					        as Gtk.Label;
-					table_labels.append(label);
+					table_labels.append (label);
 
-					label = get_object("quantity_label")
+					label = get_object ("quantity_label")
 					        as Gtk.Label;
-					table_labels.append(label);
+					table_labels.append (label);
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
-					error_message = _("Required UI object not found: %s").printf(e.message);
+					error_message = _("Required UI object not found: %s").printf (e.message);
 				}
 			}
 
 			if (error_message == null) {
 
 				/* Connect signals */
-				window.delete_event.connect(close);
-				recipient_name_entry.changed.connect(name_changed);
-				recipient_street_entry.changed.connect(street_changed);
-				recipient_city_entry.changed.connect(city_changed);
-				send_to_recipient_checkbutton.toggled.connect(toggle_send_to_recipient);
+				window.delete_event.connect (close);
+				recipient_name_entry.changed.connect (name_changed);
+				recipient_street_entry.changed.connect (street_changed);
+				recipient_city_entry.changed.connect (city_changed);
+				send_to_recipient_checkbutton.toggled.connect (toggle_send_to_recipient);
 
-				print_action.activate.connect(print);
-				quit_action.activate.connect(quit);
-				cut_action.activate.connect(cut);
-				copy_action.activate.connect(copy);
-				paste_action.activate.connect(paste);
-				add_action.activate.connect(add_row);
-				remove_action.activate.connect(remove_row);
-				preferences_action.activate.connect(show_preferences);
+				print_action.activate.connect (print);
+				quit_action.activate.connect (quit);
+				cut_action.activate.connect (cut);
+				copy_action.activate.connect (copy);
+				paste_action.activate.connect (paste);
+				add_action.activate.connect (add_row);
+				remove_action.activate.connect (remove_row);
+				preferences_action.activate.connect (show_preferences);
 
-				preferences_window.delete_event.connect((e) => { hide_preferences(); return true; });
-				preferences_cancel_button.clicked.connect(hide_preferences);
-				preferences_ok_button.clicked.connect(save_preferences);
+				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
+				preferences_cancel_button.clicked.connect (hide_preferences);
+				preferences_ok_button.clicked.connect (save_preferences);
 			}
 
 			if (error_message == null) {
 
-				now = Time();
-				today = Date();
+				now = Time ();
+				today = Date ();
 
 				/* Get current time and date */
-				today.set_time_val(TimeVal());
-				today.to_time(out now);
+				today.set_time_val (TimeVal ());
+				today.to_time (out now);
 
 				/* Initialize the date field with the current date */
-				document_date_entry.text = now.format("%d/%m/%Y");
+				document_date_entry.text = now.format ("%d/%m/%Y");
 
 				/* Initialize the page number */
 				document_page_entry.text = _("1 of 1");
@@ -309,7 +309,7 @@ namespace DDTBuilder {
 				shipment_duties_entry.text = preferences.default_duties;
 
 				/* Create a first row of widgets */
-				add_row();
+				add_row ();
 
 				/* Disable remove action */
 				remove_action.sensitive = false;
@@ -325,40 +325,39 @@ namespace DDTBuilder {
 				document_number_entry.text = "42/2011";
 				goods_appearance_entry.text = "Box";
 				goods_weight_entry.text = "3.2 Kg";
-				shipment_reason_entry.text = "Replacement";
 
 				/* Sync the form entries */
-				name_changed();
-				street_changed();
-				city_changed();
+				name_changed ();
+				street_changed ();
+				city_changed ();
 			}
 		}
 
 		/* Get an object out of the UI, checking it exists */
-		private GLib.Object get_object(string name) throws ApplicationError.OBJECT_NOT_FOUND {
+		private GLib.Object get_object (string name) throws ApplicationError.OBJECT_NOT_FOUND {
 
 			GLib.Object obj;
 
 			/* Look up the object */
-			obj = ui.get_object(name);
+			obj = ui.get_object (name);
 
 			/* If the object is not there, throw an exception */
 			if (obj == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND(name);
+				throw new ApplicationError.OBJECT_NOT_FOUND (name);
 			}
 
 			return obj;
 		}
 
 		/* Get the text from an entry, raising an exception if it's empty */
-		private string get_entry_text(Gtk.Entry entry, string name) throws ApplicationError.EMPTY_FIELD {
+		private string get_entry_text (Gtk.Entry entry, string name) throws ApplicationError.EMPTY_FIELD {
 
 			string text;
 
 			text = entry.text;
 
 			/* If the entry contains no text, throw an exception */
-			if (text.collate("") == 0) {
+			if (text.collate ("") == 0) {
 
 				/* Make the entry grab the focus to make corrections faster.
 				 *
@@ -369,67 +368,67 @@ namespace DDTBuilder {
 				 * error. Because many widgets are created at runtime,
 				 * however, implementing such a method is a little bit
 				 * tricky. In the meantime, this will do. */
-				focus_widget(entry);
+				focus_widget (entry);
 
-				throw new ApplicationError.EMPTY_FIELD(name);
+				throw new ApplicationError.EMPTY_FIELD (name);
 			}
 
 			return text;
 		}
 
-		public void show_all() {
+		public void show_all () {
 
 			/* Show the main application window */
-			window.show_all();
+			window.show_all ();
 		}
 
-		private bool close(Gdk.Event ev) {
+		private bool close (Gdk.Event ev) {
 
-			quit();
+			quit ();
 
 			return true;
 		}
 
-		private void quit() {
+		private void quit () {
 
-			Gtk.main_quit();
+			Gtk.main_quit ();
 		}
 
-		private void cut() {
+		private void cut () {
 
 			Gtk.Widget widget;
 
-			if (window.get_focus() is Gtk.Editable) {
+			if (window.get_focus () is Gtk.Editable) {
 
-				widget = window.get_focus() as Gtk.Widget;
-				(widget as Gtk.Editable).cut_clipboard();
+				widget = window.get_focus () as Gtk.Widget;
+				(widget as Gtk.Editable).cut_clipboard ();
 			}
 		}
 
-		private void copy() {
+		private void copy () {
 
 			Gtk.Widget widget;
 
-			if (window.get_focus() is Gtk.Editable) {
+			if (window.get_focus () is Gtk.Editable) {
 
-				widget = window.get_focus() as Gtk.Widget;
-				(widget as Gtk.Editable).copy_clipboard();
+				widget = window.get_focus () as Gtk.Widget;
+				(widget as Gtk.Editable).copy_clipboard ();
 			}
 		}
 
-		private void paste() {
+		private void paste () {
 
 			Gtk.Widget widget;
 
-			if (window.get_focus() is Gtk.Editable) {
+			if (window.get_focus () is Gtk.Editable) {
 
-				widget = window.get_focus() as Gtk.Widget;
-				(widget as Gtk.Editable).paste_clipboard();
+				widget = window.get_focus () as Gtk.Widget;
+				(widget as Gtk.Editable).paste_clipboard ();
 			}
 		}
 
 		/* The recipient's name has changed */
-		private void name_changed() {
+		private void name_changed () {
 
 			if (send_to_recipient_checkbutton.active) {
 
@@ -438,7 +437,7 @@ namespace DDTBuilder {
 		}
 
 		/* The recipient's street has changed */
-		private void street_changed() {
+		private void street_changed () {
 
 			if (send_to_recipient_checkbutton.active) {
 
@@ -447,7 +446,7 @@ namespace DDTBuilder {
 		}
 
 		/* The recipient's city has changed */
-		private void city_changed() {
+		private void city_changed () {
 
 			if (send_to_recipient_checkbutton.active) {
 
@@ -455,7 +454,7 @@ namespace DDTBuilder {
 			}
 		}
 
-		private void toggle_send_to_recipient() {
+		private void toggle_send_to_recipient () {
 
 			if (!send_to_recipient_checkbutton.active) {
 
@@ -479,7 +478,7 @@ namespace DDTBuilder {
 			}
 		}
 
-		public void add_row() {
+		public void add_row () {
 
 			Gtk.Label label;
 			Gtk.Entry code_entry;
@@ -495,29 +494,29 @@ namespace DDTBuilder {
 			int i;
 
 			/* Increase the number of rows */
-			goods_table.resize(goods_table.n_rows + 1,
-			                   goods_table.n_columns);
+			goods_table.resize (goods_table.n_rows + 1,
+			                    goods_table.n_columns);
 
 			/* Create all the widgets needed for a new row */
-			code_entry = new Gtk.Entry();
-			reference_entry = new Gtk.Entry();
-			description_entry = new Gtk.Entry();
-			unit_entry = new Gtk.Entry();
-			quantity_spinbutton = new Gtk.SpinButton.with_range(1.0,
-			                                                    999.0,
-			                                                    1.0);
+			code_entry = new Gtk.Entry ();
+			reference_entry = new Gtk.Entry ();
+			description_entry = new Gtk.Entry ();
+			unit_entry = new Gtk.Entry ();
+			quantity_spinbutton = new Gtk.SpinButton.with_range (1.0,
+			                                                     999.0,
+			                                                     1.0);
 
 			/* Set default values */
 			unit_entry.text = preferences.default_unit;
 
 			/* Keep track of the widgets */
-			row = new WidgetRow(5);
+			row = new WidgetRow (5);
 			row.widgets = {code_entry,
 			               reference_entry,
 			               description_entry,
 			               unit_entry,
 			               quantity_spinbutton};
-			table_widgets.prepend(row);
+			table_widgets.prepend (row);
 
 			len = (int) goods_table.n_columns;
 
@@ -525,44 +524,44 @@ namespace DDTBuilder {
 			for (i = 0; i < len; i++) {
 
 				/* Get attach options for the column label */
-				label = table_labels.nth_data(i);
-				goods_table.child_get(label,
-				                      "x-options",
-				                      out x_options,
-				                      "y-options",
-				                      out y_options,
-				                      null);
+				label = table_labels.nth_data (i);
+				goods_table.child_get (label,
+				                       "x-options",
+				                       out x_options,
+				                       "y-options",
+				                       out y_options,
+				                       null);
 
 				/* Attach the widget using the same attach options
 				 * used for the column label */
-				goods_table.attach(row.widgets[i],
-				                   i,
-				                   i + 1,
-				                   goods_table.n_rows - 1,
-				                   goods_table.n_rows,
-				                   x_options,
-				                   y_options,
-				                   0,
-				                   0);
+				goods_table.attach (row.widgets[i],
+				                    i,
+				                    i + 1,
+				                    goods_table.n_rows - 1,
+				                    goods_table.n_rows,
+				                    x_options,
+				                    y_options,
+				                    0,
+				                    0);
 
 				/* Show the widget */
-				row.widgets[i].show();
+				row.widgets[i].show ();
 			}
 
 			/* Rows can be removed if there are more than two of them */
-			if (table_widgets.length() >= 2) {
+			if (table_widgets.length () >= 2) {
 				remove_action.sensitive = true;
 			}
 
 			/* Give focus to the first widget in the new row */
-			row.widgets[0].grab_focus();
+			row.widgets[0].grab_focus ();
 
 			/* Scroll the table all the way down */
 			adjustment = table_viewport.vadjustment;
 			adjustment.value = adjustment.upper;
 		}
 
-		public void remove_row() {
+		public void remove_row () {
 
 			WidgetRow row;
 			int len;
@@ -574,56 +573,56 @@ namespace DDTBuilder {
 			for (i = 0; i < len; i++) {
 
 				/* Remove and destroy widgets */
-				goods_table.remove(row.widgets[i]);
-				row.widgets[i].destroy();
+				goods_table.remove (row.widgets[i]);
+				row.widgets[i].destroy ();
 			}
 
 			/* Remove widgets row from the stack */
-			table_widgets.delete_link(table_widgets);
+			table_widgets.delete_link (table_widgets);
 
 			/* Resize the table */
-			goods_table.resize(goods_table.n_rows - 1,
-			                   goods_table.n_columns);
+			goods_table.resize (goods_table.n_rows - 1,
+			                    goods_table.n_columns);
 
 			/* Don't allow the user to remove the last row */
-			if (table_widgets.length() <= 1) {
+			if (table_widgets.length () <= 1) {
 				remove_action.sensitive = false;
 			}
 
 			/* Give focus to the first widget in the last row */
 			row = table_widgets.data;
-			row.widgets[0].grab_focus();
+			focus_widget (row.widgets[0]);
 		}
 
-		public void show_error(string message) {
+		public void show_error (string message) {
 
 			Gtk.Dialog dialog;
 
-			dialog = new Gtk.MessageDialog(window,
-			                               0,
-			                               Gtk.MessageType.ERROR,
-			                               Gtk.ButtonsType.CLOSE,
-			                               message);
+			dialog = new Gtk.MessageDialog (window,
+			                                0,
+			                                Gtk.MessageType.ERROR,
+			                                Gtk.ButtonsType.CLOSE,
+			                                message);
 
-			dialog.run();
-			dialog.destroy();
+			dialog.run ();
+			dialog.destroy ();
 		}
 
-		public void show_warning(string message) {
+		public void show_warning (string message) {
 
 			Gtk.Dialog dialog;
 
-			dialog = new Gtk.MessageDialog(window,
-			                               0,
-			                               Gtk.MessageType.WARNING,
-			                               Gtk.ButtonsType.CLOSE,
-			                               message);
+			dialog = new Gtk.MessageDialog (window,
+			                                0,
+			                                Gtk.MessageType.WARNING,
+			                                Gtk.ButtonsType.CLOSE,
+			                                message);
 
-			dialog.run();
-			dialog.destroy();
+			dialog.run ();
+			dialog.destroy ();
 		}
 
-		private void print() {
+		private void print () {
 
 			Document document;
 			Pid viewer_pid;
@@ -631,18 +630,18 @@ namespace DDTBuilder {
 
 			try {
 
-				document = create_document();
-				out_file = document.draw();
+				document = create_document ();
+				out_file = document.draw ();
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
-				show_warning(_("Empty field: %s").printf(field_description(e.message)));
+				show_warning(_("Empty field: %s").printf (field_description (e.message)));
 
 				return;
 			}
 			catch (Error e) {
 
-				show_warning(e.message);
+				show_warning (e.message);
 
 				return;
 			}
@@ -653,23 +652,23 @@ namespace DDTBuilder {
 
 			try {
 
-				Gdk.spawn_on_screen(window.get_screen(),
-				                    null,
-				                    view_cmd,
-				                    null,
-				                    SpawnFlags.DO_NOT_REAP_CHILD,
-				                    null,
-				                    out viewer_pid);
+				Gdk.spawn_on_screen (window.get_screen (),
+				                     null,
+				                     view_cmd,
+				                     null,
+				                     SpawnFlags.DO_NOT_REAP_CHILD,
+				                     null,
+				                     out viewer_pid);
 			}
 			catch (Error e) {
 
-				show_error(_("Could not spawn viewer."));
+				show_error (_("Could not spawn viewer."));
 
 				return;
 			}
 
-			ChildWatch.add(viewer_pid,
-			               viewer_closed);
+			ChildWatch.add (viewer_pid,
+			                viewer_closed);
 
 			/* Prevent the print button from being clicked again until
 			 * the viewer has been closed */
@@ -678,102 +677,102 @@ namespace DDTBuilder {
 			return;
 		}
 
-		private void viewer_closed(Pid pid, int status){
+		private void viewer_closed (Pid pid, int status){
 
 			/* Remove the temp file and close the pid */
-			FileUtils.unlink(out_file);
-			Process.close_pid(pid);
+			FileUtils.unlink (out_file);
+			Process.close_pid (pid);
 
 			/* Make the print button clickable again */
 			print_action.sensitive = true;
 		}
 
-		private Document create_document() throws ApplicationError.EMPTY_FIELD {
+		private Document create_document () throws ApplicationError.EMPTY_FIELD {
 
 			Document document;
 
-			document = new Document();
-			collect_recipient(document);
-			collect_destination(document);
-			collect_info(document);
-			collect_goods_info(document);
-			collect_shipment_info(document);
-			collect_goods(document);
+			document = new Document ();
+			collect_recipient (document);
+			collect_destination (document);
+			collect_info (document);
+			collect_goods_info (document);
+			collect_shipment_info (document);
+			collect_goods (document);
 
 			return document;
 		}
 
-		private void collect_info(Document document) throws ApplicationError.EMPTY_FIELD {
+		private void collect_info (Document document) throws ApplicationError.EMPTY_FIELD {
 
-			document.number = get_entry_text(document_number_entry,
-			                                 "document_number_entry");
-			document.date = get_entry_text(document_date_entry,
-			                               "document_date_entry");
-			document.page_number = get_entry_text(document_page_entry,
-			                                      "document_page_entry");
+			document.number = get_entry_text (document_number_entry,
+			                                  "document_number_entry");
+			document.date = get_entry_text (document_date_entry,
+			                                "document_date_entry");
+			document.page_number = get_entry_text (document_page_entry,
+			                                       "document_page_entry");
 		}
 
-		private void collect_shipment_info(Document document) throws ApplicationError.EMPTY_FIELD {
+		private void collect_shipment_info (Document document) throws ApplicationError.EMPTY_FIELD {
 
 			ShipmentInfo info;
 
 			info = document.shipment_info;
 
-			info.reason = get_entry_text(shipment_reason_entry,
-			                             "shipment_reason_entry");
-			info.transported_by = get_entry_text(shipment_transported_by_entry,
-			                                     "shipment_transported_by_entry");
-			info.carrier = get_entry_text(shipment_carrier_entry,
-			                              "shipment_carrier_entry");
-			info.duties = get_entry_text(shipment_duties_entry,
-			                             "shipment_duties_entry");
+			info.reason = get_entry_text (shipment_reason_entry,
+			                              "shipment_reason_entry");
+			info.transported_by = get_entry_text (shipment_transported_by_entry,
+			                                      "shipment_transported_by_entry");
+			info.carrier = get_entry_text (shipment_carrier_entry,
+			                               "shipment_carrier_entry");
+			info.duties = get_entry_text (shipment_duties_entry,
+			                              "shipment_duties_entry");
 		}
 
-		private void collect_recipient(Document document) throws ApplicationError.EMPTY_FIELD {
+		private void collect_recipient (Document document) throws ApplicationError.EMPTY_FIELD {
 
 			CompanyInfo recipient;
 
 			recipient = document.recipient;
 
-			recipient.name = get_entry_text(recipient_name_entry,
-			                                "recipient_name_entry");
-			recipient.street = get_entry_text(recipient_street_entry,
-			                                  "recipient_street_entry");
-			recipient.city = get_entry_text(recipient_city_entry,
-			                                "recipient_city_entry");
-			recipient.vatin = get_entry_text(recipient_vatin_entry,
-			                                 "recipient_vatin_entry");
+			recipient.name = get_entry_text (recipient_name_entry,
+			                                 "recipient_name_entry");
+			recipient.street = get_entry_text (recipient_street_entry,
+			                                   "recipient_street_entry");
+			recipient.city = get_entry_text (recipient_city_entry,
+			                                 "recipient_city_entry");
+			recipient.vatin = get_entry_text (recipient_vatin_entry,
+			                                  "recipient_vatin_entry");
 			recipient.client_code = recipient_client_code_entry.text;
 		}
 
-		private void collect_destination(Document document) throws ApplicationError.EMPTY_FIELD {
+		private void collect_destination (Document document) throws ApplicationError.EMPTY_FIELD {
 
 			CompanyInfo destination;
 
 			destination = document.destination;
 
-			destination.name = get_entry_text(destination_name_entry,
-			                                  "destination_name_entry");
-			destination.street = get_entry_text(destination_street_entry,
-			                                    "destination_street_entry");
-			destination.city = get_entry_text(destination_city_entry,
-			                                  "destination_city_entry");
+			destination.name = get_entry_text (destination_name_entry,
+			                                   "destination_name_entry");
+			destination.street = get_entry_text (destination_street_entry,
+			                                     "destination_street_entry");
+			destination.city = get_entry_text (destination_city_entry,
+			                                   "destination_city_entry");
 		}
 
-		private void collect_goods_info(Document document) throws ApplicationError.EMPTY_FIELD {
+		private void collect_goods_info (Document document) throws ApplicationError.EMPTY_FIELD {
 
 			GoodsInfo info;
 
 			info = document.goods_info;
 
-			info.appearance = get_entry_text(goods_appearance_entry,
-			                                 "goods_appearance_entry");
-			info.parcels = "%d".printf(goods_parcels_spinbutton.get_value_as_int());
-			info.weight = get_entry_text(goods_weight_entry,
-			                             "goods_weight_entry");
+			info.appearance = get_entry_text (goods_appearance_entry,
+			                                  "goods_appearance_entry");
+			info.parcels = "%d".printf (goods_parcels_spinbutton.get_value_as_int ());
+			info.weight = get_entry_text (goods_weight_entry,
+			                              "goods_weight_entry");
 		}
 
-		private void collect_goods(Document document) throws ApplicationError.EMPTY_FIELD {
+		private void collect_goods (Document document) throws ApplicationError.EMPTY_FIELD {
 
 			Gtk.Entry entry;
 			Gtk.SpinButton spin_button;
@@ -785,64 +784,64 @@ namespace DDTBuilder {
 
 			goods = document.goods;
 
-			len = (int) table_widgets.length();
+			len = (int) table_widgets.length ();
 
 			/* Read the table from the bottom of the stack to the top */
 			for (i = len - 1; i >= 0; i--) {
 
-				row = new Row(5);
-				widget_row = table_widgets.nth_data(i);
+				row = new Row (5);
+				widget_row = table_widgets.nth_data (i);
 
 				/* Code */
 				entry = widget_row.widgets[0] as Gtk.Entry;
-				row.cells[0].text = get_entry_text(entry,
-				                                   "good_code_entry");
+				row.cells[0].text = get_entry_text (entry,
+				                                    "good_code_entry");
 
 				/* Reference */
 				entry = widget_row.widgets[1] as Gtk.Entry;
-				row.cells[1].text = get_entry_text(entry,
-				                                   "good_reference_entry");
+				row.cells[1].text = get_entry_text (entry,
+				                                    "good_reference_entry");
 
 				/* Description */
 				entry = widget_row.widgets[2] as Gtk.Entry;
-				row.cells[2].text = get_entry_text(entry,
-				                                   "good_description_entry");
+				row.cells[2].text = get_entry_text (entry,
+				                                    "good_description_entry");
 
 				/* Unit of measurement */
 				entry = widget_row.widgets[3] as Gtk.Entry;
-				row.cells[3].text = get_entry_text(entry,
-				                                   "good_unit_entry");
+				row.cells[3].text = get_entry_text (entry,
+				                                    "good_unit_entry");
 
 				/* Quantity */
 				spin_button = widget_row.widgets[4] as Gtk.SpinButton;
-				row.cells[4].text = "%d".printf(spin_button.get_value_as_int());
+				row.cells[4].text = "%d".printf (spin_button.get_value_as_int ());
 
-				goods.add_row(row);
+				goods.add_row (row);
 			}
 		}
 
-		private void show_preferences() {
+		private void show_preferences () {
 
-			fill_preferences_window();
+			fill_preferences_window ();
 
-			preferences_window.show_all();
+			preferences_window.show_all ();
 		}
 
-		private void hide_preferences() {
+		private void hide_preferences () {
 
-			preferences_window.hide();
+			preferences_window.hide ();
 		}
 
-		private void save_preferences() {
+		private void save_preferences () {
 
 			Gtk.TextIter start;
 			Gtk.TextIter end;
 
 			/* Get header text */
-			header_text_view.buffer.get_bounds(out start, out end);
-			preferences.header_text = header_text_view.buffer.get_text(start,
-			                                                           end,
-			                                                           false);
+			header_text_view.buffer.get_bounds (out start, out end);
+			preferences.header_text = header_text_view.buffer.get_text (start,
+			                                                            end,
+			                                                            false);
 
 			/* Get other values */
 			preferences.page_padding_x = page_padding_x_spinbutton.value;
@@ -862,19 +861,19 @@ namespace DDTBuilder {
 
 			try {
 
-				preferences.save();
+				preferences.save ();
 			}
 			catch (Error e) {
 
-				show_error(_("Could not save preferences: %s").printf(e.message));
+				show_error(_("Could not save preferences: %s").printf (e.message));
 			}
 
-			hide_preferences();
+			hide_preferences ();
 		}
 
 		/* Update the preferences window.
 		 */
-		private void fill_preferences_window() {
+		private void fill_preferences_window () {
 
 			header_text_view.buffer.text = preferences.header_text;
 
@@ -900,25 +899,25 @@ namespace DDTBuilder {
 		 *
 		 * If the widget is contained in a notebook page which is not the
 		 * current one, switch to that page before grabbing focus. */
-		private void focus_widget(Gtk.Widget widget) {
+		private void focus_widget (Gtk.Widget widget) {
 
 			Gtk.Widget page;
 
-			page = find_notebook_page(notebook, widget);
+			page = find_notebook_page (notebook, widget);
 
 			if (page != null) {
 
-				notebook.set_current_page(notebook.page_num(page));
+				notebook.set_current_page (notebook.page_num (page));
 			}
 
-			widget.grab_focus();
+			widget.grab_focus ();
 		}
 
 		/* Find the notebook page containing a widget.
 		 *
 		 * Return the notebook page, or null if the widget is not inside
 		 * the notebook. */
-		private Gtk.Widget find_notebook_page(Gtk.Notebook notebook, Gtk.Widget widget) {
+		private Gtk.Widget find_notebook_page (Gtk.Notebook notebook, Gtk.Widget widget) {
 
 			Gtk.Widget page;
 			Gtk.Widget tmp;
@@ -926,13 +925,13 @@ namespace DDTBuilder {
 			int i;
 
 			page = null;
-			len = notebook.get_n_pages();
+			len = notebook.get_n_pages ();
 
 			for (i = 0; i < len; i++) {
 
-				tmp = notebook.get_nth_page(i);
+				tmp = notebook.get_nth_page (i);
 
-				if (contains_widget(tmp, widget)) {
+				if (contains_widget (tmp, widget)) {
 
 					page = tmp;
 				}
@@ -946,7 +945,7 @@ namespace DDTBuilder {
 		 * Return true if the container is the widget, or it contains the
 		 * widget, or one of its descendants contains the widget.
 		 */
-		private bool contains_widget(Gtk.Widget container, Gtk.Widget widget) {
+		private bool contains_widget (Gtk.Widget container, Gtk.Widget widget) {
 
 			List<weak Gtk.Widget> children;
 			Gtk.Widget child;
@@ -965,15 +964,15 @@ namespace DDTBuilder {
 			else if (container is Gtk.Container) {
 
 				/* Get che container's children */
-				children = (container as Gtk.Container).get_children();
-				len = (int) children.length();
+				children = (container as Gtk.Container).get_children ();
+				len = (int) children.length ();
 
 				for (i = 0; i < len; i++) {
 
-					child = children.nth_data(i);
+					child = children.nth_data (i);
 
 					/* Recursively search for the widget */
-					success = success || contains_widget(child, widget);
+					success = success || contains_widget (child, widget);
 				}
 			}
 
@@ -983,106 +982,106 @@ namespace DDTBuilder {
 		/* Get human-readable field description.
 		 *
 		 * The field description is displayed to the user in error messages. */
-		private string field_description(string name) {
+		private string field_description (string name) {
 
 			string description;
 
 			description = _("Unknown");
 
-			if (name.collate("recipient_name_entry") == 0) {
+			if (name.collate ("recipient_name_entry") == 0) {
 				description = _("recipient\xe2\x80\x99s name");
 			}
-			else if (name.collate("recipient_street_entry") == 0) {
+			else if (name.collate ("recipient_street_entry") == 0) {
 				description = _("recipient\xe2\x80\x99s street");
 			}
-			else if (name.collate("recipient_city_entry") == 0) {
+			else if (name.collate ("recipient_city_entry") == 0) {
 				description = _("recipient\xe2\x80\x99s city");
 			}
-			else if (name.collate("recipient_vatin_entry") == 0) {
+			else if (name.collate ("recipient_vatin_entry") == 0) {
 				description = _("recipient\xe2\x80\x99s VATIN");
 			}
-			else if (name.collate("recipient_client_code_entry") == 0) {
+			else if (name.collate ("recipient_client_code_entry") == 0) {
 				description = _("recipient\xe2\x80\x99s client code");
 			}
-			else if (name.collate("destination_name_entry") == 0) {
+			else if (name.collate ("destination_name_entry") == 0) {
 				description = _("destination\xe2\x80\x99s name");
 			}
-			else if (name.collate("destination_name_entry") == 0) {
+			else if (name.collate ("destination_name_entry") == 0) {
 				description = _("destination\xe2\x80\x99s name");
 			}
-			else if (name.collate("destination_street_entry") == 0) {
+			else if (name.collate ("destination_street_entry") == 0) {
 				description = _("destination\xe2\x80\x99s street");
 			}
-			else if (name.collate("destination_city_entry") == 0) {
+			else if (name.collate ("destination_city_entry") == 0) {
 				description = _("destination\xe2\x80\x99s city");
 			}
-			else if (name.collate("document_number_entry") == 0) {
+			else if (name.collate ("document_number_entry") == 0) {
 				description = _("document\xe2\x80\x99s number");
 			}
-			else if (name.collate("document_date_entry") == 0) {
+			else if (name.collate ("document_date_entry") == 0) {
 				description = _("document\xe2\x80\x99s date");
 			}
-			else if (name.collate("document_page_entry") == 0) {
+			else if (name.collate ("document_page_entry") == 0) {
 				description = _("document\xe2\x80\x99s page number");
 			}
-			else if (name.collate("goods_appearance_entry") == 0) {
+			else if (name.collate ("goods_appearance_entry") == 0) {
 				description = _("goods\xe2\x80\x99 outside appearance");
 			}
-			else if (name.collate("goods_weight_entry") == 0) {
+			else if (name.collate ("goods_weight_entry") == 0) {
 				description = _("goods\xe2\x80\x99 weight");
 			}
-			else if (name.collate("shipment_reason_entry") == 0) {
+			else if (name.collate ("shipment_reason_entry") == 0) {
 				description = _("shipment\xe2\x80\x99s reason");
 			}
-			else if (name.collate("shipment_transported_by_entry") == 0) {
+			else if (name.collate ("shipment_transported_by_entry") == 0) {
 				description = _("transported by");
 			}
-			else if (name.collate("shipment_carrier_entry") == 0) {
+			else if (name.collate ("shipment_carrier_entry") == 0) {
 				description = _("shipment\xe2\x80\x99s carrier");
 			}
-			else if (name.collate("shipment_duties_entry") == 0) {
+			else if (name.collate ("shipment_duties_entry") == 0) {
 				description = _("delivery duties");
 			}
-			else if (name.collate("good_code_entry") == 0) {
+			else if (name.collate ("good_code_entry") == 0) {
 				description = _("good\xe2\x80\x99s code");
 			}
-			else if (name.collate("good_reference_entry") == 0) {
+			else if (name.collate ("good_reference_entry") == 0) {
 				description = _("good\xe2\x80\x99s reference");
 			}
-			else if (name.collate("good_description_entry") == 0) {
+			else if (name.collate ("good_description_entry") == 0) {
 				description = _("good\xe2\x80\x99s description");
 			}
-			else if (name.collate("good_unit_entry") == 0) {
+			else if (name.collate ("good_unit_entry") == 0) {
 				description = _("good\xe2\x80\x99s unit of measurement");
 			}
 
 			return description;
 		}
 
-		public static int main(string[] args) {
+		public static int main (string[] args) {
 
-			Intl.bindtextdomain(Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-			Intl.bind_textdomain_codeset(Config.GETTEXT_PACKAGE, "UTF-8");
-			Intl.textdomain(Config.GETTEXT_PACKAGE);
+			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-			Gtk.init(ref args);
-			Rsvg.init();
+			Gtk.init (ref args);
+			Rsvg.init ();
 
-			Environment.set_application_name(_("DDT Builder"));
+			Environment.set_application_name (_("DDT Builder"));
 
-			Application application = new Application();
+			Application application = new Application ();
 
 			if (application.error_message != null) {
 
 				/* If an error has occurred while constructing the UI,
 				 * display an error dialog and quit the application */
-				application.show_error(application.error_message);
+				application.show_error (application.error_message);
 			}
 			else {
 
 				/* Show the application window and enter the main loop */
-				application.show_all();
-				Gtk.main();
+				application.show_all ();
+				Gtk.main ();
 			}
 
 			return 0;

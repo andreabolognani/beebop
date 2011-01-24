@@ -30,7 +30,7 @@ namespace DDTBuilder {
 			}
 
 			set {
-				return_if_fail(value.length == columns);
+				return_if_fail (value.length == columns);
 				_widgets = value;
 			}
 		}
@@ -45,9 +45,9 @@ namespace DDTBuilder {
 			}
 		}
 
-		public WidgetRow(int columns) {
+		public WidgetRow (int columns) {
 
-			GLib.Object(columns: columns);
+			GLib.Object (columns: columns);
 		}
 	}
 }

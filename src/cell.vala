@@ -28,11 +28,5 @@ namespace DDTBuilder {
 			title = "";
 			text = "";
 		}
-
-		public Cell.with_title_and_text(string title, string text) {
-
-			this.title = title;
-			this.text = text;
-		}
 	}
 }

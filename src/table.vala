@@ -33,7 +33,7 @@ namespace DDTBuilder {
 			}
 
 			set {
-				return_if_fail(value.length == columns);
+				return_if_fail (value.length == columns);
 				_sizes = value;
 			}
 		}
@@ -45,7 +45,7 @@ namespace DDTBuilder {
 			}
 
 			set {
-				return_if_fail(value.length == columns);
+				return_if_fail (value.length == columns);
 				_headings = value;
 			}
 		}
@@ -64,17 +64,17 @@ namespace DDTBuilder {
 				headings[i] = "";
 			}
 
-			rows = new List<Row>();
+			rows = new List<Row> ();
 		}
 
-		public Table(int columns) {
+		public Table (int columns) {
 
-			GLib.Object(columns: columns);
+			GLib.Object (columns: columns);
 		}
 
-		public void add_row(Row row) {
+		public void add_row (Row row) {
 
-			rows.append(row);
+			rows.append (row);
 		}
 	}
 }
