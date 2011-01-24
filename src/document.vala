@@ -81,6 +81,15 @@ namespace DDTBuilder {
 				 * never reached */
 			}
 
+			clear ();
+		}
+
+		/* Clear a document.
+		 *
+		 * Reset all information stored in a document to default values.
+		 */
+		public void clear () {
+
 			number = "";
 			date = "";
 			page_number = "";
@@ -154,6 +163,9 @@ namespace DDTBuilder {
 				delete doc;
 				throw new DocumentError.FORMAT (_("Invalid root element"));
 			}
+
+			/* Clear the document */
+			clear ();
 
 			/* Navigate the tree structure and extract all needed information */
 			parse_document (node);
