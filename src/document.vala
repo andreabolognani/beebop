@@ -324,18 +324,18 @@ namespace DDTBuilder {
 			reason_table = new Table (4);
 			reason_table.sizes = {200.0,
 			                      150.0,
-			                      AUTOMATIC_SIZE,
-			                      150.0};
+			                      150.0,
+			                      AUTOMATIC_SIZE};
 
 			row = new Row (reason_table.columns);
 			row.cells[0].title = _("Reason");
 			row.cells[0].text = shipment_info.reason;
 			row.cells[1].title = _("Transported by");
 			row.cells[1].text = shipment_info.transported_by;
-			row.cells[2].title = _("Outside appearance");
-			row.cells[2].text = goods_info.appearance;
-			row.cells[3].title = _("Carrier");
-			row.cells[3].text = shipment_info.carrier;
+			row.cells[2].title = _("Carrier");
+			row.cells[2].text = shipment_info.carrier;
+			row.cells[3].title = _("Outside appearance");
+			row.cells[3].text = goods_info.appearance;
 
 			reason_table.add_row (row);
 
