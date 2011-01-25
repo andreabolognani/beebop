@@ -474,7 +474,7 @@ namespace DDTBuilder {
 			/* Add the title before the text, if a title is set */
 			if (cell.title.collate ("") != 0) {
 
-				text += "<b>" + cell.title + "</b>";
+				text += "<b>" + Markup.escape_text (cell.title) + "</b>";
 
 				/* Start a new line after the title only if there is some text */
 				if (cell.text.collate ("") != 0) {
@@ -482,7 +482,7 @@ namespace DDTBuilder {
 				}
 			}
 
-			text += cell.text;
+			text += Markup.escape_text (cell.text);
 
 			height = draw_text (text,
 			                    x + preferences.cell_padding_x,
