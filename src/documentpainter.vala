@@ -43,6 +43,7 @@ namespace DDTBuilder {
 			Rsvg.Handle page;
 			Rsvg.Handle logo;
 			Rsvg.DimensionData dimensions;
+			File handle;
 			Table table;
 			Table notes_table;
 			Table reason_table;
@@ -67,9 +68,11 @@ namespace DDTBuilder {
 			try {
 
 				/* Read and parse the contents of the page file */
-				FileUtils.get_contents (preferences.page_file,
-				                        out contents,
-				                        out contents_length);
+				handle = File.new_for_path (preferences.page_file);
+				handle.load_contents (null,
+				                      out contents,
+				                      out contents_length,
+				                      null);                /* No etag */
 				page = new Rsvg.Handle.from_data ((uchar[]) contents,
 				                                  contents_length);
 			}
@@ -81,9 +84,11 @@ namespace DDTBuilder {
 			try {
 
 				/* Read and parse the contents of the template file */
-				FileUtils.get_contents (preferences.logo_file,
-				                        out contents,
-				                        out contents_length);
+				handle = File.new_for_path (preferences.logo_file);
+				handle.load_contents (null,
+				                      out contents,
+				                      out contents_length,
+				                      null);                /* No etag */
 				logo = new Rsvg.Handle.from_data ((uchar[]) contents,
 				                                  contents_length);
 			}
