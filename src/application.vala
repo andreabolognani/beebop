@@ -269,7 +269,7 @@ namespace DDTBuilder {
 			if (error_message == null) {
 
 				/* Connect signals */
-				window.delete_event.connect (close);
+				window.delete_event.connect ((e) => { quit (); return true; });
 				recipient_name_entry.changed.connect (name_changed);
 				recipient_street_entry.changed.connect (street_changed);
 				recipient_city_entry.changed.connect (city_changed);
@@ -369,13 +369,6 @@ namespace DDTBuilder {
 
 			/* Show the main application window */
 			window.show_all ();
-		}
-
-		private bool close (Gdk.Event ev) {
-
-			quit ();
-
-			return true;
 		}
 
 		private void quit () {
