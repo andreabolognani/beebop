@@ -351,7 +351,7 @@ namespace DDTBuilder {
 					try {
 
 						row = parse_good (node);
-						goods.add_row (row);
+						goods.append_row (row);
 					}
 					catch (DocumentError e) {
 
@@ -382,23 +382,23 @@ namespace DDTBuilder {
 
 				if ((node->name).collate (TAG_CODE) == 0) {
 
-					row.cells[0].text = node->get_content ();
+					row.get_cell (0).text = node->get_content ();
 				}
 				else if ((node->name).collate (TAG_REFERENCE) == 0) {
 
-					row.cells[1].text = node->get_content ();
+					row.get_cell (1).text = node->get_content ();
 				}
 				else if ((node->name).collate (TAG_DESCRIPTION) == 0) {
 
-					row.cells[2].text = node->get_content ();
+					row.get_cell (2).text = node->get_content ();
 				}
 				else if ((node->name).collate (TAG_UNIT_OF_MEASUREMENT) == 0) {
 
-					row.cells[3].text = node->get_content ();
+					row.get_cell (3).text = node->get_content ();
 				}
 				else if ((node->name).collate (TAG_QUANTITY) == 0) {
 
-					row.cells[4].text = node->get_content ();
+					row.get_cell (4).text = node->get_content ();
 				}
 				else {
 

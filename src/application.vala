@@ -873,6 +873,7 @@ namespace DDTBuilder {
 			Gtk.SpinButton spin_button;
 			Table goods;
 			Row row;
+			Cell cell;
 			WidgetRow widget_row;
 			int len;
 			int i;
@@ -889,29 +890,34 @@ namespace DDTBuilder {
 
 				/* Code */
 				entry = widget_row.widgets[0] as Gtk.Entry;
-				row.cells[0].text = get_entry_text (entry,
-				                                    "good_code_entry");
+				cell = row.get_cell (0);
+				cell.text = get_entry_text (entry,
+				                            "good_code_entry");
 
 				/* Reference */
 				entry = widget_row.widgets[1] as Gtk.Entry;
-				row.cells[1].text = get_entry_text (entry,
-				                                    "good_reference_entry");
+				cell = row.get_cell (1);
+				cell.text = get_entry_text (entry,
+				                            "good_reference_entry");
 
 				/* Description */
 				entry = widget_row.widgets[2] as Gtk.Entry;
-				row.cells[2].text = get_entry_text (entry,
-				                                    "good_description_entry");
+				cell = row.get_cell (2);
+				cell.text = get_entry_text (entry,
+				                            "good_description_entry");
 
 				/* Unit of measurement */
 				entry = widget_row.widgets[3] as Gtk.Entry;
-				row.cells[3].text = get_entry_text (entry,
+				cell = row.get_cell (3);
+				cell.text = get_entry_text (entry,
 				                                    "good_unit_entry");
 
 				/* Quantity */
 				spin_button = widget_row.widgets[4] as Gtk.SpinButton;
-				row.cells[4].text = "%d".printf (spin_button.get_value_as_int ());
+				cell = row.get_cell (4);
+				cell.text = "%d".printf (spin_button.get_value_as_int ());
 
-				goods.add_row (row);
+				goods.append_row (row);
 			}
 		}
 

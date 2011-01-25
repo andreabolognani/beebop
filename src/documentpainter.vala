@@ -204,16 +204,20 @@ namespace DDTBuilder {
 			               150.0};
 
 			row = new Row (table.columns);
-			row.cells[0].title = _("Document type");
-			row.cells[0].text = _("BOP");
-			row.cells[1].title = _("Number");
-			row.cells[1].text = document.number;
-			row.cells[2].title = _("Date");
-			row.cells[2].text = document.date;
-			row.cells[3].title = _("Page");
-			row.cells[3].text = document.page_number;
+			cell = row.get_cell (0);
+			cell.title = _("Document type");
+			cell.text = _("BOP");
+			cell = row.get_cell (1);
+			cell.title = _("Number");
+			cell.text = document.number;
+			cell = row.get_cell (2);
+			cell.title = _("Date");
+			cell.text = document.date;
+			cell = row.get_cell (3);
+			cell.title = _("Page");
+			cell.text = document.page_number;
 
-			table.add_row (row);
+			table.append_row (row);
 
 			/* Draw first part of document info */
 			box_width = page_width - (2 * preferences.page_padding_x);
@@ -233,14 +237,17 @@ namespace DDTBuilder {
 			               150.0};
 
 			row = new Row (table.columns);
-			row.cells[0].title = _("Client code");
-			row.cells[0].text = document.recipient.client_code;
-			row.cells[1].title = _("VATIN");
-			row.cells[1].text = document.recipient.vatin;
-			row.cells[2].title = _("Delivery duties");
-			row.cells[2].text = document.shipment_info.duties;
+			cell = row.get_cell (0);
+			cell.title = _("Client code");
+			cell.text = document.recipient.client_code;
+			cell = row.get_cell (1);
+			cell.title = _("VATIN");
+			cell.text = document.recipient.vatin;
+			cell = row.get_cell (2);
+			cell.title = _("Delivery duties");
+			cell.text = document.shipment_info.duties;
 
-			table.add_row (row);
+			table.append_row (row);
 
 			/* Draw second part of document info */
 			box_y += offset;
@@ -255,9 +262,9 @@ namespace DDTBuilder {
 			row = new Row (document.goods.columns);
 			for (i = 0; i < document.goods.columns; i++) {
 
-				row.cells[i].text = "*****";
+				row.get_cell (i).text = "*****";
 			}
-			document.goods.add_row (row);
+			document.goods.append_row (row);
 
 			/* Draw the goods table */
 			box_y += offset + preferences.elements_spacing_y;
@@ -273,10 +280,11 @@ namespace DDTBuilder {
 			notes_table.sizes = {Document.AUTOMATIC_SIZE};
 
 			row = new Row (notes_table.columns);
-			row.cells[0].title = _("Notes");
-			row.cells[0].text = "\n";
+			cell = row.get_cell (0);
+			cell.title = _("Notes");
+			cell.text = "\n";
 
-			notes_table.add_row (row);
+			notes_table.append_row (row);
 
 			/* Create another info table */
 			reason_table = new Table (4);
@@ -286,16 +294,20 @@ namespace DDTBuilder {
 			                      Document.AUTOMATIC_SIZE};
 
 			row = new Row (reason_table.columns);
-			row.cells[0].title = _("Reason");
-			row.cells[0].text = document.shipment_info.reason;
-			row.cells[1].title = _("Transported by");
-			row.cells[1].text = document.shipment_info.transported_by;
-			row.cells[2].title = _("Carrier");
-			row.cells[2].text = document.shipment_info.carrier;
-			row.cells[3].title = _("Outside appearance");
-			row.cells[3].text = document.goods_info.appearance;
+			cell = row.get_cell (0);
+			cell.title = _("Reason");
+			cell.text = document.shipment_info.reason;
+			cell = row.get_cell (1);
+			cell.title = _("Transported by");
+			cell.text = document.shipment_info.transported_by;
+			cell = row.get_cell (2);
+			cell.title = _("Carrier");
+			cell.text = document.shipment_info.carrier;
+			cell = row.get_cell (3);
+			cell.title = _("Outside appearance");
+			cell.text = document.goods_info.appearance;
 
-			reason_table.add_row (row);
+			reason_table.append_row (row);
 
 			/* Create yet another info table */
 			date_table = new Table (4);
@@ -305,16 +317,20 @@ namespace DDTBuilder {
 			                    150.0};
 
 			row = new Row (date_table.columns);
-			row.cells[0].title = _("Shipping date and time");
-			row.cells[0].text = " ";
-			row.cells[1].title = _("Delivery date and time");
-			row.cells[1].text = " ";
-			row.cells[2].title = _("Number of parcels");
-			row.cells[2].text = document.goods_info.parcels;
-			row.cells[3].title = _("Weight");
-			row.cells[3].text = document.goods_info.weight;
+			cell = row.get_cell (0);
+			cell.title = _("Shipping date and time");
+			cell.text = " ";
+			cell = row.get_cell (1);
+			cell.title = _("Delivery date and time");
+			cell.text = " ";
+			cell = row.get_cell (2);
+			cell.title = _("Number of parcels");
+			cell.text = document.goods_info.parcels;
+			cell = row.get_cell (3);
+			cell.title = _("Weight");
+			cell.text = document.goods_info.weight;
 
-			date_table.add_row (row);
+			date_table.append_row (row);
 
 			/* Create a table for signatures */
 			signatures_table = new Table (3);
@@ -323,14 +339,17 @@ namespace DDTBuilder {
 			                          Document.AUTOMATIC_SIZE};
 
 			row = new Row (signatures_table.columns);
-			row.cells[0].title = _("Driver\xe2\x80\x99s signature");
-			row.cells[0].text = " ";
-			row.cells[1].title = _("Carrier\xe2\x80\x99s signature");
-			row.cells[1].text = " ";
-			row.cells[2].title = _("Recipient\xe2\x80\x99s signature");
-			row.cells[2].text = " ";
+			cell = row.get_cell (0);
+			cell.title = _("Driver\xe2\x80\x99s signature");
+			cell.text = " ";
+			cell = row.get_cell (1);
+			cell.title = _("Carrier\xe2\x80\x99s signature");
+			cell.text = " ";
+			cell = row.get_cell (2);
+			cell.title = _("Recipient\xe2\x80\x99s signature");
+			cell.text = " ";
 
-			signatures_table.add_row (row);
+			signatures_table.append_row (row);
 
 			/* Calculate the total sizes of all these info tables */
 			box_y += offset + preferences.elements_spacing_y;
@@ -568,7 +587,7 @@ namespace DDTBuilder {
 			row = new Row (len);
 			for (i = 0; i < len; i++) {
 
-				row.cells[i].title = table.headings[i];
+				row.get_cell (i).title = table.headings[i];
 
 				/* If at least one of the headings is not empty,
 				 * draw all headings */
@@ -592,12 +611,12 @@ namespace DDTBuilder {
 			}
 
 			/* Get the number of data rows */
-			len = (int) table.rows.length ();
+			len = table.rows;
 
 			for (i = 0; i < len; i++) {
 
 				/* Draw a row */
-				row = table.rows.nth_data (i);
+				row = table.get_row (i);
 				offset = draw_row (row,
 				                   sizes,
 				                   x,
@@ -635,7 +654,7 @@ namespace DDTBuilder {
 
 				box_width = sizes[i];
 
-				offset = draw_cell (row.cells[i],
+				offset = draw_cell (row.get_cell (i),
 				                    box_x,
 				                    box_y,
 				                    box_width,

@@ -24,7 +24,7 @@ namespace DDTBuilder {
 		private string[] _headings;
 
 		public int columns { get; construct set; }
-		public unowned List<Row> rows { get; set; }
+		public unowned List<Row> data { get; set; }
 
 		public double[] sizes {
 
@@ -50,6 +50,13 @@ namespace DDTBuilder {
 			}
 		}
 
+		public int rows {
+
+			get {
+				return (int) data.length ();
+			}
+		}
+
 		construct {
 
 			int i;
@@ -64,7 +71,7 @@ namespace DDTBuilder {
 				headings[i] = "";
 			}
 
-			rows = new List<Row> ();
+			data = new List<Row> ();
 		}
 
 		public Table (int columns) {
@@ -72,9 +79,38 @@ namespace DDTBuilder {
 			GLib.Object (columns: columns);
 		}
 
-		public void add_row (Row row) {
+		public Row get_row (int j) {
 
-			rows.append (row);
+			return_val_if_fail (j >= 0 && j <= rows, null);
+
+			return data.nth_data (j);
+		}
+
+		public void append_row (Row row) {
+
+			return_if_fail (row.columns == columns);
+
+			data.append (row);
+		}
+
+		/* TODO In case it is found to be useful
+		public void set_row (int j, Row row) {}
+		*/
+
+		public Cell get_cell (int i, int j) {
+
+			return_val_if_fail (i >= 0 && i <= columns, null);
+			return_val_if_fail (j >= 0 && j <= rows, null);
+
+			return data.nth_data (j).get_cell (i);
+		}
+
+		public void set_cell (int i, int j, Cell cell) {
+
+			return_if_fail (i >= 0 && i <= columns);
+			return_if_fail (j >= 0 && j <= rows);
+
+			data.nth_data (j).set_cell (i, cell);
 		}
 	}
 }

@@ -20,35 +20,37 @@ namespace DDTBuilder {
 
 	public class Row : GLib.Object {
 
-		private Cell[] _cells;
+		private Cell[] data;
 
 		public int columns { get; construct set; }
-
-		public Cell[] cells {
-
-			get {
-				return _cells;
-			}
-
-			set {
-				return_if_fail (value.length == columns);
-				_cells = value;
-			}
-		}
 
 		construct {
 
 			int i;
 
-			cells = new Cell[columns];
+			data = new Cell[columns];
 			for (i = 0; i < columns; i++) {
-				cells[i] = new Cell ();
+				data[i] = new Cell ();
 			}
 		}
 
 		public Row (int columns) {
 
 			GLib.Object (columns: columns);
+		}
+
+		public Cell get_cell (int i) {
+
+			return_val_if_fail (i >= 0 && i <= columns, null);
+
+			return data[i];
+		}
+
+		public void set_cell (int i, Cell cell) {
+
+			return_if_fail (i >= 0 && i <= columns);
+
+			data[i] = cell;
 		}
 	}
 }
