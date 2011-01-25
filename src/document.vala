@@ -31,6 +31,7 @@ namespace DDTBuilder {
 		public const string TAG_DOCUMENT = "document";
 		public const string TAG_NUMBER = "number";
 		public const string TAG_DATE = "date";
+		public const string TAG_PAGE_NUMBER = "page_number";
 		public const string TAG_RECIPIENT = "recipient";
 		public const string TAG_DESTINATION = "destination";
 		public const string TAG_SHIPMENT = "shipment";
@@ -192,6 +193,10 @@ namespace DDTBuilder {
 				else if ((node->name).collate (TAG_DATE) == 0) {
 
 					date = node->get_content ();
+				}
+				else if ((node->name).collate (TAG_PAGE_NUMBER) == 0) {
+
+					page_number = node->get_content ();
 				}
 				else if ((node->name).collate (TAG_RECIPIENT) == 0) {
 

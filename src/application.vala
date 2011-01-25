@@ -694,8 +694,7 @@ namespace DDTBuilder {
 			/* Fill in document info */
 			document_number_entry.text = document.number;
 			document_date_entry.text = document.date;
-			// FIXME
-			//document_page_entry.text = document.page_number;
+			document_page_entry.text = document.page_number;
 
 			/* Fill in goods info */
 			goods_appearance_entry.text = document.goods_info.appearance;
