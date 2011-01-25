@@ -653,7 +653,11 @@ namespace DDTBuilder {
 		/* Load a document into the interface */
 		private void load () {
 
+			Cell cell;
+			WidgetRow widget_row;
 			bool same;
+			int rows;
+			int i;
 
 			same = true;
 
@@ -703,6 +707,39 @@ namespace DDTBuilder {
 			shipment_transported_by_entry.text = document.shipment_info.transported_by;
 			shipment_carrier_entry.text = document.shipment_info.carrier;
 			shipment_duties_entry.text = document.shipment_info.duties;
+
+			rows = document.goods.rows;
+
+			for (i = 0; i < rows; i++) {
+
+				if (i >= table_widgets.length ()) {
+
+					add_row ();
+				}
+
+				/* The rows of widgets are stored in reverse order */
+				widget_row = table_widgets.nth_data (table_widgets.length () - i - 1);
+
+				/* Code */
+				cell = document.goods.get_cell (0, i);
+				(widget_row.widgets[0] as Gtk.Entry).text = cell.text;
+
+				/* Reference */
+				cell = document.goods.get_cell (1, i);
+				(widget_row.widgets[1] as Gtk.Entry).text = cell.text;
+
+				/* Description */
+				cell = document.goods.get_cell (2, i);
+				(widget_row.widgets[2] as Gtk.Entry).text = cell.text;
+
+				/* Unit of measurement */
+				cell = document.goods.get_cell (3, i);
+				(widget_row.widgets[3] as Gtk.Entry).text = cell.text;
+
+				/* Quantity */
+				cell = document.goods.get_cell (4, i);
+				(widget_row.widgets[4] as Gtk.SpinButton).value = cell.text.to_double ();
+			}
 		}
 
 		private void print () {
