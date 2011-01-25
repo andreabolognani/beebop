@@ -320,23 +320,6 @@ namespace DDTBuilder {
 				/* Disable remove action */
 				remove_action.sensitive = false;
 			}
-
-			if (error_message == null) {
-
-				/* Add some dummy data */
-				recipient_name_entry.text = "Random Company";
-				recipient_street_entry.text = "Fleet Street, 15";
-				recipient_city_entry.text = "London (UK)";
-				recipient_vatin_entry.text = "0830192809";
-				document_number_entry.text = "42/2011";
-				goods_appearance_entry.text = "Box";
-				goods_weight_entry.text = "3.2 Kg";
-
-				/* Sync the form entries */
-				name_changed ();
-				street_changed ();
-				city_changed ();
-			}
 		}
 
 		/* Get an object out of the UI, checking it exists */
@@ -654,20 +637,79 @@ namespace DDTBuilder {
 
 					/* Read and parse the file */
 					tmp.load ();
-
-					show_warning ("Loaded document %s".printf (tmp.number));
 				}
 				catch (DocumentError e) {
 
 					/* Show an error */
 					show_error (_("Could not load document: %s").printf (e.message));
+
+					return;
 				}
+
+				/* Sync the interface with the loaded document */
+				document = tmp;
+				load ();
 			}
 			else {
 
 				/* Destroy the dialog */
 				dialog.destroy ();
 			}
+		}
+
+		/* Load a document into the interface */
+		private void load () {
+
+			bool same;
+
+			same = true;
+
+			/* If the three pieces of information shared by the recipient and the
+			 * destination do not differ, then the shipment is sent to the
+			 * recipient, and the checkbutton has to be activated */
+			if (document.destination.name.collate (document.recipient.name) != 0) {
+
+				same = same && false;
+			}
+			if (document.destination.street.collate (document.recipient.street) != 0) {
+
+				same = same && false;
+			}
+			if (document.destination.city.collate (document.recipient.city) != 0) {
+
+				same = same && false;
+			}
+
+			send_to_recipient_checkbutton.active = same;
+
+			/* Fill in recipient info */
+			recipient_name_entry.text = document.recipient.name;
+			recipient_street_entry.text = document.recipient.street;
+			recipient_city_entry.text = document.recipient.city;
+			recipient_vatin_entry.text = document.recipient.vatin;
+			recipient_client_code_entry.text = document.recipient.client_code;
+
+			/* Fill in destination info */
+			destination_name_entry.text = document.destination.name;
+			destination_street_entry.text = document.destination.street;
+			destination_city_entry.text = document.destination.city;
+
+			/* Fill in document info */
+			document_number_entry.text = document.number;
+			document_date_entry.text = document.date;
+			// FIXME
+			//document_page_entry.text = document.page_number;
+
+			/* Fill in goods info */
+			goods_appearance_entry.text = document.goods_info.appearance;
+			goods_parcels_spinbutton.value = document.goods_info.parcels.to_double ();
+			goods_weight_entry.text = document.goods_info.weight;
+
+			/* Fill in shipment info */
+			shipment_reason_entry.text = document.shipment_info.reason;
+			shipment_transported_by_entry.text = document.shipment_info.transported_by;
+			shipment_carrier_entry.text = document.shipment_info.carrier;
+			shipment_duties_entry.text = document.shipment_info.duties;
 		}
 
 		private void print () {

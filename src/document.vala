@@ -281,7 +281,6 @@ namespace DDTBuilder {
 				}
 				else {
 
-					warning ("%s", node->name);
 					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_DESTINATION));
 				}
 			}
