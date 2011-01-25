@@ -1659,28 +1659,6 @@
   <object class="GtkAction" id="open_action">
     <property name="stock_id">gtk-open</property>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup1">
-    <widgets>
-      <widget name="recipient_name_entry"/>
-      <widget name="recipient_street_entry"/>
-      <widget name="recipient_city_entry"/>
-      <widget name="recipient_vatin_entry"/>
-      <widget name="recipient_client_code_entry"/>
-      <widget name="destination_name_entry"/>
-      <widget name="destination_street_entry"/>
-      <widget name="destination_city_entry"/>
-      <widget name="document_number_entry"/>
-      <widget name="document_date_entry"/>
-      <widget name="document_page_entry"/>
-      <widget name="goods_appearance_entry"/>
-      <widget name="goods_parcels_spinbutton"/>
-      <widget name="goods_weight_entry"/>
-      <widget name="shipment_reason_entry"/>
-      <widget name="shipment_transported_by_entry"/>
-      <widget name="shipment_carrier_entry"/>
-      <widget name="shipment_duties_entry"/>
-    </widgets>
-  </object>
   <object class="GtkSizeGroup" id="sizegroup2">
     <widgets>
       <widget name="label1"/>
