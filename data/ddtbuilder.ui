@@ -25,6 +25,7 @@
                         <property name="visible">True</property>
                         <property name="related_action">open_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -270,6 +271,7 @@
                                     <property name="label" translatable="yes">Name</property>
                                   </object>
                                   <packing>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -282,6 +284,7 @@
                                   <packing>
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -294,6 +297,7 @@
                                   <packing>
                                     <property name="top_attach">2</property>
                                     <property name="bottom_attach">3</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -360,6 +364,7 @@
                                   <packing>
                                     <property name="top_attach">3</property>
                                     <property name="bottom_attach">4</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -372,6 +377,7 @@
                                   <packing>
                                     <property name="top_attach">4</property>
                                     <property name="bottom_attach">5</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -423,6 +429,7 @@
                                     <property name="label" translatable="yes">Name</property>
                                   </object>
                                   <packing>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -435,6 +442,7 @@
                                   <packing>
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -447,6 +455,7 @@
                                   <packing>
                                     <property name="top_attach">2</property>
                                     <property name="bottom_attach">3</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -506,6 +515,7 @@
                                     <property name="right_attach">2</property>
                                     <property name="top_attach">3</property>
                                     <property name="bottom_attach">4</property>
+                                    <property name="x_options">GTK_FILL</property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -547,6 +557,7 @@
                                     <property name="label" translatable="yes">Number</property>
                                   </object>
                                   <packing>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -559,6 +570,7 @@
                                   <packing>
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -597,6 +609,7 @@
                                   <packing>
                                     <property name="top_attach">2</property>
                                     <property name="bottom_attach">3</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -652,6 +665,7 @@
                                     <property name="label" translatable="yes">Outside appearance</property>
                                   </object>
                                   <packing>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -664,6 +678,7 @@
                                   <packing>
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -676,6 +691,7 @@
                                   <packing>
                                     <property name="top_attach">2</property>
                                     <property name="bottom_attach">3</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -761,6 +777,7 @@
                                   <packing>
                                     <property name="top_attach">1</property>
                                     <property name="bottom_attach">2</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -773,6 +790,7 @@
                                   <packing>
                                     <property name="top_attach">2</property>
                                     <property name="bottom_attach">3</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -785,6 +803,7 @@
                                   <packing>
                                     <property name="top_attach">3</property>
                                     <property name="bottom_attach">4</property>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -849,6 +868,7 @@
                                     <property name="label" translatable="yes">Reason</property>
                                   </object>
                                   <packing>
+                                    <property name="x_options"></property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -1638,5 +1658,49 @@
   </object>
   <object class="GtkAction" id="open_action">
     <property name="stock_id">gtk-open</property>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup1">
+    <widgets>
+      <widget name="recipient_name_entry"/>
+      <widget name="recipient_street_entry"/>
+      <widget name="recipient_city_entry"/>
+      <widget name="recipient_vatin_entry"/>
+      <widget name="recipient_client_code_entry"/>
+      <widget name="destination_name_entry"/>
+      <widget name="destination_street_entry"/>
+      <widget name="destination_city_entry"/>
+      <widget name="document_number_entry"/>
+      <widget name="document_date_entry"/>
+      <widget name="document_page_entry"/>
+      <widget name="goods_appearance_entry"/>
+      <widget name="goods_parcels_spinbutton"/>
+      <widget name="goods_weight_entry"/>
+      <widget name="shipment_reason_entry"/>
+      <widget name="shipment_transported_by_entry"/>
+      <widget name="shipment_carrier_entry"/>
+      <widget name="shipment_duties_entry"/>
+    </widgets>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup2">
+    <widgets>
+      <widget name="label1"/>
+      <widget name="label2"/>
+      <widget name="label3"/>
+      <widget name="label18"/>
+      <widget name="label19"/>
+      <widget name="label9"/>
+      <widget name="label10"/>
+      <widget name="label11"/>
+      <widget name="label12"/>
+      <widget name="label13"/>
+      <widget name="label4"/>
+      <widget name="label21"/>
+      <widget name="label22"/>
+      <widget name="label23"/>
+      <widget name="label6"/>
+      <widget name="label7"/>
+      <widget name="label8"/>
+      <widget name="label20"/>
+    </widgets>
   </object>
 </interface>
