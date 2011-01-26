@@ -20,9 +20,39 @@ namespace DDTBuilder {
 
 	public class Connector : GLib.Object {
 
-		public View view { get; set; }
-		public Document document { get; set; }
+		private View _view;
 
+		public Document document { get; set; }
+		public View view {
+
+			get {
+				return _view;
+			}
+
+			set {
+				_view = value;
+				prepare_view ();
+			}
+		}
+
+		/* Prepare a view for use.
+		 *
+		 * This include connecting signal handlers and updating
+		 * all the widgets in the view to make their contents
+		 * reflect the contents of the document */
+		private void prepare_view () {
+
+			view.window.delete_event.connect ((e) => { quit (); return true; });
+		}
+
+		/* Quit the application */
+		private void quit () {
+
+			Gtk.main_quit ();
+		}
+
+		/* Show the main application window and wait for user
+		 * interaction */
 		public void run () {
 
 			view.window.show_all ();

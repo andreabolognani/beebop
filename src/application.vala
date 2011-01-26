@@ -24,7 +24,7 @@ namespace DDTBuilder {
 
 	public class Application : GLib.Object {
 
-		Connector connector;
+		private Connector connector;
 
 #if false
 		private Preferences preferences;
