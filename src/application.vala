@@ -315,6 +315,7 @@ namespace DDTBuilder {
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true);
+				renderer.edited.connect ((path, val) => { update_goods (path, CODE_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
 				                                                 renderer,
 				                                                 "text", CODE_COLUMN);
@@ -322,6 +323,7 @@ namespace DDTBuilder {
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true);
+				renderer.edited.connect ((path, val) => { update_goods (path, REFERENCE_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
 				                                                 renderer,
 				                                                 "text", REFERENCE_COLUMN);
@@ -329,6 +331,7 @@ namespace DDTBuilder {
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true);
+				renderer.edited.connect ((path, val) => { update_goods (path, DESCRIPTION_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
 				                                                 renderer,
 				                                                 "text", DESCRIPTION_COLUMN);
@@ -337,6 +340,7 @@ namespace DDTBuilder {
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true);
+				renderer.edited.connect ((path, val) => { update_goods (path, UNIT_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Unit of measurement"),
 				                                                 renderer,
 				                                                 "text", UNIT_COLUMN);
@@ -346,7 +350,7 @@ namespace DDTBuilder {
 				renderer.set ("adjustment", adjustment,
 				              "digits", 0,
 				              "editable", true);
-				renderer.edited.connect ((p, n) => { warning ("Value changed: %s => %s", p, n); });
+				renderer.edited.connect ((path, val) => { update_goods (path, QUANTITY_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
 				                                                 renderer,
 				                                                 "text", QUANTITY_COLUMN);
@@ -1089,6 +1093,37 @@ namespace DDTBuilder {
 			default_transported_by_entry.text = preferences.default_transported_by;
 			default_carrier_entry.text = preferences.default_carrier;
 			default_duties_entry.text = preferences.default_duties;
+		}
+
+		/* Update the ListStore backing the goods.
+		 *
+		 * Keep the ListStore up-to-date with the changes made in the interface. */
+		private void update_goods (string row, int column, string val) {
+
+			Gtk.ListStore store;
+			Gtk.TreePath path;
+			Gtk.TreeIter iter;
+
+			/* Get an iter to the modified row */
+			store = goods_treeview.model
+			        as Gtk.ListStore;
+			path = new Gtk.TreePath.from_string (row);
+			store.get_iter (out iter, path);
+
+			/* The column QUANTITY_COLUMN contains a int, so the string
+			 * has to be converted before it is stored in the model */
+			if (column == QUANTITY_COLUMN) {
+
+				store.set (iter,
+				           column, val.to_int (),
+				           -1);
+			}
+			else {
+
+				store.set (iter,
+				           column, val,
+				           -1);
+			}
 		}
 
 		/* Make a widget grab the focus.
