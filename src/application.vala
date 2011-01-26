@@ -268,10 +268,8 @@ namespace DDTBuilder {
 				cut_action.activate.connect (cut);
 				copy_action.activate.connect (copy);
 				paste_action.activate.connect (paste);
-#if false
 				add_action.activate.connect (add_row);
 				remove_action.activate.connect (remove_row);
-#endif
 				preferences_action.activate.connect (show_preferences);
 
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
@@ -287,29 +285,6 @@ namespace DDTBuilder {
 				                                typeof (string),
 				                                typeof (string),
 				                                typeof (int));
-
-				adjustment = new Gtk.Adjustment (1.0,
-				                                 0.0,
-				                                 999.0,
-				                                 1.0,
-				                                 10.0,
-				                                 0.0);
-				list_store.append (out iter);
-				list_store.set (iter,
-				                CODE_COLUMN, "12",
-				                REFERENCE_COLUMN, "order 7878",
-				                DESCRIPTION_COLUMN, "Something",
-				                UNIT_COLUMN, "N",
-				                QUANTITY_COLUMN, 12,
-				                -1);
-				list_store.append (out iter);
-				list_store.set (iter,
-				                CODE_COLUMN, "13",
-				                REFERENCE_COLUMN, "order 7878",
-				                DESCRIPTION_COLUMN, "Something",
-				                UNIT_COLUMN, "N",
-				                QUANTITY_COLUMN, 500,
-				                -1);
 
 				goods_treeview.model = list_store;
 
@@ -355,6 +330,12 @@ namespace DDTBuilder {
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererSpin ();
+				adjustment = new Gtk.Adjustment (1.0,
+				                                 0.0,
+				                                 999.0,
+				                                 1.0,
+				                                 10.0,
+				                                 0.0);
 				renderer.set ("adjustment", adjustment,
 				              "digits", 0,
 				              "editable", true,
@@ -389,9 +370,7 @@ namespace DDTBuilder {
 				shipment_duties_entry.text = preferences.default_duties;
 
 				/* Create a first row of widgets */
-#if false
 				add_row ();
-#endif
 
 				/* Disable remove action */
 				remove_action.sensitive = false;
@@ -536,123 +515,50 @@ namespace DDTBuilder {
 			}
 		}
 
-#if false
 		public void add_row () {
 
-			Gtk.Label label;
-			Gtk.Entry code_entry;
-			Gtk.Entry reference_entry;
-			Gtk.Entry description_entry;
-			Gtk.Entry unit_entry;
-			Gtk.SpinButton quantity_spinbutton;
-			Gtk.Adjustment adjustment;
-			Gtk.AttachOptions x_options;
-			Gtk.AttachOptions y_options;
-			WidgetRow row;
-			int len;
-			int i;
+			Gtk.ListStore store;
+			Gtk.TreeIter iter;
+			int rows;
 
-			/* Increase the number of rows */
-			goods_table.resize (goods_table.n_rows + 1,
-			                    goods_table.n_columns);
+			store = goods_treeview.model
+			        as Gtk.ListStore;
 
-			/* Create all the widgets needed for a new row */
-			code_entry = new Gtk.Entry ();
-			reference_entry = new Gtk.Entry ();
-			description_entry = new Gtk.Entry ();
-			unit_entry = new Gtk.Entry ();
-			quantity_spinbutton = new Gtk.SpinButton.with_range (1.0,
-			                                                     999.0,
-			                                                     1.0);
+			/* Create a new row and initialize it */
+			store.append (out iter);
+			store.set (iter,
+			           CODE_COLUMN, "",
+			           REFERENCE_COLUMN, "",
+			           DESCRIPTION_COLUMN, "",
+			           UNIT_COLUMN, preferences.default_unit,
+			           QUANTITY_COLUMN, 1);
 
-			/* Set default values */
-			unit_entry.text = preferences.default_unit;
-
-			/* Keep track of the widgets */
-			row = new WidgetRow (5);
-			row.widgets = {code_entry,
-			               reference_entry,
-			               description_entry,
-			               unit_entry,
-			               quantity_spinbutton};
-			table_widgets.prepend (row);
-
-			len = (int) goods_table.n_columns;
-
-			/* Attach the widgets to the table */
-			for (i = 0; i < len; i++) {
-
-				/* Get attach options for the column label */
-				label = table_labels.nth_data (i);
-				goods_table.child_get (label,
-				                       "x-options",
-				                       out x_options,
-				                       "y-options",
-				                       out y_options,
-				                       null);
-
-				/* Attach the widget using the same attach options
-				 * used for the column label */
-				goods_table.attach (row.widgets[i],
-				                    i,
-				                    i + 1,
-				                    goods_table.n_rows - 1,
-				                    goods_table.n_rows,
-				                    x_options,
-				                    y_options,
-				                    0,
-				                    0);
-
-				/* Show the widget */
-				row.widgets[i].show ();
-			}
-
-			/* Rows can be removed if there are more than two of them */
-			if (table_widgets.length () >= 2) {
-				remove_action.sensitive = true;
-			}
-
-			/* Give focus to the first widget in the new row */
-			row.widgets[0].grab_focus ();
-
-			/* Scroll the table all the way down */
-			adjustment = table_viewport.vadjustment;
-			adjustment.value = adjustment.upper;
+			/* Enable / disable row deletion based on the number of rows */
+			rows = store.iter_n_children (null);
+			remove_action.sensitive = (rows > 1);
 		}
 
 		public void remove_row () {
 
-			WidgetRow row;
-			int len;
-			int i;
+			Gtk.ListStore store;
+			Gtk.TreeIter iter;
+			Gtk.TreePath path;
+			int rows;
 
-			row = table_widgets.data;
-			len = (int) goods_table.n_columns;
+			store = goods_treeview.model
+			        as Gtk.ListStore;
 
-			for (i = 0; i < len; i++) {
+			/* Get an iter pointing to the last row */
+			rows = store.iter_n_children (null);
+			path = new Gtk.TreePath.from_indices (rows - 1, -1);
+			store.get_iter (out iter, path);
 
-				/* Remove and destroy widgets */
-				goods_table.remove (row.widgets[i]);
-				row.widgets[i].destroy ();
-			}
+			store.remove (iter);
 
-			/* Remove widgets row from the stack */
-			table_widgets.delete_link (table_widgets);
-
-			/* Resize the table */
-			goods_table.resize (goods_table.n_rows - 1,
-			                    goods_table.n_columns);
-
-			/* Don't allow the user to remove the last row */
-			if (table_widgets.length () <= 1) {
-				remove_action.sensitive = false;
-			}
-
-			/* Give focus to the first widget in the last row */
-			row = table_widgets.data;
-			focus_widget (row.widgets[0]);
+			/* Enable / disable row deletion based on the number of rows */
+			rows--;
+			remove_action.sensitive = (rows > 1);
 		}
-#endif
 
 		public void show_error (string message) {
 
