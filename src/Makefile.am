@@ -43,6 +43,8 @@ ddtbuilder_SOURCES = \
 	row.vala \
 	table.vala \
 	document.vala \
+	view.vala \
+	connector.vala \
 	application.vala \
 	$(NULL)
 ddtbuilder_LDFLAGS = \

@@ -25,6 +25,7 @@ namespace DDTBuilder {
 
 	public class Application : GLib.Object {
 
+#if false
 		private Preferences preferences;
 		private Document document;
 
@@ -1089,8 +1090,12 @@ namespace DDTBuilder {
 
 			return description;
 		}
+#endif
 
 		public static int main (string[] args) {
+
+			View view;
+			Connector connector;
 
 			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
 			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
@@ -1102,6 +1107,24 @@ namespace DDTBuilder {
 
 			Environment.set_application_name (_("DDT Builder"));
 
+			view = new View ();
+			connector = new Connector ();
+
+			try {
+
+				/* Load the view */
+				view.load ();
+
+				/* Assign the view to the connector and run it */
+				connector.view = view;
+				connector.run ();
+			}
+			catch (ViewError e) {
+
+				warning ("Could not load view");
+			}
+
+#if false
 			Application application = new Application ();
 
 			if (application.error_message != null) {
@@ -1116,6 +1139,7 @@ namespace DDTBuilder {
 				application.show_all ();
 				Gtk.main ();
 			}
+#endif
 
 			return 0;
 		}

@@ -20,6 +20,9 @@ namespace DDTBuilder {
 
 	public class Const : GLib.Object {
 
+		/* Resource paths */
+		public const string UI_FILE = Config.PKGDATADIR + "/ddtbuilder.ui";
+
 		/* Document file tags */
 		public const string TAG_DOCUMENT = "document";
 		public const string TAG_NUMBER = "number";
@@ -71,6 +74,40 @@ namespace DDTBuilder {
 		public const int COLUMN_UNIT = 3;
 		public const int COLUMN_QUANTITY = 4;
 		public const int LAST_COLUMN = 5;
+
+		/* Object names */
+		public const string OBJ_WINDOW = "window";
+		public const string OBJ_PREFERENCES_WINDOW = "preferences_window";
+		public const string OBJ_NOTEBOOK = "notebook";
+		public const string OBJ_RECIPIENT_NAME_ENTRY = "recipient_name_entry";
+		public const string OBJ_RECIPIENT_STREET_ENTRY = "recipient_street_entry";
+		public const string OBJ_RECIPIENT_CITY_ENTRY = "recipient_city_entry";
+		public const string OBJ_RECIPIENT_VATIN_ENTRY = "recipient_vatin_entry";
+		public const string OBJ_RECIPIENT_CLIENT_CODE_ENTRY = "recipient_client_code_entry";
+		public const string OBJ_DESTINATION_NAME_ENTRY = "destination_name_entry";
+		public const string OBJ_DESTINATION_STREET_ENTRY = "destination_street_entry";
+		public const string OBJ_DESTINATION_CITY_ENTRY = "destination_city_entry";
+		public const string OBJ_SEND_TO_RECIPIENT_CHECKBUTTON = "send_to_recipient_checkbutton";
+		public const string OBJ_DOCUMENT_NUMBER_ENTRY = "document_number_entry";
+		public const string OBJ_DOCUMENT_DATE_ENTRY = "document_date_entry";
+		public const string OBJ_DOCUMENT_PAGE_ENTRY = "document_page_entry";
+		public const string OBJ_GOODS_APPEARANCE_ENTRY = "goods_appearance_entry";
+		public const string OBJ_GOODS_PARCELS_SPINBUTTON = "goods_parcels_spinbutton";
+		public const string OBJ_GOODS_WEIGHT_ENTRY = "goods_weight_entry";
+		public const string OBJ_SHIPMENT_REASON_ENTRY = "shipment_reason_entry";
+		public const string OBJ_SHIPMENT_TRANSPORTED_BY_ENTRY = "shipment_transported_by_entry";
+		public const string OBJ_SHIPMENT_CARRIER_ENTRY = "shipment_carrier_entry";
+		public const string OBJ_SHIPMENT_DUTIES_ENTRY = "shipment_duties_entry";
+		public const string OBJ_GOODS_TREEVIEW = "goods_treeview";
+		public const string OBJ_OPEN_ACTION = "open_action";
+		public const string OBJ_PRINT_ACTION = "print_action";
+		public const string OBJ_QUIT_ACTION = "quit_action";
+		public const string OBJ_CUT_ACTION = "cut_action";
+		public const string OBJ_COPY_ACTION = "copy_action";
+		public const string OBJ_PASTE_ACTION = "paste_action";
+		public const string OBJ_ADD_ACTION = "add_action";
+		public const string OBJ_REMOVE_ACTION = "remove_action";
+		public const string OBJ_PREFERENCES_ACTION = "preferences_action";
 
 		/* Size constants */
 		public const double AUTOMATIC_SIZE = -1.0;
