@@ -388,14 +388,15 @@ namespace DDTBuilder {
 			Xml.Node *node;
 			Gtk.TreeIter iter;
 
+			/* Create a new row for the good */
+			goods.append (out iter);
+
 			for (node = parent->children; node != null; node = node->next) {
 
 				/* Skip non-node contents */
 				if (node->type != Xml.ElementType.ELEMENT_NODE) {
 					continue;
 				}
-
-				goods.append (out iter);
 
 				if ((node->name).collate (TAG_CODE) == 0) {
 
