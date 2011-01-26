@@ -901,78 +901,11 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
-                        <property name="window_placement_set">True</property>
+                        <property name="shadow_type">etched-in</property>
                         <child>
-                          <object class="GtkViewport" id="table_viewport">
+                          <object class="GtkTreeView" id="goods_treeview">
                             <property name="visible">True</property>
-                            <property name="resize_mode">queue</property>
-                            <property name="shadow_type">etched-in</property>
-                            <child>
-                              <object class="GtkTable" id="goods_table">
-                                <property name="visible">True</property>
-                                <property name="border_width">5</property>
-                                <property name="n_columns">5</property>
-                                <property name="column_spacing">2</property>
-                                <property name="row_spacing">2</property>
-                                <child>
-                                  <object class="GtkLabel" id="code_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Code</property>
-                                  </object>
-                                  <packing>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="description_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Description</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">2</property>
-                                    <property name="right_attach">3</property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="reference_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Reference</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="unit_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Unit of measurement</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">3</property>
-                                    <property name="right_attach">4</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="quantity_label">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Quantity</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">4</property>
-                                    <property name="right_attach">5</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                              </object>
-                            </child>
+                            <property name="can_focus">True</property>
                           </object>
                         </child>
                       </object>
@@ -1673,39 +1606,39 @@
   </object>
   <object class="GtkSizeGroup" id="sizegroup2">
     <widgets>
-      <widget name="label1"/>
-      <widget name="label2"/>
-      <widget name="label3"/>
-      <widget name="label18"/>
-      <widget name="label19"/>
-      <widget name="label9"/>
-      <widget name="label10"/>
-      <widget name="label11"/>
-      <widget name="label12"/>
-      <widget name="label13"/>
-      <widget name="label4"/>
-      <widget name="label21"/>
-      <widget name="label22"/>
-      <widget name="label23"/>
-      <widget name="label6"/>
-      <widget name="label7"/>
-      <widget name="label8"/>
       <widget name="label20"/>
+      <widget name="label8"/>
+      <widget name="label7"/>
+      <widget name="label6"/>
+      <widget name="label23"/>
+      <widget name="label22"/>
+      <widget name="label21"/>
+      <widget name="label4"/>
+      <widget name="label13"/>
+      <widget name="label12"/>
+      <widget name="label11"/>
+      <widget name="label10"/>
+      <widget name="label9"/>
+      <widget name="label19"/>
+      <widget name="label18"/>
+      <widget name="label3"/>
+      <widget name="label2"/>
+      <widget name="label1"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup1">
     <widgets>
-      <widget name="label16"/>
-      <widget name="label17"/>
-      <widget name="label30"/>
-      <widget name="label15"/>
-      <widget name="label34"/>
-      <widget name="label36"/>
-      <widget name="label39"/>
-      <widget name="label40"/>
-      <widget name="label41"/>
-      <widget name="label42"/>
       <widget name="label43"/>
+      <widget name="label42"/>
+      <widget name="label41"/>
+      <widget name="label40"/>
+      <widget name="label39"/>
+      <widget name="label36"/>
+      <widget name="label34"/>
+      <widget name="label15"/>
+      <widget name="label30"/>
+      <widget name="label17"/>
+      <widget name="label16"/>
     </widgets>
   </object>
 </interface>

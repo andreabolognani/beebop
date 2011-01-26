@@ -25,6 +25,12 @@ namespace DDTBuilder {
 
 	public class Application : GLib.Object {
 
+		private int CODE_COLUMN = 0;
+		private int REFERENCE_COLUMN = 1;
+		private int DESCRIPTION_COLUMN = 2;
+		private int UNIT_COLUMN = 3;
+		private int QUANTITY_COLUMN = 4;
+
 		private Preferences preferences;
 		private Document document;
 
@@ -57,8 +63,7 @@ namespace DDTBuilder {
 		private Gtk.Entry shipment_carrier_entry;
 		private Gtk.Entry shipment_duties_entry;
 
-		private Gtk.Viewport table_viewport;
-		private Gtk.Table goods_table;
+		private Gtk.TreeView goods_treeview;
 
 		private Gtk.TextView header_text_view;
 		private Gtk.SpinButton page_padding_x_spinbutton;
@@ -97,7 +102,11 @@ namespace DDTBuilder {
 
 		construct {
 
-			Gtk.Label label;
+			Gtk.Adjustment adjustment;
+			Gtk.ListStore list_store;
+			Gtk.TreeIter iter;
+			Gtk.CellRendererText renderer;
+			Gtk.TreeViewColumn column;
 			Gdk.ModifierType accel_mods;
 			Date today;
 			Time now;
@@ -182,10 +191,8 @@ namespace DDTBuilder {
 					                         as Gtk.Entry;
 					shipment_duties_entry = get_object ("shipment_duties_entry")
 					                        as Gtk.Entry;
-					table_viewport = get_object ("table_viewport")
-					                 as Gtk.Viewport;
-					goods_table = get_object ("goods_table")
-					              as Gtk.Table;
+					goods_treeview = get_object ("goods_treeview")
+					                 as Gtk.TreeView;
 					header_text_view = get_object ("header_text_view")
 					                   as Gtk.TextView;
 					page_padding_x_spinbutton = get_object ("page_padding_x_spinbutton")
@@ -239,26 +246,6 @@ namespace DDTBuilder {
 					                as Gtk.Action;
 					preferences_action = get_object ("preferences_action")
 					                     as Gtk.Action;
-
-					label = get_object ("code_label")
-					        as Gtk.Label;
-					table_labels.append (label);
-
-					label = get_object ("reference_label")
-					        as Gtk.Label;
-					table_labels.append (label);
-
-					label = get_object ("description_label")
-					        as Gtk.Label;
-					table_labels.append (label);
-
-					label = get_object ("unit_label")
-					        as Gtk.Label;
-					table_labels.append (label);
-
-					label = get_object ("quantity_label")
-					        as Gtk.Label;
-					table_labels.append (label);
 				}
 				catch (ApplicationError.OBJECT_NOT_FOUND e) {
 
@@ -281,8 +268,10 @@ namespace DDTBuilder {
 				cut_action.activate.connect (cut);
 				copy_action.activate.connect (copy);
 				paste_action.activate.connect (paste);
+#if false
 				add_action.activate.connect (add_row);
 				remove_action.activate.connect (remove_row);
+#endif
 				preferences_action.activate.connect (show_preferences);
 
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
@@ -291,6 +280,77 @@ namespace DDTBuilder {
 			}
 
 			if (error_message == null) {
+
+				list_store = new Gtk.ListStore (5,
+				                                typeof (string),
+				                                typeof (string),
+				                                typeof (string),
+				                                typeof (string),
+				                                typeof (int));
+
+				adjustment = new Gtk.Adjustment (1.0,
+				                                 0.0,
+				                                 999.0,
+				                                 1.0,
+				                                 10.0,
+				                                 0.0);
+				list_store.append (out iter);
+				list_store.set (iter,
+				                CODE_COLUMN, "12",
+				                REFERENCE_COLUMN, "order 7878",
+				                DESCRIPTION_COLUMN, "Something",
+				                UNIT_COLUMN, "N",
+				                QUANTITY_COLUMN, 12,
+				                -1);
+				list_store.append (out iter);
+				list_store.set (iter,
+				                CODE_COLUMN, "13",
+				                REFERENCE_COLUMN, "order 7878",
+				                DESCRIPTION_COLUMN, "Something",
+				                UNIT_COLUMN, "N",
+				                QUANTITY_COLUMN, 500,
+				                -1);
+
+				goods_treeview.model = list_store;
+
+				renderer = new Gtk.CellRendererText ();
+				renderer.set ("editable", true);
+				column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
+				                                                 renderer,
+				                                                 "text", CODE_COLUMN);
+				goods_treeview.append_column (column);
+
+				renderer = new Gtk.CellRendererText ();
+				renderer.set ("editable", true);
+				column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
+				                                                 renderer,
+				                                                 "text", REFERENCE_COLUMN);
+				goods_treeview.append_column (column);
+
+				renderer = new Gtk.CellRendererText ();
+				renderer.set ("editable", true);
+				column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
+				                                                 renderer,
+				                                                 "text", DESCRIPTION_COLUMN);
+				column.expand = true;
+				goods_treeview.append_column (column);
+
+				renderer = new Gtk.CellRendererText ();
+				renderer.set ("editable", true);
+				column = new Gtk.TreeViewColumn.with_attributes (_("Unit of measurement"),
+				                                                 renderer,
+				                                                 "text", UNIT_COLUMN);
+				goods_treeview.append_column (column);
+
+				renderer = new Gtk.CellRendererSpin ();
+				renderer.set ("adjustment", adjustment,
+				              "digits", 0,
+				              "editable", true);
+				renderer.edited.connect ((p, n) => { warning ("Value changed: %s => %s", p, n); });
+				column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
+				                                                 renderer,
+				                                                 "text", QUANTITY_COLUMN);
+				goods_treeview.append_column (column);
 
 				now = Time ();
 				today = Date ();
@@ -315,7 +375,9 @@ namespace DDTBuilder {
 				shipment_duties_entry.text = preferences.default_duties;
 
 				/* Create a first row of widgets */
+#if false
 				add_row ();
+#endif
 
 				/* Disable remove action */
 				remove_action.sensitive = false;
@@ -460,6 +522,7 @@ namespace DDTBuilder {
 			}
 		}
 
+#if false
 		public void add_row () {
 
 			Gtk.Label label;
@@ -575,6 +638,7 @@ namespace DDTBuilder {
 			row = table_widgets.data;
 			focus_widget (row.widgets[0]);
 		}
+#endif
 
 		public void show_error (string message) {
 
@@ -711,10 +775,12 @@ namespace DDTBuilder {
 
 			for (i = 0; i < rows; i++) {
 
+#if false
 				if (i >= table_widgets.length ()) {
 
 					add_row ();
 				}
+#endif
 
 				/* The rows of widgets are stored in reverse order */
 				widget_row = table_widgets.nth_data (table_widgets.length () - i - 1);
