@@ -19,11 +19,12 @@
 namespace DDTBuilder {
 
 	public errordomain ApplicationError {
-		OBJECT_NOT_FOUND,
-		EMPTY_FIELD
+		FAILED
 	}
 
 	public class Application : GLib.Object {
+
+		Connector connector;
 
 #if false
 		private Preferences preferences;
@@ -541,20 +542,6 @@ namespace DDTBuilder {
 			/* Enable / disable row deletion based on the number of rows */
 			rows--;
 			remove_action.sensitive = (rows > 1);
-		}
-
-		public void show_error (string message) {
-
-			Gtk.Dialog dialog;
-
-			dialog = new Gtk.MessageDialog (window,
-			                                0,
-			                                Gtk.MessageType.ERROR,
-			                                Gtk.ButtonsType.CLOSE,
-			                                message);
-
-			dialog.run ();
-			dialog.destroy ();
 		}
 
 		public void show_warning (string message) {
@@ -1092,54 +1079,88 @@ namespace DDTBuilder {
 		}
 #endif
 
-		public static int main (string[] args) {
+		/* Prepare the application to run */
+		public void prepare () throws ApplicationError {
 
 			View view;
-			Connector connector;
-
-			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
-			Intl.textdomain (Config.GETTEXT_PACKAGE);
-
-			Gtk.init (ref args);
-			Xml.Parser.init ();
-			Rsvg.init ();
-
-			Environment.set_application_name (_("DDT Builder"));
 
 			view = new View ();
 			connector = new Connector ();
 
 			try {
 
-				/* Load the view */
+				/* Load the view and assign it to the connector */
 				view.load ();
-
-				/* Assign the view to the connector and run it */
 				connector.view = view;
-				connector.run ();
 			}
-			catch (ViewError e) {
+			catch (ViewError.IO e) {
 
-				warning ("Could not load view");
+				throw new ApplicationError.FAILED (_("Failed to load view"));
+			}
+			catch (ViewError.OBJECT_NOT_FOUND e) {
+
+				throw new ApplicationError.FAILED (_("Required object '%s' not found").printf (e.message));
+			}
+			catch (Error e) {
+
+				throw new ApplicationError.FAILED (_("Unknown error: %s").printf (e.message));
+			}
+		}
+
+		/* Run the application */
+		public void run () {
+
+			/* Ask the connector to make the application start */
+			connector.run ();
+		}
+
+		/* Show an error message */
+		public void show_error (string message) {
+
+			Gtk.Dialog dialog;
+
+			dialog = new Gtk.MessageDialog (null,
+			                                0,
+			                                Gtk.MessageType.ERROR,
+			                                Gtk.ButtonsType.CLOSE,
+			                                message);
+
+			dialog.run ();
+			dialog.destroy ();
+		}
+
+		public static int main (string[] args) {
+
+			Application application;
+
+			Gtk.init (ref args);
+			Xml.Parser.init ();
+			Rsvg.init ();
+
+			/* Set up internationalization */
+			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+			Intl.textdomain (Config.GETTEXT_PACKAGE);
+
+			Environment.set_application_name (_("DDT Builder"));
+
+			application = new Application ();
+
+			try {
+
+				/* Prepare the application */
+				application.prepare ();
+			}
+			catch (Error e) {
+
+				/* Show an error message and exit */
+				application.show_error (e.message);
+
+				return 1;
 			}
 
-#if false
-			Application application = new Application ();
-
-			if (application.error_message != null) {
-
-				/* If an error has occurred while constructing the UI,
-				 * display an error dialog and quit the application */
-				application.show_error (application.error_message);
-			}
-			else {
-
-				/* Show the application window and enter the main loop */
-				application.show_all ();
-				Gtk.main ();
-			}
-#endif
+			/* Run the application */
+			application.run ();
 
 			return 0;
 		}
