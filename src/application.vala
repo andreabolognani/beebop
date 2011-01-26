@@ -273,14 +273,8 @@ namespace DDTBuilder {
 
 			if (error_message == null) {
 
-				list_store = new Gtk.ListStore (5,
-				                                typeof (string),
-				                                typeof (string),
-				                                typeof (string),
-				                                typeof (string),
-				                                typeof (int));
-
-				goods_treeview.model = list_store;
+				document = new Document ();
+				goods_treeview.model = document.goods;
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true,
@@ -915,29 +909,24 @@ namespace DDTBuilder {
 		 * Keep the ListStore up-to-date with the changes made in the interface. */
 		private void update_goods (string row, int column, string val) {
 
-			Gtk.ListStore store;
-			Gtk.TreePath path;
 			Gtk.TreeIter iter;
+			Gtk.TreePath path;
 
 			/* Get an iter to the modified row */
-			store = goods_treeview.model
-			        as Gtk.ListStore;
 			path = new Gtk.TreePath.from_string (row);
-			store.get_iter (out iter, path);
+			document.goods.get_iter (out iter, path);
 
 			/* The column QUANTITY_COLUMN contains a int, so the string
 			 * has to be converted before it is stored in the model */
 			if (column == QUANTITY_COLUMN) {
 
-				store.set (iter,
-				           column, val.to_int (),
-				           -1);
+				document.goods.set (iter,
+				                    column, val.to_int ());
 			}
 			else {
 
-				store.set (iter,
-				           column, val,
-				           -1);
+				document.goods.set (iter,
+				                    column, val);
 			}
 		}
 
