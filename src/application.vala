@@ -314,46 +314,56 @@ namespace DDTBuilder {
 				goods_treeview.model = list_store;
 
 				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true);
+				renderer.set ("editable", true,
+				              "ellipsize", Pango.EllipsizeMode.END);
 				renderer.edited.connect ((path, val) => { update_goods (path, CODE_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
 				                                                 renderer,
 				                                                 "text", CODE_COLUMN);
+				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true);
+				renderer.set ("editable", true,
+				              "ellipsize", Pango.EllipsizeMode.END);
 				renderer.edited.connect ((path, val) => { update_goods (path, REFERENCE_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
 				                                                 renderer,
 				                                                 "text", REFERENCE_COLUMN);
+				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true);
+				renderer.set ("editable", true,
+				              "ellipsize", Pango.EllipsizeMode.END);
 				renderer.edited.connect ((path, val) => { update_goods (path, DESCRIPTION_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
 				                                                 renderer,
 				                                                 "text", DESCRIPTION_COLUMN);
 				column.expand = true;
+				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true);
+				renderer.set ("editable", true,
+				              "ellipsize", Pango.EllipsizeMode.END);
 				renderer.edited.connect ((path, val) => { update_goods (path, UNIT_COLUMN, val); });
-				column = new Gtk.TreeViewColumn.with_attributes (_("Unit of measurement"),
+				column = new Gtk.TreeViewColumn.with_attributes (_("U.M."),
 				                                                 renderer,
 				                                                 "text", UNIT_COLUMN);
+				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererSpin ();
 				renderer.set ("adjustment", adjustment,
 				              "digits", 0,
-				              "editable", true);
+				              "editable", true,
+				              "ellipsize", Pango.EllipsizeMode.END);
 				renderer.edited.connect ((path, val) => { update_goods (path, QUANTITY_COLUMN, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
 				                                                 renderer,
 				                                                 "text", QUANTITY_COLUMN);
+				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				now = Time ();
