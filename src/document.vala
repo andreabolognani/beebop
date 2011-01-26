@@ -26,42 +26,6 @@ namespace DDTBuilder {
 
 	public class Document : GLib.Object {
 
-		public const double AUTOMATIC_SIZE = -1.0;
-
-		public const string TAG_DOCUMENT = "document";
-		public const string TAG_NUMBER = "number";
-		public const string TAG_DATE = "date";
-		public const string TAG_PAGE_NUMBER = "page_number";
-		public const string TAG_RECIPIENT = "recipient";
-		public const string TAG_DESTINATION = "destination";
-		public const string TAG_SHIPMENT = "shipment";
-		public const string TAG_GOODS = "goods";
-		public const string TAG_NAME = "name";
-		public const string TAG_STREET = "street";
-		public const string TAG_CITY = "city";
-		public const string TAG_VATIN = "vatin";
-		public const string TAG_CLIENT_CODE = "client_code";
-		public const string TAG_REASON = "reason";
-		public const string TAG_TRANSPORTED_BY = "transported_by";
-		public const string TAG_CARRIER = "carrier";
-		public const string TAG_DELIVERY_DUTIES = "delivery_duties";
-		public const string TAG_OUTSIDE_APPEARANCE = "outside_appearance";
-		public const string TAG_NUMBER_OF_PARCELS = "number_of_parcels";
-		public const string TAG_WEIGHT = "weight";
-		public const string TAG_GOOD = "good";
-		public const string TAG_CODE = "code";
-		public const string TAG_REFERENCE = "reference";
-		public const string TAG_DESCRIPTION = "description";
-		public const string TAG_UNIT_OF_MEASUREMENT = "unit_of_measurement";
-		public const string TAG_QUANTITY = "quantity";
-
-		public const int COLUMN_CODE = 0;
-		public const int COLUMN_REFERENCE = 1;
-		public const int COLUMN_DESCRIPTION = 2;
-		public const int COLUMN_UNIT = 3;
-		public const int COLUMN_QUANTITY = 4;
-		public const int LAST_COLUMN = 5;
-
 		private Preferences preferences;
 
 		public string filename { get; set; }
@@ -107,7 +71,7 @@ namespace DDTBuilder {
 			goods_info = new GoodsInfo ();
 			shipment_info = new ShipmentInfo ();
 
-			goods = new Gtk.ListStore (LAST_COLUMN,
+			goods = new Gtk.ListStore (Const.LAST_COLUMN,
 			                           typeof (string),
 			                           typeof (string),
 			                           typeof (string),
@@ -118,7 +82,7 @@ namespace DDTBuilder {
 			/*
 			goods.sizes = {70.0,
 			               100.0,
-			               AUTOMATIC_SIZE,
+			               Const.AUTOMATIC_SIZE,
 			               50.0,
 			               100.0};
 			goods.headings = {_("Code"),
@@ -173,7 +137,7 @@ namespace DDTBuilder {
 				throw new DocumentError.FORMAT (_("No root element"));
 			}
 
-			if ((node->name).collate (TAG_DOCUMENT) != 0) {
+			if ((node->name).collate (Const.TAG_DOCUMENT) != 0) {
 
 				delete doc;
 				throw new DocumentError.FORMAT (_("Invalid root element"));
@@ -200,37 +164,37 @@ namespace DDTBuilder {
 					continue;
 				}
 
-				if ((node->name).collate (TAG_NUMBER) == 0) {
+				if ((node->name).collate (Const.TAG_NUMBER) == 0) {
 
 					number = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_DATE) == 0) {
+				else if ((node->name).collate (Const.TAG_DATE) == 0) {
 
 					date = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_PAGE_NUMBER) == 0) {
+				else if ((node->name).collate (Const.TAG_PAGE_NUMBER) == 0) {
 
 					page_number = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_RECIPIENT) == 0) {
+				else if ((node->name).collate (Const.TAG_RECIPIENT) == 0) {
 
 					parse_recipient (node);
 				}
-				else if ((node->name).collate (TAG_DESTINATION) == 0) {
+				else if ((node->name).collate (Const.TAG_DESTINATION) == 0) {
 
 					parse_destination (node);
 				}
-				else if ((node->name).collate (TAG_SHIPMENT) == 0) {
+				else if ((node->name).collate (Const.TAG_SHIPMENT) == 0) {
 
 					parse_shipment (node);
 				}
-				else if ((node->name).collate (TAG_GOODS) == 0) {
+				else if ((node->name).collate (Const.TAG_GOODS) == 0) {
 
 					parse_goods (node);
 				}
 				else {
 
-					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'".printf (TAG_DOCUMENT)));
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'".printf (Const.TAG_DOCUMENT)));
 				}
 			}
 		}
@@ -247,29 +211,29 @@ namespace DDTBuilder {
 					continue;
 				}
 
-				if ((node->name).collate (TAG_NAME) == 0) {
+				if ((node->name).collate (Const.TAG_NAME) == 0) {
 
 					recipient.name = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_STREET) == 0) {
+				else if ((node->name).collate (Const.TAG_STREET) == 0) {
 
 					recipient.street = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_CITY) == 0) {
+				else if ((node->name).collate (Const.TAG_CITY) == 0) {
 
 					recipient.city = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_VATIN) == 0) {
+				else if ((node->name).collate (Const.TAG_VATIN) == 0) {
 
 					recipient.vatin = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_CLIENT_CODE) == 0) {
+				else if ((node->name).collate (Const.TAG_CLIENT_CODE) == 0) {
 
 					recipient.client_code = node->get_content ();
 				}
 				else {
 
-					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_RECIPIENT));
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_RECIPIENT));
 				}
 			}
 		}
@@ -286,21 +250,21 @@ namespace DDTBuilder {
 					continue;
 				}
 
-				if ((node->name).collate (TAG_NAME) == 0) {
+				if ((node->name).collate (Const.TAG_NAME) == 0) {
 
 					destination.name = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_STREET) == 0) {
+				else if ((node->name).collate (Const.TAG_STREET) == 0) {
 
 					destination.street = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_CITY) == 0) {
+				else if ((node->name).collate (Const.TAG_CITY) == 0) {
 
 					destination.city = node->get_content ();
 				}
 				else {
 
-					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_DESTINATION));
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_DESTINATION));
 				}
 			}
 		}
@@ -317,25 +281,25 @@ namespace DDTBuilder {
 					continue;
 				}
 
-				if ((node->name).collate (TAG_REASON) == 0) {
+				if ((node->name).collate (Const.TAG_REASON) == 0) {
 
 					shipment_info.reason = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_TRANSPORTED_BY) == 0) {
+				else if ((node->name).collate (Const.TAG_TRANSPORTED_BY) == 0) {
 
 					shipment_info.transported_by = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_CARRIER) == 0) {
+				else if ((node->name).collate (Const.TAG_CARRIER) == 0) {
 
 					shipment_info.carrier = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_DELIVERY_DUTIES) == 0) {
+				else if ((node->name).collate (Const.TAG_DELIVERY_DUTIES) == 0) {
 
 					shipment_info.duties = node->get_content ();
 				}
 				else {
 
-					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_SHIPMENT));
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_SHIPMENT));
 				}
 			}
 		}
@@ -352,19 +316,19 @@ namespace DDTBuilder {
 					continue;
 				}
 
-				if ((node->name).collate (TAG_OUTSIDE_APPEARANCE) == 0) {
+				if ((node->name).collate (Const.TAG_OUTSIDE_APPEARANCE) == 0) {
 
 					goods_info.appearance = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_NUMBER_OF_PARCELS) == 0) {
+				else if ((node->name).collate (Const.TAG_NUMBER_OF_PARCELS) == 0) {
 
 					goods_info.parcels = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_WEIGHT) == 0) {
+				else if ((node->name).collate (Const.TAG_WEIGHT) == 0) {
 
 					goods_info.weight = node->get_content ();
 				}
-				else if ((node->name).collate (TAG_GOOD) == 0) {
+				else if ((node->name).collate (Const.TAG_GOOD) == 0) {
 
 					try {
 
@@ -377,7 +341,7 @@ namespace DDTBuilder {
 				}
 				else {
 
-					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_GOODS));
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_GOODS));
 				}
 			}
 		}
@@ -398,34 +362,34 @@ namespace DDTBuilder {
 					continue;
 				}
 
-				if ((node->name).collate (TAG_CODE) == 0) {
+				if ((node->name).collate (Const.TAG_CODE) == 0) {
 
 					goods.set (iter,
-					           COLUMN_CODE, node->get_content ());
+					           Const.COLUMN_CODE, node->get_content ());
 				}
-				else if ((node->name).collate (TAG_REFERENCE) == 0) {
+				else if ((node->name).collate (Const.TAG_REFERENCE) == 0) {
 
 					goods.set (iter,
-					           COLUMN_REFERENCE, node->get_content ());
+					           Const.COLUMN_REFERENCE, node->get_content ());
 				}
-				else if ((node->name).collate (TAG_DESCRIPTION) == 0) {
+				else if ((node->name).collate (Const.TAG_DESCRIPTION) == 0) {
 
 					goods.set (iter,
-					           COLUMN_DESCRIPTION, node->get_content ());
+					           Const.COLUMN_DESCRIPTION, node->get_content ());
 				}
-				else if ((node->name).collate (TAG_UNIT_OF_MEASUREMENT) == 0) {
+				else if ((node->name).collate (Const.TAG_UNIT_OF_MEASUREMENT) == 0) {
 
 					goods.set (iter,
-					           COLUMN_UNIT, node->get_content ());
+					           Const.COLUMN_UNIT, node->get_content ());
 				}
-				else if ((node->name).collate (TAG_QUANTITY) == 0) {
+				else if ((node->name).collate (Const.TAG_QUANTITY) == 0) {
 
 					goods.set (iter,
-					           COLUMN_QUANTITY, (node->get_content ()).to_int ());
+					           Const.COLUMN_QUANTITY, (node->get_content ()).to_int ());
 				}
 				else {
 
-					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_GOOD));
+					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_GOOD));
 				}
 			}
 		}

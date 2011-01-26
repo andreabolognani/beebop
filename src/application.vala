@@ -25,12 +25,6 @@ namespace DDTBuilder {
 
 	public class Application : GLib.Object {
 
-		private int CODE_COLUMN = 0;
-		private int REFERENCE_COLUMN = 1;
-		private int DESCRIPTION_COLUMN = 2;
-		private int UNIT_COLUMN = 3;
-		private int QUANTITY_COLUMN = 4;
-
 		private Preferences preferences;
 		private Document document;
 
@@ -279,30 +273,30 @@ namespace DDTBuilder {
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true,
 				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, CODE_COLUMN, val); });
+				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_CODE, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
 				                                                 renderer,
-				                                                 "text", CODE_COLUMN);
+				                                                 "text", Const.COLUMN_CODE);
 				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true,
 				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, REFERENCE_COLUMN, val); });
+				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_REFERENCE, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
 				                                                 renderer,
-				                                                 "text", REFERENCE_COLUMN);
+				                                                 "text", Const.COLUMN_REFERENCE);
 				column.resizable = true;
 				goods_treeview.append_column (column);
 
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true,
 				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, DESCRIPTION_COLUMN, val); });
+				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_DESCRIPTION, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
 				                                                 renderer,
-				                                                 "text", DESCRIPTION_COLUMN);
+				                                                 "text", Const.COLUMN_DESCRIPTION);
 				column.expand = true;
 				column.resizable = true;
 				goods_treeview.append_column (column);
@@ -310,10 +304,10 @@ namespace DDTBuilder {
 				renderer = new Gtk.CellRendererText ();
 				renderer.set ("editable", true,
 				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, UNIT_COLUMN, val); });
+				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_UNIT, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("U.M."),
 				                                                 renderer,
-				                                                 "text", UNIT_COLUMN);
+				                                                 "text", Const.COLUMN_UNIT);
 				column.resizable = true;
 				goods_treeview.append_column (column);
 
@@ -328,10 +322,10 @@ namespace DDTBuilder {
 				              "digits", 0,
 				              "editable", true,
 				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, QUANTITY_COLUMN, val); });
+				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_QUANTITY, val); });
 				column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
 				                                                 renderer,
-				                                                 "text", QUANTITY_COLUMN);
+				                                                 "text", Const.COLUMN_QUANTITY);
 				column.resizable = true;
 				goods_treeview.append_column (column);
 
@@ -515,11 +509,11 @@ namespace DDTBuilder {
 			/* Create a new row and initialize it */
 			store.append (out iter);
 			store.set (iter,
-			           CODE_COLUMN, "",
-			           REFERENCE_COLUMN, "",
-			           DESCRIPTION_COLUMN, "",
-			           UNIT_COLUMN, preferences.default_unit,
-			           QUANTITY_COLUMN, 1);
+			           Const.COLUMN_CODE, "",
+			           Const.COLUMN_REFERENCE, "",
+			           Const.COLUMN_DESCRIPTION, "",
+			           Const.COLUMN_UNIT, preferences.default_unit,
+			           Const.COLUMN_QUANTITY, 1);
 
 			/* Enable / disable row deletion based on the number of rows */
 			rows = store.iter_n_children (null);
@@ -919,9 +913,9 @@ namespace DDTBuilder {
 			path = new Gtk.TreePath.from_string (row);
 			document.goods.get_iter (out iter, path);
 
-			/* The column QUANTITY_COLUMN contains a int, so the string
+			/* The quantity column contains a int, so the string
 			 * has to be converted before it is stored in the model */
-			if (column == QUANTITY_COLUMN) {
+			if (column == Const.COLUMN_QUANTITY) {
 
 				document.goods.set (iter,
 				                    column, val.to_int ());

@@ -22,20 +22,6 @@ namespace DDTBuilder {
 
 		private static string DIR = "ddtbuilder";
 		private static string FILE = "preferences";
-		private static string GROUP = "DDT Builder";
-		private static string KEY_VIEWER = "viewer";
-		private static string KEY_HEADER_TEXT = "header_text";
-		private static string KEY_PAGE_PADDING = "page_padding";
-		private static string KEY_CELL_PADDING = "cell_padding";
-		private static string KEY_ELEMENTS_SPACING = "elements_spacing";
-		private static string KEY_ADDRESS_BOX_WIDTH = "address_box_width";
-		private static string KEY_FONT = "font";
-		private static string KEY_LINE_WIDTH = "line_width";
-		private static string KEY_DEFAULT_UNIT = "default_unit";
-		private static string KEY_DEFAULT_REASON = "default_reason";
-		private static string KEY_DEFAULT_TRANSPORTED_BY = "default_transported_by";
-		private static string KEY_DEFAULT_CARRIER = "default_carrier";
-		private static string KEY_DEFAULT_DUTIES = "default_duties";
 
 		private static Preferences singleton = null;
 
@@ -134,67 +120,67 @@ namespace DDTBuilder {
 
 			/* Get all the config values */
 
-			viewer = pref.get_string (GROUP,
-			                          KEY_VIEWER);
+			viewer = pref.get_string (Const.GROUP,
+			                          Const.KEY_VIEWER);
 
 			/* Header */
-			header_text = pref.get_string (GROUP,
-			                               KEY_HEADER_TEXT);
+			header_text = pref.get_string (Const.GROUP,
+			                               Const.KEY_HEADER_TEXT);
 
 			/* Sizes */
-			dimensions = pref.get_double_list (GROUP,
-			                                   KEY_PAGE_PADDING);
+			dimensions = pref.get_double_list (Const.GROUP,
+			                                   Const.KEY_PAGE_PADDING);
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (KEY_PAGE_PADDING)));
+				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (Const.KEY_PAGE_PADDING)));
 			}
 
 			page_padding_x = dimensions[0];
 			page_padding_y = dimensions[1];
 
-			dimensions = pref.get_double_list (GROUP,
-			                                   KEY_CELL_PADDING);
+			dimensions = pref.get_double_list (Const.GROUP,
+			                                   Const.KEY_CELL_PADDING);
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (KEY_CELL_PADDING)));
+				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (Const.KEY_CELL_PADDING)));
 			}
 
 			cell_padding_x = dimensions[0];
 			cell_padding_y = dimensions[1];
 
-			dimensions = pref.get_double_list (GROUP,
-			                                   KEY_ELEMENTS_SPACING);
+			dimensions = pref.get_double_list (Const.GROUP,
+			                                   Const.KEY_ELEMENTS_SPACING);
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (KEY_ELEMENTS_SPACING)));
+				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (Const.KEY_ELEMENTS_SPACING)));
 			}
 
 			elements_spacing_x = dimensions[0];
 			elements_spacing_y = dimensions[1];
 
-			address_box_width = pref.get_double (GROUP,
-			                                     KEY_ADDRESS_BOX_WIDTH);
+			address_box_width = pref.get_double (Const.GROUP,
+			                                     Const.KEY_ADDRESS_BOX_WIDTH);
 
 			/* Appearance */
-			font = pref.get_string (GROUP,
-			                        KEY_FONT);
-			line_width = pref.get_double (GROUP,
-			                              KEY_LINE_WIDTH);
+			font = pref.get_string (Const.GROUP,
+			                        Const.KEY_FONT);
+			line_width = pref.get_double (Const.GROUP,
+			                              Const.KEY_LINE_WIDTH);
 
 			/* Defaults */
-			default_unit = pref.get_string (GROUP,
-			                                KEY_DEFAULT_UNIT);
-			default_reason = pref.get_string (GROUP,
-			                                  KEY_DEFAULT_REASON);
-			default_transported_by = pref.get_string (GROUP,
-			                                          KEY_DEFAULT_TRANSPORTED_BY);
-			default_carrier = pref.get_string (GROUP,
-			                                   KEY_DEFAULT_CARRIER);
-			default_duties = pref.get_string (GROUP,
-			                                  KEY_DEFAULT_DUTIES);
+			default_unit = pref.get_string (Const.GROUP,
+			                                Const.KEY_DEFAULT_UNIT);
+			default_reason = pref.get_string (Const.GROUP,
+			                                  Const.KEY_DEFAULT_REASON);
+			default_transported_by = pref.get_string (Const.GROUP,
+			                                          Const.KEY_DEFAULT_TRANSPORTED_BY);
+			default_carrier = pref.get_string (Const.GROUP,
+			                                   Const.KEY_DEFAULT_CARRIER);
+			default_duties = pref.get_string (Const.GROUP,
+			                                  Const.KEY_DEFAULT_DUTIES);
 		}
 
 		public void save () throws Error {
@@ -209,61 +195,61 @@ namespace DDTBuilder {
 			dimensions = new double[2];
 
 			/* Set preferences */
-			pref.set_string (GROUP,
-			                 KEY_VIEWER,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_VIEWER,
 			                 viewer);
 
 			/* Header */
-			pref.set_string (GROUP,
-			                 KEY_HEADER_TEXT,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_HEADER_TEXT,
 			                 header_text);
 
 			/* Sizes */
 			dimensions[0] = page_padding_x;
 			dimensions[1] = page_padding_y;
-			pref.set_double_list (GROUP,
-			                      KEY_PAGE_PADDING,
+			pref.set_double_list (Const.GROUP,
+			                      Const.KEY_PAGE_PADDING,
 			                      dimensions);
 
 			dimensions[0] = cell_padding_x;
 			dimensions[1] = cell_padding_y;
-			pref.set_double_list (GROUP,
-			                      KEY_CELL_PADDING,
+			pref.set_double_list (Const.GROUP,
+			                      Const.KEY_CELL_PADDING,
 			                      dimensions);
 
 			dimensions[0] = elements_spacing_x;
 			dimensions[1] = elements_spacing_y;
-			pref.set_double_list (GROUP,
-			                      KEY_ELEMENTS_SPACING,
+			pref.set_double_list (Const.GROUP,
+			                      Const.KEY_ELEMENTS_SPACING,
 			                      dimensions);
 
-			pref.set_double (GROUP,
-			                 KEY_ADDRESS_BOX_WIDTH,
+			pref.set_double (Const.GROUP,
+			                 Const.KEY_ADDRESS_BOX_WIDTH,
 			                 address_box_width);
 
 			/* Appearance */
-			pref.set_string (GROUP,
-			                 KEY_FONT,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_FONT,
 			                 font);
-			pref.set_double (GROUP,
-			                 KEY_LINE_WIDTH,
+			pref.set_double (Const.GROUP,
+			                 Const.KEY_LINE_WIDTH,
 			                 line_width);
 
 			/* Defaults */
-			pref.set_string (GROUP,
-			                 KEY_DEFAULT_UNIT,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_DEFAULT_UNIT,
 			                 default_unit);
-			pref.set_string (GROUP,
-			                 KEY_DEFAULT_REASON,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_DEFAULT_REASON,
 			                 default_reason);
-			pref.set_string (GROUP,
-			                 KEY_DEFAULT_TRANSPORTED_BY,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_DEFAULT_TRANSPORTED_BY,
 			                 default_transported_by);
-			pref.set_string (GROUP,
-			                 KEY_DEFAULT_CARRIER,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_DEFAULT_CARRIER,
 			                 default_carrier);
-			pref.set_string (GROUP,
-			                 KEY_DEFAULT_DUTIES,
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_DEFAULT_DUTIES,
 			                 default_duties);
 
 			/* Get textual representation of the keyfile */
