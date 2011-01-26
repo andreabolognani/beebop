@@ -674,6 +674,9 @@ namespace DDTBuilder {
 			shipment_transported_by_entry.text = document.shipment_info.transported_by;
 			shipment_carrier_entry.text = document.shipment_info.carrier;
 			shipment_duties_entry.text = document.shipment_info.duties;
+
+			/* Replace tree view model */
+			goods_treeview.model = document.goods;
 		}
 
 		private void print () {
