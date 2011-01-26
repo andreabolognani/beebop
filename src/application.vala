@@ -93,9 +93,6 @@ namespace DDTBuilder {
 		private Gtk.Action remove_action;
 		private Gtk.Action preferences_action;
 
-		private List<Gtk.Label> table_labels;
-		private List<WidgetRow> table_widgets;
-
 		private string out_file;
 
 		public string error_message { get; private set; }
@@ -114,9 +111,6 @@ namespace DDTBuilder {
 			uint accel_key;
 
 			error_message = null;
-
-			table_labels = new List<Gtk.Label> ();
-			table_widgets = new List<WidgetRow> ();
 
 			try {
 
@@ -637,11 +631,7 @@ namespace DDTBuilder {
 		/* Load a document into the interface */
 		private void load () {
 
-			Cell cell;
-			WidgetRow widget_row;
 			bool same;
-			int rows;
-			int i;
 
 			same = true;
 
@@ -690,41 +680,6 @@ namespace DDTBuilder {
 			shipment_transported_by_entry.text = document.shipment_info.transported_by;
 			shipment_carrier_entry.text = document.shipment_info.carrier;
 			shipment_duties_entry.text = document.shipment_info.duties;
-
-			rows = document.goods.rows;
-
-			for (i = 0; i < rows; i++) {
-
-#if false
-				if (i >= table_widgets.length ()) {
-
-					add_row ();
-				}
-#endif
-
-				/* The rows of widgets are stored in reverse order */
-				widget_row = table_widgets.nth_data (table_widgets.length () - i - 1);
-
-				/* Code */
-				cell = document.goods.get_cell (0, i);
-				(widget_row.widgets[0] as Gtk.Entry).text = cell.text;
-
-				/* Reference */
-				cell = document.goods.get_cell (1, i);
-				(widget_row.widgets[1] as Gtk.Entry).text = cell.text;
-
-				/* Description */
-				cell = document.goods.get_cell (2, i);
-				(widget_row.widgets[2] as Gtk.Entry).text = cell.text;
-
-				/* Unit of measurement */
-				cell = document.goods.get_cell (3, i);
-				(widget_row.widgets[3] as Gtk.Entry).text = cell.text;
-
-				/* Quantity */
-				cell = document.goods.get_cell (4, i);
-				(widget_row.widgets[4] as Gtk.SpinButton).value = cell.text.to_double ();
-			}
 		}
 
 		private void print () {
@@ -883,57 +838,6 @@ namespace DDTBuilder {
 		}
 
 		private void collect_goods (Document document) throws ApplicationError.EMPTY_FIELD {
-
-			Gtk.Entry entry;
-			Gtk.SpinButton spin_button;
-			Table goods;
-			Row row;
-			Cell cell;
-			WidgetRow widget_row;
-			int len;
-			int i;
-
-			goods = document.goods;
-
-			len = (int) table_widgets.length ();
-
-			/* Read the table from the bottom of the stack to the top */
-			for (i = len - 1; i >= 0; i--) {
-
-				row = new Row (5);
-				widget_row = table_widgets.nth_data (i);
-
-				/* Code */
-				entry = widget_row.widgets[0] as Gtk.Entry;
-				cell = row.get_cell (0);
-				cell.text = get_entry_text (entry,
-				                            "good_code_entry");
-
-				/* Reference */
-				entry = widget_row.widgets[1] as Gtk.Entry;
-				cell = row.get_cell (1);
-				cell.text = get_entry_text (entry,
-				                            "good_reference_entry");
-
-				/* Description */
-				entry = widget_row.widgets[2] as Gtk.Entry;
-				cell = row.get_cell (2);
-				cell.text = get_entry_text (entry,
-				                            "good_description_entry");
-
-				/* Unit of measurement */
-				entry = widget_row.widgets[3] as Gtk.Entry;
-				cell = row.get_cell (3);
-				cell.text = get_entry_text (entry,
-				                                    "good_unit_entry");
-
-				/* Quantity */
-				spin_button = widget_row.widgets[4] as Gtk.SpinButton;
-				cell = row.get_cell (4);
-				cell.text = "%d".printf (spin_button.get_value_as_int ());
-
-				goods.append_row (row);
-			}
 		}
 
 		private void show_preferences () {
