@@ -685,18 +685,12 @@ namespace DDTBuilder {
 		private void print () {
 
 			Document document;
-			DocumentPainter painter;
 			Pid viewer_pid;
 			string[] view_cmd;
 
 			try {
 
 				document = create_document ();
-
-				painter = new DocumentPainter();
-				painter.document = document;
-
-				out_file = painter.draw ();
 			}
 			catch (ApplicationError.EMPTY_FIELD e) {
 
@@ -710,7 +704,7 @@ namespace DDTBuilder {
 
 				return;
 			}
-
+#if false
 			view_cmd = {preferences.viewer,
 			            out_file,
 			            null};
@@ -738,6 +732,7 @@ namespace DDTBuilder {
 			/* Prevent the print button from being clicked again until
 			 * the viewer has been closed */
 			print_action.sensitive = false;
+#endif
 
 			return;
 		}

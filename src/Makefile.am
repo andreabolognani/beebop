@@ -42,7 +42,6 @@ ddtbuilder_SOURCES = \
 	row.vala \
 	table.vala \
 	document.vala \
-	documentpainter.vala \
 	widgetrow.vala \
 	application.vala \
 	$(NULL)

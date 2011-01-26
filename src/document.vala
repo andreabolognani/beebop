@@ -55,6 +55,13 @@ namespace DDTBuilder {
 		public const string TAG_UNIT_OF_MEASUREMENT = "unit_of_measurement";
 		public const string TAG_QUANTITY = "quantity";
 
+		public const int COLUMN_CODE = 0;
+		public const int COLUMN_REFERENCE = 1;
+		public const int COLUMN_DESCRIPTION = 2;
+		public const int COLUMN_UNIT = 3;
+		public const int COLUMN_QUANTITY = 4;
+		public const int LAST_COLUMN = 5;
+
 		private Preferences preferences;
 
 		public string filename { get; set; }
@@ -65,7 +72,7 @@ namespace DDTBuilder {
 		public CompanyInfo destination { get; set; }
 		public GoodsInfo goods_info { get; set; }
 		public ShipmentInfo shipment_info { get; set; }
-		public Table goods { get; set; }
+		public Gtk.ListStore goods { get; set; }
 
 		construct {
 
@@ -100,12 +107,18 @@ namespace DDTBuilder {
 			goods_info = new GoodsInfo ();
 			shipment_info = new ShipmentInfo ();
 
-			goods = new Table (5);
+			goods = new Gtk.ListStore (LAST_COLUMN,
+			                           typeof (string),
+			                           typeof (string),
+			                           typeof (string),
+			                           typeof (string),
+			                           typeof (int));
 
-			/* Set size and heading for each column */
+			/* XXX Move these to the Painter class */
+			/*
 			goods.sizes = {70.0,
 			               100.0,
-			               AUTOMATIC_SIZE,   /* Fill all free space */
+			               AUTOMATIC_SIZE,
 			               50.0,
 			               100.0};
 			goods.headings = {_("Code"),
@@ -113,6 +126,7 @@ namespace DDTBuilder {
 			                  _("Description"),
 			                  _("U.M."),
 			                  _("Quantity")};
+			*/
 		}
 
 		/* Load a document from file.
@@ -330,7 +344,6 @@ namespace DDTBuilder {
 		private void parse_goods (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
-			Row row;
 
 			for (node = parent->children; node != null; node = node->next) {
 
@@ -355,8 +368,7 @@ namespace DDTBuilder {
 
 					try {
 
-						row = parse_good (node);
-						goods.append_row (row);
+						parse_good (node);
 					}
 					catch (DocumentError e) {
 
@@ -371,12 +383,10 @@ namespace DDTBuilder {
 		}
 
 		/* Parse the contents of the good tag */
-		private Row parse_good (Xml.Node *parent) throws DocumentError {
+		private void parse_good (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
-			Row row;
-
-			row = new Row (5);
+			Gtk.TreeIter iter;
 
 			for (node = parent->children; node != null; node = node->next) {
 
@@ -385,33 +395,38 @@ namespace DDTBuilder {
 					continue;
 				}
 
+				goods.append (out iter);
+
 				if ((node->name).collate (TAG_CODE) == 0) {
 
-					row.get_cell (0).text = node->get_content ();
+					goods.set (iter,
+					           COLUMN_CODE, node->get_content ());
 				}
 				else if ((node->name).collate (TAG_REFERENCE) == 0) {
 
-					row.get_cell (1).text = node->get_content ();
+					goods.set (iter,
+					           COLUMN_REFERENCE, node->get_content ());
 				}
 				else if ((node->name).collate (TAG_DESCRIPTION) == 0) {
 
-					row.get_cell (2).text = node->get_content ();
+					goods.set (iter,
+					           COLUMN_DESCRIPTION, node->get_content ());
 				}
 				else if ((node->name).collate (TAG_UNIT_OF_MEASUREMENT) == 0) {
 
-					row.get_cell (3).text = node->get_content ();
+					goods.set (iter,
+					           COLUMN_UNIT, node->get_content ());
 				}
 				else if ((node->name).collate (TAG_QUANTITY) == 0) {
 
-					row.get_cell (4).text = node->get_content ();
+					goods.set (iter,
+					           COLUMN_QUANTITY, (node->get_content ()).to_int ());
 				}
 				else {
 
 					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (TAG_GOOD));
 				}
 			}
-
-			return row;
 		}
 	}
 }
