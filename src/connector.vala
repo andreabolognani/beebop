@@ -415,6 +415,9 @@ namespace DDTBuilder {
 
 				widget = view.window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).cut_clipboard ();
+
+				/* Enable paste action */
+				view.paste_action.sensitive = true;
 			}
 		}
 
@@ -427,6 +430,9 @@ namespace DDTBuilder {
 
 				widget = view.window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).copy_clipboard ();
+
+				/* Enable paste action */
+				view.paste_action.sensitive = true;
 			}
 		}
 
@@ -460,15 +466,28 @@ namespace DDTBuilder {
 		/* React to focus changed */
 		private void focus_changed (Gtk.Widget focus) {
 
+			Gtk.Clipboard clipboard;
 			bool editable;
 
 			editable = focus is Gtk.Editable;
 
-			/* Cut, copy and paste are only available when an
+			/* Cut and copy are only available when an
 			 * editable widget is focused */
 			view.cut_action.sensitive = editable;
 			view.copy_action.sensitive = editable;
-			view.paste_action.sensitive = editable;
+			view.paste_action.sensitive = false;
+
+			if (editable) {
+
+				/* Get the default clipboard */
+				clipboard = Gtk.Clipboard.get (Gdk.SELECTION_CLIPBOARD);
+
+				/* If some text is available, enable the paste action */
+				if (clipboard.wait_is_text_available ()) {
+
+					view.paste_action.sensitive = true;
+				}
+			}
 		}
 
 		/* React to changes of the recipient's name */
