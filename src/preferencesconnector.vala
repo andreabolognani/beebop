@@ -143,7 +143,8 @@ namespace DDTBuilder {
 			}
 			catch (Error e) {
 
-				//show_error(_("Could not save preferences: %s").printf (e.message));
+				Util.show_error(view.preferences_window,
+				                _("Could not save preferences: %s").printf (e.message));
 			}
 
 			view.preferences_window.hide ();

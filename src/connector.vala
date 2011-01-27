@@ -286,7 +286,8 @@ namespace DDTBuilder {
 				catch (DocumentError e) {
 
 					/* Show an error */
-					show_error (_("Could not load document: %s").printf (e.message));
+					Util.show_error (view.window,
+					                 _("Could not load document: %s").printf (e.message));
 
 					return;
 				}
@@ -317,7 +318,8 @@ namespace DDTBuilder {
 			}
 			catch (Error e) {
 
-				show_error (_("Saving error: %s").printf (e.message));
+				Util.show_error (view.window,
+				                 _("Saving error: %s").printf (e.message));
 			}
 		}
 
@@ -383,7 +385,8 @@ namespace DDTBuilder {
 				}
 				catch (Error e) {
 
-					show_error (_("Failed to show preferences view"));
+					Util.show_error (view.window,
+					                 _("Failed to show preferences view"));
 					return;
 				}
 
@@ -501,21 +504,6 @@ namespace DDTBuilder {
 				widget = view.window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).paste_clipboard ();
 			}
-		}
-
-		/* Show an error message */
-		private void show_error (string message) {
-
-			Gtk.Dialog dialog;
-
-			dialog = new Gtk.MessageDialog (view.window,
-			                                0,
-			                                Gtk.MessageType.ERROR,
-			                                Gtk.ButtonsType.CLOSE,
-			                                message);
-
-			dialog.run ();
-			dialog.destroy ();
 		}
 
 		/* React to focus changed */

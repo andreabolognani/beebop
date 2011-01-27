@@ -462,21 +462,6 @@ namespace DDTBuilder {
 			connector.run ();
 		}
 
-		/* Show an error message */
-		public void show_error (string message) {
-
-			Gtk.Dialog dialog;
-
-			dialog = new Gtk.MessageDialog (null,
-			                                0,
-			                                Gtk.MessageType.ERROR,
-			                                Gtk.ButtonsType.CLOSE,
-			                                message);
-
-			dialog.run ();
-			dialog.destroy ();
-		}
-
 		public static int main (string[] args) {
 
 			Application application;
@@ -502,7 +487,7 @@ namespace DDTBuilder {
 			catch (Error e) {
 
 				/* Show an error message and exit */
-				application.show_error (e.message);
+				Util.show_error (null, e.message);
 
 				return 1;
 			}

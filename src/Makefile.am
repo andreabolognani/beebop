@@ -35,6 +35,7 @@ bin_PROGRAMS = ddtbuilder
 
 ddtbuilder_SOURCES = \
 	const.vala \
+	util.vala \
 	preferences.vala \
 	companyinfo.vala \
 	goodsinfo.vala \
