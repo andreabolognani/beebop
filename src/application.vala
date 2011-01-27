@@ -488,32 +488,6 @@ namespace DDTBuilder {
 			default_duties_entry.text = preferences.default_duties;
 		}
 
-		/* Update the ListStore backing the goods.
-		 *
-		 * Keep the ListStore up-to-date with the changes made in the interface. */
-		private void update_goods (string row, int column, string val) {
-
-			Gtk.TreeIter iter;
-			Gtk.TreePath path;
-
-			/* Get an iter to the modified row */
-			path = new Gtk.TreePath.from_string (row);
-			document.goods.get_iter (out iter, path);
-
-			/* The quantity column contains a int, so the string
-			 * has to be converted before it is stored in the model */
-			if (column == Const.COLUMN_QUANTITY) {
-
-				document.goods.set (iter,
-				                    column, val.to_int ());
-			}
-			else {
-
-				document.goods.set (iter,
-				                    column, val);
-			}
-		}
-
 		/* Make a widget grab the focus.
 		 *
 		 * If the widget is contained in a notebook page which is not the

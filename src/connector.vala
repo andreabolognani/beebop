@@ -74,6 +74,9 @@ namespace DDTBuilder {
 			renderer = new Gtk.CellRendererText ();
 			renderer.set ("editable", true,
 			              "ellipsize", Pango.EllipsizeMode.END);
+			renderer.edited.connect ((path, val) => {
+				update_goods (path, Const.COLUMN_CODE, val);
+			});
 			column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
 			                                                 renderer,
 			                                                 "text", Const.COLUMN_CODE);
@@ -83,6 +86,9 @@ namespace DDTBuilder {
 			renderer = new Gtk.CellRendererText ();
 			renderer.set ("editable", true,
 			              "ellipsize", Pango.EllipsizeMode.END);
+			renderer.edited.connect ((path, val) => {
+				update_goods (path, Const.COLUMN_REFERENCE, val);
+			});
 			column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
 			                                                 renderer,
 			                                                 "text", Const.COLUMN_REFERENCE);
@@ -92,6 +98,9 @@ namespace DDTBuilder {
 			renderer = new Gtk.CellRendererText ();
 			renderer.set ("editable", true,
 			              "ellipsize", Pango.EllipsizeMode.END);
+			renderer.edited.connect ((path, val) => {
+				update_goods (path, Const.COLUMN_DESCRIPTION, val);
+			});
 			column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
 			                                                 renderer,
 			                                                 "text", Const.COLUMN_DESCRIPTION);
@@ -102,6 +111,9 @@ namespace DDTBuilder {
 			renderer = new Gtk.CellRendererText ();
 			renderer.set ("editable", true,
 			              "ellipsize", Pango.EllipsizeMode.END);
+			renderer.edited.connect ((path, val) => {
+				update_goods (path, Const.COLUMN_UNIT, val);
+			});
 			column = new Gtk.TreeViewColumn.with_attributes (_("U.M."),
 			                                                 renderer,
 			                                                 "text", Const.COLUMN_UNIT);
@@ -119,6 +131,9 @@ namespace DDTBuilder {
 			              "digits", 0,
 			              "editable", true,
 			              "ellipsize", Pango.EllipsizeMode.END);
+			renderer.edited.connect ((path, val) => {
+				update_goods (path, Const.COLUMN_QUANTITY, val);
+			});
 			column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
 			                                                 renderer,
 			                                                 "text", Const.COLUMN_QUANTITY);
@@ -209,6 +224,32 @@ namespace DDTBuilder {
 			view.window.show_all ();
 
 			Gtk.main ();
+		}
+
+		/* Update the list store backing the goods.
+		 *
+		 * Keep the list store up-to-date with the changes made in the interface */
+		private void update_goods (string row, int column, string val) {
+
+			Gtk.TreeIter iter;
+			Gtk.TreePath path;
+
+			/* Get an iter to the modified row */
+			path = new Gtk.TreePath.from_string (row);
+			document.goods.get_iter (out iter, path);
+
+			/* The quantity column contains a int, so the string
+			 * has to be converted before it is stored in the model */
+			if (column == Const.COLUMN_QUANTITY) {
+
+				document.goods.set (iter,
+				                    column, val.to_int ());
+			}
+			else {
+
+				document.goods.set (iter,
+				                    column, val);
+			}
 		}
 
 		/* Check whether send to recipient is active  */
