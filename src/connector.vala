@@ -158,6 +158,7 @@ namespace DDTBuilder {
 			view.send_to_recipient_checkbutton.toggled.connect (() => {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
+			view.open_action.activate.connect (open);
 			view.add_action.activate.connect (add_row);
 			view.remove_action.activate.connect (remove_row);
 
@@ -230,12 +231,6 @@ namespace DDTBuilder {
 			view.remove_action.sensitive = (rows > 1);
 		}
 
-		/* Quit the application */
-		private void quit () {
-
-			Gtk.main_quit ();
-		}
-
 		/* Show the main application window and wait for user
 		 * interaction */
 		public void run () {
@@ -245,8 +240,59 @@ namespace DDTBuilder {
 			Gtk.main ();
 		}
 
+		/* Open a document and load its contents */
+		private void open () {
+
+			Gtk.FileChooserDialog dialog;
+			Document tmp;
+
+			dialog = new Gtk.FileChooserDialog (_("Open file"),
+			                                    view.window,
+			                                    Gtk.FileChooserAction.OPEN,
+			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+
+			/* Display the dialog */
+			if (dialog.run () == Gtk.ResponseType.ACCEPT) {
+
+				/* Create a new document */
+				tmp = new Document ();
+				tmp.filename = dialog.get_filename ();
+
+				/* Destroy the dialog */
+				dialog.destroy ();
+
+				try {
+
+					/* Read and parse the file */
+					tmp.load ();
+				}
+				catch (DocumentError e) {
+
+					/* Show an error */
+					show_error (_("Could not load document: %s").printf (e.message));
+
+					return;
+				}
+
+				/* Sync the interface with the loaded document */
+				document = tmp;
+			}
+			else {
+
+				/* Destroy the dialog */
+				dialog.destroy ();
+			}
+		}
+
+		/* Quit the application */
+		private void quit () {
+
+			Gtk.main_quit ();
+		}
+
 		/* Add a new row to the goods tree view */
-		public void add_row () {
+		private void add_row () {
 
 			Gtk.TreeIter iter;
 			int rows;
@@ -266,7 +312,7 @@ namespace DDTBuilder {
 		}
 
 		/* Remove a row from the goods tree view */
-		public void remove_row () {
+		private void remove_row () {
 
 			Gtk.TreeIter iter;
 			Gtk.TreePath path;
@@ -377,6 +423,21 @@ namespace DDTBuilder {
 
 				view.destination_city_entry.text = view.recipient_city_entry.text;
 			}
+		}
+
+		/* Show an error message */
+		private void show_error (string message) {
+
+			Gtk.Dialog dialog;
+
+			dialog = new Gtk.MessageDialog (view.window,
+			                                0,
+			                                Gtk.MessageType.ERROR,
+			                                Gtk.ButtonsType.CLOSE,
+			                                message);
+
+			dialog.run ();
+			dialog.destroy ();
 		}
 	}
 }

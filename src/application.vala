@@ -172,52 +172,6 @@ namespace DDTBuilder {
 			dialog.destroy ();
 		}
 
-		/* Open a file and load its contents */
-		private void open () {
-
-			Gtk.FileChooserDialog dialog;
-			Document tmp;
-
-			dialog = new Gtk.FileChooserDialog (_("Open file"),
-			                                    window,
-			                                    Gtk.FileChooserAction.OPEN,
-			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
-
-			/* Display the dialog */
-			if (dialog.run () == Gtk.ResponseType.ACCEPT) {
-
-				/* Create a new document */
-				tmp = new Document ();
-				tmp.filename = dialog.get_filename ();
-
-				/* Destroy the dialog */
-				dialog.destroy ();
-
-				try {
-
-					/* Read and parse the file */
-					tmp.load ();
-				}
-				catch (DocumentError e) {
-
-					/* Show an error */
-					show_error (_("Could not load document: %s").printf (e.message));
-
-					return;
-				}
-
-				/* Sync the interface with the loaded document */
-				document = tmp;
-				load ();
-			}
-			else {
-
-				/* Destroy the dialog */
-				dialog.destroy ();
-			}
-		}
-
 		private void print () {
 
 			Document document;
