@@ -85,12 +85,8 @@ namespace DDTBuilder {
 										as Gtk.Button;
 
 				/* Connect signals */
-				open_action.activate.connect (open);
 				print_action.activate.connect (print);
 				quit_action.activate.connect (quit);
-				cut_action.activate.connect (cut);
-				copy_action.activate.connect (copy);
-				paste_action.activate.connect (paste);
 				preferences_action.activate.connect (show_preferences);
 
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
@@ -123,39 +119,6 @@ namespace DDTBuilder {
 			}
 
 			return text;
-		}
-
-		private void cut () {
-
-			Gtk.Widget widget;
-
-			if (window.get_focus () is Gtk.Editable) {
-
-				widget = window.get_focus () as Gtk.Widget;
-				(widget as Gtk.Editable).cut_clipboard ();
-			}
-		}
-
-		private void copy () {
-
-			Gtk.Widget widget;
-
-			if (window.get_focus () is Gtk.Editable) {
-
-				widget = window.get_focus () as Gtk.Widget;
-				(widget as Gtk.Editable).copy_clipboard ();
-			}
-		}
-
-		private void paste () {
-
-			Gtk.Widget widget;
-
-			if (window.get_focus () is Gtk.Editable) {
-
-				widget = window.get_focus () as Gtk.Widget;
-				(widget as Gtk.Editable).paste_clipboard ();
-			}
 		}
 
 		public void show_warning (string message) {

@@ -159,6 +159,9 @@ namespace DDTBuilder {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
 			view.open_action.activate.connect (open);
+			view.cut_action.activate.connect (cut);
+			view.copy_action.activate.connect (copy);
+			view.paste_action.activate.connect (paste);
 			view.add_action.activate.connect (add_row);
 			view.remove_action.activate.connect (remove_row);
 
@@ -331,7 +334,6 @@ namespace DDTBuilder {
 			view.remove_action.sensitive = (rows > 1);
 		}
 
-
 		/* Update the list store backing the goods.
 		 *
 		 * Keep the list store up-to-date with the changes made in the interface */
@@ -395,6 +397,42 @@ namespace DDTBuilder {
 				view.destination_name_entry.text = "";
 				view.destination_street_entry.text = "";
 				view.destination_city_entry.text = "";
+			}
+		}
+
+		/* Cut selected text */
+		private void cut () {
+
+			Gtk.Widget widget;
+
+			if (view.window.get_focus () is Gtk.Editable) {
+
+				widget = view.window.get_focus () as Gtk.Widget;
+				(widget as Gtk.Editable).cut_clipboard ();
+			}
+		}
+
+		/* Copy selected text */
+		private void copy () {
+
+			Gtk.Widget widget;
+
+			if (view.window.get_focus () is Gtk.Editable) {
+
+				widget = view.window.get_focus () as Gtk.Widget;
+				(widget as Gtk.Editable).copy_clipboard ();
+			}
+		}
+
+		/* Paste selected text */
+		private void paste () {
+
+			Gtk.Widget widget;
+
+			if (view.window.get_focus () is Gtk.Editable) {
+
+				widget = view.window.get_focus () as Gtk.Widget;
+				(widget as Gtk.Editable).paste_clipboard ();
 			}
 		}
 
