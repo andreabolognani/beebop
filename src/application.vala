@@ -285,30 +285,6 @@ namespace DDTBuilder {
 			hide_preferences ();
 		}
 
-		/* Update the preferences window.
-		 */
-		private void fill_preferences_window () {
-
-			header_text_view.buffer.text = preferences.header_text;
-
-			page_padding_x_spinbutton.value = preferences.page_padding_x;
-			page_padding_y_spinbutton.value = preferences.page_padding_y;
-			cell_padding_x_spinbutton.value = preferences.cell_padding_x;
-			cell_padding_y_spinbutton.value = preferences.cell_padding_y;
-			elements_spacing_x_spinbutton.value = preferences.elements_spacing_x;
-			elements_spacing_y_spinbutton.value = preferences.elements_spacing_y;
-			address_boxes_width_spinbutton.value = preferences.address_box_width;
-
-			fontbutton.font_name = preferences.font;
-			line_width_spinbutton.value = preferences.line_width;
-
-			default_unit_entry.text = preferences.default_unit;
-			default_reason_entry.text = preferences.default_reason;
-			default_transported_by_entry.text = preferences.default_transported_by;
-			default_carrier_entry.text = preferences.default_carrier;
-			default_duties_entry.text = preferences.default_duties;
-		}
-
 		/* Make a widget grab the focus.
 		 *
 		 * If the widget is contained in a notebook page which is not the

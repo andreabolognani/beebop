@@ -57,9 +57,10 @@ namespace DDTBuilder {
 
 			/* Connect signal handlers */
 			view.preferences_window.delete_event.connect ((e) => {
-				view.preferences_window.hide ();
+				cancel ();
 				return true;
 			});
+			view.preferences_cancel_button.clicked.connect (cancel);
 		}
 
 		/**/
@@ -68,12 +69,43 @@ namespace DDTBuilder {
 			if (preferences == null || view == null)
 				return;
 
+			/* Header */
+			view.header_textview.buffer.text = preferences.header_text;
 
+			/* Sizes */
+			view.page_padding_x_spinbutton.value = preferences.page_padding_x;
+			view.page_padding_y_spinbutton.value = preferences.page_padding_y;
+			view.cell_padding_x_spinbutton.value = preferences.cell_padding_x;
+			view.cell_padding_y_spinbutton.value = preferences.cell_padding_y;
+			view.elements_spacing_x_spinbutton.value = preferences.elements_spacing_x;
+			view.elements_spacing_y_spinbutton.value = preferences.elements_spacing_y;
+			view.address_box_width_spinbutton.value = preferences.address_box_width;
+
+			/* Appearance */
+			view.fontbutton.font_name = preferences.font;
+			view.line_width_spinbutton.value = preferences.line_width;
+
+			/* Defaults */
+			view.default_unit_entry.text = preferences.default_unit;
+			view.default_reason_entry.text = preferences.default_reason;
+			view.default_transported_by_entry.text = preferences.default_transported_by;
+			view.default_carrier_entry.text = preferences.default_carrier;
+			view.default_duties_entry.text = preferences.default_duties;
 		}
 
+		/* Show preferences window */
 		public void run () {
 
+			/* Make sure the displayed values are correct */
+			update_view ();
+
 			view.preferences_window.show_all ();
+		}
+
+		/* Cancel changes to preferences */
+		private void cancel () {
+
+			view.preferences_window.hide ();
 		}
 	}
 }
