@@ -109,7 +109,7 @@ namespace DDTBuilder {
 			view.goods_treeview.append_column (column);
 
 			adjustment = new Gtk.Adjustment (1.0,
-			                                 0.0,
+			                                 1.0,
 			                                 999.0,
 			                                 1.0,
 			                                 10.0,
