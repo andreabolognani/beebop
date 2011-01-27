@@ -86,7 +86,6 @@ namespace DDTBuilder {
 
 				/* Connect signals */
 				print_action.activate.connect (print);
-				quit_action.activate.connect (quit);
 				preferences_action.activate.connect (show_preferences);
 
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });

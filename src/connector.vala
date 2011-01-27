@@ -159,6 +159,7 @@ namespace DDTBuilder {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
 			view.open_action.activate.connect (open);
+			view.quit_action.activate.connect (quit);
 			view.cut_action.activate.connect (cut);
 			view.copy_action.activate.connect (copy);
 			view.paste_action.activate.connect (paste);
