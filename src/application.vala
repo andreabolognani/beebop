@@ -263,68 +263,6 @@ namespace DDTBuilder {
 
 			if (error_message == null) {
 
-				document = new Document ();
-				goods_treeview.model = document.goods;
-
-				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true,
-				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_CODE, val); });
-				column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
-				                                                 renderer,
-				                                                 "text", Const.COLUMN_CODE);
-				column.resizable = true;
-				goods_treeview.append_column (column);
-
-				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true,
-				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_REFERENCE, val); });
-				column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
-				                                                 renderer,
-				                                                 "text", Const.COLUMN_REFERENCE);
-				column.resizable = true;
-				goods_treeview.append_column (column);
-
-				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true,
-				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_DESCRIPTION, val); });
-				column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
-				                                                 renderer,
-				                                                 "text", Const.COLUMN_DESCRIPTION);
-				column.expand = true;
-				column.resizable = true;
-				goods_treeview.append_column (column);
-
-				renderer = new Gtk.CellRendererText ();
-				renderer.set ("editable", true,
-				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_UNIT, val); });
-				column = new Gtk.TreeViewColumn.with_attributes (_("U.M."),
-				                                                 renderer,
-				                                                 "text", Const.COLUMN_UNIT);
-				column.resizable = true;
-				goods_treeview.append_column (column);
-
-				renderer = new Gtk.CellRendererSpin ();
-				adjustment = new Gtk.Adjustment (1.0,
-				                                 0.0,
-				                                 999.0,
-				                                 1.0,
-				                                 10.0,
-				                                 0.0);
-				renderer.set ("adjustment", adjustment,
-				              "digits", 0,
-				              "editable", true,
-				              "ellipsize", Pango.EllipsizeMode.END);
-				renderer.edited.connect ((path, val) => { update_goods (path, Const.COLUMN_QUANTITY, val); });
-				column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
-				                                                 renderer,
-				                                                 "text", Const.COLUMN_QUANTITY);
-				column.resizable = true;
-				goods_treeview.append_column (column);
-
 				now = Time ();
 				today = Date ();
 

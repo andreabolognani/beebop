@@ -60,11 +60,70 @@ namespace DDTBuilder {
 		 * reflect the contents of the document */
 		private void prepare_view () {
 
+			Gtk.CellRendererText renderer;
+			Gtk.TreeViewColumn column;
+			Gtk.Adjustment adjustment;
+
 			if (view == null)
 				return;
 
 			/* Start by updating the view */
 			update_view ();
+
+			/* Create tree view columns */
+			renderer = new Gtk.CellRendererText ();
+			renderer.set ("editable", true,
+			              "ellipsize", Pango.EllipsizeMode.END);
+			column = new Gtk.TreeViewColumn.with_attributes (_("Code"),
+			                                                 renderer,
+			                                                 "text", Const.COLUMN_CODE);
+			column.resizable = true;
+			view.goods_treeview.append_column (column);
+
+			renderer = new Gtk.CellRendererText ();
+			renderer.set ("editable", true,
+			              "ellipsize", Pango.EllipsizeMode.END);
+			column = new Gtk.TreeViewColumn.with_attributes (_("Reference"),
+			                                                 renderer,
+			                                                 "text", Const.COLUMN_REFERENCE);
+			column.resizable = true;
+			view.goods_treeview.append_column (column);
+
+			renderer = new Gtk.CellRendererText ();
+			renderer.set ("editable", true,
+			              "ellipsize", Pango.EllipsizeMode.END);
+			column = new Gtk.TreeViewColumn.with_attributes (_("Description"),
+			                                                 renderer,
+			                                                 "text", Const.COLUMN_DESCRIPTION);
+			column.expand = true;
+			column.resizable = true;
+			view.goods_treeview.append_column (column);
+
+			renderer = new Gtk.CellRendererText ();
+			renderer.set ("editable", true,
+			              "ellipsize", Pango.EllipsizeMode.END);
+			column = new Gtk.TreeViewColumn.with_attributes (_("U.M."),
+			                                                 renderer,
+			                                                 "text", Const.COLUMN_CODE);
+			column.resizable = true;
+			view.goods_treeview.append_column (column);
+
+			adjustment = new Gtk.Adjustment (1.0,
+			                                 0.0,
+			                                 999.0,
+			                                 1.0,
+			                                 10.0,
+			                                 0.0);
+			renderer = new Gtk.CellRendererSpin ();
+			renderer.set ("adjustment", adjustment,
+			              "digits", 0,
+			              "editable", true,
+			              "ellipsize", Pango.EllipsizeMode.END);
+			column = new Gtk.TreeViewColumn.with_attributes (_("Quantity"),
+			                                                 renderer,
+			                                                 "text", Const.COLUMN_QUANTITY);
+			column.resizable = true;
+			view.goods_treeview.append_column (column);
 
 			/* Connect signal handlers */
 			view.window.delete_event.connect ((e) => {
@@ -132,6 +191,9 @@ namespace DDTBuilder {
 			view.shipment_transported_by_entry.text = document.shipment_info.transported_by;
 			view.shipment_carrier_entry.text = document.shipment_info.carrier;
 			view.shipment_duties_entry.text = document.shipment_info.duties;
+
+			/* Goods */
+			view.goods_treeview.model = document.goods;
 		}
 
 		/* Quit the application */
