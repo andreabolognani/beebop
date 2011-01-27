@@ -1,3 +1,17 @@
 [type: gettext/glade]data/beebop.ui
-src/application.vala
+src/const.vala
+src/util.vala
+src/preferences.vala
+src/companyinfo.vala
+src/goodsinfo.vala
+src/shipmentinfo.vala
+src/cell.vala
+src/row.vala
+src/table.vala
 src/document.vala
+src/painter.vala
+src/preferencesview.vala
+src/preferencesconnector.vala
+src/view.vala
+src/connector.vala
+src/application.vala
