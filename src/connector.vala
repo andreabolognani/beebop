@@ -67,7 +67,13 @@ namespace DDTBuilder {
 			update_view ();
 
 			/* Connect signal handlers */
-			view.window.delete_event.connect ((e) => { quit (); return true; });
+			view.window.delete_event.connect ((e) => {
+				quit ();
+				return true;
+			});
+			view.send_to_recipient_checkbutton.toggled.connect (() => {
+				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
+			});
 		}
 
 		/* Update the view to match the document */
@@ -94,7 +100,7 @@ namespace DDTBuilder {
 
 			/* Activate the "send to recipient" checkbutton if the
 			 * recipient info match the destination info */
-			view.send_to_recipient_checkbutton.active = same;
+			toggle_send_to_recipient (same);
 
 			/* Recipient info */
 			view.recipient_name_entry.text = document.recipient.name;
@@ -122,6 +128,39 @@ namespace DDTBuilder {
 			view.window.show_all ();
 
 			Gtk.main ();
+		}
+
+		/* Check whether send to recipient is active  */
+		private bool send_to_recipient_is_active () {
+
+			return view.send_to_recipient_checkbutton.active;
+		}
+
+		/* Enable/disable send to recipient feature */
+		private void toggle_send_to_recipient (bool val) {
+
+			/* Enable/disable checkbutton */
+			view.send_to_recipient_checkbutton.active = val;
+
+			/* Disable destination fields if checkbutton is active */
+			view.destination_name_entry.sensitive = !val;
+			view.destination_city_entry.sensitive = !val;
+			view.destination_street_entry.sensitive = !val;
+
+			if (val) {
+
+				/* Copy destination info from recipient */
+				view.destination_name_entry.text = view.recipient_name_entry.text;
+				view.destination_street_entry.text = view.recipient_street_entry.text;
+				view.destination_city_entry.text = view.recipient_city_entry.text;
+			}
+			else {
+
+				/* Reset destination info */
+				view.destination_name_entry.text = "";
+				view.destination_street_entry.text = "";
+				view.destination_city_entry.text = "";
+			}
 		}
 	}
 }
