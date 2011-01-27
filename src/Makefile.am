@@ -44,6 +44,8 @@ ddtbuilder_SOURCES = \
 	table.vala \
 	document.vala \
 	painter.vala \
+	preferencesview.vala \
+	preferencesconnector.vala \
 	view.vala \
 	connector.vala \
 	application.vala \

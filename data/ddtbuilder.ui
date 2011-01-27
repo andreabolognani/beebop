@@ -1012,7 +1012,7 @@
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="shadow_type">etched-in</property>
                         <child>
-                          <object class="GtkTextView" id="header_text_view">
+                          <object class="GtkTextView" id="header_textview">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="left_margin">2</property>
@@ -1232,7 +1232,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSpinButton" id="address_boxes_width_spinbutton">
+                          <object class="GtkSpinButton" id="address_box_width_spinbutton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>

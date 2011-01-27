@@ -26,7 +26,6 @@ namespace DDTBuilder {
 	public class View : GLib.Object {
 
 		public Gtk.Window window { get; private set; }
-		public Gtk.Window preferences_window { get; private set; }
 
 		public Gtk.Notebook notebook { get; private set; }
 
@@ -66,26 +65,6 @@ namespace DDTBuilder {
 		public Gtk.Action remove_action { get; private set; }
 		public Gtk.Action preferences_action { get; private set; }
 
-#if false
-		public Gtk.TextView header_text_view { get; private set; }
-		public Gtk.SpinButton page_padding_x_spinbutton { get; private set; }
-		public Gtk.SpinButton page_padding_y_spinbutton { get; private set; }
-		public Gtk.SpinButton cell_padding_x_spinbutton { get; private set; }
-		public Gtk.SpinButton cell_padding_y_spinbutton { get; private set; }
-		public Gtk.SpinButton elements_spacing_x_spinbutton { get; private set; }
-		public Gtk.SpinButton elements_spacing_y_spinbutton { get; private set; }
-		public Gtk.SpinButton address_boxes_width_spinbutton { get; private set; }
-		public Gtk.FontButton fontbutton { get; private set; }
-		public Gtk.SpinButton line_width_spinbutton { get; private set; }
-		public Gtk.Entry default_unit_entry { get; private set; }
-		public Gtk.Entry default_reason_entry { get; private set; }
-		public Gtk.Entry default_transported_by_entry { get; private set; }
-		public Gtk.Entry default_carrier_entry { get; private set; }
-		public Gtk.Entry default_duties_entry { get; private set; }
-		public Gtk.Button preferences_ok_button { get; private set; }
-		public Gtk.Button preferences_cancel_button { get; private set; }
-#endif
-
 		public void load () throws ViewError {
 
 			Gtk.Builder ui;
@@ -104,8 +83,6 @@ namespace DDTBuilder {
 			/* Look up all required objects */
 			window = get_object (ui, Const.OBJ_WINDOW)
 			         as Gtk.Window;
-			preferences_window = get_object (ui, Const.OBJ_PREFERENCES_WINDOW)
-			                     as Gtk.Window;
 			notebook = get_object (ui, Const.OBJ_NOTEBOOK)
 			           as Gtk.Notebook;
 			recipient_name_entry = get_object (ui, Const.OBJ_RECIPIENT_NAME_ENTRY)
@@ -168,43 +145,6 @@ namespace DDTBuilder {
 			                as Gtk.Action;
 			preferences_action = get_object (ui, Const.OBJ_PREFERENCES_ACTION)
 			                     as Gtk.Action;
-
-#if false
-			header_text_view = get_object (ui, "header_text_view")
-							   as Gtk.TextView;
-			page_padding_x_spinbutton = get_object (ui, "page_padding_x_spinbutton")
-										as Gtk.SpinButton;
-			page_padding_y_spinbutton = get_object (ui, "page_padding_y_spinbutton")
-										as Gtk.SpinButton;
-			cell_padding_x_spinbutton = get_object (ui, "cell_padding_x_spinbutton")
-										as Gtk.SpinButton;
-			cell_padding_y_spinbutton = get_object (ui, "cell_padding_y_spinbutton")
-										as Gtk.SpinButton;
-			elements_spacing_x_spinbutton = get_object (ui, "elements_spacing_x_spinbutton")
-											as Gtk.SpinButton;
-			elements_spacing_y_spinbutton = get_object (ui, "elements_spacing_y_spinbutton")
-											as Gtk.SpinButton;
-			address_boxes_width_spinbutton = get_object (ui, "address_boxes_width_spinbutton")
-											 as Gtk.SpinButton;
-			fontbutton = get_object (ui, "fontbutton")
-						 as Gtk.FontButton;
-			line_width_spinbutton = get_object (ui, "line_width_spinbutton")
-									as Gtk.SpinButton;
-			default_unit_entry = get_object (ui, "default_unit_entry")
-								 as Gtk.Entry;
-			default_reason_entry = get_object (ui, "default_reason_entry")
-								   as Gtk.Entry;
-			default_transported_by_entry = get_object (ui, "default_transported_by_entry")
-										   as Gtk.Entry;
-			default_carrier_entry = get_object (ui, "default_carrier_entry")
-									as Gtk.Entry;
-			default_duties_entry = get_object (ui, "default_duties_entry")
-								   as Gtk.Entry;
-			preferences_ok_button = get_object (ui, "preferences_ok_button")
-									as Gtk.Button;
-			preferences_cancel_button = get_object (ui, "preferences_cancel_button")
-										as Gtk.Button;
-#endif
 		}
 
 		/* Get an object out of the UI, checking it exists */

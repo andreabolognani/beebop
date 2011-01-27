@@ -21,6 +21,9 @@ namespace DDTBuilder {
 	public class Connector : GLib.Object {
 
 		private Preferences preferences;
+
+		private PreferencesConnector preferences_connector;
+
 		private Document _document;
 		private View _view;
 
@@ -58,6 +61,8 @@ namespace DDTBuilder {
 
 				/* XXX This error is handled by Application */
 			}
+
+			preferences_connector = null;
 
 			_document = null;
 			_view = null;
@@ -166,6 +171,7 @@ namespace DDTBuilder {
 			view.paste_action.activate.connect (paste);
 			view.add_action.activate.connect (add_row);
 			view.remove_action.activate.connect (remove_row);
+			view.preferences_action.activate.connect (show_preferences);
 
 			/* Connect internal signal handlers */
 			view.window.set_focus.connect ((focus) => {
@@ -359,6 +365,34 @@ namespace DDTBuilder {
 			/* Enable / disable row deletion based on the number of rows */
 			rows--;
 			view.remove_action.sensitive = (rows > 1);
+		}
+
+		/* Show preferences view */
+		private void show_preferences () {
+
+			PreferencesView preferences_view;
+
+			/* Lazily create preferences connector */
+			if (preferences_connector == null) {
+
+				try {
+
+					/* Try to load the preferences view */
+					preferences_view = new PreferencesView ();
+					preferences_view.load ();
+				}
+				catch (Error e) {
+
+					show_error (_("Failed to show preferences view"));
+					return;
+				}
+
+				preferences_connector = new PreferencesConnector ();
+				preferences_connector.view = preferences_view;
+			}
+
+			/* Run preferences connector */
+			preferences_connector.run ();
 		}
 
 		/* Update the list store backing the goods.

@@ -48,43 +48,6 @@ namespace DDTBuilder {
 
 		private void obsolete () {
 
-			goods_treeview = get_object ("goods_treeview")
-							 as Gtk.TreeView;
-			header_text_view = get_object ("header_text_view")
-							   as Gtk.TextView;
-			page_padding_x_spinbutton = get_object ("page_padding_x_spinbutton")
-										as Gtk.SpinButton;
-			page_padding_y_spinbutton = get_object ("page_padding_y_spinbutton")
-										as Gtk.SpinButton;
-			cell_padding_x_spinbutton = get_object ("cell_padding_x_spinbutton")
-										as Gtk.SpinButton;
-			cell_padding_y_spinbutton = get_object ("cell_padding_y_spinbutton")
-										as Gtk.SpinButton;
-			elements_spacing_x_spinbutton = get_object ("elements_spacing_x_spinbutton")
-											as Gtk.SpinButton;
-			elements_spacing_y_spinbutton = get_object ("elements_spacing_y_spinbutton")
-											as Gtk.SpinButton;
-			address_boxes_width_spinbutton = get_object ("address_boxes_width_spinbutton")
-											 as Gtk.SpinButton;
-			fontbutton = get_object ("fontbutton")
-						 as Gtk.FontButton;
-			line_width_spinbutton = get_object ("line_width_spinbutton")
-									as Gtk.SpinButton;
-			default_unit_entry = get_object ("default_unit_entry")
-								 as Gtk.Entry;
-			default_reason_entry = get_object ("default_reason_entry")
-								   as Gtk.Entry;
-			default_transported_by_entry = get_object ("default_transported_by_entry")
-										   as Gtk.Entry;
-			default_carrier_entry = get_object ("default_carrier_entry")
-									as Gtk.Entry;
-			default_duties_entry = get_object ("default_duties_entry")
-								   as Gtk.Entry;
-			preferences_ok_button = get_object ("preferences_ok_button")
-									as Gtk.Button;
-			preferences_cancel_button = get_object ("preferences_cancel_button")
-										as Gtk.Button;
-
 				/* Connect signals */
 				print_action.activate.connect (print);
 				preferences_action.activate.connect (show_preferences);
@@ -281,18 +244,6 @@ namespace DDTBuilder {
 			info.parcels = "%d".printf (goods_parcels_spinbutton.get_value_as_int ());
 			info.weight = get_entry_text (goods_weight_entry,
 			                              "goods_weight_entry");
-		}
-
-		private void show_preferences () {
-
-			fill_preferences_window ();
-
-			preferences_window.show_all ();
-		}
-
-		private void hide_preferences () {
-
-			preferences_window.hide ();
 		}
 
 		private void save_preferences () {

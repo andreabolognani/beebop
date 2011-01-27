@@ -77,7 +77,6 @@ namespace DDTBuilder {
 
 		/* Object names */
 		public const string OBJ_WINDOW = "window";
-		public const string OBJ_PREFERENCES_WINDOW = "preferences_window";
 		public const string OBJ_NOTEBOOK = "notebook";
 		public const string OBJ_RECIPIENT_NAME_ENTRY = "recipient_name_entry";
 		public const string OBJ_RECIPIENT_STREET_ENTRY = "recipient_street_entry";
@@ -109,6 +108,24 @@ namespace DDTBuilder {
 		public const string OBJ_ADD_ACTION = "add_action";
 		public const string OBJ_REMOVE_ACTION = "remove_action";
 		public const string OBJ_PREFERENCES_ACTION = "preferences_action";
+		public const string OBJ_PREFERENCES_WINDOW = "preferences_window";
+		public const string OBJ_HEADER_TEXTVIEW = "header_textview";
+		public const string OBJ_PAGE_PADDING_X_SPINBUTTON = "page_padding_x_spinbutton";
+		public const string OBJ_PAGE_PADDING_Y_SPINBUTTON = "page_padding_y_spinbutton";
+		public const string OBJ_CELL_PADDING_X_SPINBUTTON = "cell_padding_x_spinbutton";
+		public const string OBJ_CELL_PADDING_Y_SPINBUTTON = "cell_padding_y_spinbutton";
+		public const string OBJ_ELEMENTS_SPACING_X_SPINBUTTON = "elements_spacing_x_spinbutton";
+		public const string OBJ_ELEMENTS_SPACING_Y_SPINBUTTON = "elements_spacing_y_spinbutton";
+		public const string OBJ_ADDRESS_BOX_WIDTH_SPINBUTTON = "address_box_width_spinbutton";
+		public const string OBJ_FONTBUTTON = "fontbutton";
+		public const string OBJ_LINE_WIDTH_SPINBUTTON = "line_width_spinbutton";
+		public const string OBJ_DEFAULT_UNIT_ENTRY = "default_unit_entry";
+		public const string OBJ_DEFAULT_REASON_ENTRY = "default_reason_entry";
+		public const string OBJ_DEFAULT_TRANSPORTED_BY_ENTRY = "default_transported_by_entry";
+		public const string OBJ_DEFAULT_CARRIER_ENTRY = "default_carrier_entry";
+		public const string OBJ_DEFAULT_DUTIES_ENTRY = "default_duties_entry";
+		public const string OBJ_PREFERENCES_OK_BUTTON = "preferences_ok_button";
+		public const string OBJ_PREFERENCES_CANCEL_BUTTON = "preferences_cancel_button";
 
 		/* Size constants */
 		public const double AUTOMATIC_SIZE = -1.0;
