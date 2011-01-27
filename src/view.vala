@@ -56,6 +56,7 @@ namespace DDTBuilder {
 		public Gtk.TreeView goods_treeview { get; private set; }
 
 		public Gtk.Action open_action { get; private set; }
+		public Gtk.Action save_action { get; private set; }
 		public Gtk.Action print_action { get; private set; }
 		public Gtk.Action quit_action { get; private set; }
 		public Gtk.Action cut_action { get; private set; }
@@ -148,6 +149,8 @@ namespace DDTBuilder {
 			goods_treeview = get_object (ui, Const.OBJ_GOODS_TREEVIEW)
 			                 as Gtk.TreeView;
 			open_action = get_object (ui, Const.OBJ_OPEN_ACTION)
+			              as Gtk.Action;
+			save_action = get_object (ui, Const.OBJ_SAVE_ACTION)
 			              as Gtk.Action;
 			print_action = get_object (ui, Const.OBJ_PRINT_ACTION)
 			               as Gtk.Action;

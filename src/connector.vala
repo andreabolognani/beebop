@@ -159,6 +159,7 @@ namespace DDTBuilder {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
 			view.open_action.activate.connect (open);
+			view.save_action.activate.connect (save);
 			view.quit_action.activate.connect (quit);
 			view.cut_action.activate.connect (cut);
 			view.copy_action.activate.connect (copy);
@@ -291,6 +292,26 @@ namespace DDTBuilder {
 
 				/* Destroy the dialog */
 				dialog.destroy ();
+			}
+		}
+
+		/* Save a document */
+		private void save () {
+
+			Painter painter;
+
+			try {
+
+				/* Create a painter for the document */
+				painter = new Painter ();
+				painter.document = document;
+
+				/* Draw the document */
+				painter.draw ();
+			}
+			catch (Error e) {
+
+				show_error (_("Saving error: %s").printf (e.message));
 			}
 		}
 
