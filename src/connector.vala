@@ -193,6 +193,9 @@ namespace Beebop {
 			if (document == null || view == null)
 				return;
 
+			/* Update window title */
+			update_title ();
+
 			same = true;
 
 			/* Compare all the info shared by both the recipient
@@ -457,6 +460,37 @@ namespace Beebop {
 				document.goods.set (iter,
 				                    column, val);
 			}
+		}
+
+		/* Update view title to reflect open document */
+		private void update_title () {
+
+			File handle;
+			FileInfo info;
+			string title;
+
+			if (document.filename.collate ("") != 0) {
+
+				/* Get the display name using GIO */
+				try {
+
+					handle = File.new_for_path (document.filename);
+					info = handle.query_info (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+					                          FileQueryInfoFlags.NONE,
+					                          null);
+					title = info.get_attribute_string (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
+				}
+				catch (Error e) {
+
+					title = _("Unknown");
+				}
+			}
+			else {
+
+				title = _("Unsaved document");
+			}
+
+			view.window.title = _("%s - Beebop").printf (title);
 		}
 
 		/* Check whether send to recipient is active  */
