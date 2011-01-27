@@ -27,40 +27,6 @@ namespace DDTBuilder {
 		private Connector connector;
 
 #if false
-		private Preferences preferences;
-		private Document document;
-
-		private Gtk.Builder ui;
-		private Gtk.Window window;
-		private Gtk.Window preferences_window;
-
-		private Gtk.Notebook notebook;
-
-		private Gtk.Entry recipient_name_entry;
-		private Gtk.Entry recipient_street_entry;
-		private Gtk.Entry recipient_city_entry;
-		private Gtk.Entry recipient_vatin_entry;
-		private Gtk.Entry recipient_client_code_entry;
-
-		private Gtk.Entry destination_name_entry;
-		private Gtk.Entry destination_street_entry;
-		private Gtk.Entry destination_city_entry;
-		private Gtk.CheckButton send_to_recipient_checkbutton;
-
-		private Gtk.Entry document_number_entry;
-		private Gtk.Entry document_date_entry;
-		private Gtk.Entry document_page_entry;
-		private Gtk.Entry goods_appearance_entry;
-		private Gtk.SpinButton goods_parcels_spinbutton;
-		private Gtk.Entry goods_weight_entry;
-
-		private Gtk.Entry shipment_reason_entry;
-		private Gtk.Entry shipment_transported_by_entry;
-		private Gtk.Entry shipment_carrier_entry;
-		private Gtk.Entry shipment_duties_entry;
-
-		private Gtk.TreeView goods_treeview;
-
 		private Gtk.TextView header_text_view;
 		private Gtk.SpinButton page_padding_x_spinbutton;
 		private Gtk.SpinButton page_padding_y_spinbutton;
@@ -79,160 +45,44 @@ namespace DDTBuilder {
 		private Gtk.Button preferences_ok_button;
 		private Gtk.Button preferences_cancel_button;
 
-		private Gtk.Action open_action;
-		private Gtk.Action print_action;
-		private Gtk.Action quit_action;
-		private Gtk.Action cut_action;
-		private Gtk.Action copy_action;
-		private Gtk.Action paste_action;
-		private Gtk.Action add_action;
-		private Gtk.Action remove_action;
-		private Gtk.Action preferences_action;
+		private void obsolete () {
 
-		private string out_file;
-
-		public string error_message { get; private set; }
-
-		construct {
-
-			error_message = null;
-
-			try {
-
-				preferences = Preferences.get_instance ();
-				document = new Document ();
-			}
-			catch (Error e) {
-
-				error_message = _("Could not load preferences: %s".printf (e.message));
-			}
-
-			if (error_message == null) {
-
-				try {
-
-					ui = new Gtk.Builder ();
-					ui.add_from_file (preferences.ui_file);
-				}
-				catch (Error e) {
-
-					error_message = _("Could not load UI file: %s").printf (preferences.ui_file);
-				}
-			}
-
-			if (error_message == null) {
-
-				/* Look up all the required object. If any is missing, throw
-				 * an error and quit the application */
-				try {
-
-					window = get_object ("window")
-					         as Gtk.Window;
-					preferences_window = get_object ("preferences_window")
-					                     as Gtk.Window;
-					notebook = get_object ("notebook")
-					           as Gtk.Notebook;
-					recipient_name_entry = get_object ("recipient_name_entry")
-					                       as Gtk.Entry;
-					recipient_street_entry = get_object ("recipient_street_entry")
-					                         as Gtk.Entry;
-					recipient_city_entry = get_object ("recipient_city_entry")
-					                       as Gtk.Entry;
-					recipient_vatin_entry = get_object ("recipient_vatin_entry")
-					                        as Gtk.Entry;
-					recipient_client_code_entry = get_object ("recipient_client_code_entry")
-					                              as Gtk.Entry;
-					destination_name_entry = get_object ("destination_name_entry")
-					                         as Gtk.Entry;
-					destination_street_entry = get_object ("destination_street_entry")
-					                           as Gtk.Entry;
-					destination_city_entry = get_object ("destination_city_entry")
-					                         as Gtk.Entry;
-					send_to_recipient_checkbutton = get_object ("send_to_recipient_checkbutton")
-					                                as Gtk.CheckButton;
-					document_number_entry = get_object ("document_number_entry")
-					                        as Gtk.Entry;
-					document_date_entry = get_object ("document_date_entry")
-					                      as Gtk.Entry;
-					document_page_entry = get_object ("document_page_entry")
-					                      as Gtk.Entry;
-					goods_appearance_entry = get_object ("goods_appearance_entry")
-					                         as Gtk.Entry;
-					goods_parcels_spinbutton = get_object ("goods_parcels_spinbutton")
-					                         as Gtk.SpinButton;
-					goods_weight_entry = get_object ("goods_weight_entry")
-					                     as Gtk.Entry;
-					shipment_reason_entry = get_object ("shipment_reason_entry")
-					                        as Gtk.Entry;
-					shipment_transported_by_entry = get_object ("shipment_transported_by_entry")
-					                                as Gtk.Entry;
-					shipment_carrier_entry = get_object ("shipment_carrier_entry")
-					                         as Gtk.Entry;
-					shipment_duties_entry = get_object ("shipment_duties_entry")
-					                        as Gtk.Entry;
-					goods_treeview = get_object ("goods_treeview")
-					                 as Gtk.TreeView;
-					header_text_view = get_object ("header_text_view")
-					                   as Gtk.TextView;
-					page_padding_x_spinbutton = get_object ("page_padding_x_spinbutton")
-					                            as Gtk.SpinButton;
-					page_padding_y_spinbutton = get_object ("page_padding_y_spinbutton")
-					                            as Gtk.SpinButton;
-					cell_padding_x_spinbutton = get_object ("cell_padding_x_spinbutton")
-					                            as Gtk.SpinButton;
-					cell_padding_y_spinbutton = get_object ("cell_padding_y_spinbutton")
-					                            as Gtk.SpinButton;
-					elements_spacing_x_spinbutton = get_object ("elements_spacing_x_spinbutton")
-					                                as Gtk.SpinButton;
-					elements_spacing_y_spinbutton = get_object ("elements_spacing_y_spinbutton")
-					                                as Gtk.SpinButton;
-					address_boxes_width_spinbutton = get_object ("address_boxes_width_spinbutton")
-					                                 as Gtk.SpinButton;
-					fontbutton = get_object ("fontbutton")
-					             as Gtk.FontButton;
-					line_width_spinbutton = get_object ("line_width_spinbutton")
-					                        as Gtk.SpinButton;
-					default_unit_entry = get_object ("default_unit_entry")
-					                     as Gtk.Entry;
-					default_reason_entry = get_object ("default_reason_entry")
-					                       as Gtk.Entry;
-					default_transported_by_entry = get_object ("default_transported_by_entry")
-					                               as Gtk.Entry;
-					default_carrier_entry = get_object ("default_carrier_entry")
-					                        as Gtk.Entry;
-					default_duties_entry = get_object ("default_duties_entry")
-					                       as Gtk.Entry;
-					preferences_ok_button = get_object ("preferences_ok_button")
-					                        as Gtk.Button;
-					preferences_cancel_button = get_object ("preferences_cancel_button")
-					                            as Gtk.Button;
-
-					open_action = get_object ("open_action")
-					              as Gtk.Action;
-					print_action = get_object ("print_action")
-					               as Gtk.Action;
-					quit_action = get_object ("quit_action")
-					              as Gtk.Action;
-					cut_action = get_object ("cut_action")
-					             as Gtk.Action;
-					copy_action = get_object ("copy_action")
-					              as Gtk.Action;
-					paste_action = get_object ("paste_action")
-					               as Gtk.Action;
-					add_action = get_object ("add_action")
-					             as Gtk.Action;
-					remove_action = get_object ("remove_action")
-					                as Gtk.Action;
-					preferences_action = get_object ("preferences_action")
-					                     as Gtk.Action;
-				}
-				catch (ApplicationError.OBJECT_NOT_FOUND e) {
-
-					error_message = _("Required UI object not found: %s").printf (e.message);
-				}
-			}
-
-			if (error_message == null) {
+			goods_treeview = get_object ("goods_treeview")
+							 as Gtk.TreeView;
+			header_text_view = get_object ("header_text_view")
+							   as Gtk.TextView;
+			page_padding_x_spinbutton = get_object ("page_padding_x_spinbutton")
+										as Gtk.SpinButton;
+			page_padding_y_spinbutton = get_object ("page_padding_y_spinbutton")
+										as Gtk.SpinButton;
+			cell_padding_x_spinbutton = get_object ("cell_padding_x_spinbutton")
+										as Gtk.SpinButton;
+			cell_padding_y_spinbutton = get_object ("cell_padding_y_spinbutton")
+										as Gtk.SpinButton;
+			elements_spacing_x_spinbutton = get_object ("elements_spacing_x_spinbutton")
+											as Gtk.SpinButton;
+			elements_spacing_y_spinbutton = get_object ("elements_spacing_y_spinbutton")
+											as Gtk.SpinButton;
+			address_boxes_width_spinbutton = get_object ("address_boxes_width_spinbutton")
+											 as Gtk.SpinButton;
+			fontbutton = get_object ("fontbutton")
+						 as Gtk.FontButton;
+			line_width_spinbutton = get_object ("line_width_spinbutton")
+									as Gtk.SpinButton;
+			default_unit_entry = get_object ("default_unit_entry")
+								 as Gtk.Entry;
+			default_reason_entry = get_object ("default_reason_entry")
+								   as Gtk.Entry;
+			default_transported_by_entry = get_object ("default_transported_by_entry")
+										   as Gtk.Entry;
+			default_carrier_entry = get_object ("default_carrier_entry")
+									as Gtk.Entry;
+			default_duties_entry = get_object ("default_duties_entry")
+								   as Gtk.Entry;
+			preferences_ok_button = get_object ("preferences_ok_button")
+									as Gtk.Button;
+			preferences_cancel_button = get_object ("preferences_cancel_button")
+										as Gtk.Button;
 
 				/* Connect signals */
 				open_action.activate.connect (open);
@@ -248,23 +98,6 @@ namespace DDTBuilder {
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
 				preferences_cancel_button.clicked.connect (hide_preferences);
 				preferences_ok_button.clicked.connect (save_preferences);
-			}
-		}
-
-		/* Get an object out of the UI, checking it exists */
-		private GLib.Object get_object (string name) throws ApplicationError.OBJECT_NOT_FOUND {
-
-			GLib.Object obj;
-
-			/* Look up the object */
-			obj = ui.get_object (name);
-
-			/* If the object is not there, throw an exception */
-			if (obj == null) {
-				throw new ApplicationError.OBJECT_NOT_FOUND (name);
-			}
-
-			return obj;
 		}
 
 		/* Get the text from an entry, raising an exception if it's empty */
@@ -292,17 +125,6 @@ namespace DDTBuilder {
 			}
 
 			return text;
-		}
-
-		public void show_all () {
-
-			/* Show the main application window */
-			window.show_all ();
-		}
-
-		private void quit () {
-
-			Gtk.main_quit ();
 		}
 
 		private void cut () {
@@ -443,63 +265,6 @@ namespace DDTBuilder {
 			}
 		}
 
-		/* Load a document into the interface */
-		private void load () {
-
-			bool same;
-
-			same = true;
-
-			/* If the three pieces of information shared by the recipient and the
-			 * destination do not differ, then the shipment is sent to the
-			 * recipient, and the checkbutton has to be activated */
-			if (document.destination.name.collate (document.recipient.name) != 0) {
-
-				same = same && false;
-			}
-			if (document.destination.street.collate (document.recipient.street) != 0) {
-
-				same = same && false;
-			}
-			if (document.destination.city.collate (document.recipient.city) != 0) {
-
-				same = same && false;
-			}
-
-			send_to_recipient_checkbutton.active = same;
-
-			/* Fill in recipient info */
-			recipient_name_entry.text = document.recipient.name;
-			recipient_street_entry.text = document.recipient.street;
-			recipient_city_entry.text = document.recipient.city;
-			recipient_vatin_entry.text = document.recipient.vatin;
-			recipient_client_code_entry.text = document.recipient.client_code;
-
-			/* Fill in destination info */
-			destination_name_entry.text = document.destination.name;
-			destination_street_entry.text = document.destination.street;
-			destination_city_entry.text = document.destination.city;
-
-			/* Fill in document info */
-			document_number_entry.text = document.number;
-			document_date_entry.text = document.date;
-			document_page_entry.text = document.page_number;
-
-			/* Fill in goods info */
-			goods_appearance_entry.text = document.goods_info.appearance;
-			goods_parcels_spinbutton.value = document.goods_info.parcels.to_double ();
-			goods_weight_entry.text = document.goods_info.weight;
-
-			/* Fill in shipment info */
-			shipment_reason_entry.text = document.shipment_info.reason;
-			shipment_transported_by_entry.text = document.shipment_info.transported_by;
-			shipment_carrier_entry.text = document.shipment_info.carrier;
-			shipment_duties_entry.text = document.shipment_info.duties;
-
-			/* Replace tree view model */
-			goods_treeview.model = document.goods;
-		}
-
 		private void print () {
 
 			Document document;
@@ -522,7 +287,6 @@ namespace DDTBuilder {
 
 				return;
 			}
-#if false
 			view_cmd = {preferences.viewer,
 			            out_file,
 			            null};
@@ -550,7 +314,6 @@ namespace DDTBuilder {
 			/* Prevent the print button from being clicked again until
 			 * the viewer has been closed */
 			print_action.sensitive = false;
-#endif
 
 			return;
 		}
@@ -648,9 +411,6 @@ namespace DDTBuilder {
 			info.parcels = "%d".printf (goods_parcels_spinbutton.get_value_as_int ());
 			info.weight = get_entry_text (goods_weight_entry,
 			                              "goods_weight_entry");
-		}
-
-		private void collect_goods (Document document) throws ApplicationError.EMPTY_FIELD {
 		}
 
 		private void show_preferences () {
@@ -929,19 +689,7 @@ namespace DDTBuilder {
 			Document document;
 			View view;
 
-			try {
-
-				/* Create and load the document */
-				document = new Document ();
-				/*
-				document.filename = "test.xml";
-				document.load ();
-				*/
-			}
-			catch (Error e) {
-
-				throw new ApplicationError.FAILED (_("Failed to load document: %s".printf (e.message)));
-			}
+			document = new Document ();
 
 			try {
 
