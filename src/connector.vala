@@ -167,6 +167,11 @@ namespace DDTBuilder {
 			view.remove_action.activate.connect (remove_row);
 
 			/* Connect internal signal handlers */
+			view.window.set_focus.connect ((focus) => {
+				if (focus != null) {
+					focus_changed (focus);
+				}
+			});
 			view.recipient_name_entry.changed.connect (recipient_name_changed);
 			view.recipient_street_entry.changed.connect (recipient_street_changed);
 			view.recipient_city_entry.changed.connect (recipient_city_changed);
@@ -437,6 +442,35 @@ namespace DDTBuilder {
 			}
 		}
 
+		/* Show an error message */
+		private void show_error (string message) {
+
+			Gtk.Dialog dialog;
+
+			dialog = new Gtk.MessageDialog (view.window,
+			                                0,
+			                                Gtk.MessageType.ERROR,
+			                                Gtk.ButtonsType.CLOSE,
+			                                message);
+
+			dialog.run ();
+			dialog.destroy ();
+		}
+
+		/* React to focus changed */
+		private void focus_changed (Gtk.Widget focus) {
+
+			bool editable;
+
+			editable = focus is Gtk.Editable;
+
+			/* Cut, copy and paste are only available when an
+			 * editable widget is focused */
+			view.cut_action.sensitive = editable;
+			view.copy_action.sensitive = editable;
+			view.paste_action.sensitive = editable;
+		}
+
 		/* React to changes of the recipient's name */
 		private void recipient_name_changed () {
 
@@ -462,21 +496,6 @@ namespace DDTBuilder {
 
 				view.destination_city_entry.text = view.recipient_city_entry.text;
 			}
-		}
-
-		/* Show an error message */
-		private void show_error (string message) {
-
-			Gtk.Dialog dialog;
-
-			dialog = new Gtk.MessageDialog (view.window,
-			                                0,
-			                                Gtk.MessageType.ERROR,
-			                                Gtk.ButtonsType.CLOSE,
-			                                message);
-
-			dialog.run ();
-			dialog.destroy ();
 		}
 	}
 }
