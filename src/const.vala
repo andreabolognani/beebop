@@ -111,5 +111,10 @@ namespace DDTBuilder {
 
 		/* Size constants */
 		public const double AUTOMATIC_SIZE = -1.0;
+
+		/* Range constants */
+		public const double QUANTITY_MIN = 1.0;
+		public const double QUANTITY_MAX = 999.0;
+		public const double QUANTITY_DEFAULT = 1.0;
 	}
 }

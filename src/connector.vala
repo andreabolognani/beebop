@@ -120,9 +120,9 @@ namespace DDTBuilder {
 			column.resizable = true;
 			view.goods_treeview.append_column (column);
 
-			adjustment = new Gtk.Adjustment (1.0,
-			                                 1.0,
-			                                 999.0,
+			adjustment = new Gtk.Adjustment (Const.QUANTITY_DEFAULT,
+			                                 Const.QUANTITY_MIN,
+			                                 Const.QUANTITY_MAX,
 			                                 1.0,
 			                                 10.0,
 			                                 0.0);
@@ -233,6 +233,7 @@ namespace DDTBuilder {
 
 			Gtk.TreeIter iter;
 			Gtk.TreePath path;
+			int quantity;
 
 			/* Get an iter to the modified row */
 			path = new Gtk.TreePath.from_string (row);
@@ -242,8 +243,14 @@ namespace DDTBuilder {
 			 * has to be converted before it is stored in the model */
 			if (column == Const.COLUMN_QUANTITY) {
 
-				document.goods.set (iter,
-				                    column, val.to_int ());
+				quantity = val.to_int ();
+
+				/* Use the new value only if it is within range */
+				if (quantity >= Const.QUANTITY_MIN && quantity <= Const.QUANTITY_MAX) {
+
+					document.goods.set (iter,
+					                    column, quantity);
+				}
 			}
 			else {
 
