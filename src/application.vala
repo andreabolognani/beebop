@@ -28,33 +28,10 @@ namespace DDTBuilder {
 		private Connector connector;
 
 #if false
-		private Gtk.TextView header_text_view;
-		private Gtk.SpinButton page_padding_x_spinbutton;
-		private Gtk.SpinButton page_padding_y_spinbutton;
-		private Gtk.SpinButton cell_padding_x_spinbutton;
-		private Gtk.SpinButton cell_padding_y_spinbutton;
-		private Gtk.SpinButton elements_spacing_x_spinbutton;
-		private Gtk.SpinButton elements_spacing_y_spinbutton;
-		private Gtk.SpinButton address_boxes_width_spinbutton;
-		private Gtk.FontButton fontbutton;
-		private Gtk.SpinButton line_width_spinbutton;
-		private Gtk.Entry default_unit_entry;
-		private Gtk.Entry default_reason_entry;
-		private Gtk.Entry default_transported_by_entry;
-		private Gtk.Entry default_carrier_entry;
-		private Gtk.Entry default_duties_entry;
-		private Gtk.Button preferences_ok_button;
-		private Gtk.Button preferences_cancel_button;
-
 		private void obsolete () {
 
 				/* Connect signals */
 				print_action.activate.connect (print);
-				preferences_action.activate.connect (show_preferences);
-
-				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
-				preferences_cancel_button.clicked.connect (hide_preferences);
-				preferences_ok_button.clicked.connect (save_preferences);
 		}
 
 		/* Get the text from an entry, raising an exception if it's empty */
@@ -82,20 +59,6 @@ namespace DDTBuilder {
 			}
 
 			return text;
-		}
-
-		public void show_warning (string message) {
-
-			Gtk.Dialog dialog;
-
-			dialog = new Gtk.MessageDialog (window,
-			                                0,
-			                                Gtk.MessageType.WARNING,
-			                                Gtk.ButtonsType.CLOSE,
-			                                message);
-
-			dialog.run ();
-			dialog.destroy ();
 		}
 
 		private void print () {
