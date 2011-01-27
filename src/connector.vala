@@ -307,6 +307,14 @@ namespace DDTBuilder {
 
 			Painter painter;
 
+			/* If no filename has been chosen for the document,
+			 * make the user choose one */
+			if (document.filename.collate ("") == 0) {
+
+				save_as ();
+				return;
+			}
+
 			try {
 
 				/* Create a painter for the document */
@@ -321,6 +329,13 @@ namespace DDTBuilder {
 				Util.show_error (view.window,
 				                 _("Saving error: %s").printf (e.message));
 			}
+		}
+
+		/* Choose a name for the document and save */
+		private void save_as () {
+
+			Util.show_error (view.window,
+			                 _("Save as not implemented yet"));
 		}
 
 		/* Quit the application */

@@ -27,7 +27,6 @@ namespace DDTBuilder {
 
 		public string page_file { get; private set; }
 		public string logo_file { get; private set; }
-		public string out_file { get; private set; }
 
 		public string viewer { get; set; }
 
@@ -56,7 +55,6 @@ namespace DDTBuilder {
 
 			page_file = Config.PKGDATADIR + "/page.svg";
 			logo_file = Config.PKGDATADIR + "/logo.svg";
-			out_file = Environment.get_tmp_dir () + "/out.pdf";
 
 			viewer = "/usr/bin/evince";
 

@@ -39,7 +39,7 @@ namespace DDTBuilder {
 			}
 		}
 
-		public string draw () throws Error {
+		public void draw () throws Error {
 
 			Cairo.Surface logo_surface;
 			Cairo.Context logo_context;
@@ -112,7 +112,7 @@ namespace DDTBuilder {
 			logo_height = dimensions.height;
 
 			/* Make the target surface as big as the page template */
-			surface = new Cairo.PdfSurface (preferences.out_file,
+			surface = new Cairo.PdfSurface (document.filename + ".pdf",
 			                                page_width,
 			                                page_height);
 			context = new Cairo.Context (surface);
@@ -437,8 +437,6 @@ namespace DDTBuilder {
 
 				throw new DocumentError.IO (_("Drawing error."));
 			}
-
-			return preferences.out_file;
 		}
 
 		private double draw_text (string text, double x, double y, double width, double height, bool really) {
