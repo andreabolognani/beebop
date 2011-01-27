@@ -20,6 +20,7 @@ namespace DDTBuilder {
 
 	public class Connector : GLib.Object {
 
+		private Preferences preferences;
 		private Document _document;
 		private View _view;
 
@@ -48,6 +49,15 @@ namespace DDTBuilder {
 		}
 
 		construct {
+
+			try {
+
+				preferences = Preferences.get_instance ();
+			}
+			catch (Error e) {
+
+				/* TODO Handle errors */
+			}
 
 			_document = null;
 			_view = null;
@@ -140,7 +150,7 @@ namespace DDTBuilder {
 			column.resizable = true;
 			view.goods_treeview.append_column (column);
 
-			/* Connect signal handlers */
+			/* Connect signal handlers to user-activable actions */
 			view.window.delete_event.connect ((e) => {
 				quit ();
 				return true;
@@ -148,6 +158,10 @@ namespace DDTBuilder {
 			view.send_to_recipient_checkbutton.toggled.connect (() => {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
+			view.add_action.activate.connect (add_row);
+			view.remove_action.activate.connect (remove_row);
+
+			/* Connect internal signal handlers */
 			view.recipient_name_entry.changed.connect (recipient_name_changed);
 			view.recipient_street_entry.changed.connect (recipient_street_changed);
 			view.recipient_city_entry.changed.connect (recipient_city_changed);
@@ -157,6 +171,7 @@ namespace DDTBuilder {
 		private void update_view () {
 
 			bool same;
+			int rows;
 
 			if (document == null || view == null)
 				return;
@@ -209,6 +224,10 @@ namespace DDTBuilder {
 
 			/* Goods */
 			view.goods_treeview.model = document.goods;
+
+			/* Enable / disable row deletion based on the number of rows */
+			rows = document.goods.iter_n_children (null);
+			view.remove_action.sensitive = (rows > 1);
 		}
 
 		/* Quit the application */
@@ -225,6 +244,47 @@ namespace DDTBuilder {
 
 			Gtk.main ();
 		}
+
+		/* Add a new row to the goods tree view */
+		public void add_row () {
+
+			Gtk.TreeIter iter;
+			int rows;
+
+			/* Create a new row and initialize it */
+			document.goods.append (out iter);
+			document.goods.set (iter,
+			                    Const.COLUMN_CODE, "",
+			                    Const.COLUMN_REFERENCE, "",
+			                    Const.COLUMN_DESCRIPTION, "",
+			                    Const.COLUMN_UNIT, preferences.default_unit,
+			                    Const.COLUMN_QUANTITY, 1);
+
+			/* Enable / disable row deletion based on the number of rows */
+			rows = document.goods.iter_n_children (null);
+			view.remove_action.sensitive = (rows > 1);
+		}
+
+		/* Remove a row from the goods tree view */
+		public void remove_row () {
+
+			Gtk.TreeIter iter;
+			Gtk.TreePath path;
+			int rows;
+
+			/* Get an iter pointing to the last row */
+			rows = document.goods.iter_n_children (null);
+			path = new Gtk.TreePath.from_indices (rows - 1, -1);
+			document.goods.get_iter (out iter, path);
+
+			/* Remove the last row */
+			document.goods.remove (iter);
+
+			/* Enable / disable row deletion based on the number of rows */
+			rows--;
+			view.remove_action.sensitive = (rows > 1);
+		}
+
 
 		/* Update the list store backing the goods.
 		 *

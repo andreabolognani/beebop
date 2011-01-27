@@ -91,8 +91,6 @@ namespace DDTBuilder {
 				cut_action.activate.connect (cut);
 				copy_action.activate.connect (copy);
 				paste_action.activate.connect (paste);
-				add_action.activate.connect (add_row);
-				remove_action.activate.connect (remove_row);
 				preferences_action.activate.connect (show_preferences);
 
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
@@ -158,51 +156,6 @@ namespace DDTBuilder {
 				widget = window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).paste_clipboard ();
 			}
-		}
-
-		public void add_row () {
-
-			Gtk.ListStore store;
-			Gtk.TreeIter iter;
-			int rows;
-
-			store = goods_treeview.model
-			        as Gtk.ListStore;
-
-			/* Create a new row and initialize it */
-			store.append (out iter);
-			store.set (iter,
-			           Const.COLUMN_CODE, "",
-			           Const.COLUMN_REFERENCE, "",
-			           Const.COLUMN_DESCRIPTION, "",
-			           Const.COLUMN_UNIT, preferences.default_unit,
-			           Const.COLUMN_QUANTITY, 1);
-
-			/* Enable / disable row deletion based on the number of rows */
-			rows = store.iter_n_children (null);
-			remove_action.sensitive = (rows > 1);
-		}
-
-		public void remove_row () {
-
-			Gtk.ListStore store;
-			Gtk.TreeIter iter;
-			Gtk.TreePath path;
-			int rows;
-
-			store = goods_treeview.model
-			        as Gtk.ListStore;
-
-			/* Get an iter pointing to the last row */
-			rows = store.iter_n_children (null);
-			path = new Gtk.TreePath.from_indices (rows - 1, -1);
-			store.get_iter (out iter, path);
-
-			store.remove (iter);
-
-			/* Enable / disable row deletion based on the number of rows */
-			rows--;
-			remove_action.sensitive = (rows > 1);
 		}
 
 		public void show_warning (string message) {
