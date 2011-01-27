@@ -116,6 +116,22 @@ namespace DDTBuilder {
 			view.destination_name_entry.text = document.destination.name;
 			view.destination_street_entry.text = document.destination.street;
 			view.destination_city_entry.text = document.destination.city;
+
+			/* Document info */
+			view.document_number_entry.text = document.number;
+			view.document_date_entry.text = document.date;
+			view.document_page_entry.text = document.page_number;
+
+			/* Goods info */
+			view.goods_appearance_entry.text = document.goods_info.appearance;
+			view.goods_parcels_spinbutton.value = document.goods_info.parcels.to_double ();
+			view.goods_weight_entry.text = document.goods_info.weight;
+
+			/* Shipment info  */
+			view.shipment_reason_entry.text = document.shipment_info.reason;
+			view.shipment_transported_by_entry.text = document.shipment_info.transported_by;
+			view.shipment_carrier_entry.text = document.shipment_info.carrier;
+			view.shipment_duties_entry.text = document.shipment_info.duties;
 		}
 
 		/* Quit the application */

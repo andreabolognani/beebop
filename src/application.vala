@@ -1033,9 +1033,17 @@ namespace DDTBuilder {
 			Document document;
 			View view;
 
-			/* Create and load the document */
-			document = new Document ();
-			document.recipient.name = "Test";
+			try {
+
+				/* Create and load the document */
+				document = new Document ();
+				document.filename = "test.xml";
+				document.load ();
+			}
+			catch (Error e) {
+
+				throw new ApplicationError.FAILED (_("Failed to load document: %s".printf (e.message)));
+			}
 
 			try {
 
