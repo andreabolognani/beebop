@@ -9,6 +9,7 @@ SUBDIRS = \
 
 EXTRA_DIST = \
 	cross-configure \
+	COPYING \
 	$(NULL)
 
 DISTCLEANFILES = \
