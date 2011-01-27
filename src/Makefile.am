@@ -43,6 +43,7 @@ ddtbuilder_SOURCES = \
 	row.vala \
 	table.vala \
 	document.vala \
+	painter.vala \
 	view.vala \
 	connector.vala \
 	application.vala \

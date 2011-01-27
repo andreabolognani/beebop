@@ -18,14 +18,14 @@
 
 namespace DDTBuilder {
 
-	public class DocumentPainter : GLib.Object {
+	public class Painter : GLib.Object {
 
 		private Preferences preferences;
 
-		public Document document { get; set; }
-
 		private Cairo.Surface surface;
 		private Cairo.Context context;
+
+		public Document document { get; set; }
 
 		construct {
 
@@ -33,7 +33,10 @@ namespace DDTBuilder {
 
 				preferences = Preferences.get_instance ();
 			}
-			catch (Error e) {}
+			catch (Error e) {
+
+				/* XXX This error is handled by Application */
+			}
 		}
 
 		public string draw () throws Error {
@@ -161,7 +164,7 @@ namespace DDTBuilder {
 			            preferences.page_padding_x -
 						preferences.elements_spacing_x +
 			            preferences.cell_padding_x;
-			box_height = Document.AUTOMATIC_SIZE;
+			box_height = Const.AUTOMATIC_SIZE;
 			offset = draw_cell (cell,
 			                    box_x,
 			                    box_y,
@@ -175,7 +178,7 @@ namespace DDTBuilder {
 
 			/* Draw the recipient's address in a right-aligned box */
 			box_width = preferences.address_box_width;
-			box_height = Document.AUTOMATIC_SIZE;
+			box_height = Const.AUTOMATIC_SIZE;
 			box_x = page_width - preferences.page_padding_x - box_width;
 			box_y = preferences.page_padding_y;
 			offset = draw_company_address (_("Recipient"),
@@ -203,7 +206,7 @@ namespace DDTBuilder {
 
 			/* Create a table to store document info */
 			table = new Table (4);
-			table.sizes = {Document.AUTOMATIC_SIZE,
+			table.sizes = {Const.AUTOMATIC_SIZE,
 			               150.0,
 			               150.0,
 			               150.0};
@@ -226,7 +229,7 @@ namespace DDTBuilder {
 
 			/* Draw first part of document info */
 			box_width = page_width - (2 * preferences.page_padding_x);
-			box_height = Document.AUTOMATIC_SIZE;
+			box_height = Const.AUTOMATIC_SIZE;
 			box_x = preferences.page_padding_x;
 			box_y = starting_point + preferences.elements_spacing_y;
 			offset = draw_table (table,
@@ -238,7 +241,7 @@ namespace DDTBuilder {
 
 			table = new Table (3);
 			table.sizes = {200.0,
-			               Document.AUTOMATIC_SIZE,
+			               Const.AUTOMATIC_SIZE,
 			               150.0};
 
 			row = new Row (table.columns);
@@ -263,6 +266,7 @@ namespace DDTBuilder {
 			                     box_height,
 			                     true);
 
+#if false
 			/* Add a closing row to the goods table */
 			row = new Row (document.goods.columns);
 			for (i = 0; i < document.goods.columns; i++) {
@@ -279,10 +283,11 @@ namespace DDTBuilder {
 			                     box_width,
 			                     box_height,
 			                     true);
+#endif
 
 			/* Create a table to store notes */
 			notes_table = new Table (1);
-			notes_table.sizes = {Document.AUTOMATIC_SIZE};
+			notes_table.sizes = {Const.AUTOMATIC_SIZE};
 
 			row = new Row (notes_table.columns);
 			cell = row.get_cell (0);
@@ -296,7 +301,7 @@ namespace DDTBuilder {
 			reason_table.sizes = {200.0,
 			                      150.0,
 			                      150.0,
-			                      Document.AUTOMATIC_SIZE};
+			                      Const.AUTOMATIC_SIZE};
 
 			row = new Row (reason_table.columns);
 			cell = row.get_cell (0);
@@ -318,7 +323,7 @@ namespace DDTBuilder {
 			date_table = new Table (4);
 			date_table.sizes = {200.0,
 			                    200.0,
-			                    Document.AUTOMATIC_SIZE,
+			                    Const.AUTOMATIC_SIZE,
 			                    150.0};
 
 			row = new Row (date_table.columns);
@@ -341,7 +346,7 @@ namespace DDTBuilder {
 			signatures_table = new Table (3);
 			signatures_table.sizes = {200.0,
 			                          200.0,
-			                          Document.AUTOMATIC_SIZE};
+			                          Const.AUTOMATIC_SIZE};
 
 			row = new Row (signatures_table.columns);
 			cell = row.get_cell (0);
@@ -651,7 +656,7 @@ namespace DDTBuilder {
 			len = sizes.length;
 
 			box_y = y;
-			box_height = Document.AUTOMATIC_SIZE;
+			box_height = Const.AUTOMATIC_SIZE;
 
 			box_x = x;
 
