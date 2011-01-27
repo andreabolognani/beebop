@@ -1,5 +1,5 @@
-/* DDT Builder -- Easily create nice-looking DDTs
- * Copyright (C) 2010-2011  Andrea Bolognani <eof@kiyuko.org>
+/* Beebop -- Easily create nice-looking shipping lists
+ * Copyright (C) 2010-2011  Andrea Bolognani <andrea.bolognani@roundhousecode.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

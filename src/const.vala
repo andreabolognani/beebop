@@ -1,5 +1,5 @@
-/* DDT Builder -- Easily create nice-looking DDTs
- * Copyright (C) 2010-2011  Andrea Bolognani <eof@kiyuko.org>
+/* Beebop -- Easily create nice-looking shipping lists
+ * Copyright (C) 2010-2011  Andrea Bolognani <andrea.bolognani@roundhousecode.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace DDTBuilder {
+namespace Beebop {
 
 	public class Const : GLib.Object {
 
 		/* Resource paths */
-		public const string UI_FILE = Config.PKGDATADIR + "/ddtbuilder.ui";
+		public const string UI_FILE = Config.PKGDATADIR + "/beebop.ui";
 
 		/* Document file tags */
 		public const string TAG_DOCUMENT = "document";
@@ -52,7 +52,7 @@ namespace DDTBuilder {
 		public const string TAG_QUANTITY = "quantity";
 
 		/* Preferences file groups and keys */
-		public const string GROUP = "DDT Builder";
+		public const string GROUP = "Beebop";
 		public const string KEY_VIEWER = "viewer";
 		public const string KEY_HEADER_TEXT = "header_text";
 		public const string KEY_PAGE_PADDING = "page_padding";

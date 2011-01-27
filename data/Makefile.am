@@ -1,7 +1,7 @@
 NULL =
 
 pkgdata_DATA = \
-	ddtbuilder.ui \
+	beebop.ui \
 	page.svg \
 	logo.svg \
 	$(NULL)

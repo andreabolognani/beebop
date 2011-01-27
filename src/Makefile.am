@@ -31,9 +31,9 @@ AM_VALAFLAGS = \
 	$(NULL)
 # --vapidir "$(abs_top_srcdir)/vapi" is there to support out-of-tree development builds
 
-bin_PROGRAMS = ddtbuilder
+bin_PROGRAMS = beebop
 
-ddtbuilder_SOURCES = \
+beebop_SOURCES = \
 	const.vala \
 	util.vala \
 	preferences.vala \
@@ -51,7 +51,7 @@ ddtbuilder_SOURCES = \
 	connector.vala \
 	application.vala \
 	$(NULL)
-ddtbuilder_LDFLAGS = \
+beebop_LDFLAGS = \
 	$(OS_LDFLAGS) \
 	$(GLIB_LIBS) \
 	$(GTK_LIBS) \
@@ -62,7 +62,7 @@ ddtbuilder_LDFLAGS = \
 	$(NULL)
 
 # Hack needed for out-of-tree development builds
-$(srcdir)/ddtbuilder_vala.stamp: $(ddtbuilder_SOURCES)
+$(srcdir)/beebop_vala.stamp: $(beebop_SOURCES)
 	$(am__cd) $(srcdir) \
-		&& $(AM_V_VALAC)$(VALAC) $(AM_VALAFLAGS) $(VALAFLAGS) -C $(ddtbuilder_SOURCES)
+		&& $(AM_V_VALAC)$(VALAC) $(AM_VALAFLAGS) $(VALAFLAGS) -C $(beebop_SOURCES)
 	$(AM_V_at)touch $@

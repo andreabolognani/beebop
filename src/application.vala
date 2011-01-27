@@ -1,5 +1,5 @@
-/* DDT Builder -- Easily create nice-looking DDTs
- * Copyright (C) 2010-2011  Andrea Bolognani <eof@kiyuko.org>
+/* Beebop -- Easily create nice-looking shipping lists
+ * Copyright (C) 2010-2011  Andrea Bolognani <andrea.bolognani@roundhousecode.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace DDTBuilder {
+namespace Beebop {
 
 	public errordomain ApplicationError {
 		FAILED
@@ -438,7 +438,7 @@ namespace DDTBuilder {
 			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-			Environment.set_application_name (_("DDT Builder"));
+			Environment.set_application_name (_("Beepop"));
 
 			application = new Application ();
 
