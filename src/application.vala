@@ -95,17 +95,6 @@ namespace DDTBuilder {
 
 		construct {
 
-			Gtk.Adjustment adjustment;
-			Gtk.ListStore list_store;
-			Gtk.TreeIter iter;
-			Gtk.CellRendererText renderer;
-			Gtk.TreeViewColumn column;
-			Gdk.ModifierType accel_mods;
-			Date today;
-			Time now;
-			string element;
-			uint accel_key;
-
 			error_message = null;
 
 			try {
@@ -259,37 +248,6 @@ namespace DDTBuilder {
 				preferences_window.delete_event.connect ((e) => { hide_preferences (); return true; });
 				preferences_cancel_button.clicked.connect (hide_preferences);
 				preferences_ok_button.clicked.connect (save_preferences);
-			}
-
-			if (error_message == null) {
-
-				now = Time ();
-				today = Date ();
-
-				/* Get current time and date */
-				today.set_time_val (TimeVal ());
-				today.to_time (out now);
-
-				/* Initialize the date field with the current date */
-				document_date_entry.text = now.format ("%d/%m/%Y");
-
-				/* Initialize the page number */
-				document_page_entry.text = _("1 of 1");
-
-				/* Reset parcels SpinButton value */
-				goods_parcels_spinbutton.value = goods_parcels_spinbutton.adjustment.lower;
-
-				/* Fill in other default values */
-				shipment_reason_entry.text = preferences.default_reason;
-				shipment_transported_by_entry.text = preferences.default_transported_by;
-				shipment_carrier_entry.text = preferences.default_carrier;
-				shipment_duties_entry.text = preferences.default_duties;
-
-				/* Create a first row of widgets */
-				add_row ();
-
-				/* Disable remove action */
-				remove_action.sensitive = false;
 			}
 		}
 
@@ -975,8 +933,10 @@ namespace DDTBuilder {
 
 				/* Create and load the document */
 				document = new Document ();
+				/*
 				document.filename = "test.xml";
 				document.load ();
+				*/
 			}
 			catch (Error e) {
 

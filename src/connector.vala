@@ -104,7 +104,7 @@ namespace DDTBuilder {
 			              "ellipsize", Pango.EllipsizeMode.END);
 			column = new Gtk.TreeViewColumn.with_attributes (_("U.M."),
 			                                                 renderer,
-			                                                 "text", Const.COLUMN_CODE);
+			                                                 "text", Const.COLUMN_UNIT);
 			column.resizable = true;
 			view.goods_treeview.append_column (column);
 

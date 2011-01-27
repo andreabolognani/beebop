@@ -27,7 +27,7 @@ namespace DDTBuilder {
 		construct {
 
 			appearance = "";
-			parcels = "";
+			parcels = "1";
 			weight = "";
 		}
 	}

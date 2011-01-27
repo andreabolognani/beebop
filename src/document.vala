@@ -60,16 +60,32 @@ namespace DDTBuilder {
 		 */
 		public void clear () {
 
+			Gtk.TreeIter iter;
+			Time now;
+			Date today;
+
+			/* Get current time and day */
+			now = Time ();
+			today = Date ();
+			today.set_time_val (TimeVal ());
+			today.to_time (out now);
+
 			filename = "";
 
 			number = "";
-			date = "";
-			page_number = "";
+			date = now.format ("%d/%m/%Y");
+			page_number = _("1 of 1");
 
 			recipient = new CompanyInfo ();
 			destination = new CompanyInfo ();
 			goods_info = new GoodsInfo ();
 			shipment_info = new ShipmentInfo ();
+
+			/* Use default values for shipment info */
+			shipment_info.reason = preferences.default_reason;
+			shipment_info.transported_by = preferences.default_transported_by;
+			shipment_info.carrier = preferences.default_carrier;
+			shipment_info.duties = preferences.default_duties;
 
 			goods = new Gtk.ListStore (Const.LAST_COLUMN,
 			                           typeof (string),
@@ -77,6 +93,12 @@ namespace DDTBuilder {
 			                           typeof (string),
 			                           typeof (string),
 			                           typeof (int));
+
+			/* Create the first row */
+			goods.append (out iter);
+			goods.set (iter,
+			           Const.COLUMN_UNIT, preferences.default_unit,
+			           Const.COLUMN_QUANTITY, 1);
 
 			/* XXX Move these to the Painter class */
 			/*
