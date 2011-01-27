@@ -20,9 +20,21 @@ namespace DDTBuilder {
 
 	public class Connector : GLib.Object {
 
+		private Document _document;
 		private View _view;
 
-		public Document document { get; set; }
+		public Document document {
+
+			get {
+				return _document;
+			}
+
+			set {
+				_document = value;
+				update_view ();
+			}
+		}
+
 		public View view {
 
 			get {
@@ -35,6 +47,12 @@ namespace DDTBuilder {
 			}
 		}
 
+		construct {
+
+			_document = null;
+			_view = null;
+		}
+
 		/* Prepare a view for use.
 		 *
 		 * This include connecting signal handlers and updating
@@ -42,7 +60,53 @@ namespace DDTBuilder {
 		 * reflect the contents of the document */
 		private void prepare_view () {
 
+			if (view == null)
+				return;
+
+			/* Start by updating the view */
+			update_view ();
+
+			/* Connect signal handlers */
 			view.window.delete_event.connect ((e) => { quit (); return true; });
+		}
+
+		/* Update the view to match the document */
+		private void update_view () {
+
+			bool same;
+
+			if (document == null || view == null)
+				return;
+
+			same = true;
+
+			/* Compare all the info shared by both the recipient
+			 * and the destination */
+			if (document.recipient.name.collate (document.destination.name) != 0) {
+				same = false;
+			}
+			if (document.recipient.street.collate (document.destination.street) != 0) {
+				same = false;
+			}
+			if (document.recipient.city.collate (document.destination.city) != 0) {
+				same = false;
+			}
+
+			/* Activate the "send to recipient" checkbutton if the
+			 * recipient info match the destination info */
+			view.send_to_recipient_checkbutton.active = same;
+
+			/* Recipient info */
+			view.recipient_name_entry.text = document.recipient.name;
+			view.recipient_street_entry.text = document.recipient.street;
+			view.recipient_city_entry.text = document.recipient.city;
+			view.recipient_vatin_entry.text = document.recipient.vatin;
+			view.recipient_client_code_entry.text = document.recipient.client_code;
+
+			/* Destination info */
+			view.destination_name_entry.text = document.destination.name;
+			view.destination_street_entry.text = document.destination.street;
+			view.destination_city_entry.text = document.destination.city;
 		}
 
 		/* Quit the application */

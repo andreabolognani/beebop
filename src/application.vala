@@ -1079,19 +1079,26 @@ namespace DDTBuilder {
 		}
 #endif
 
+		construct {
+
+			connector = new Connector ();
+		}
+
 		/* Prepare the application to run */
 		public void prepare () throws ApplicationError {
 
+			Document document;
 			View view;
 
-			view = new View ();
-			connector = new Connector ();
+			/* Create and load the document */
+			document = new Document ();
+			document.recipient.name = "Test";
 
 			try {
 
-				/* Load the view and assign it to the connector */
+				/* Create and load the view */
+				view = new View ();
 				view.load ();
-				connector.view = view;
 			}
 			catch (ViewError.IO e) {
 
@@ -1105,6 +1112,10 @@ namespace DDTBuilder {
 
 				throw new ApplicationError.FAILED (_("Unknown error: %s").printf (e.message));
 			}
+
+			/* Connect the document to the view */
+			connector.document = document;
+			connector.view = view;
 		}
 
 		/* Run the application */
