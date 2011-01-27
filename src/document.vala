@@ -124,8 +124,17 @@ namespace DDTBuilder {
 			File handle;
 			Xml.Doc *doc;
 			Xml.Node *node;
+			string tmp_filename;
 			string data;
 			size_t len;
+
+			tmp_filename = filename;
+
+			/* Clear the document and delete the first row of
+			 * goods, then restore the filename */
+			clear ();
+			goods.clear ();
+			filename = tmp_filename;
 
 			handle = File.new_for_path (filename);
 
@@ -164,9 +173,6 @@ namespace DDTBuilder {
 				delete doc;
 				throw new DocumentError.FORMAT (_("Invalid root element"));
 			}
-
-			/* Clear the document */
-			clear ();
 
 			/* Navigate the tree structure and extract all needed information */
 			parse_document (node);
