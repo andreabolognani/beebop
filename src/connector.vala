@@ -74,6 +74,9 @@ namespace DDTBuilder {
 			view.send_to_recipient_checkbutton.toggled.connect (() => {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
+			view.recipient_name_entry.changed.connect (recipient_name_changed);
+			view.recipient_street_entry.changed.connect (recipient_street_changed);
+			view.recipient_city_entry.changed.connect (recipient_city_changed);
 		}
 
 		/* Update the view to match the document */
@@ -160,6 +163,33 @@ namespace DDTBuilder {
 				view.destination_name_entry.text = "";
 				view.destination_street_entry.text = "";
 				view.destination_city_entry.text = "";
+			}
+		}
+
+		/* React to changes of the recipient's name */
+		private void recipient_name_changed () {
+
+			if (send_to_recipient_is_active ()) {
+
+				view.destination_name_entry.text = view.recipient_name_entry.text;
+			}
+		}
+
+		/* React to changes of the recipient's street */
+		private void recipient_street_changed () {
+
+			if (send_to_recipient_is_active ()) {
+
+				view.destination_street_entry.text = view.recipient_street_entry.text;
+			}
+		}
+
+		/* React to changes of the recipient's city */
+		private void recipient_city_changed () {
+
+			if (send_to_recipient_is_active ()) {
+
+				view.destination_city_entry.text = view.recipient_city_entry.text;
 			}
 		}
 	}

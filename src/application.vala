@@ -246,12 +246,6 @@ namespace DDTBuilder {
 			if (error_message == null) {
 
 				/* Connect signals */
-				window.delete_event.connect ((e) => { quit (); return true; });
-				recipient_name_entry.changed.connect (name_changed);
-				recipient_street_entry.changed.connect (street_changed);
-				recipient_city_entry.changed.connect (city_changed);
-				send_to_recipient_checkbutton.toggled.connect (toggle_send_to_recipient);
-
 				open_action.activate.connect (open);
 				print_action.activate.connect (print);
 				quit_action.activate.connect (quit);
@@ -445,57 +439,6 @@ namespace DDTBuilder {
 
 				widget = window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).paste_clipboard ();
-			}
-		}
-
-		/* The recipient's name has changed */
-		private void name_changed () {
-
-			if (send_to_recipient_checkbutton.active) {
-
-				destination_name_entry.text = recipient_name_entry.text;
-			}
-		}
-
-		/* The recipient's street has changed */
-		private void street_changed () {
-
-			if (send_to_recipient_checkbutton.active) {
-
-				destination_street_entry.text = recipient_street_entry.text;
-			}
-		}
-
-		/* The recipient's city has changed */
-		private void city_changed () {
-
-			if (send_to_recipient_checkbutton.active) {
-
-				destination_city_entry.text = recipient_city_entry.text;
-			}
-		}
-
-		private void toggle_send_to_recipient () {
-
-			if (!send_to_recipient_checkbutton.active) {
-
-				/* Enable send destination */
-				destination_name_entry.sensitive = true;
-				destination_name_entry.text = "";
-				destination_street_entry.sensitive = true;
-				destination_street_entry.text = "";
-				destination_city_entry.sensitive = true;
-				destination_city_entry.text = "";
-			}
-			else {
-
-				/* Send to recipient */
-				destination_name_entry.sensitive = false;
-				destination_name_entry.text = recipient_name_entry.text;
-				destination_street_entry.sensitive = false;
-				destination_street_entry.text = recipient_street_entry.text;
-				destination_city_entry.sensitive = false;
-				destination_city_entry.text = recipient_city_entry.text;
 			}
 		}
 
