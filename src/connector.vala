@@ -260,6 +260,7 @@ namespace Beebop {
 		private void open () {
 
 			Gtk.FileChooserDialog dialog;
+			Gtk.FileFilter filter;
 			Document tmp;
 
 			dialog = new Gtk.FileChooserDialog (_("Open file"),
@@ -267,6 +268,18 @@ namespace Beebop {
 			                                    Gtk.FileChooserAction.OPEN,
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+
+			/* Select only .beebop files by default */
+			filter = new Gtk.FileFilter ();
+			filter.set_name (_("Beebop files"));
+			filter.add_pattern ("*.beebop");
+			dialog.add_filter (filter);
+
+			/* Let the user chose any file if he wants to */
+			filter = new Gtk.FileFilter ();
+			filter.set_name (_("All files"));
+			filter.add_pattern ("*");
+			dialog.add_filter (filter);
 
 			/* Display the dialog */
 			if (dialog.run () == Gtk.ResponseType.ACCEPT) {
