@@ -46,9 +46,7 @@ namespace DDTBuilder {
 			}
 			catch (Error e) {
 
-				/* If the preferences can't be loaded the execution doesn't
-				 * go as far as creating a Document, so this branch is
-				 * never reached */
+				/* XXX This error is handled by Application */
 			}
 
 			clear ();

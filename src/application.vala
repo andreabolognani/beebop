@@ -24,6 +24,7 @@ namespace DDTBuilder {
 
 	public class Application : GLib.Object {
 
+		private Preferences preferences;
 		private Connector connector;
 
 #if false
@@ -521,17 +522,25 @@ namespace DDTBuilder {
 		}
 #endif
 
-		construct {
-
-			connector = new Connector ();
-		}
-
 		/* Prepare the application to run */
 		public void prepare () throws ApplicationError {
 
 			Document document;
 			View view;
 
+			try {
+
+				/* Load preferences */
+				preferences = Preferences.get_instance ();
+			}
+			catch (Error e) {
+
+				throw new ApplicationError.FAILED (_("Failed to load preferences: %s".printf (e.message)));
+			}
+
+			connector = new Connector ();
+
+			/* Create an empty document */
 			document = new Document ();
 
 			try {

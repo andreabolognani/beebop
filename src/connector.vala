@@ -56,7 +56,7 @@ namespace DDTBuilder {
 			}
 			catch (Error e) {
 
-				/* TODO Handle errors */
+				/* XXX This error is handled by Application */
 			}
 
 			_document = null;
