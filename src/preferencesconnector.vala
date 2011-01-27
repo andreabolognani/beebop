@@ -61,6 +61,7 @@ namespace DDTBuilder {
 				return true;
 			});
 			view.preferences_cancel_button.clicked.connect (cancel);
+			view.preferences_ok_button.clicked.connect (confirm);
 		}
 
 		/**/
@@ -104,6 +105,46 @@ namespace DDTBuilder {
 
 		/* Cancel changes to preferences */
 		private void cancel () {
+
+			view.preferences_window.hide ();
+		}
+
+		/* Confirm changes to preferences */
+		private void confirm () {
+
+			Gtk.TextIter start;
+			Gtk.TextIter end;
+
+			/* Get header text */
+			view.header_textview.buffer.get_bounds (out start, out end);
+			preferences.header_text = view.header_textview.buffer.get_text (start,
+			                                                                end,
+			                                                                false);
+
+			/* Get other values */
+			preferences.page_padding_x = view.page_padding_x_spinbutton.value;
+			preferences.page_padding_y = view.page_padding_y_spinbutton.value;
+			preferences.cell_padding_x = view.cell_padding_x_spinbutton.value;
+			preferences.cell_padding_y = view.cell_padding_y_spinbutton.value;
+			preferences.elements_spacing_x = view.elements_spacing_x_spinbutton.value;
+			preferences.elements_spacing_y = view.elements_spacing_y_spinbutton.value;
+			preferences.address_box_width = view.address_box_width_spinbutton.value;
+			preferences.font = view.fontbutton.font_name;
+			preferences.line_width = view.line_width_spinbutton.value;
+			preferences.default_unit = view.default_unit_entry.text;
+			preferences.default_reason = view.default_reason_entry.text;
+			preferences.default_transported_by = view.default_transported_by_entry.text;
+			preferences.default_carrier = view.default_carrier_entry.text;
+			preferences.default_duties = view.default_duties_entry.text;
+
+			try {
+
+				preferences.save ();
+			}
+			catch (Error e) {
+
+				//show_error(_("Could not save preferences: %s").printf (e.message));
+			}
 
 			view.preferences_window.hide ();
 		}
