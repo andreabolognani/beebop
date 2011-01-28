@@ -208,7 +208,7 @@ namespace Beebop {
 				return;
 
 			/* Update window title */
-			update_title ();
+			update_controls ();
 
 			same = true;
 
@@ -278,7 +278,7 @@ namespace Beebop {
 
 			document = new Document ();
 
-			update_title ();
+			update_controls ();
 		}
 
 		/* Open a document and load its contents */
@@ -371,8 +371,8 @@ namespace Beebop {
 				                 _("Could not save document: %s").printf (e.message));
 			}
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* Choose a name for the document and save */
@@ -567,8 +567,11 @@ namespace Beebop {
 			}
 		}
 
-		/* Update view title to reflect open document */
-		private void update_title () {
+		/* Update view controls.
+		 *
+		 * This includes updating the view title and enabling/disabling
+		 * some controls based on the state of the document */
+		private void update_controls () {
 
 			File handle;
 			FileInfo info;
@@ -601,11 +604,14 @@ namespace Beebop {
 				title = "*" + title;
 			}
 
-			/* Update view title */
+			/* Update view controls */
 			view.window.title = title;
 
 			/* An unsaved document can't be printed */
 			view.print_action.sensitive = !document.unsaved;
+
+			/* The Save button is disabled for saved documents */
+			view.save_action.sensitive = document.unsaved;
 		}
 
 		/* Check whether send to recipient is active  */
@@ -690,7 +696,7 @@ namespace Beebop {
 			bool editable;
 
 			/* Update the view title */
-			update_title ();
+			update_controls ();
 
 			editable = focus is Gtk.Editable;
 
@@ -725,8 +731,8 @@ namespace Beebop {
 				view.destination_name_entry.text = view.recipient_name_entry.text;
 			}
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the recipient's street */
@@ -741,8 +747,8 @@ namespace Beebop {
 				view.destination_street_entry.text = view.recipient_street_entry.text;
 			}
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the recipient's city */
@@ -757,8 +763,8 @@ namespace Beebop {
 				view.destination_city_entry.text = view.recipient_city_entry.text;
 			}
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the recipient's VATIN */
@@ -767,8 +773,8 @@ namespace Beebop {
 			/* Update document */
 			document.recipient.vatin = view.recipient_vatin_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the recipient's client code */
@@ -777,8 +783,8 @@ namespace Beebop {
 			/* Update document */
 			document.recipient.client_code = view.recipient_client_code_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the destination's name */
@@ -787,8 +793,8 @@ namespace Beebop {
 			/* Update document */
 			document.destination.name = view.destination_name_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the destination's street */
@@ -797,8 +803,8 @@ namespace Beebop {
 			/* Update document */
 			document.destination.street = view.destination_street_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the destination's city */
@@ -807,8 +813,8 @@ namespace Beebop {
 			/* Update document */
 			document.destination.city = view.destination_city_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the document's number */
@@ -817,8 +823,8 @@ namespace Beebop {
 			/* Update document */
 			document.number = view.document_number_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the document's date */
@@ -827,8 +833,8 @@ namespace Beebop {
 			/* Update document */
 			document.date = view.document_date_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the document's page number */
@@ -837,8 +843,8 @@ namespace Beebop {
 			/* Update document */
 			document.page_number = view.document_page_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the goods' appearance */
@@ -847,8 +853,8 @@ namespace Beebop {
 			/* Update document */
 			document.goods_info.appearance = view.goods_appearance_entry.text;
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the number of parcels */
@@ -857,8 +863,8 @@ namespace Beebop {
 			/* Update document */
 			document.goods_info.parcels = "%d".printf (view.goods_parcels_spinbutton.get_value_as_int ());
 
-			/* Update view title */
-			update_title ();
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* React to changes of the goods' weight */
