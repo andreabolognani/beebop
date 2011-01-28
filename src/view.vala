@@ -54,6 +54,7 @@ namespace Beebop {
 
 		public Gtk.TreeView goods_treeview { get; private set; }
 
+		public Gtk.Action new_action { get; private set; }
 		public Gtk.Action open_action { get; private set; }
 		public Gtk.Action save_action { get; private set; }
 		public Gtk.Action save_as_action { get; private set; }
@@ -126,6 +127,8 @@ namespace Beebop {
 			                        as Gtk.Entry;
 			goods_treeview = get_object (ui, Const.OBJ_GOODS_TREEVIEW)
 			                 as Gtk.TreeView;
+			new_action = get_object (ui, Const.OBJ_NEW_ACTION)
+			             as Gtk.Action;
 			open_action = get_object (ui, Const.OBJ_OPEN_ACTION)
 			              as Gtk.Action;
 			save_action = get_object (ui, Const.OBJ_SAVE_ACTION)

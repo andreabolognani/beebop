@@ -98,6 +98,7 @@ namespace Beebop {
 		public const string OBJ_SHIPMENT_CARRIER_ENTRY = "shipment_carrier_entry";
 		public const string OBJ_SHIPMENT_DUTIES_ENTRY = "shipment_duties_entry";
 		public const string OBJ_GOODS_TREEVIEW = "goods_treeview";
+		public const string OBJ_NEW_ACTION = "new_action";
 		public const string OBJ_OPEN_ACTION = "open_action";
 		public const string OBJ_SAVE_ACTION = "save_action";
 		public const string OBJ_SAVE_AS_ACTION = "save_as_action";

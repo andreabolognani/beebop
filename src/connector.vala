@@ -163,6 +163,7 @@ namespace Beebop {
 			view.send_to_recipient_checkbutton.toggled.connect (() => {
 				toggle_send_to_recipient (view.send_to_recipient_checkbutton.active);
 			});
+			view.new_action.activate.connect (file_new);
 			view.open_action.activate.connect (open);
 			view.save_action.activate.connect (save);
 			view.save_as_action.activate.connect (save_as);
@@ -269,6 +270,14 @@ namespace Beebop {
 			view.window.show_all ();
 
 			Gtk.main ();
+		}
+
+		/* Create a new document */
+		private void file_new () {
+
+			document = new Document ();
+
+			update_title ();
 		}
 
 		/* Open a document and load its contents */
