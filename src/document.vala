@@ -177,6 +177,9 @@ namespace Beebop {
 			/* Create the first row */
 			goods.append (out iter);
 			goods.set (iter,
+			           Const.COLUMN_CODE, "",
+			           Const.COLUMN_REFERENCE, "",
+			           Const.COLUMN_DESCRIPTION, "",
 			           Const.COLUMN_UNIT, preferences.default_unit,
 			           Const.COLUMN_QUANTITY, 1);
 
