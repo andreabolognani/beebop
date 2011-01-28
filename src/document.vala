@@ -28,6 +28,8 @@ namespace Beebop {
 
 		private Preferences preferences;
 
+		public bool unsaved { get; private set; }
+
 		public string filename { get; set; }
 		public string number { get; set; }
 		public string date { get; set; }
@@ -67,6 +69,8 @@ namespace Beebop {
 			today = Date ();
 			today.set_time_val (TimeVal ());
 			today.to_time (out now);
+
+			unsaved = true;
 
 			filename = "";
 
@@ -174,6 +178,9 @@ namespace Beebop {
 
 			/* Navigate the tree structure and extract all needed information */
 			parse_document (node);
+
+			/* A newly loaded document is not unsaved */
+			unsaved = false;
 
 			delete doc;
 		}
