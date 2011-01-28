@@ -28,12 +28,6 @@ namespace Beebop {
 		private Connector connector;
 
 #if false
-		private void obsolete () {
-
-				/* Connect signals */
-				print_action.activate.connect (print);
-		}
-
 		/* Get the text from an entry, raising an exception if it's empty */
 		private string get_entry_text (Gtk.Entry entry, string name) throws ApplicationError.EMPTY_FIELD {
 
@@ -59,69 +53,6 @@ namespace Beebop {
 			}
 
 			return text;
-		}
-
-		private void print () {
-
-			Document document;
-			Pid viewer_pid;
-			string[] view_cmd;
-
-			try {
-
-				document = create_document ();
-			}
-			catch (ApplicationError.EMPTY_FIELD e) {
-
-				show_warning(_("Empty field: %s").printf (field_description (e.message)));
-
-				return;
-			}
-			catch (Error e) {
-
-				show_warning (e.message);
-
-				return;
-			}
-			view_cmd = {preferences.viewer,
-			            out_file,
-			            null};
-
-			try {
-
-				Gdk.spawn_on_screen (window.get_screen (),
-				                     null,
-				                     view_cmd,
-				                     null,
-				                     SpawnFlags.DO_NOT_REAP_CHILD,
-				                     null,
-				                     out viewer_pid);
-			}
-			catch (Error e) {
-
-				show_error (_("Could not spawn viewer."));
-
-				return;
-			}
-
-			ChildWatch.add (viewer_pid,
-			                viewer_closed);
-
-			/* Prevent the print button from being clicked again until
-			 * the viewer has been closed */
-			print_action.sensitive = false;
-
-			return;
-		}
-
-		private void viewer_closed (Pid pid, int status){
-
-			/* Remove the temp file and close the pid */
-			FileUtils.unlink (out_file);
-			Process.close_pid (pid);
-
-			/* Make the print button clickable again */
-			print_action.sensitive = true;
 		}
 
 		/* Make a widget grab the focus.

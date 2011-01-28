@@ -167,6 +167,7 @@ namespace Beebop {
 			view.open_action.activate.connect (open);
 			view.save_action.activate.connect (save);
 			view.save_as_action.activate.connect (save_as);
+			view.print_action.activate.connect (print);
 			view.quit_action.activate.connect (quit);
 			view.cut_action.activate.connect (cut);
 			view.copy_action.activate.connect (copy);
@@ -413,6 +414,28 @@ namespace Beebop {
 			else {
 
 				dialog.destroy ();
+			}
+		}
+
+		/* Print the current document */
+		private void print () {
+
+			File handle;
+
+			try {
+
+				/* Build file path */
+				handle = File.new_for_path (document.filename + ".pdf");
+
+				/* Launch viewer */
+				Gtk.show_uri (view.window.get_screen (),
+				              handle.get_uri (),
+				              Gdk.CURRENT_TIME);
+			}
+			catch (Error e) {
+
+				Util.show_error (view.window,
+				                 _("Unable to launch viewer: %s").printf (e.message));
 			}
 		}
 
