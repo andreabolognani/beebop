@@ -276,8 +276,15 @@ namespace Beebop {
 		/* Create a new document */
 		private void file_new () {
 
+			/* Ask for confirmation if there are unsaved changes */
+			if (document.unsaved && !Util.confirm_discard (view.window)) {
+				return;
+			}
+
+			/* Replace the current document with a new one */
 			document = new Document ();
 
+			/* Update view controls */
 			update_controls ();
 		}
 
@@ -287,6 +294,11 @@ namespace Beebop {
 			Gtk.FileChooserDialog dialog;
 			Gtk.FileFilter filter;
 			Document tmp;
+
+			/* Ask for confirmation if there are unsaved changes */
+			if (document.unsaved && !Util.confirm_discard (view.window)) {
+				return;
+			}
 
 			dialog = new Gtk.FileChooserDialog (_("Open File"),
 			                                    view.window,
@@ -441,6 +453,11 @@ namespace Beebop {
 
 		/* Quit the application */
 		private void quit () {
+
+			/* Ask for confirmation if there are unsaved changes */
+			if (document.unsaved && !Util.confirm_discard (view.window)) {
+				return;
+			}
 
 			Gtk.main_quit ();
 		}
@@ -610,8 +627,14 @@ namespace Beebop {
 			/* Update view title */
 			view.window.title = title;
 
-			/* An unsaved document can't be printed */
-			view.print_action.sensitive = !document.unsaved;
+			/* Documents can't be printed if they contain unsaved
+			 * changes or have never been saved */
+			view.print_action.sensitive = false;
+
+			if (!document.unsaved && document.filename.collate ("") != 0) {
+
+				view.print_action.sensitive = true;
+			}
 
 			/* The Save button is disabled for saved documents */
 			view.save_action.sensitive = document.unsaved;

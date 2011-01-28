@@ -26,13 +26,40 @@ namespace Beebop {
 			Gtk.Dialog dialog;
 
 			dialog = new Gtk.MessageDialog (parent,
-			                                0,
+			                                Gtk.DialogFlags.MODAL,
 			                                Gtk.MessageType.ERROR,
 			                                Gtk.ButtonsType.CLOSE,
 			                                message);
 
 			dialog.run ();
 			dialog.destroy ();
+		}
+
+		/* Ask the user for confirmation before discarding changes */
+		public static bool confirm_discard (Gtk.Window? parent) {
+
+			Gtk.MessageDialog dialog;
+			bool confirm;
+
+			dialog = new Gtk.MessageDialog (parent,
+			                                Gtk.DialogFlags.MODAL,
+			                                Gtk.MessageType.QUESTION,
+			                                Gtk.ButtonsType.OK_CANCEL,
+			                                _("Discard unsaved changes?"));
+			dialog.format_secondary_text (_("If you continue, all changes " +
+			                                "made to the current document " +
+			                                "will be lost."));
+
+			confirm = false;
+
+			if (dialog.run () == Gtk.ResponseType.OK) {
+
+				confirm = true;
+			}
+
+			dialog.destroy ();
+
+			return confirm;
 		}
 	}
 }

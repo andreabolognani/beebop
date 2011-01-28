@@ -148,8 +148,6 @@ namespace Beebop {
 			today.set_time_val (TimeVal ());
 			today.to_time (out now);
 
-			unsaved = true;
-
 			filename = "";
 
 			_number = "";
@@ -182,6 +180,8 @@ namespace Beebop {
 			           Const.COLUMN_DESCRIPTION, "",
 			           Const.COLUMN_UNIT, preferences.default_unit,
 			           Const.COLUMN_QUANTITY, 1);
+
+			unsaved = false;
 
 			/* XXX Move these to the Painter class */
 			/*
