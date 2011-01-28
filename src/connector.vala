@@ -177,9 +177,9 @@ namespace Beebop {
 			view.preferences_action.activate.connect (show_preferences);
 
 			/* Connect internal signal handlers */
-			view.window.set_focus.connect ((focus) => {
+			view.window.set_focus.connect_after ((focus) => {
 				if (focus != null) {
-					focus_changed (focus);
+					update_controls ();
 				}
 			});
 			view.recipient_name_entry.changed.connect (recipient_name_changed);
@@ -573,8 +573,11 @@ namespace Beebop {
 		 * some controls based on the state of the document */
 		private void update_controls () {
 
+			Gtk.Clipboard clipboard;
+			Gtk.Widget widget;
 			File handle;
 			FileInfo info;
+			bool editable;
 			string title;
 
 			if (document.filename.collate ("") != 0) {
@@ -604,7 +607,7 @@ namespace Beebop {
 				title = "*" + title;
 			}
 
-			/* Update view controls */
+			/* Update view title */
 			view.window.title = title;
 
 			/* An unsaved document can't be printed */
@@ -612,6 +615,32 @@ namespace Beebop {
 
 			/* The Save button is disabled for saved documents */
 			view.save_action.sensitive = document.unsaved;
+
+			/* Get focused widget */
+			widget = view.window.get_focus ();
+
+			if (widget != null) {
+
+				editable = widget is Gtk.Editable;
+
+				/* Cut and copy are only available when an
+				 * editable widget is focused */
+				view.cut_action.sensitive = editable;
+				view.copy_action.sensitive = editable;
+				view.paste_action.sensitive = false;
+
+				if (editable) {
+
+					/* Get the default clipboard */
+					clipboard = Gtk.Clipboard.get (Gdk.SELECTION_CLIPBOARD);
+
+					/* If some text is available, enable the paste action */
+					if (clipboard.wait_is_text_available ()) {
+
+						view.paste_action.sensitive = true;
+					}
+				}
+			}
 		}
 
 		/* Check whether send to recipient is active  */
@@ -686,36 +715,6 @@ namespace Beebop {
 
 				widget = view.window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).paste_clipboard ();
-			}
-		}
-
-		/* React to focus changed */
-		private void focus_changed (Gtk.Widget focus) {
-
-			Gtk.Clipboard clipboard;
-			bool editable;
-
-			/* Update the view title */
-			update_controls ();
-
-			editable = focus is Gtk.Editable;
-
-			/* Cut and copy are only available when an
-			 * editable widget is focused */
-			view.cut_action.sensitive = editable;
-			view.copy_action.sensitive = editable;
-			view.paste_action.sensitive = false;
-
-			if (editable) {
-
-				/* Get the default clipboard */
-				clipboard = Gtk.Clipboard.get (Gdk.SELECTION_CLIPBOARD);
-
-				/* If some text is available, enable the paste action */
-				if (clipboard.wait_is_text_available ()) {
-
-					view.paste_action.sensitive = true;
-				}
 			}
 		}
 
