@@ -350,15 +350,15 @@ namespace Beebop {
 
 				/* Draw the document */
 				painter.draw ();
+
+				/* Save the document */
+				document.save ();
 			}
 			catch (Error e) {
 
 				Util.show_error (view.window,
-				                 _("Saving error: %s").printf (e.message));
+				                 _("Could not save document: %s").printf (e.message));
 			}
-
-			/* Save the document */
-			document.save ();
 
 			/* Update view title */
 			update_title ();

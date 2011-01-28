@@ -255,7 +255,7 @@ namespace Beebop {
 			}
 
 			/* Navigate the tree structure and extract all needed information */
-			parse_document (node);
+			load_document (node);
 
 			/* A newly loaded document is not unsaved */
 			unsaved = false;
@@ -264,15 +264,55 @@ namespace Beebop {
 		}
 
 		/* Save a document to file */
-		public void save () {
+		public void save () throws DocumentError {
 
-			/* TODO Perform actual file writing */
+			Xml.Doc *doc;
+			Xml.Node *node;
+			File handle;
+			string data;
+			size_t len;
 
+			/* Can't save an untitled document */
+			if (filename.collate ("") == 0) {
+
+				throw new DocumentError.IO (_("Untitled document"));
+			}
+
+			doc = new Xml.Doc ("1.0");
+
+			node = new Xml.Node (null, Const.TAG_DOCUMENT);
+			doc->set_root_element (node);
+
+			save_document (node);
+
+			doc->dump_memory (out data,
+			                  out len);
+
+			try {
+
+				/* Build file path */
+				handle = File.new_for_path (filename);
+
+				/* Write file contents */
+				handle.replace_contents (data,
+				                         len,
+				                         null,      /* No etag */
+				                         true,      /* Create backup */
+				                         FileCreateFlags.NONE,
+				                         null,      /* No new etag */
+				                         null);
+			}
+			catch (Error e) {
+
+				throw new DocumentError.IO (e.message);
+			}
+
+			/* Reset unsaved flag */
 			unsaved = false;
 		}
 
-		/* Parse the contents of the document tag */
-		private void parse_document (Xml.Node *parent) throws DocumentError {
+		/* Load the contents of the <document> tag */
+		private void load_document (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -297,19 +337,19 @@ namespace Beebop {
 				}
 				else if ((node->name).collate (Const.TAG_RECIPIENT) == 0) {
 
-					parse_recipient (node);
+					load_recipient (node);
 				}
 				else if ((node->name).collate (Const.TAG_DESTINATION) == 0) {
 
-					parse_destination (node);
+					load_destination (node);
 				}
 				else if ((node->name).collate (Const.TAG_SHIPMENT) == 0) {
 
-					parse_shipment (node);
+					load_shipment (node);
 				}
 				else if ((node->name).collate (Const.TAG_GOODS) == 0) {
 
-					parse_goods (node);
+					load_goods (node);
 				}
 				else {
 
@@ -318,8 +358,8 @@ namespace Beebop {
 			}
 		}
 
-		/* Parse the contents of the recipient tag */
-		private void parse_recipient (Xml.Node *parent) throws DocumentError {
+		/* Load the contents of the <recipient> tag */
+		private void load_recipient (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -357,8 +397,8 @@ namespace Beebop {
 			}
 		}
 
-		/* Parse the contents of the destination tag */
-		private void parse_destination (Xml.Node *parent) throws DocumentError {
+		/* Load the contents of the <destination> tag */
+		private void load_destination (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -388,8 +428,8 @@ namespace Beebop {
 			}
 		}
 
-		/* Parse the contents of the shipment tag */
-		private void parse_shipment (Xml.Node *parent) throws DocumentError {
+		/* Load the contents of the <shipment> tag */
+		private void load_shipment (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -423,8 +463,8 @@ namespace Beebop {
 			}
 		}
 
-		/* Parse the contents of the goods tag */
-		private void parse_goods (Xml.Node *parent) throws DocumentError {
+		/* Load the contents of the <goods> tag */
+		private void load_goods (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 
@@ -451,7 +491,7 @@ namespace Beebop {
 
 					try {
 
-						parse_good (node);
+						load_good (node);
 					}
 					catch (DocumentError e) {
 
@@ -465,8 +505,8 @@ namespace Beebop {
 			}
 		}
 
-		/* Parse the contents of the good tag */
-		private void parse_good (Xml.Node *parent) throws DocumentError {
+		/* Load the contents of a <good> tag */
+		private void load_good (Xml.Node *parent) throws DocumentError {
 
 			Xml.Node *node;
 			Gtk.TreeIter iter;
@@ -511,6 +551,162 @@ namespace Beebop {
 					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_GOOD));
 				}
 			}
+		}
+
+		/* Save the contents of the <document> tag */
+		private void save_document (Xml.Node *parent) throws DocumentError {
+
+			Xml.Node *node;
+
+			parent->new_text_child (null,
+			                        Const.TAG_NUMBER,
+			                        number);
+			parent->new_text_child (null,
+			                        Const.TAG_DATE,
+			                        date);
+			parent->new_text_child (null,
+			                        Const.TAG_PAGE_NUMBER,
+			                        page_number);
+
+			/* Recipient */
+			node = parent->new_text_child (null,
+			                               Const.TAG_RECIPIENT,
+			                               "");
+			save_recipient (node);
+
+			/* Destination */
+			node = parent->new_text_child (null,
+			                               Const.TAG_DESTINATION,
+			                               "");
+			save_destination (node);
+
+			/* Shipment */
+			node = parent->new_text_child (null,
+			                               Const.TAG_SHIPMENT,
+			                               "");
+			save_shipment (node);
+
+			/* Goods */
+			node = parent->new_text_child (null,
+			                               Const.TAG_GOODS,
+			                               "");
+			save_goods (node);
+		}
+
+		/* Save the contents of the <recipient> tag */
+		private void save_recipient (Xml.Node *parent) throws DocumentError {
+
+			parent->new_text_child (null,
+			                        Const.TAG_NAME,
+			                        recipient.name);
+			parent->new_text_child (null,
+			                        Const.TAG_STREET,
+			                        recipient.street);
+			parent->new_text_child (null,
+			                        Const.TAG_CITY,
+			                        recipient.city);
+			parent->new_text_child (null,
+			                        Const.TAG_VATIN,
+			                        recipient.vatin);
+			parent->new_text_child (null,
+			                        Const.TAG_CLIENT_CODE,
+			                        recipient.client_code);
+		}
+
+		/* Save the contents of the <destination> tag */
+		private void save_destination (Xml.Node *parent) throws DocumentError {
+
+			parent->new_text_child (null,
+			                        Const.TAG_NAME,
+			                        destination.name);
+			parent->new_text_child (null,
+			                        Const.TAG_STREET,
+			                        destination.street);
+			parent->new_text_child (null,
+			                        Const.TAG_CITY,
+			                        destination.city);
+		}
+
+		/* Save the contents of the <shipment> tag */
+		private void save_shipment (Xml.Node *parent) throws DocumentError {
+
+			parent->new_text_child (null,
+			                        Const.TAG_REASON,
+			                        shipment_info.reason);
+			parent->new_text_child (null,
+			                        Const.TAG_CARRIER,
+			                        shipment_info.carrier);
+			parent->new_text_child (null,
+			                        Const.TAG_TRANSPORTED_BY,
+			                        shipment_info.transported_by);
+			parent->new_text_child (null,
+			                        Const.TAG_DELIVERY_DUTIES,
+			                        shipment_info.duties);
+		}
+
+		/* Save the contents of the <goods> tag */
+		private void save_goods (Xml.Node *parent) throws DocumentError {
+
+			Xml.Node *node;
+			Gtk.TreeIter iter;
+
+			parent->new_text_child (null,
+			                        Const.TAG_OUTSIDE_APPEARANCE,
+			                        goods_info.appearance);
+			parent->new_text_child (null,
+			                        Const.TAG_NUMBER_OF_PARCELS,
+			                        goods_info.parcels);
+			parent->new_text_child (null,
+			                        Const.TAG_WEIGHT,
+			                        goods_info.weight);
+
+			/* Get iter to first row */
+			goods.get_iter_first (out iter);
+
+			while (goods.iter_is_valid (iter)) {
+
+				node = parent->new_text_child (null,
+				                               Const.TAG_GOOD,
+				                               "");
+				save_good (node, iter);
+
+				/* Move down one row */
+				goods.iter_next (ref iter);
+			}
+		}
+
+		/* Save the contents of a <good> tag */
+		private void save_good (Xml.Node *parent, Gtk.TreeIter iter) throws DocumentError {
+
+			string code;
+			string reference;
+			string description;
+			string unit;
+			int quantity;
+
+			/* Get row data */
+			goods.get (iter,
+			           Const.COLUMN_CODE, out code,
+			           Const.COLUMN_REFERENCE, out reference,
+			           Const.COLUMN_DESCRIPTION, out description,
+			           Const.COLUMN_UNIT, out unit,
+			           Const.COLUMN_QUANTITY, out quantity);
+
+			parent->new_text_child (null,
+			                        Const.TAG_CODE,
+			                        code);
+			parent->new_text_child (null,
+			                        Const.TAG_REFERENCE,
+			                        reference);
+			parent->new_text_child (null,
+			                        Const.TAG_DESCRIPTION,
+			                        description);
+			parent->new_text_child (null,
+			                        Const.TAG_UNIT_OF_MEASUREMENT,
+			                        unit);
+			parent->new_text_child (null,
+			                        Const.TAG_QUANTITY,
+			                        "%d".printf (quantity));
 		}
 	}
 }
