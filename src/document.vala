@@ -182,20 +182,6 @@ namespace Beebop {
 			           Const.COLUMN_QUANTITY, 1);
 
 			unsaved = false;
-
-			/* XXX Move these to the Painter class */
-			/*
-			goods.sizes = {70.0,
-			               100.0,
-			               Const.AUTOMATIC_SIZE,
-			               50.0,
-			               100.0};
-			goods.headings = {_("Code"),
-			                  _("Reference"),
-			                  _("Description"),
-			                  _("U.M."),
-			                  _("Quantity")};
-			*/
 		}
 
 		/* Load a document from file.

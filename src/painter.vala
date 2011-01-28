@@ -18,12 +18,20 @@
 
 namespace Beebop {
 
+	enum PaintMode {
+		PAINT,
+		PRETEND
+	}
+
 	public class Painter : GLib.Object {
 
 		private Preferences preferences;
 
 		private Cairo.Surface surface;
 		private Cairo.Context context;
+
+		private Rsvg.Handle page;
+		private Rsvg.Handle logo;
 
 		public Document document { get; set; }
 
@@ -39,45 +47,54 @@ namespace Beebop {
 			}
 		}
 
-		public void draw () throws Error {
+		public void paint () throws Error {
 
-			Cairo.Surface logo_surface;
-			Cairo.Context logo_context;
-			Rsvg.Handle page;
-			Rsvg.Handle logo;
 			Rsvg.DimensionData dimensions;
-			File handle;
-			Table table;
-			Table notes_table;
-			Table reason_table;
-			Table date_table;
-			Table signatures_table;
-			Row row;
-			Cell cell;
-			string contents;
-			size_t contents_length;
 			double page_width;
 			double page_height;
-			double logo_width;
-			double logo_height;
-			double box_x;
-			double box_y;
-			double box_width;
-			double box_height;
-			double offset;
-			double starting_point;
-			int i;
+			double header_heigth;
+
+			dimensions = Rsvg.DimensionData ();
+
+			load_resources ();
+
+			/* Get page size */
+			page.get_dimensions (dimensions);
+			page_width = dimensions.width;
+			page_height = dimensions.height;
+
+			surface = new Cairo.PdfSurface (document.filename + ".pdf",
+			                                page_width,
+			                                page_height);
+			context = new Cairo.Context (surface);
+
+			/* Set some appearance properties */
+			context.set_line_width (preferences.line_width);
+			context.set_source_rgb (0.0, 0.0, 0.0);
+
+			header_heigth = paint_header (page_width,
+			                              page_height,
+			                              PaintMode.PAINT);
+
+			context.show_page ();
+		}
+
+		/* Load required resources */
+		private void load_resources () throws Error {
+
+			File handle;
+			string data;
+			size_t len;
 
 			try {
 
 				/* Read and parse the contents of the page file */
 				handle = File.new_for_path (preferences.page_file);
 				handle.load_contents (null,
-				                      out contents,
-				                      out contents_length,
-				                      null);                /* No etag */
-				page = new Rsvg.Handle.from_data ((uchar[]) contents,
-				                                  contents_length);
+				                      out data,
+				                      out len,
+				                      null);           /* No etag */
+				page = new Rsvg.Handle.from_data ((uchar[]) data, len);
 			}
 			catch (Error e) {
 
@@ -86,66 +103,83 @@ namespace Beebop {
 
 			try {
 
-				/* Read and parse the contents of the template file */
+				/* Read and parse the contents of the logo file */
 				handle = File.new_for_path (preferences.logo_file);
 				handle.load_contents (null,
-				                      out contents,
-				                      out contents_length,
-				                      null);                /* No etag */
-				logo = new Rsvg.Handle.from_data ((uchar[]) contents,
-				                                  contents_length);
+				                      out data,
+				                      out len,
+				                      null);           /* No etag */
+				logo = new Rsvg.Handle.from_data ((uchar[]) data, len);
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO (_("Could not load logo file: %s").printf (preferences.logo_file));
+				throw new DocumentError.IO (_("Could not load logo template file: %s").printf (preferences.logo_file));
 			}
+		}
 
-			/* Get templates' dimensions */
+		/* Draw the header */
+		private double paint_header (double page_width, double page_height, PaintMode mode) throws Error {
+
+			Cairo.Surface tmp_surface;
+			Cairo.Context tmp_context;
+			Rsvg.DimensionData dimensions;
+			Table table;
+			Row row; /* fight the powa! */
+			Cell cell;
+			double logo_width;
+			double logo_height;
+			double box_x;
+			double box_y;
+			double box_width;
+			double box_height;
+			double starting_point;
+			double offset;
+
 			dimensions = Rsvg.DimensionData ();
 
-			page.get_dimensions (dimensions);
-			page_width = dimensions.width;
-			page_height = dimensions.height;
-
+			/* Get logo template dimensions */
 			logo.get_dimensions (dimensions);
 			logo_width = dimensions.width;
 			logo_height = dimensions.height;
 
-			/* Make the target surface as big as the page template */
-			surface = new Cairo.PdfSurface (document.filename + ".pdf",
-			                                page_width,
-			                                page_height);
-			context = new Cairo.Context (surface);
+			if (mode == PaintMode.PAINT) {
 
-			/* Draw the page template on the surface */
-			page.render_cairo (context);
+				tmp_surface = new Cairo.PdfSurface (null,
+				                                    page_width,
+				                                    page_height);
+				tmp_context = new Cairo.Context (tmp_surface);
 
-			/* Create a surface to store the logo on.
-			 *
-			 * XXX Passing null as the first parameter is actually correct,
-			 * despite the fact that valac reports a warning */
-			logo_surface = new Cairo.PdfSurface (null,
-			                                     logo_width,
-			                                     logo_height);
-			logo_context = new Cairo.Context (logo_surface);
+				page.render_cairo (tmp_context);
 
-			logo.render_cairo (logo_context);
+				context.save ();
+				context.set_source_surface (tmp_surface,
+					                        0.0,
+					                        0.0);
+				context.rectangle (0.0,
+				                   0.0,
+				                   page_width,
+				                   page_height);
+				context.fill ();
+				context.restore ();
 
-			/* Copy the contents of the logo surface to the target surface */
-			context.save ();
-			context.set_source_surface (logo_surface,
-			                            preferences.page_padding_x,
-			                            preferences.page_padding_y);
-			context.rectangle (preferences.page_padding_x,
-			                   preferences.page_padding_y,
-			                   logo_width,
-			                   logo_height);
-			context.fill ();
-			context.restore ();
+				tmp_surface = new Cairo.PdfSurface (null,
+				                                    logo_width,
+				                                    logo_height);
+				tmp_context = new Cairo.Context (tmp_surface);
 
-			/* Set some appearance properties */
-			context.set_line_width (preferences.line_width);
-			context.set_source_rgb (0.0, 0.0, 0.0);
+				logo.render_cairo (tmp_context);
+
+				context.save ();
+				context.set_source_surface (tmp_surface,
+				                            preferences.page_padding_x,
+				                            preferences.page_padding_y);
+				context.rectangle (preferences.page_padding_x,
+				                   preferences.page_padding_y,
+				                   logo_width,
+				                   logo_height);
+				context.fill ();
+				context.restore ();
+			}
 
 			cell = new Cell ();
 			cell.text = preferences.header_text;
@@ -170,7 +204,7 @@ namespace Beebop {
 			                    box_y,
 			                    box_width,
 			                    box_height,
-			                    true);
+			                    mode);
 
 			/* This will be the new starting point if the address
 			 * boxes are not taller */
@@ -187,9 +221,9 @@ namespace Beebop {
 			                               box_y,
 			                               box_width,
 			                               box_height,
-			                               true);
+			                               mode);
 
-			/* Draw the destination's address in a rigth-aligned box,
+			/* Draw the destination's address in a right-aligned box,
 			 * just below the one used for the recipient's address */
 			box_y += offset + preferences.elements_spacing_y;
 			offset = draw_company_address (_("Destination"),
@@ -198,11 +232,12 @@ namespace Beebop {
 			                               box_y,
 			                               box_width,
 			                               box_height,
-			                               true);
+			                               mode);
 
 			/* The starting point is either below the address boxes or
 			 * below the header, depending on which one is taller */
 			starting_point = Math.fmax (starting_point, box_y + offset);
+			starting_point = Math.fmax (starting_point, logo_height + preferences.page_padding_y);
 
 			/* Create a table to store document info */
 			table = new Table (4);
@@ -237,7 +272,7 @@ namespace Beebop {
 			                     box_y,
 			                     box_width,
 			                     box_height,
-			                     true);
+			                     mode);
 
 			table = new Table (3);
 			table.sizes = {200.0,
@@ -264,9 +299,59 @@ namespace Beebop {
 			                     box_y,
 			                     box_width,
 			                     box_height,
-			                     true);
+			                     mode);
+
+			starting_point = box_y + offset;
+
+			return starting_point;
+		}
+
+		private void prepare_tables () {
+
+			/*
+			goods.sizes = {70.0,
+			               100.0,
+			               Const.AUTOMATIC_SIZE,
+			               50.0,
+			               100.0};
+			goods.headings = {_("Code"),
+			                  _("Reference"),
+			                  _("Description"),
+			                  _("U.M."),
+			                  _("Quantity")};
+			*/
+		}
 
 #if false
+		public void draw () throws Error {
+
+			Cairo.Surface logo_surface;
+			Cairo.Context logo_context;
+			Rsvg.Handle page;
+			Rsvg.Handle logo;
+			Rsvg.DimensionData dimensions;
+			File handle;
+			Table table;
+			Table notes_table;
+			Table reason_table;
+			Table date_table;
+			Table signatures_table;
+			Row row;
+			Cell cell;
+			string contents;
+			size_t contents_length;
+			double page_width;
+			double page_height;
+			double logo_width;
+			double logo_height;
+			double box_x;
+			double box_y;
+			double box_width;
+			double box_height;
+			double offset;
+			double starting_point;
+			int i;
+
 			/* Add a closing row to the goods table */
 			row = new Row (document.goods.columns);
 			for (i = 0; i < document.goods.columns; i++) {
@@ -283,7 +368,6 @@ namespace Beebop {
 			                     box_width,
 			                     box_height,
 			                     true);
-#endif
 
 			/* Create a table to store notes */
 			notes_table = new Table (1);
@@ -438,8 +522,9 @@ namespace Beebop {
 				throw new DocumentError.IO (_("Drawing error."));
 			}
 		}
+#endif
 
-		private double draw_text (string text, double x, double y, double width, double height, bool really) {
+		private double draw_text (string text, double x, double y, double width, double height, PaintMode mode) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -460,7 +545,7 @@ namespace Beebop {
 			layout.set_width ((int) (width * Pango.SCALE));
 			layout.set_markup (text, -1);
 
-			if (really) {
+			if (mode == PaintMode.PAINT) {
 
 				/* Show contents */
 				Pango.cairo_show_layout (context, layout);
@@ -473,7 +558,7 @@ namespace Beebop {
 			return (text_height / Pango.SCALE);
 		}
 
-		private double draw_cell (Cell cell, double x, double y, double width, double height, bool really) {
+		private double draw_cell (Cell cell, double x, double y, double width, double height, PaintMode mode) {
 
 			string text;
 
@@ -497,7 +582,7 @@ namespace Beebop {
 			                    y + preferences.cell_padding_y,
 			                    width - (2 * preferences.cell_padding_x),
 			                    height,
-			                    really);
+			                    mode);
 
 			/* Add vertical padding to the text height */
 			height += (2 * preferences.cell_padding_y);
@@ -505,16 +590,16 @@ namespace Beebop {
 			return height;
 		}
 
-		private double draw_cell_with_border (Cell cell, double x, double y, double width, double height, bool really) {
+		private double draw_cell_with_border (Cell cell, double x, double y, double width, double height, PaintMode mode) {
 
 			height = draw_cell (cell,
 			                    x,
 			                    y,
 			                    width,
 			                    height,
-			                    really);
+			                    mode);
 
-			if (really) {
+			if (mode == PaintMode.PAINT) {
 
 				/* Draw the border */
 				context.rectangle (x,
@@ -527,7 +612,7 @@ namespace Beebop {
 			return height;
 		}
 
-		private double draw_company_address (string title, CompanyInfo company, double x, double y, double width, double height, bool really) {
+		private double draw_company_address (string title, CompanyInfo company, double x, double y, double width, double height, PaintMode mode) {
 
 			Cell cell;
 
@@ -543,12 +628,12 @@ namespace Beebop {
 			                                y,
 			                                width,
 			                                height,
-			                                really);
+			                                mode);
 
 			return height;
 		}
 
-		private double draw_table (Table table, double x, double y, double width, double height, bool really) {
+		private double draw_table (Table table, double x, double y, double width, double height, PaintMode mode) {
 
 			Row row;
 			double[] tmp;
@@ -613,7 +698,7 @@ namespace Beebop {
 				                   y,
 				                   width,
 				                   height,
-				                   really);
+				                   mode);
 				y += offset;
 				height += offset;
 			}
@@ -631,7 +716,7 @@ namespace Beebop {
 				                   y,
 				                   width,
 				                   height,
-				                   really);
+				                   mode);
 
 				/* Update the vertical offset */
 				y += offset;
@@ -641,7 +726,7 @@ namespace Beebop {
 			return height;
 		}
 
-		private double draw_row (Row row, double[] sizes, double x, double y, double width, double height, bool really) {
+		private double draw_row (Row row, double[] sizes, double x, double y, double width, double height, PaintMode mode) {
 
 			double box_x;
 			double box_y;
@@ -667,7 +752,7 @@ namespace Beebop {
 				                    box_y,
 				                    box_width,
 				                    box_height,
-				                    really);
+				                    mode);
 
 				box_height = Math.fmax (box_height, offset);
 
@@ -680,7 +765,7 @@ namespace Beebop {
 
 				box_width = sizes[i];
 
-				if (really) {
+				if (mode == PaintMode.PAINT) {
 
 					context.rectangle (x,
 					                   y,

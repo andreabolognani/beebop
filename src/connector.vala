@@ -372,7 +372,7 @@ namespace Beebop {
 				painter.document = document;
 
 				/* Draw the document */
-				painter.draw ();
+				painter.paint ();
 
 				/* Save the document */
 				document.save ();
