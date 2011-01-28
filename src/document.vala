@@ -32,6 +32,7 @@ namespace Beebop {
 		private string _number;
 		private string _date;
 		private string _page_number;
+		private Gtk.ListStore _goods;
 
 		public bool unsaved {
 
@@ -102,7 +103,20 @@ namespace Beebop {
 		public CompanyInfo destination { get; set; }
 		public GoodsInfo goods_info { get; set; }
 		public ShipmentInfo shipment_info { get; set; }
-		public Gtk.ListStore goods { get; set; }
+
+		public Gtk.ListStore goods {
+
+			get {
+				return _goods;
+			}
+
+			set {
+				_goods = value;
+				_goods.row_changed.connect ((path, iter) => {
+					unsaved = true;
+				});
+			}
+		}
 
 		construct {
 

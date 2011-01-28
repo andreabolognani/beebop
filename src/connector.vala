@@ -436,6 +436,7 @@ namespace Beebop {
 
 			Gtk.TreeIter iter;
 			Gtk.TreePath path;
+			string current;
 			int quantity;
 
 			/* Get an iter to the modified row */
@@ -445,6 +446,15 @@ namespace Beebop {
 			/* The quantity column contains a int, so the string
 			 * has to be converted before it is stored in the model */
 			if (column == Const.COLUMN_QUANTITY) {
+
+				/* Get current value */
+				document.goods.get (iter,
+				                    column, out quantity);
+
+				/* The value is the same: make no changes */
+				if (quantity == val.to_int ()) {
+					return;
+				}
 
 				quantity = val.to_int ();
 
@@ -457,6 +467,16 @@ namespace Beebop {
 			}
 			else {
 
+				/* Get the current value */
+				document.goods.get (iter,
+				                    column, out current);
+
+				/* The value is the same: make no changes */
+				if (current.collate (val) == 0) {
+					return;
+				}
+
+				/* Store the new value */
 				document.goods.set (iter,
 				                    column, val);
 			}
