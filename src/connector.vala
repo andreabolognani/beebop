@@ -165,6 +165,7 @@ namespace Beebop {
 			});
 			view.open_action.activate.connect (open);
 			view.save_action.activate.connect (save);
+			view.save_as_action.activate.connect (save_as);
 			view.quit_action.activate.connect (quit);
 			view.cut_action.activate.connect (cut);
 			view.copy_action.activate.connect (copy);
@@ -277,7 +278,7 @@ namespace Beebop {
 			Gtk.FileFilter filter;
 			Document tmp;
 
-			dialog = new Gtk.FileChooserDialog (_("Open file"),
+			dialog = new Gtk.FileChooserDialog (_("Open File"),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.OPEN,
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -367,8 +368,43 @@ namespace Beebop {
 		/* Choose a name for the document and save */
 		private void save_as () {
 
-			Util.show_error (view.window,
-			                 _("Save as not implemented yet"));
+			Gtk.FileChooserDialog dialog;
+
+			dialog = new Gtk.FileChooserDialog (_("Save As..."),
+			                                    view.window,
+			                                    Gtk.FileChooserAction.SAVE,
+			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
+
+			/* Suggest a file name for the document  */
+			if (document.filename.collate ("") == 0) {
+
+				/* TODO Suggest a better file name, using the document
+				 *      number and recipient's name */
+				dialog.set_current_name ("Untitled document.beebop");
+			}
+			else {
+
+				dialog.set_filename (document.filename);
+			}
+
+			/* Enable overwrite confirmation */
+			dialog.do_overwrite_confirmation = true;
+
+			/* Display the dialog */
+			if (dialog.run () == Gtk.ResponseType.ACCEPT) {
+
+				/* Get selected filename */
+				document.filename = dialog.get_filename ();
+				dialog.destroy ();
+
+				/* Save document */
+				save ();
+			}
+			else {
+
+				dialog.destroy ();
+			}
 		}
 
 		/* Quit the application */
@@ -524,7 +560,7 @@ namespace Beebop {
 			}
 			else {
 
-				title = _("Unsaved document");
+				title = _("Untitled document");
 			}
 
 			/* Visually mark an unsaved document */

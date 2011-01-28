@@ -100,6 +100,7 @@ namespace Beebop {
 		public const string OBJ_GOODS_TREEVIEW = "goods_treeview";
 		public const string OBJ_OPEN_ACTION = "open_action";
 		public const string OBJ_SAVE_ACTION = "save_action";
+		public const string OBJ_SAVE_AS_ACTION = "save_as_action";
 		public const string OBJ_PRINT_ACTION = "print_action";
 		public const string OBJ_QUIT_ACTION = "quit_action";
 		public const string OBJ_CUT_ACTION = "cut_action";

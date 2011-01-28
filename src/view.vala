@@ -56,6 +56,7 @@ namespace Beebop {
 
 		public Gtk.Action open_action { get; private set; }
 		public Gtk.Action save_action { get; private set; }
+		public Gtk.Action save_as_action { get; private set; }
 		public Gtk.Action print_action { get; private set; }
 		public Gtk.Action quit_action { get; private set; }
 		public Gtk.Action cut_action { get; private set; }
@@ -129,6 +130,8 @@ namespace Beebop {
 			              as Gtk.Action;
 			save_action = get_object (ui, Const.OBJ_SAVE_ACTION)
 			              as Gtk.Action;
+			save_as_action = get_object (ui, Const.OBJ_SAVE_AS_ACTION)
+			                 as Gtk.Action;
 			print_action = get_object (ui, Const.OBJ_PRINT_ACTION)
 			               as Gtk.Action;
 			quit_action = get_object (ui, Const.OBJ_QUIT_ACTION)
