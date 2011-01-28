@@ -578,7 +578,11 @@ namespace Beebop {
 				title = "*" + title;
 			}
 
+			/* Update view title */
 			view.window.title = title;
+
+			/* An unsaved document can't be printed */
+			view.print_action.sensitive = !document.unsaved;
 		}
 
 		/* Check whether send to recipient is active  */
