@@ -263,6 +263,14 @@ namespace Beebop {
 			delete doc;
 		}
 
+		/* Save a document to file */
+		public void save () {
+
+			/* TODO Perform actual file writing */
+
+			unsaved = false;
+		}
+
 		/* Parse the contents of the document tag */
 		private void parse_document (Xml.Node *parent) throws DocumentError {
 

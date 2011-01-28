@@ -182,6 +182,17 @@ namespace Beebop {
 			view.recipient_name_entry.changed.connect (recipient_name_changed);
 			view.recipient_street_entry.changed.connect (recipient_street_changed);
 			view.recipient_city_entry.changed.connect (recipient_city_changed);
+			view.recipient_vatin_entry.changed.connect (recipient_vatin_changed);
+			view.recipient_client_code_entry.changed.connect (recipient_client_code_changed);
+			view.destination_name_entry.changed.connect (destination_name_changed);
+			view.destination_street_entry.changed.connect (destination_street_changed);
+			view.destination_city_entry.changed.connect (destination_city_changed);
+			view.document_number_entry.changed.connect (document_number_changed);
+			view.document_date_entry.changed.connect (document_date_changed);
+			view.document_page_entry.changed.connect (document_page_changed);
+			view.goods_appearance_entry.changed.connect (goods_appearance_changed);
+			view.goods_parcels_spinbutton.changed.connect (goods_parcels_changed);
+			view.goods_weight_entry.changed.connect (goods_weight_changed);
 		}
 
 		/* Update the view to match the document */
@@ -345,6 +356,12 @@ namespace Beebop {
 				Util.show_error (view.window,
 				                 _("Saving error: %s").printf (e.message));
 			}
+
+			/* Save the document */
+			document.save ();
+
+			/* Update view title */
+			update_title ();
 		}
 
 		/* Choose a name for the document and save */
@@ -600,6 +617,9 @@ namespace Beebop {
 			Gtk.Clipboard clipboard;
 			bool editable;
 
+			/* Update the view title */
+			update_title ();
+
 			editable = focus is Gtk.Editable;
 
 			/* Cut and copy are only available when an
@@ -624,28 +644,156 @@ namespace Beebop {
 		/* React to changes of the recipient's name */
 		private void recipient_name_changed () {
 
+			/* Update document */
+			document.recipient.name = view.recipient_name_entry.text;
+
+			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
 				view.destination_name_entry.text = view.recipient_name_entry.text;
 			}
+
+			/* Update view title */
+			update_title ();
 		}
 
 		/* React to changes of the recipient's street */
 		private void recipient_street_changed () {
 
+			/* Update document */
+			document.recipient.street = view.recipient_street_entry.text;
+
+			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
 				view.destination_street_entry.text = view.recipient_street_entry.text;
 			}
+
+			/* Update view title */
+			update_title ();
 		}
 
 		/* React to changes of the recipient's city */
 		private void recipient_city_changed () {
 
+			/* Update document */
+			document.recipient.city = view.recipient_city_entry.text;
+
+			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
 				view.destination_city_entry.text = view.recipient_city_entry.text;
 			}
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the recipient's VATIN */
+		private void recipient_vatin_changed () {
+
+			/* Update document */
+			document.recipient.vatin = view.recipient_vatin_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the recipient's client code */
+		private void recipient_client_code_changed () {
+
+			/* Update document */
+			document.recipient.client_code = view.recipient_client_code_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the destination's name */
+		private void destination_name_changed () {
+
+			/* Update document */
+			document.destination.name = view.destination_name_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the destination's street */
+		private void destination_street_changed () {
+
+			/* Update document */
+			document.destination.street = view.destination_street_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the destination's city */
+		private void destination_city_changed () {
+
+			/* Update document */
+			document.destination.city = view.destination_city_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the document's number */
+		private void document_number_changed () {
+
+			/* Update document */
+			document.number = view.document_number_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the document's date */
+		private void document_date_changed () {
+
+			/* Update document */
+			document.date = view.document_date_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the document's page number */
+		private void document_page_changed () {
+
+			/* Update document */
+			document.page_number = view.document_page_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the goods' appearance */
+		private void goods_appearance_changed () {
+
+			/* Update document */
+			document.goods_info.appearance = view.goods_appearance_entry.text;
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the number of parcels */
+		private void goods_parcels_changed () {
+
+			/* Update document */
+			document.goods_info.parcels = "%d".printf (view.goods_parcels_spinbutton.get_value_as_int ());
+
+			/* Update view title */
+			update_title ();
+		}
+
+		/* React to changes of the goods' weight */
+		private void goods_weight_changed () {
+
+			/* Update document */
+			document.goods_info.weight = view.goods_weight_entry.text;
 		}
 	}
 }
