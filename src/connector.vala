@@ -621,15 +621,22 @@ namespace Beebop {
 
 			if (widget != null) {
 
-				editable = widget is Gtk.Editable;
-
-				/* Cut and copy are only available when an
-				 * editable widget is focused */
-				view.cut_action.sensitive = editable;
-				view.copy_action.sensitive = editable;
+				/* Disable all action by default */
+				view.cut_action.sensitive = false;
+				view.copy_action.sensitive = false;
 				view.paste_action.sensitive = false;
 
+				editable = widget is Gtk.Editable;
+
 				if (editable) {
+
+					/* XXX Here one should get the selection bounds using
+					 *     the Gtk.Editable.get_selection_bounds method
+					 *     and enable cut & copy only if the bounds do
+					 *     not match. The GTK+ vapi has a bug that prevents
+					 *     bound retrieval, though, so just enable them */
+					view.cut_action.sensitive = true;
+					view.copy_action.sensitive = true;
 
 					/* Get the default clipboard */
 					clipboard = Gtk.Clipboard.get (Gdk.SELECTION_CLIPBOARD);
