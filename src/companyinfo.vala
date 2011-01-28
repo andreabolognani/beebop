@@ -20,19 +20,93 @@ namespace Beebop {
 
 	public class CompanyInfo : GLib.Object {
 
-		public string name { get; set; }
-		public string street { get; set; }
-		public string city { get; set; }
-		public string vatin { get; set; }
-		public string client_code { get; set; }
+		private string _name;
+		private string _street;
+		private string _city;
+		private string _vatin;
+		private string _client_code;
+
+		public bool unsaved { get; set; }
+
+		public string name {
+
+			get {
+				return _name;
+			}
+
+			set {
+				if (value.collate (_name) != 0) {
+					_name = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string street {
+
+			get {
+				return _street;
+			}
+
+			set {
+				if (value.collate (_street) != 0) {
+					_street = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string city {
+
+			get {
+				return _city;
+			}
+
+			set {
+				if (value.collate (_city) != 0) {
+					_city = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string vatin {
+
+			get {
+				return _vatin;
+			}
+
+			set {
+				if (value.collate (_vatin) != 0) {
+					_vatin = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string client_code {
+
+			get {
+				return _client_code;
+			}
+
+			set {
+				if (value.collate (_client_code) != 0) {
+					_client_code = value;
+					unsaved = true;
+				}
+			}
+		}
 
 		construct {
 
-			name = "";
-			street = "";
-			city = "";
-			vatin = "";
-			client_code = "";
+			_name = "";
+			_street = "";
+			_city = "";
+			_vatin = "";
+			_client_code = "";
+
+			unsaved = false;
 		}
 	}
 }

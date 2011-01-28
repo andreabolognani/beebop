@@ -28,12 +28,76 @@ namespace Beebop {
 
 		private Preferences preferences;
 
-		public bool unsaved { get; private set; }
+		private bool _unsaved;
+		private string _number;
+		private string _date;
+		private string _page_number;
+
+		public bool unsaved {
+
+			get {
+				return _unsaved ||
+				       recipient.unsaved ||
+				       destination.unsaved ||
+				       goods_info.unsaved ||
+				       shipment_info.unsaved;
+			}
+
+			private set {
+				_unsaved = value;
+				if (!value) {
+					recipient.unsaved = false;
+					destination.unsaved = false;
+					goods_info.unsaved = false;
+					shipment_info.unsaved = false;
+				}
+			}
+		}
 
 		public string filename { get; set; }
-		public string number { get; set; }
-		public string date { get; set; }
-		public string page_number { get; set; }
+
+		public string number {
+
+			get {
+				return _number;
+			}
+
+			set {
+				if (value.collate (_number) != 0) {
+					_number = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string date {
+
+			get {
+				return _date;
+			}
+
+			set {
+				if (value.collate (_date) != 0) {
+					_date = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string page_number {
+
+			get {
+				return _page_number;
+			}
+
+			set {
+				if (value.collate (_page_number) != 0) {
+					_page_number = value;
+					unsaved = true;
+				}
+			}
+		}
+
 		public CompanyInfo recipient { get; set; }
 		public CompanyInfo destination { get; set; }
 		public GoodsInfo goods_info { get; set; }
@@ -74,9 +138,9 @@ namespace Beebop {
 
 			filename = "";
 
-			number = "";
-			date = now.format ("%d/%m/%Y");
-			page_number = _("1 of 1");
+			_number = "";
+			_date = now.format ("%d/%m/%Y");
+			_page_number = _("1 of 1");
 
 			recipient = new CompanyInfo ();
 			destination = new CompanyInfo ();

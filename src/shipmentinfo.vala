@@ -20,17 +20,77 @@ namespace Beebop {
 
 	public class ShipmentInfo : GLib.Object {
 
-		public string reason { get; set; }
-		public string transported_by { get; set; }
-		public string carrier { get; set; }
-		public string duties { get; set; }
+		private string _reason;
+		private string _transported_by;
+		private string _carrier;
+		private string _duties;
+
+		public bool unsaved { get; set; }
+
+		public string reason {
+
+			get {
+				return _reason;
+			}
+
+			set {
+				if (value.collate (_reason) != 0) {
+					_reason = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string transported_by {
+
+			get {
+				return _transported_by;
+			}
+
+			set {
+				if (value.collate (_transported_by) != 0) {
+					_transported_by = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string carrier {
+
+			get {
+				return _carrier;
+			}
+
+			set {
+				if (value.collate (_carrier) != 0) {
+					_carrier = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string duties {
+
+			get {
+				return _duties;
+			}
+
+			set {
+				if (value.collate (_duties) != 0) {
+					_duties = value;
+					unsaved = true;
+				}
+			}
+		}
 
 		construct {
 
-			reason = "";
-			transported_by = "";
-			carrier = "";
-			duties = "";
+			_reason = "";
+			_transported_by = "";
+			_carrier = "";
+			_duties = "";
+
+			unsaved = false;
 		}
 	}
 }

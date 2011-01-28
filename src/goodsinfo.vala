@@ -20,15 +20,61 @@ namespace Beebop {
 
 	public class GoodsInfo : GLib.Object {
 
-		public string appearance { get; set; }
-		public string parcels { get; set; }
-		public string weight { get; set; }
+		private string _appearance;
+		private string _parcels;
+		private string _weight;
+
+		public bool unsaved { get; set; }
+
+		public string appearance {
+
+			get {
+				return _appearance;
+			}
+
+			set {
+				if (value.collate (_appearance) != 0) {
+					_appearance = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string parcels {
+
+			get {
+				return _parcels;
+			}
+
+			set {
+				if (value.collate (_parcels) != 0) {
+					_parcels = value;
+					unsaved = true;
+				}
+			}
+		}
+
+		public string weight {
+
+			get {
+				return _weight;
+			}
+
+			set {
+				if (value.collate (_weight) != 0) {
+					_weight = value;
+					unsaved = true;
+				}
+			}
+		}
 
 		construct {
 
-			appearance = "";
-			parcels = "1";
-			weight = "";
+			_appearance = "";
+			_parcels = "1";
+			_weight = "";
+
+			unsaved = false;
 		}
 	}
 }
