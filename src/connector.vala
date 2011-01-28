@@ -510,7 +510,13 @@ namespace Beebop {
 				title = _("Unsaved document");
 			}
 
-			view.window.title = _("%s - Beebop").printf (title);
+			/* Visually mark an unsaved document */
+			if (document.unsaved) {
+
+				title = "*" + title;
+			}
+
+			view.window.title = title;
 		}
 
 		/* Check whether send to recipient is active  */
