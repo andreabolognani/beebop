@@ -232,15 +232,15 @@ namespace Beebop {
 			/* Create a closing row */
 			row = new Row (table.columns);
 			cell = row.get_cell (0);
-			cell.text = "******";
+			cell.text = "*****";
 			cell = row.get_cell (1);
-			cell.text = "******";
+			cell.text = "*****";
 			cell = row.get_cell (2);
-			cell.text = "******";
+			cell.text = "*****";
 			cell = row.get_cell (3);
-			cell.text = "******";
+			cell.text = "*****";
 			cell = row.get_cell (4);
-			cell.text = "******";
+			cell.text = "*****";
 
 			table.append_row (row);
 
@@ -257,6 +257,29 @@ namespace Beebop {
 
 				table.remove_row ();
 			}
+
+			do {
+
+				/* Append an empty row */
+				row = new Row (table.columns);
+
+				table.append_row (row);
+
+				height = draw_table (table,
+				                     preferences.page_padding_x,
+				                     0.0,
+				                     page_width - (2 * preferences.page_padding_x),
+				                     Const.AUTOMATIC_SIZE,
+				                     PaintMode.PRETEND);
+
+				/* Too many empty rows: drop the last one and finish */
+				if (height > table_height) {
+
+					table.remove_row ();
+					break;
+				}
+			}
+			while (true);
 
 			return tables;
 		}
