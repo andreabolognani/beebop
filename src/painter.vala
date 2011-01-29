@@ -47,12 +47,15 @@ namespace Beebop {
 			}
 		}
 
+		/* Paint the document */
 		public void paint () throws Error {
 
 			Rsvg.DimensionData dimensions;
 			double page_width;
 			double page_height;
-			double header_heigth;
+			double header_height;
+			double footer_height;
+			double table_height;
 
 			dimensions = Rsvg.DimensionData ();
 
@@ -72,11 +75,51 @@ namespace Beebop {
 			context.set_line_width (preferences.line_width);
 			context.set_source_rgb (0.0, 0.0, 0.0);
 
-			header_heigth = paint_header (page_width,
+			/* Do a pretend paint run to calculate header and
+			 * footer height */
+			header_height = paint_header (page_width,
 			                              page_height,
-			                              PaintMode.PAINT);
+			                              PaintMode.PRETEND);
+			footer_height = paint_footer (0.0,
+			                              page_width,
+			                              page_height,
+			                              PaintMode.PRETEND);
 
-			context.show_page ();
+			/* Calculate how much vertical space is available
+			 * for the goods table */
+			table_height = page_height -
+			               header_height -
+			               footer_height -
+			               (2 * preferences.elements_spacing_y) -
+			               (2 * preferences.page_padding_y);
+
+			for (int i = 0; i < 3; i++) {
+
+				/* Paint header */
+				paint_header (page_width,
+				              page_height,
+				              PaintMode.PAINT);
+
+				/* TODO Paint goods table */
+				context.rectangle (preferences.page_padding_x,
+				                   header_height +
+				                   preferences.page_padding_y +
+				                   preferences.elements_spacing_y,
+				                   page_width - (2 * preferences.page_padding_x),
+				                   table_height);
+				context.stroke ();
+
+				/* Paint footer */
+				paint_footer (page_height -
+				              footer_height -
+				              preferences.elements_spacing_y,
+			                  page_width,
+			                  page_height,
+			                  PaintMode.PAINT);
+
+				/* Finish the current page */
+				context.show_page ();
+			}
 		}
 
 		/* Load required resources */
@@ -116,6 +159,24 @@ namespace Beebop {
 				throw new DocumentError.IO (_("Could not load logo template file: %s").printf (preferences.logo_file));
 			}
 		}
+
+#if false
+		private void prepare_tables () {
+
+			/*
+			goods.sizes = {70.0,
+			               100.0,
+			               Const.AUTOMATIC_SIZE,
+			               50.0,
+			               100.0};
+			goods.headings = {_("Code"),
+			                  _("Reference"),
+			                  _("Description"),
+			                  _("U.M."),
+			                  _("Quantity")};
+			*/
+		}
+#endif
 
 		/* Draw the header */
 		private double paint_header (double page_width, double page_height, PaintMode mode) throws Error {
@@ -301,93 +362,54 @@ namespace Beebop {
 			                     box_height,
 			                     mode);
 
-			starting_point = box_y + offset;
+			starting_point = box_y + offset - preferences.page_padding_y;
 
 			return starting_point;
 		}
 
-		private void prepare_tables () {
+		/* Paint the footer */
+		private double paint_footer (double starting_point, double page_width, double page_height, PaintMode mode) {
 
-			/*
-			goods.sizes = {70.0,
-			               100.0,
-			               Const.AUTOMATIC_SIZE,
-			               50.0,
-			               100.0};
-			goods.headings = {_("Code"),
-			                  _("Reference"),
-			                  _("Description"),
-			                  _("U.M."),
-			                  _("Quantity")};
-			*/
-		}
-
-#if false
-		public void draw () throws Error {
-
-			Cairo.Surface logo_surface;
-			Cairo.Context logo_context;
-			Rsvg.Handle page;
-			Rsvg.Handle logo;
-			Rsvg.DimensionData dimensions;
-			File handle;
 			Table table;
-			Table notes_table;
-			Table reason_table;
-			Table date_table;
-			Table signatures_table;
-			Row row;
+			Row row; /* fight the powa! */
 			Cell cell;
-			string contents;
-			size_t contents_length;
-			double page_width;
-			double page_height;
-			double logo_width;
-			double logo_height;
 			double box_x;
 			double box_y;
 			double box_width;
 			double box_height;
 			double offset;
-			double starting_point;
-			int i;
-
-			/* Add a closing row to the goods table */
-			row = new Row (document.goods.columns);
-			for (i = 0; i < document.goods.columns; i++) {
-
-				row.get_cell (i).text = "*****";
-			}
-			document.goods.append_row (row);
-
-			/* Draw the goods table */
-			box_y += offset + preferences.elements_spacing_y;
-			offset = draw_table (document.goods,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     true);
 
 			/* Create a table to store notes */
-			notes_table = new Table (1);
-			notes_table.sizes = {Const.AUTOMATIC_SIZE};
+			table = new Table (1);
+			table.sizes = {Const.AUTOMATIC_SIZE};
 
-			row = new Row (notes_table.columns);
+			row = new Row (table.columns);
 			cell = row.get_cell (0);
 			cell.title = _("Notes");
 			cell.text = "\n";
 
-			notes_table.append_row (row);
+			table.append_row (row);
 
-			/* Create another info table */
-			reason_table = new Table (4);
-			reason_table.sizes = {200.0,
-			                      150.0,
-			                      150.0,
-			                      Const.AUTOMATIC_SIZE};
+			/* Paint notes table */
+			box_x = preferences.page_padding_x;
+			box_y = starting_point;
+			box_width = page_width - (2 * preferences.page_padding_x);
+			box_height = Const.AUTOMATIC_SIZE;
+			offset = draw_table (table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     mode);
 
-			row = new Row (reason_table.columns);
+			/* Create a table for goods info */
+			table = new Table (4);
+			table.sizes = {200.0,
+			               150.0,
+			               150.0,
+			               Const.AUTOMATIC_SIZE};
+
+			row = new Row (table.columns);
 			cell = row.get_cell (0);
 			cell.title = _("Reason");
 			cell.text = document.shipment_info.reason;
@@ -401,16 +423,24 @@ namespace Beebop {
 			cell.title = _("Outside appearance");
 			cell.text = document.goods_info.appearance;
 
-			reason_table.append_row (row);
+			table.append_row (row);
 
-			/* Create yet another info table */
-			date_table = new Table (4);
-			date_table.sizes = {200.0,
-			                    200.0,
-			                    Const.AUTOMATIC_SIZE,
-			                    150.0};
+			box_y += offset;
+			offset = draw_table (table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     mode);
 
-			row = new Row (date_table.columns);
+			/* Create a table for shipping info */
+			table = new Table (4);
+			table.sizes = {200.0,
+			               200.0,
+			               Const.AUTOMATIC_SIZE,
+			               150.0};
+
+			row = new Row (table.columns);
 			cell = row.get_cell (0);
 			cell.title = _("Shipping date and time");
 			cell.text = " ";
@@ -424,15 +454,23 @@ namespace Beebop {
 			cell.title = _("Weight");
 			cell.text = document.goods_info.weight;
 
-			date_table.append_row (row);
+			table.append_row (row);
+
+			box_y += offset;
+			offset = draw_table (table,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     mode);
 
 			/* Create a table for signatures */
-			signatures_table = new Table (3);
-			signatures_table.sizes = {200.0,
-			                          200.0,
-			                          Const.AUTOMATIC_SIZE};
+			table = new Table (3);
+			table.sizes = {200.0,
+			               200.0,
+			               Const.AUTOMATIC_SIZE};
 
-			row = new Row (signatures_table.columns);
+			row = new Row (table.columns);
 			cell = row.get_cell (0);
 			cell.title = _("Driver\xe2\x80\x99s signature");
 			cell.text = " ";
@@ -443,86 +481,21 @@ namespace Beebop {
 			cell.title = _("Recipient\xe2\x80\x99s signature");
 			cell.text = " ";
 
-			signatures_table.append_row (row);
+			table.append_row (row);
 
-			/* Calculate the total sizes of all these info tables */
-			box_y += offset + preferences.elements_spacing_y;
-			offset = 0.0;
-			offset += draw_table (notes_table,
-			                      box_x,
-			                      box_y,
-			                      box_width,
-			                      box_height,
-			                      false);
-			offset += draw_table (reason_table,
-			                      box_x,
-			                      box_y,
-			                      box_width,
-			                      box_height,
-			                      false);
-			offset += draw_table (date_table,
-			                      box_x,
-			                      box_y,
-			                      box_width,
-			                      box_height,
-			                      false);
-			offset += draw_table (signatures_table,
-			                      box_x,
-			                      box_y,
-			                      box_width,
-			                      box_height,
-			                      false);
-
-			/* Make sure the contents don't overflow the page height.
-			 *
-			 * Future versions will deal with the problem by splitting the goods
-			 * table into several pages; in the meantime, just make sure the
-			 * document can be drawn without overlapping stuff */
-			if (box_y + offset + preferences.page_padding_y > page_height) {
-
-				throw new DocumentError.TOO_MANY_GOODS (_("Too many goods. Please remove some."));
-			}
-
-			/* Calculate the correct starting point */
-			box_y = page_height - offset - preferences.page_padding_y;
-
-			/* Actually draw the tables */
-			offset = draw_table (notes_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     true);
 			box_y += offset;
-			offset = draw_table (reason_table,
+			offset = draw_table (table,
 			                     box_x,
 			                     box_y,
 			                     box_width,
 			                     box_height,
-			                     true);
+			                     mode);
+
 			box_y += offset;
-			offset = draw_table (date_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     true);
-			box_y += offset;
-			offset = draw_table (signatures_table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     true);
+			box_y -= starting_point;
 
-			context.show_page ();
-
-			if (context.status () != Cairo.Status.SUCCESS) {
-
-				throw new DocumentError.IO (_("Drawing error."));
-			}
+			return box_y;
 		}
-#endif
 
 		private double draw_text (string text, double x, double y, double width, double height, PaintMode mode) {
 
