@@ -93,6 +93,11 @@ namespace Beebop {
 			data.append (row);
 		}
 
+		public void remove_row () {
+
+			data.delete_link (data.last ());
+		}
+
 		/* TODO In case it is found to be useful
 		public void set_row (int j, Row row) {}
 		*/

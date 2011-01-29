@@ -51,11 +51,15 @@ namespace Beebop {
 		public void paint () throws Error {
 
 			Rsvg.DimensionData dimensions;
+			List<Table> tables;
+			Table table;
 			double page_width;
 			double page_height;
 			double header_height;
 			double footer_height;
 			double table_height;
+			int len;
+			int i;
 
 			dimensions = Rsvg.DimensionData ();
 
@@ -93,21 +97,29 @@ namespace Beebop {
 			               (2 * preferences.elements_spacing_y) -
 			               (2 * preferences.page_padding_y);
 
-			for (int i = 0; i < 3; i++) {
+			/* Split goods into appropriately-sized tables */
+			tables = prepare_tables (table_height,
+			                         page_width,
+			                         page_height);
+			len = (int) tables.length ();
+
+			for (i = 0; i < len; i++) {
 
 				/* Paint header */
 				paint_header (page_width,
 				              page_height,
 				              PaintMode.PAINT);
 
-				/* TODO Paint goods table */
-				context.rectangle (preferences.page_padding_x,
-				                   header_height +
-				                   preferences.page_padding_y +
-				                   preferences.elements_spacing_y,
-				                   page_width - (2 * preferences.page_padding_x),
-				                   table_height);
-				context.stroke ();
+				/* Paint table */
+				table = tables.nth_data (i);
+				draw_table (table,
+				            preferences.page_padding_x,
+				            header_height +
+				            preferences.page_padding_y +
+				            preferences.elements_spacing_y,
+				            page_width - (2 * preferences.page_padding_x),
+				            table_height,
+				            PaintMode.PAINT);
 
 				/* Paint footer */
 				paint_footer (page_height -
@@ -120,6 +132,104 @@ namespace Beebop {
 				/* Finish the current page */
 				context.show_page ();
 			}
+		}
+
+		/* Split all the goods into (possibly several) correctly sized tables  */
+		private List<Table> prepare_tables (double table_height, double page_width, double page_height) {
+
+			Gtk.TreeIter iter;
+			List<Table> tables;
+			Table table;
+			Row row; /* fight the powah! */
+			Cell cell;
+			double[] sizes;
+			string[] headings;
+			string code;
+			string reference;
+			string description;
+			string unit;
+			int quantity;
+			double height;
+
+			tables = new List<Table> ();
+
+			/* Column sizes and headings */
+			sizes = {70.0,
+			         100.0,
+			         Const.AUTOMATIC_SIZE,
+			         50.0,
+			         100.0};
+			headings = {_("Code"),
+			            _("Reference"),
+			            _("Description"),
+			            _("U.M."),
+			            _("Quantity")};
+
+			/* Create the first table */
+			table = new Table(5);
+			table.sizes = sizes;
+			table.headings = headings;
+
+			tables.append (table);
+
+			document.goods.get_iter_first (out iter);
+
+			do {
+
+				/* Get row values */
+				document.goods.get (iter,
+				                    Const.COLUMN_CODE, out code,
+				                    Const.COLUMN_REFERENCE, out reference,
+				                    Const.COLUMN_DESCRIPTION, out description,
+				                    Const.COLUMN_UNIT, out unit,
+				                    Const.COLUMN_QUANTITY, out quantity);
+
+				/* Fill a row and append it to the table */
+				row = new Row(table.columns);
+				cell = row.get_cell (0);
+				cell.text = code;
+				cell = row.get_cell (1);
+				cell.text = reference;
+				cell = row.get_cell (2);
+				cell.text = description;
+				cell = row.get_cell (3);
+				cell.text = unit;
+				cell = row.get_cell (4);
+				cell.text = "%d".printf (quantity);
+
+				table.append_row (row);
+
+				/* Calculated the vertical space that would be used
+				 * by the table */
+				height = draw_table (table,
+				                     preferences.page_padding_x,
+				                     0.0,
+				                     page_width - (2 * preferences.page_padding_x),
+				                     Const.AUTOMATIC_SIZE,
+				                     PaintMode.PRETEND);
+
+				/* The table is too big: roll back */
+				if (height > table_height) {
+
+					/* Remove the row that caused the overflow */
+					table.remove_row ();
+
+					/* Create a new table */
+					table = new Table(5);
+					table.sizes = sizes;
+					table.headings = headings;
+
+					tables.append (table);
+				}
+				else {
+
+					/* On to the next row */
+					document.goods.iter_next (ref iter);
+				}
+			}
+			while (document.goods.iter_is_valid (iter));
+
+			return tables;
 		}
 
 		/* Load required resources */
@@ -160,24 +270,6 @@ namespace Beebop {
 			}
 		}
 
-#if false
-		private void prepare_tables () {
-
-			/*
-			goods.sizes = {70.0,
-			               100.0,
-			               Const.AUTOMATIC_SIZE,
-			               50.0,
-			               100.0};
-			goods.headings = {_("Code"),
-			                  _("Reference"),
-			                  _("Description"),
-			                  _("U.M."),
-			                  _("Quantity")};
-			*/
-		}
-#endif
-
 		/* Draw the header */
 		private double paint_header (double page_width, double page_height, PaintMode mode) throws Error {
 
@@ -185,7 +277,7 @@ namespace Beebop {
 			Cairo.Context tmp_context;
 			Rsvg.DimensionData dimensions;
 			Table table;
-			Row row; /* fight the powa! */
+			Row row; /* fight the powah! */
 			Cell cell;
 			double logo_width;
 			double logo_height;
@@ -371,7 +463,7 @@ namespace Beebop {
 		private double paint_footer (double starting_point, double page_width, double page_height, PaintMode mode) {
 
 			Table table;
-			Row row; /* fight the powa! */
+			Row row; /* fight the powah! */
 			Cell cell;
 			double box_x;
 			double box_y;
