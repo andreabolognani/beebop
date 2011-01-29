@@ -229,6 +229,35 @@ namespace Beebop {
 			}
 			while (document.goods.iter_is_valid (iter));
 
+			/* Create a closing row */
+			row = new Row (table.columns);
+			cell = row.get_cell (0);
+			cell.text = "******";
+			cell = row.get_cell (1);
+			cell.text = "******";
+			cell = row.get_cell (2);
+			cell.text = "******";
+			cell = row.get_cell (3);
+			cell.text = "******";
+			cell = row.get_cell (4);
+			cell.text = "******";
+
+			table.append_row (row);
+
+			height = draw_table (table,
+			                     preferences.page_padding_x,
+			                     0.0,
+			                     page_width - (2 * preferences.page_padding_x),
+			                     Const.AUTOMATIC_SIZE,
+			                     PaintMode.PRETEND);
+
+			/* If the closing row causes the table to exceed its
+			 * allowed size, just remove it and call it a day */
+			if (height > table_height) {
+
+				table.remove_row ();
+			}
+
 			return tables;
 		}
 
