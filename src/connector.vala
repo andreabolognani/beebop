@@ -195,6 +195,10 @@ namespace Beebop {
 			view.goods_appearance_entry.changed.connect (goods_appearance_changed);
 			view.goods_parcels_spinbutton.changed.connect (goods_parcels_changed);
 			view.goods_weight_entry.changed.connect (goods_weight_changed);
+			view.shipment_reason_entry.changed.connect (shipment_reason_changed);
+			view.shipment_transported_by_entry.changed.connect (shipment_transported_by_changed);
+			view.shipment_carrier_entry.changed.connect (shipment_carrier_changed);
+			view.shipment_duties_entry.changed.connect (shipment_duties_changed);
 		}
 
 		/* Update the view to match the document */
@@ -889,6 +893,49 @@ namespace Beebop {
 
 			/* Update document */
 			document.goods_info.weight = view.goods_weight_entry.text;
+
+			/* Update view controls */
+			update_controls ();
+		}
+
+		/* React to changes to the shipment's reason */
+		private void shipment_reason_changed () {
+
+			/* Update document */
+			document.shipment_info.reason = view.shipment_reason_entry.text;
+
+			/* Update view controls */
+			update_controls ();
+		}
+
+		/* React to changes to who transports the shipment */
+		private void shipment_transported_by_changed () {
+
+			/* Update document */
+			document.shipment_info.transported_by = view.shipment_transported_by_entry.text;
+
+			/* Update view controls */
+			update_controls ();
+		}
+
+		/* React to changes to the shipments' carrier */
+		private void shipment_carrier_changed () {
+
+			/* Update document */
+			document.shipment_info.carrier = view.shipment_carrier_entry.text;
+
+			/* Update view controls */
+			update_controls ();
+		}
+
+		/* React to changes to the shipment's delivery duties */
+		private void shipment_duties_changed () {
+
+			/* Update document */
+			document.shipment_info.duties = view.shipment_duties_entry.text;
+
+			/* Update view controls */
+			update_controls ();
 		}
 	}
 }
