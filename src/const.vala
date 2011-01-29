@@ -52,7 +52,6 @@ namespace Beebop {
 
 		/* Preferences file groups and keys */
 		public const string GROUP = "Beebop";
-		public const string KEY_VIEWER = "viewer";
 		public const string KEY_HEADER_TEXT = "header_text";
 		public const string KEY_PAGE_PADDING = "page_padding";
 		public const string KEY_CELL_PADDING = "cell_padding";

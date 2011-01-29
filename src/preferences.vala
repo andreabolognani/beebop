@@ -28,8 +28,6 @@ namespace Beebop {
 		public string page_file { get; private set; }
 		public string logo_file { get; private set; }
 
-		public string viewer { get; set; }
-
 		public string header_text { get; set; }
 
 		public double page_padding_x { get; set; }
@@ -55,8 +53,6 @@ namespace Beebop {
 
 			page_file = Config.PKGDATADIR + "/page.svg";
 			logo_file = Config.PKGDATADIR + "/logo.svg";
-
-			viewer = "/usr/bin/evince";
 
 			header_text = "";
 
@@ -115,9 +111,6 @@ namespace Beebop {
 			}
 
 			/* Get all the config values */
-
-			viewer = pref.get_string (Const.GROUP,
-			                          Const.KEY_VIEWER);
 
 			/* Header */
 			header_text = pref.get_string (Const.GROUP,
@@ -191,9 +184,6 @@ namespace Beebop {
 			dimensions = new double[2];
 
 			/* Set preferences */
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_VIEWER,
-			                 viewer);
 
 			/* Header */
 			pref.set_string (Const.GROUP,
