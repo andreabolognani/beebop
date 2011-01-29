@@ -112,14 +112,14 @@ namespace Beebop {
 
 				/* Paint table */
 				table = tables.nth_data (i);
-				draw_table (table,
-				            preferences.page_padding_x,
-				            header_height +
-				            preferences.page_padding_y +
-				            preferences.elements_spacing_y,
-				            page_width - (2 * preferences.page_padding_x),
-				            table_height,
-				            PaintMode.PAINT);
+				paint_table (table,
+				             preferences.page_padding_x,
+				             header_height +
+				             preferences.page_padding_y +
+				             preferences.elements_spacing_y,
+				             page_width - (2 * preferences.page_padding_x),
+				             table_height,
+				             PaintMode.PAINT);
 
 				/* Paint footer */
 				paint_footer (page_height -
@@ -201,12 +201,12 @@ namespace Beebop {
 
 				/* Calculated the vertical space that would be used
 				 * by the table */
-				height = draw_table (table,
-				                     preferences.page_padding_x,
-				                     0.0,
-				                     page_width - (2 * preferences.page_padding_x),
-				                     Const.AUTOMATIC_SIZE,
-				                     PaintMode.PRETEND);
+				height = paint_table (table,
+				                      preferences.page_padding_x,
+				                      0.0,
+				                      page_width - (2 * preferences.page_padding_x),
+				                      Const.AUTOMATIC_SIZE,
+				                      PaintMode.PRETEND);
 
 				/* The table is too big: roll back */
 				if (height > table_height) {
@@ -244,12 +244,12 @@ namespace Beebop {
 
 			table.append_row (row);
 
-			height = draw_table (table,
-			                     preferences.page_padding_x,
-			                     0.0,
-			                     page_width - (2 * preferences.page_padding_x),
-			                     Const.AUTOMATIC_SIZE,
-			                     PaintMode.PRETEND);
+			height = paint_table (table,
+			                      preferences.page_padding_x,
+			                      0.0,
+			                      page_width - (2 * preferences.page_padding_x),
+			                      Const.AUTOMATIC_SIZE,
+			                      PaintMode.PRETEND);
 
 			/* If the closing row causes the table to exceed its
 			 * allowed size, just remove it and call it a day */
@@ -265,12 +265,12 @@ namespace Beebop {
 
 				table.append_row (row);
 
-				height = draw_table (table,
-				                     preferences.page_padding_x,
-				                     0.0,
-				                     page_width - (2 * preferences.page_padding_x),
-				                     Const.AUTOMATIC_SIZE,
-				                     PaintMode.PRETEND);
+				height = paint_table (table,
+				                      preferences.page_padding_x,
+				                      0.0,
+				                      page_width - (2 * preferences.page_padding_x),
+				                      Const.AUTOMATIC_SIZE,
+				                      PaintMode.PRETEND);
 
 				/* Too many empty rows: drop the last one and finish */
 				if (height > table_height) {
@@ -322,7 +322,7 @@ namespace Beebop {
 			}
 		}
 
-		/* Draw the header */
+		/* Paint the header */
 		private double paint_header (double page_width, double page_height, PaintMode mode) throws Error {
 
 			Cairo.Surface tmp_surface;
@@ -389,7 +389,7 @@ namespace Beebop {
 			cell = new Cell ();
 			cell.text = preferences.header_text;
 
-			/* Draw the header (usually sender's info). The width of the cell,
+			/* Paint the header (usually sender's info). The width of the cell,
 			 * as well as its horizontal starting point, is chosen not to
 			 * overlap with either the address boxes or the logo */
 			box_x = preferences.page_padding_x +
@@ -404,40 +404,40 @@ namespace Beebop {
 						preferences.elements_spacing_x +
 			            preferences.cell_padding_x;
 			box_height = Const.AUTOMATIC_SIZE;
-			offset = draw_cell (cell,
-			                    box_x,
-			                    box_y,
-			                    box_width,
-			                    box_height,
-			                    mode);
+			offset = paint_cell (cell,
+			                     box_x,
+			                     box_y,
+			                     box_width,
+			                     box_height,
+			                     mode);
 
 			/* This will be the new starting point if the address
 			 * boxes are not taller */
 			starting_point = box_y + offset - preferences.cell_padding_y;
 
-			/* Draw the recipient's address in a right-aligned box */
+			/* Paint the recipient's address in a right-aligned box */
 			box_width = preferences.address_box_width;
 			box_height = Const.AUTOMATIC_SIZE;
 			box_x = page_width - preferences.page_padding_x - box_width;
 			box_y = preferences.page_padding_y;
-			offset = draw_company_address (_("Recipient"),
-			                               document.recipient,
-			                               box_x,
-			                               box_y,
-			                               box_width,
-			                               box_height,
-			                               mode);
+			offset = paint_company_address (_("Recipient"),
+			                                document.recipient,
+			                                box_x,
+			                                box_y,
+			                                box_width,
+			                                box_height,
+			                                mode);
 
-			/* Draw the destination's address in a right-aligned box,
+			/* Paint the destination's address in a right-aligned box,
 			 * just below the one used for the recipient's address */
 			box_y += offset + preferences.elements_spacing_y;
-			offset = draw_company_address (_("Destination"),
-			                               document.destination,
-			                               box_x,
-			                               box_y,
-			                               box_width,
-			                               box_height,
-			                               mode);
+			offset = paint_company_address (_("Destination"),
+			                                document.destination,
+			                                box_x,
+			                                box_y,
+			                                box_width,
+			                                box_height,
+			                                mode);
 
 			/* The starting point is either below the address boxes or
 			 * below the header, depending on which one is taller */
@@ -467,17 +467,17 @@ namespace Beebop {
 
 			table.append_row (row);
 
-			/* Draw first part of document info */
+			/* Paint first part of document info */
 			box_width = page_width - (2 * preferences.page_padding_x);
 			box_height = Const.AUTOMATIC_SIZE;
 			box_x = preferences.page_padding_x;
 			box_y = starting_point + preferences.elements_spacing_y;
-			offset = draw_table (table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     mode);
+			offset = paint_table (table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      mode);
 
 			table = new Table (3);
 			table.sizes = {200.0,
@@ -497,14 +497,14 @@ namespace Beebop {
 
 			table.append_row (row);
 
-			/* Draw second part of document info */
+			/* Paint second part of document info */
 			box_y += offset;
-			offset = draw_table (table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     mode);
+			offset = paint_table (table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      mode);
 
 			starting_point = box_y + offset - preferences.page_padding_y;
 
@@ -539,12 +539,12 @@ namespace Beebop {
 			box_y = starting_point;
 			box_width = page_width - (2 * preferences.page_padding_x);
 			box_height = Const.AUTOMATIC_SIZE;
-			offset = draw_table (table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     mode);
+			offset = paint_table (table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      mode);
 
 			/* Create a table for goods info */
 			table = new Table (4);
@@ -570,12 +570,12 @@ namespace Beebop {
 			table.append_row (row);
 
 			box_y += offset;
-			offset = draw_table (table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     mode);
+			offset = paint_table (table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      mode);
 
 			/* Create a table for shipping info */
 			table = new Table (4);
@@ -601,12 +601,12 @@ namespace Beebop {
 			table.append_row (row);
 
 			box_y += offset;
-			offset = draw_table (table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     mode);
+			offset = paint_table (table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      mode);
 
 			/* Create a table for signatures */
 			table = new Table (3);
@@ -628,12 +628,12 @@ namespace Beebop {
 			table.append_row (row);
 
 			box_y += offset;
-			offset = draw_table (table,
-			                     box_x,
-			                     box_y,
-			                     box_width,
-			                     box_height,
-			                     mode);
+			offset = paint_table (table,
+			                      box_x,
+			                      box_y,
+			                      box_width,
+			                      box_height,
+			                      mode);
 
 			box_y += offset;
 			box_y -= starting_point;
@@ -641,7 +641,235 @@ namespace Beebop {
 			return box_y;
 		}
 
-		private double draw_text (string text, double x, double y, double width, double height, PaintMode mode) {
+		/* Paint a cell (with no border) */
+		private double paint_cell (Cell cell, double x, double y, double width, double height, PaintMode mode) {
+
+			string text;
+
+			text = "";
+
+			/* Add the title before the text, if a title is set */
+			if (cell.title.collate ("") != 0) {
+
+				text += "<b>" + Markup.escape_text (cell.title) + "</b>";
+
+				/* Start a new line after the title only if there is some text */
+				if (cell.text.collate ("") != 0) {
+					text += "\n";
+				}
+			}
+
+			text += Markup.escape_text (cell.text);
+
+			height = paint_text (text,
+			                    x + preferences.cell_padding_x,
+			                    y + preferences.cell_padding_y,
+			                    width - (2 * preferences.cell_padding_x),
+			                    height,
+			                    mode);
+
+			/* Add vertical padding to the text height */
+			height += (2 * preferences.cell_padding_y);
+
+			return height;
+		}
+
+		/* Paint a cell (with border) */
+		private double paint_cell_with_border (Cell cell, double x, double y, double width, double height, PaintMode mode) {
+
+			height = paint_cell (cell,
+			                    x,
+			                    y,
+			                    width,
+			                    height,
+			                    mode);
+
+			if (mode == PaintMode.PAINT) {
+
+				/* Paint the border */
+				context.rectangle (x,
+				                   y,
+				                   width,
+				                   height);
+				context.stroke ();
+			}
+
+			return height;
+		}
+
+		private double paint_company_address (string title, CompanyInfo company, double x, double y, double width, double height, PaintMode mode) {
+
+			Cell cell;
+
+			cell = new Cell ();
+
+			cell.title = title;
+			cell.text = company.name + "\n";
+			cell.text += company.street + "\n";
+			cell.text += company.city;
+
+			height = paint_cell_with_border (cell,
+			                                x,
+			                                y,
+			                                width,
+			                                height,
+			                                mode);
+
+			return height;
+		}
+
+		/* Paint a table */
+		private double paint_table (Table table, double x, double y, double width, double height, PaintMode mode) {
+
+			Row row;
+			double[] tmp;
+			double[] sizes;
+			double offset;
+			int len;
+			int i;
+			bool paint_headings;
+
+			/* XXX Use a temporary variable here because Vala doesn't
+			 * seem to like direct access to an array property */
+			tmp = table.sizes;
+
+			len = tmp.length;
+			sizes = new double[len];
+			offset = 0.0;
+			height = 0.0;
+
+			for (i = 0; i < len; i++) {
+
+				sizes[i] = tmp[i];
+
+				/* If the size of the column is not zero or less, add it
+				 * to the accumulator */
+				if (sizes[i] > 0.0) {
+					offset += sizes[i];
+				}
+			}
+
+			for (i = 0; i < len; i++) {
+
+				/* -1.0 is used as a placeholder size: the actual size
+				 * of the column is calculated at paint time so that it
+				 * fills all the horizontal space not used by the
+				 * other columns */
+				if (sizes[i] <= 0) {
+					sizes[i] = width - offset;
+				}
+			}
+
+			paint_headings = false;
+
+			/* Create headings row */
+			row = new Row (len);
+			for (i = 0; i < len; i++) {
+
+				row.get_cell (i).title = table.headings[i];
+
+				/* If at least one of the headings is not empty,
+				 * paint all headings */
+				if (table.headings[i].collate ("") != 0) {
+
+					paint_headings = true;
+				}
+			}
+
+			if (paint_headings) {
+
+				offset = paint_row (row,
+				                    sizes,
+				                    x,
+				                    y,
+				                    width,
+				                    height,
+				                    mode);
+				y += offset;
+				height += offset;
+			}
+
+			/* Get the number of data rows */
+			len = table.rows;
+
+			for (i = 0; i < len; i++) {
+
+				/* Paint a row */
+				row = table.get_row (i);
+				offset = paint_row (row,
+				                    sizes,
+				                    x,
+				                    y,
+				                    width,
+				                    height,
+				                    mode);
+
+				/* Update the vertical offset */
+				y += offset;
+				height += offset;
+			}
+
+			return height;
+		}
+
+		/* Paint a table row */
+		private double paint_row (Row row, double[] sizes, double x, double y, double width, double height, PaintMode mode) {
+
+			double box_x;
+			double box_y;
+			double box_width;
+			double box_height;
+			double offset;
+			int len;
+			int i;
+
+			len = sizes.length;
+
+			box_y = y;
+			box_height = Const.AUTOMATIC_SIZE;
+
+			box_x = x;
+
+			for (i = 0; i < len; i++) {
+
+				box_width = sizes[i];
+
+				offset = paint_cell (row.get_cell (i),
+				                     box_x,
+				                     box_y,
+				                     box_width,
+				                     box_height,
+				                     mode);
+
+				box_height = Math.fmax (box_height, offset);
+
+				/* Move to the next column */
+				box_x += box_width;
+			}
+
+			/* Paint the borders around all the boxes */
+			for (i = 0; i < len; i++) {
+
+				box_width = sizes[i];
+
+				if (mode == PaintMode.PAINT) {
+
+					context.rectangle (x,
+					                   y,
+					                   box_width,
+					                   box_height);
+					context.stroke ();
+				}
+
+				/* Move to the next column */
+				x += box_width;
+			}
+
+			return box_height;
+		}
+
+		/* Paint text */
+		private double paint_text (string text, double x, double y, double width, double height, PaintMode mode) {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -673,229 +901,6 @@ namespace Beebop {
 			                 out text_height);
 
 			return (text_height / Pango.SCALE);
-		}
-
-		private double draw_cell (Cell cell, double x, double y, double width, double height, PaintMode mode) {
-
-			string text;
-
-			text = "";
-
-			/* Add the title before the text, if a title is set */
-			if (cell.title.collate ("") != 0) {
-
-				text += "<b>" + Markup.escape_text (cell.title) + "</b>";
-
-				/* Start a new line after the title only if there is some text */
-				if (cell.text.collate ("") != 0) {
-					text += "\n";
-				}
-			}
-
-			text += Markup.escape_text (cell.text);
-
-			height = draw_text (text,
-			                    x + preferences.cell_padding_x,
-			                    y + preferences.cell_padding_y,
-			                    width - (2 * preferences.cell_padding_x),
-			                    height,
-			                    mode);
-
-			/* Add vertical padding to the text height */
-			height += (2 * preferences.cell_padding_y);
-
-			return height;
-		}
-
-		private double draw_cell_with_border (Cell cell, double x, double y, double width, double height, PaintMode mode) {
-
-			height = draw_cell (cell,
-			                    x,
-			                    y,
-			                    width,
-			                    height,
-			                    mode);
-
-			if (mode == PaintMode.PAINT) {
-
-				/* Draw the border */
-				context.rectangle (x,
-				                   y,
-				                   width,
-				                   height);
-				context.stroke ();
-			}
-
-			return height;
-		}
-
-		private double draw_company_address (string title, CompanyInfo company, double x, double y, double width, double height, PaintMode mode) {
-
-			Cell cell;
-
-			cell = new Cell ();
-
-			cell.title = title;
-			cell.text = company.name + "\n";
-			cell.text += company.street + "\n";
-			cell.text += company.city;
-
-			height = draw_cell_with_border (cell,
-			                                x,
-			                                y,
-			                                width,
-			                                height,
-			                                mode);
-
-			return height;
-		}
-
-		private double draw_table (Table table, double x, double y, double width, double height, PaintMode mode) {
-
-			Row row;
-			double[] tmp;
-			double[] sizes;
-			double offset;
-			int len;
-			int i;
-			bool draw_headings;
-
-			/* XXX Use a temporary variable here because Vala doesn't
-			 * seem to like direct access to an array property */
-			tmp = table.sizes;
-
-			len = tmp.length;
-			sizes = new double[len];
-			offset = 0.0;
-			height = 0.0;
-
-			for (i = 0; i < len; i++) {
-
-				sizes[i] = tmp[i];
-
-				/* If the size of the column is not zero or less, add it
-				 * to the accumulator */
-				if (sizes[i] > 0.0) {
-					offset += sizes[i];
-				}
-			}
-
-			for (i = 0; i < len; i++) {
-
-				/* -1.0 is used as a placeholder size: the actual size
-				 * of the column is calculated at draw time so that it
-				 * fills all the horizontal space not used by the
-				 * other columns */
-				if (sizes[i] <= 0) {
-					sizes[i] = width - offset;
-				}
-			}
-
-			draw_headings = false;
-
-			/* Create headings row */
-			row = new Row (len);
-			for (i = 0; i < len; i++) {
-
-				row.get_cell (i).title = table.headings[i];
-
-				/* If at least one of the headings is not empty,
-				 * draw all headings */
-				if (table.headings[i].collate ("") != 0) {
-
-					draw_headings = true;
-				}
-			}
-
-			if (draw_headings) {
-
-				offset = draw_row (row,
-				                   sizes,
-				                   x,
-				                   y,
-				                   width,
-				                   height,
-				                   mode);
-				y += offset;
-				height += offset;
-			}
-
-			/* Get the number of data rows */
-			len = table.rows;
-
-			for (i = 0; i < len; i++) {
-
-				/* Draw a row */
-				row = table.get_row (i);
-				offset = draw_row (row,
-				                   sizes,
-				                   x,
-				                   y,
-				                   width,
-				                   height,
-				                   mode);
-
-				/* Update the vertical offset */
-				y += offset;
-				height += offset;
-			}
-
-			return height;
-		}
-
-		private double draw_row (Row row, double[] sizes, double x, double y, double width, double height, PaintMode mode) {
-
-			double box_x;
-			double box_y;
-			double box_width;
-			double box_height;
-			double offset;
-			int len;
-			int i;
-
-			len = sizes.length;
-
-			box_y = y;
-			box_height = Const.AUTOMATIC_SIZE;
-
-			box_x = x;
-
-			for (i = 0; i < len; i++) {
-
-				box_width = sizes[i];
-
-				offset = draw_cell (row.get_cell (i),
-				                    box_x,
-				                    box_y,
-				                    box_width,
-				                    box_height,
-				                    mode);
-
-				box_height = Math.fmax (box_height, offset);
-
-				/* Move to the next column */
-				box_x += box_width;
-			}
-
-			/* Draw the borders around all the boxes */
-			for (i = 0; i < len; i++) {
-
-				box_width = sizes[i];
-
-				if (mode == PaintMode.PAINT) {
-
-					context.rectangle (x,
-					                   y,
-					                   box_width,
-					                   box_height);
-					context.stroke ();
-				}
-
-				/* Move to the next column */
-				x += box_width;
-			}
-
-			return box_height;
 		}
 	}
 }
