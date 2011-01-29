@@ -31,7 +31,6 @@ namespace Beebop {
 		private bool _unsaved;
 		private string _number;
 		private string _date;
-		private string _page_number;
 		private Gtk.ListStore _goods;
 
 		public bool unsaved {
@@ -80,20 +79,6 @@ namespace Beebop {
 			set {
 				if (value.collate (_date) != 0) {
 					_date = value;
-					unsaved = true;
-				}
-			}
-		}
-
-		public string page_number {
-
-			get {
-				return _page_number;
-			}
-
-			set {
-				if (value.collate (_page_number) != 0) {
-					_page_number = value;
 					unsaved = true;
 				}
 			}
@@ -152,7 +137,6 @@ namespace Beebop {
 
 			_number = "";
 			_date = now.format ("%d/%m/%Y");
-			_page_number = _("1 of 1");
 
 			recipient = new CompanyInfo ();
 			destination = new CompanyInfo ();
@@ -319,10 +303,6 @@ namespace Beebop {
 				else if ((node->name).collate (Const.TAG_DATE) == 0) {
 
 					date = node->get_content ();
-				}
-				else if ((node->name).collate (Const.TAG_PAGE_NUMBER) == 0) {
-
-					page_number = node->get_content ();
 				}
 				else if ((node->name).collate (Const.TAG_RECIPIENT) == 0) {
 
@@ -553,9 +533,6 @@ namespace Beebop {
 			parent->new_text_child (null,
 			                        Const.TAG_DATE,
 			                        date);
-			parent->new_text_child (null,
-			                        Const.TAG_PAGE_NUMBER,
-			                        page_number);
 
 			/* Recipient */
 			node = parent->new_text_child (null,

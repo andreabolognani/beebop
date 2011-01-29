@@ -27,7 +27,6 @@ namespace Beebop {
 		public const string TAG_DOCUMENT = "document";
 		public const string TAG_NUMBER = "number";
 		public const string TAG_DATE = "date";
-		public const string TAG_PAGE_NUMBER = "page_number";
 		public const string TAG_RECIPIENT = "recipient";
 		public const string TAG_DESTINATION = "destination";
 		public const string TAG_SHIPMENT = "shipment";
@@ -89,7 +88,6 @@ namespace Beebop {
 		public const string OBJ_SEND_TO_RECIPIENT_CHECKBUTTON = "send_to_recipient_checkbutton";
 		public const string OBJ_DOCUMENT_NUMBER_ENTRY = "document_number_entry";
 		public const string OBJ_DOCUMENT_DATE_ENTRY = "document_date_entry";
-		public const string OBJ_DOCUMENT_PAGE_ENTRY = "document_page_entry";
 		public const string OBJ_GOODS_APPEARANCE_ENTRY = "goods_appearance_entry";
 		public const string OBJ_GOODS_PARCELS_SPINBUTTON = "goods_parcels_spinbutton";
 		public const string OBJ_GOODS_WEIGHT_ENTRY = "goods_weight_entry";

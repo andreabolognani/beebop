@@ -192,7 +192,6 @@ namespace Beebop {
 			view.destination_city_entry.changed.connect (destination_city_changed);
 			view.document_number_entry.changed.connect (document_number_changed);
 			view.document_date_entry.changed.connect (document_date_changed);
-			view.document_page_entry.changed.connect (document_page_changed);
 			view.goods_appearance_entry.changed.connect (goods_appearance_changed);
 			view.goods_parcels_spinbutton.changed.connect (goods_parcels_changed);
 			view.goods_weight_entry.changed.connect (goods_weight_changed);
@@ -243,7 +242,6 @@ namespace Beebop {
 			/* Document info */
 			view.document_number_entry.text = document.number;
 			view.document_date_entry.text = document.date;
-			view.document_page_entry.text = document.page_number;
 
 			/* Goods info */
 			view.goods_appearance_entry.text = document.goods_info.appearance;
@@ -861,16 +859,6 @@ namespace Beebop {
 
 			/* Update document */
 			document.date = view.document_date_entry.text;
-
-			/* Update view controls */
-			update_controls ();
-		}
-
-		/* React to changes of the document's page number */
-		private void document_page_changed () {
-
-			/* Update document */
-			document.page_number = view.document_page_entry.text;
 
 			/* Update view controls */
 			update_controls ();

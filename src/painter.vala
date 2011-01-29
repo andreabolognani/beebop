@@ -81,7 +81,8 @@ namespace Beebop {
 
 			/* Do a pretend paint run to calculate header and
 			 * footer height */
-			header_height = paint_header (page_width,
+			header_height = paint_header ("100 of 100",
+			                              page_width,
 			                              page_height,
 			                              PaintMode.PRETEND);
 			footer_height = paint_footer (0.0,
@@ -106,7 +107,8 @@ namespace Beebop {
 			for (i = 0; i < len; i++) {
 
 				/* Paint header */
-				paint_header (page_width,
+				paint_header (_("%d of %d").printf (i + 1, len),
+				              page_width,
 				              page_height,
 				              PaintMode.PAINT);
 
@@ -323,7 +325,7 @@ namespace Beebop {
 		}
 
 		/* Paint the header */
-		private double paint_header (double page_width, double page_height, PaintMode mode) throws Error {
+		private double paint_header (string page_number, double page_width, double page_height, PaintMode mode) throws Error {
 
 			Cairo.Surface tmp_surface;
 			Cairo.Context tmp_context;
@@ -463,7 +465,7 @@ namespace Beebop {
 			cell.text = document.date;
 			cell = row.get_cell (3);
 			cell.title = _("Page");
-			cell.text = document.page_number;
+			cell.text = page_number;
 
 			table.append_row (row);
 

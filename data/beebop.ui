@@ -25,6 +25,7 @@
                         <property name="visible">True</property>
                         <property name="related_action">new_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <accelerator key="n" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
@@ -54,6 +55,7 @@
                         <property name="visible">True</property>
                         <property name="related_action">save_as_action</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                       </object>
@@ -648,7 +650,7 @@
                             <child>
                               <object class="GtkTable" id="table4">
                                 <property name="visible">True</property>
-                                <property name="n_rows">3</property>
+                                <property name="n_rows">2</property>
                                 <property name="n_columns">2</property>
                                 <property name="column_spacing">5</property>
                                 <property name="row_spacing">2</property>
@@ -699,33 +701,6 @@
                                   <packing>
                                     <property name="left_attach">1</property>
                                     <property name="right_attach">2</property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="label4">
-                                    <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">Page number</property>
-                                  </object>
-                                  <packing>
-                                    <property name="top_attach">2</property>
-                                    <property name="bottom_attach">3</property>
-                                    <property name="x_options"></property>
-                                    <property name="y_options"></property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkEntry" id="document_page_entry">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="invisible_char">&#x25CF;</property>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
-                                    <property name="top_attach">2</property>
-                                    <property name="bottom_attach">3</property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -1708,7 +1683,7 @@
   <object class="GtkAction" id="open_action">
     <property name="stock_id">gtk-open</property>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup2">
+  <object class="GtkSizeGroup" id="main_sizegroup">
     <widgets>
       <widget name="label1"/>
       <widget name="label2"/>
@@ -1720,17 +1695,16 @@
       <widget name="label11"/>
       <widget name="label12"/>
       <widget name="label13"/>
-      <widget name="label4"/>
       <widget name="label21"/>
       <widget name="label22"/>
       <widget name="label23"/>
+      <widget name="label20"/>
       <widget name="label6"/>
       <widget name="label7"/>
       <widget name="label8"/>
-      <widget name="label20"/>
     </widgets>
   </object>
-  <object class="GtkSizeGroup" id="sizegroup1">
+  <object class="GtkSizeGroup" id="preferences_sizegroup">
     <widgets>
       <widget name="label16"/>
       <widget name="label17"/>

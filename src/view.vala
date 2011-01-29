@@ -42,7 +42,6 @@ namespace Beebop {
 
 		public Gtk.Entry document_number_entry { get; private set; }
 		public Gtk.Entry document_date_entry { get; private set; }
-		public Gtk.Entry document_page_entry { get; private set; }
 		public Gtk.Entry goods_appearance_entry { get; private set; }
 		public Gtk.SpinButton goods_parcels_spinbutton { get; private set; }
 		public Gtk.Entry goods_weight_entry { get; private set; }
@@ -108,8 +107,6 @@ namespace Beebop {
 			document_number_entry = get_object (ui, Const.OBJ_DOCUMENT_NUMBER_ENTRY)
 			                        as Gtk.Entry;
 			document_date_entry = get_object (ui, Const.OBJ_DOCUMENT_DATE_ENTRY)
-			                      as Gtk.Entry;
-			document_page_entry = get_object (ui, Const.OBJ_DOCUMENT_PAGE_ENTRY)
 			                      as Gtk.Entry;
 			goods_appearance_entry = get_object (ui, Const.OBJ_GOODS_APPEARANCE_ENTRY)
 			                         as Gtk.Entry;
