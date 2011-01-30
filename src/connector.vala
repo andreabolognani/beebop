@@ -596,8 +596,8 @@ namespace Beebop {
 			Gtk.Widget widget;
 			File handle;
 			FileInfo info;
-			bool editable;
 			string title;
+			bool editable;
 
 			if (document.filename.collate ("") != 0) {
 
@@ -663,16 +663,22 @@ namespace Beebop {
 					view.cut_action.sensitive = true;
 					view.copy_action.sensitive = true;
 
-					/* Get the default clipboard */
+					/* Get the default clipboard and retrieve its contents */
 					clipboard = Gtk.Clipboard.get (Gdk.SELECTION_CLIPBOARD);
-
-					/* If some text is available, enable the paste action */
-					if (clipboard.wait_is_text_available ()) {
-
-						view.paste_action.sensitive = true;
-					}
+					clipboard.request_text ((cboard, text) => {
+						if (text != null) {
+							clipboard_text_received (text);
+						}
+					});
 				}
 			}
+		}
+
+		/* Enable / disable paste action based on clipboard contents */
+		private void clipboard_text_received (string text) {
+
+			/* Enable the paste action if there is some text in the clipboard */
+			view.paste_action.sensitive = (text.collate ("") != 0);
 		}
 
 		/* Check whether send to recipient is active  */
