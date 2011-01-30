@@ -101,7 +101,7 @@ namespace Beebop {
 
 				/* Parse the contents of the preferences file */
 				pref.load_from_data (data,
-				                     data.len (),
+				                     len,
 				                     KeyFileFlags.NONE);
 			}
 			catch (IOError.NOT_FOUND e) {
@@ -256,7 +256,7 @@ namespace Beebop {
 
 			/* Replace the old preferences file (if any) */
 			handle.replace_contents (data,
-			                         data.len (),
+			                         len,
 			                         null,    /* No etag */
 			                         true,    /* Create backup */
 			                         FileCreateFlags.NONE,
