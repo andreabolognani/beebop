@@ -1,0 +1,20 @@
+--- gtk+-2.0.vapi.orig	2011-01-30 11:34:12.551344726 +0100
++++ gtk+-2.0.vapi	2011-01-30 11:35:15.507345886 +0100
+@@ -2163,7 +2163,7 @@
+ 		public uint get_mnemonic_keyval ();
+ 		public unowned Gtk.Widget get_mnemonic_widget ();
+ 		public bool get_selectable ();
+-		public bool get_selection_bounds (int start, int end);
++		public bool get_selection_bounds (out int start, out int end);
+ 		public bool get_single_line_mode ();
+ 		public unowned string get_text ();
+ 		public bool get_track_visited_links ();
+@@ -7153,7 +7153,7 @@
+ 	[CCode (cheader_filename = "gtk/gtk.h")]
+ 	public delegate void ClipboardTargetsReceivedFunc (Gtk.Clipboard clipboard, out Gdk.Atom atoms, int n_atoms);
+ 	[CCode (cheader_filename = "gtk/gtk.h")]
+-	public delegate void ClipboardTextReceivedFunc (Gtk.Clipboard clipboard, string text);
++	public delegate void ClipboardTextReceivedFunc (Gtk.Clipboard clipboard, string? text);
+ 	[CCode (cheader_filename = "gtk/gtk.h")]
+ 	public delegate void ClipboardURIReceivedFunc (Gtk.Clipboard clipboard, string uris);
+ 	[CCode (cheader_filename = "gtk/gtk.h", has_target = false)]

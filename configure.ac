@@ -101,6 +101,7 @@ AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
 	vapi/Makefile
+	patches/Makefile
 	po/Makefile.in
 	src/Makefile])
 

@@ -3,6 +3,7 @@ NULL =
 SUBDIRS = \
 	data \
 	vapi \
+	patches \
 	po \
 	src \
 	$(NULL)
