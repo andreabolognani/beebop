@@ -646,11 +646,6 @@ namespace Beebop {
 
 			if (widget != null) {
 
-				/* Disable all action by default */
-				view.cut_action.sensitive = false;
-				view.copy_action.sensitive = false;
-				view.paste_action.sensitive = false;
-
 				editable = widget is Gtk.Editable;
 
 				if (editable) {
@@ -670,6 +665,13 @@ namespace Beebop {
 							clipboard_text_received (text);
 						}
 					});
+				}
+				else {
+
+					/* Disable editing actions for non-editable widgets */
+					view.cut_action.sensitive = false;
+					view.copy_action.sensitive = false;
+					view.paste_action.sensitive = false;
 				}
 			}
 		}
