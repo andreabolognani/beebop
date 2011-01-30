@@ -30,6 +30,8 @@ namespace Beebop {
 
 		public string header_text { get; set; }
 
+		public string document_directory { get; set; }
+
 		public double page_padding_x { get; set; }
 		public double page_padding_y { get; set; }
 		public double cell_padding_x { get; set; }
@@ -55,6 +57,8 @@ namespace Beebop {
 			logo_file = Config.PKGDATADIR + "/logo.svg";
 
 			header_text = "";
+
+			document_directory = Environment.get_user_special_dir (UserDirectory.DOCUMENTS);
 
 			page_padding_x = 10.0;
 			page_padding_y = 10.0;
@@ -115,6 +119,10 @@ namespace Beebop {
 			/* Header */
 			header_text = pref.get_string (Const.GROUP,
 			                               Const.KEY_HEADER_TEXT);
+
+			/* Locations */
+			document_directory = pref.get_string (Const.GROUP,
+			                                      Const.KEY_DOCUMENT_DIRECTORY);
 
 			/* Sizes */
 			dimensions = pref.get_double_list (Const.GROUP,
@@ -189,6 +197,11 @@ namespace Beebop {
 			pref.set_string (Const.GROUP,
 			                 Const.KEY_HEADER_TEXT,
 			                 header_text);
+
+			/* Locations */
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_DOCUMENT_DIRECTORY,
+			                 document_directory);
 
 			/* Sizes */
 			dimensions[0] = page_padding_x;

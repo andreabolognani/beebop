@@ -73,6 +73,9 @@ namespace Beebop {
 			/* Header */
 			view.header_textview.buffer.text = preferences.header_text;
 
+			/* Locations */
+			view.document_directory_button.set_current_folder (preferences.document_directory);
+
 			/* Sizes */
 			view.page_padding_x_spinbutton.value = preferences.page_padding_x;
 			view.page_padding_y_spinbutton.value = preferences.page_padding_y;
@@ -120,6 +123,9 @@ namespace Beebop {
 			preferences.header_text = view.header_textview.buffer.get_text (start,
 			                                                                end,
 			                                                                false);
+
+			/* Get document directory */
+			preferences.document_directory = view.document_directory_button.get_current_folder ();
 
 			/* Get other values */
 			preferences.page_padding_x = view.page_padding_x_spinbutton.value;

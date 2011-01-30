@@ -24,6 +24,8 @@ namespace Beebop {
 
 		public Gtk.TextView header_textview { get; private set; }
 
+		public Gtk.FileChooserButton document_directory_button { get; private set; }
+
 		public Gtk.SpinButton page_padding_x_spinbutton { get; private set; }
 		public Gtk.SpinButton page_padding_y_spinbutton { get; private set; }
 		public Gtk.SpinButton cell_padding_x_spinbutton { get; private set; }
@@ -64,6 +66,8 @@ namespace Beebop {
 			                     as Gtk.Window;
 			header_textview = get_object (ui, Const.OBJ_HEADER_TEXTVIEW)
 			                   as Gtk.TextView;
+			document_directory_button = get_object (ui, Const.OBJ_DOCUMENT_DIRECTORY_BUTTON)
+			                            as Gtk.FileChooserButton;
 			page_padding_x_spinbutton = get_object (ui, Const.OBJ_PAGE_PADDING_X_SPINBUTTON)
 			                            as Gtk.SpinButton;
 			page_padding_y_spinbutton = get_object (ui, Const.OBJ_PAGE_PADDING_Y_SPINBUTTON)
