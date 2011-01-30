@@ -182,23 +182,23 @@ namespace Beebop {
 					update_controls ();
 				}
 			});
-			view.recipient_name_entry.changed.connect (recipient_name_changed);
-			view.recipient_street_entry.changed.connect (recipient_street_changed);
-			view.recipient_city_entry.changed.connect (recipient_city_changed);
-			view.recipient_vatin_entry.changed.connect (recipient_vatin_changed);
-			view.recipient_client_code_entry.changed.connect (recipient_client_code_changed);
-			view.destination_name_entry.changed.connect (destination_name_changed);
-			view.destination_street_entry.changed.connect (destination_street_changed);
-			view.destination_city_entry.changed.connect (destination_city_changed);
-			view.document_number_entry.changed.connect (document_number_changed);
-			view.document_date_entry.changed.connect (document_date_changed);
-			view.goods_appearance_entry.changed.connect (goods_appearance_changed);
-			view.goods_parcels_spinbutton.changed.connect (goods_parcels_changed);
-			view.goods_weight_entry.changed.connect (goods_weight_changed);
-			view.shipment_reason_entry.changed.connect (shipment_reason_changed);
-			view.shipment_transported_by_entry.changed.connect (shipment_transported_by_changed);
-			view.shipment_carrier_entry.changed.connect (shipment_carrier_changed);
-			view.shipment_duties_entry.changed.connect (shipment_duties_changed);
+			view.recipient_name_entry.event.connect (recipient_name_changed);
+			view.recipient_street_entry.event.connect (recipient_street_changed);
+			view.recipient_city_entry.event.connect (recipient_city_changed);
+			view.recipient_vatin_entry.event.connect (recipient_vatin_changed);
+			view.recipient_client_code_entry.event.connect (recipient_client_code_changed);
+			view.destination_name_entry.event.connect (destination_name_changed);
+			view.destination_street_entry.event.connect (destination_street_changed);
+			view.destination_city_entry.event.connect (destination_city_changed);
+			view.document_number_entry.event.connect (document_number_changed);
+			view.document_date_entry.event.connect (document_date_changed);
+			view.goods_appearance_entry.event.connect (goods_appearance_changed);
+			view.goods_parcels_spinbutton.event.connect (goods_parcels_changed);
+			view.goods_weight_entry.event.connect (goods_weight_changed);
+			view.shipment_reason_entry.event.connect (shipment_reason_changed);
+			view.shipment_transported_by_entry.event.connect (shipment_transported_by_changed);
+			view.shipment_carrier_entry.event.connect (shipment_carrier_changed);
+			view.shipment_duties_entry.event.connect (shipment_duties_changed);
 		}
 
 		/* Update the view to match the document */
@@ -598,6 +598,8 @@ namespace Beebop {
 			FileInfo info;
 			string title;
 			bool editable;
+			int start;
+			int end;
 
 			if (document.filename.collate ("") != 0) {
 
@@ -650,13 +652,21 @@ namespace Beebop {
 
 				if (editable) {
 
-					/* XXX Here one should get the selection bounds using
-					 *     the Gtk.Editable.get_selection_bounds method
-					 *     and enable cut & copy only if the bounds do
-					 *     not match. The GTK+ vapi has a bug that prevents
-					 *     bound retrieval, though, so just enable them */
-					view.cut_action.sensitive = true;
-					view.copy_action.sensitive = true;
+					/* Get current selection bounds */
+					(widget as Gtk.Editable).get_selection_bounds (out start,
+					                                               out end);
+
+					/* Enable cut and copy if there is a selection */
+					if (start != end) {
+
+						view.cut_action.sensitive = true;
+						view.copy_action.sensitive = true;
+					}
+					else {
+
+						view.cut_action.sensitive = false;
+						view.copy_action.sensitive = false;
+					}
 
 					/* Get the default clipboard and retrieve its contents */
 					clipboard = Gtk.Clipboard.get (Gdk.SELECTION_CLIPBOARD);
@@ -759,7 +769,7 @@ namespace Beebop {
 		}
 
 		/* React to changes of the recipient's name */
-		private void recipient_name_changed () {
+		private bool recipient_name_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.recipient.name = view.recipient_name_entry.text;
@@ -772,10 +782,12 @@ namespace Beebop {
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the recipient's street */
-		private void recipient_street_changed () {
+		private bool recipient_street_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.recipient.street = view.recipient_street_entry.text;
@@ -788,10 +800,12 @@ namespace Beebop {
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the recipient's city */
-		private void recipient_city_changed () {
+		private bool recipient_city_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.recipient.city = view.recipient_city_entry.text;
@@ -804,146 +818,176 @@ namespace Beebop {
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the recipient's VATIN */
-		private void recipient_vatin_changed () {
+		private bool recipient_vatin_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.recipient.vatin = view.recipient_vatin_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the recipient's client code */
-		private void recipient_client_code_changed () {
+		private bool recipient_client_code_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.recipient.client_code = view.recipient_client_code_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the destination's name */
-		private void destination_name_changed () {
+		private bool destination_name_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.destination.name = view.destination_name_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the destination's street */
-		private void destination_street_changed () {
+		private bool destination_street_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.destination.street = view.destination_street_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the destination's city */
-		private void destination_city_changed () {
+		private bool destination_city_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.destination.city = view.destination_city_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the document's number */
-		private void document_number_changed () {
+		private bool document_number_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.number = view.document_number_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the document's date */
-		private void document_date_changed () {
+		private bool document_date_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.date = view.document_date_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the goods' appearance */
-		private void goods_appearance_changed () {
+		private bool goods_appearance_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.goods_info.appearance = view.goods_appearance_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the number of parcels */
-		private void goods_parcels_changed () {
+		private bool goods_parcels_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.goods_info.parcels = "%d".printf (view.goods_parcels_spinbutton.get_value_as_int ());
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the goods' weight */
-		private void goods_weight_changed () {
+		private bool goods_weight_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.goods_info.weight = view.goods_weight_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes to the shipment's reason */
-		private void shipment_reason_changed () {
+		private bool shipment_reason_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.shipment_info.reason = view.shipment_reason_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes to who transports the shipment */
-		private void shipment_transported_by_changed () {
+		private bool shipment_transported_by_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.shipment_info.transported_by = view.shipment_transported_by_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes to the shipments' carrier */
-		private void shipment_carrier_changed () {
+		private bool shipment_carrier_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.shipment_info.carrier = view.shipment_carrier_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes to the shipment's delivery duties */
-		private void shipment_duties_changed () {
+		private bool shipment_duties_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.shipment_info.duties = view.shipment_duties_entry.text;
 
 			/* Update view controls */
 			update_controls ();
+
+			return false;
 		}
 	}
 }
