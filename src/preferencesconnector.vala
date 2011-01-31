@@ -136,6 +136,7 @@ namespace Beebop {
 
 			Gtk.TextIter start;
 			Gtk.TextIter end;
+			string filename;
 
 			/* Get header text */
 			view.header_textview.buffer.get_bounds (out start, out end);
@@ -145,8 +146,18 @@ namespace Beebop {
 
 			/* Get paths */
 			preferences.document_directory = view.document_directory_button.get_current_folder ();
-			preferences.page_template = view.page_template_button.get_filename ();
-			preferences.logo = view.logo_button.get_filename ();
+
+			filename = view.page_template_button.get_filename ();
+			if (filename != null) {
+
+				preferences.page_template = filename;
+			}
+
+			filename = view.logo_button.get_filename ();
+			if (filename != null) {
+
+				preferences.logo = filename;
+			}
 
 			/* Get other values */
 			preferences.page_padding_x = view.page_padding_x_spinbutton.value;
