@@ -48,7 +48,7 @@ namespace Beebop {
 		}
 
 		/* Paint the document */
-		public void paint () throws Error {
+		public void paint () throws DocumentError {
 
 			Rsvg.DimensionData dimensions;
 			List<Table> tables;
@@ -133,11 +133,17 @@ namespace Beebop {
 
 				/* Finish the current page */
 				context.show_page ();
+
+				/* Check for drawing errors */
+				if (context.status () != Cairo.Status.SUCCESS) {
+
+					throw new DocumentError.IO (_("Drawing error"));
+				}
 			}
 		}
 
 		/* Split all the goods into (possibly several) correctly sized tables  */
-		private List<Table> prepare_tables (double table_height, double page_width, double page_height) {
+		private List<Table> prepare_tables (double table_height, double page_width, double page_height) throws DocumentError {
 
 			Gtk.TreeIter iter;
 			List<Table> tables;
@@ -283,11 +289,17 @@ namespace Beebop {
 			}
 			while (true);
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return tables;
 		}
 
 		/* Load required resources */
-		private void load_resources () throws Error {
+		private void load_resources () throws DocumentError {
 
 			File handle;
 			string data;
@@ -325,7 +337,7 @@ namespace Beebop {
 		}
 
 		/* Paint the header */
-		private double paint_header (string page_number, double page_width, double page_height, PaintMode mode) throws Error {
+		private double paint_header (string page_number, double page_width, double page_height, PaintMode mode) throws DocumentError {
 
 			Cairo.Surface tmp_surface;
 			Cairo.Context tmp_context;
@@ -510,11 +522,17 @@ namespace Beebop {
 
 			starting_point = box_y + offset - preferences.page_padding_y;
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return starting_point;
 		}
 
 		/* Paint the footer */
-		private double paint_footer (double starting_point, double page_width, double page_height, PaintMode mode) {
+		private double paint_footer (double starting_point, double page_width, double page_height, PaintMode mode) throws DocumentError {
 
 			Table table;
 			Row row; /* fight the powah! */
@@ -640,11 +658,17 @@ namespace Beebop {
 			box_y += offset;
 			box_y -= starting_point;
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return box_y;
 		}
 
 		/* Paint a cell (with no border) */
-		private double paint_cell (Cell cell, double x, double y, double width, double height, PaintMode mode) {
+		private double paint_cell (Cell cell, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			string text;
 
@@ -673,11 +697,17 @@ namespace Beebop {
 			/* Add vertical padding to the text height */
 			height += (2 * preferences.cell_padding_y);
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return height;
 		}
 
 		/* Paint a cell (with border) */
-		private double paint_cell_with_border (Cell cell, double x, double y, double width, double height, PaintMode mode) {
+		private double paint_cell_with_border (Cell cell, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			height = paint_cell (cell,
 			                    x,
@@ -696,10 +726,16 @@ namespace Beebop {
 				context.stroke ();
 			}
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return height;
 		}
 
-		private double paint_company_address (string title, CompanyInfo company, double x, double y, double width, double height, PaintMode mode) {
+		private double paint_company_address (string title, CompanyInfo company, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			Cell cell;
 
@@ -717,11 +753,17 @@ namespace Beebop {
 			                                height,
 			                                mode);
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return height;
 		}
 
 		/* Paint a table */
-		private double paint_table (Table table, double x, double y, double width, double height, PaintMode mode) {
+		private double paint_table (Table table, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			Row row;
 			double[] tmp;
@@ -811,11 +853,17 @@ namespace Beebop {
 				height += offset;
 			}
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return height;
 		}
 
 		/* Paint a table row */
-		private double paint_row (Row row, double[] sizes, double x, double y, double width, double height, PaintMode mode) {
+		private double paint_row (Row row, double[] sizes, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			double box_x;
 			double box_y;
@@ -867,11 +915,17 @@ namespace Beebop {
 				x += box_width;
 			}
 
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
+
 			return box_height;
 		}
 
 		/* Paint text */
-		private double paint_text (string text, double x, double y, double width, double height, PaintMode mode) {
+		private double paint_text (string text, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			Pango.Layout layout;
 			Pango.FontDescription font_description;
@@ -901,6 +955,12 @@ namespace Beebop {
 
 			layout.get_size (out text_width,
 			                 out text_height);
+
+			/* Check for drawing errors */
+			if (context.status () != Cairo.Status.SUCCESS) {
+
+				throw new DocumentError.IO (_("Drawing error"));
+			}
 
 			return (text_height / Pango.SCALE);
 		}
