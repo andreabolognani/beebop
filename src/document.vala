@@ -20,8 +20,7 @@ namespace Beebop {
 
 	public errordomain DocumentError {
 		IO,
-		FORMAT,
-		TOO_MANY_GOODS
+		FORMAT
 	}
 
 	public class Document : GLib.Object {
