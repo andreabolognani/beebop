@@ -43,7 +43,7 @@ shift
 shift
 
 # Call configure
-`dirname ${0}`/configure \
+`dirname ${0}`/../configure \
 	--host "${HOST}" \
 	--prefix "${INSTALLDIR}" \
 	--bindir "${INSTALLDIR}" \
