@@ -625,7 +625,7 @@ namespace Beebop {
 			}
 			else {
 
-				title = _("Untitled document");
+				title = _("Untitled document.beebop");
 			}
 
 			/* Visually mark an unsaved document */
