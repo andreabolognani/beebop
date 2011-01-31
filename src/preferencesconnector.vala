@@ -73,8 +73,10 @@ namespace Beebop {
 			/* Header */
 			view.header_textview.buffer.text = preferences.header_text;
 
-			/* Locations */
+			/* Paths */
 			view.document_directory_button.set_current_folder (preferences.document_directory);
+			view.page_template_button.set_filename (preferences.page_template);
+			view.logo_button.set_filename (preferences.logo);
 
 			/* Sizes */
 			view.page_padding_x_spinbutton.value = preferences.page_padding_x;
@@ -124,8 +126,10 @@ namespace Beebop {
 			                                                                end,
 			                                                                false);
 
-			/* Get document directory */
+			/* Get paths */
 			preferences.document_directory = view.document_directory_button.get_current_folder ();
+			preferences.page_template = view.page_template_button.get_filename ();
+			preferences.logo = view.logo_button.get_filename ();
 
 			/* Get other values */
 			preferences.page_padding_x = view.page_padding_x_spinbutton.value;

@@ -308,7 +308,7 @@ namespace Beebop {
 			try {
 
 				/* Read and parse the contents of the page file */
-				handle = File.new_for_path (preferences.page_file);
+				handle = File.new_for_path (preferences.page_template);
 				handle.load_contents (null,
 				                      out data,
 				                      out len,
@@ -317,13 +317,13 @@ namespace Beebop {
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO (_("Could not load page template file: %s").printf (preferences.page_file));
+				throw new DocumentError.IO (_("Could not load page template file: %s").printf (preferences.page_template));
 			}
 
 			try {
 
 				/* Read and parse the contents of the logo file */
-				handle = File.new_for_path (preferences.logo_file);
+				handle = File.new_for_path (preferences.logo);
 				handle.load_contents (null,
 				                      out data,
 				                      out len,
@@ -332,7 +332,7 @@ namespace Beebop {
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO (_("Could not load logo template file: %s").printf (preferences.logo_file));
+				throw new DocumentError.IO (_("Could not load logo template file: %s").printf (preferences.logo));
 			}
 		}
 

@@ -54,6 +54,8 @@ namespace Beebop {
 		public const string GROUP = "Beebop";
 		public const string KEY_HEADER_TEXT = "header_text";
 		public const string KEY_DOCUMENT_DIRECTORY = "document_directory";
+		public const string KEY_PAGE_TEMPLATE = "page_template";
+		public const string KEY_LOGO = "logo";
 		public const string KEY_PAGE_PADDING = "page_padding";
 		public const string KEY_CELL_PADDING = "cell_padding";
 		public const string KEY_ELEMENTS_SPACING = "elements_spacing";
@@ -111,6 +113,8 @@ namespace Beebop {
 		public const string OBJ_PREFERENCES_WINDOW = "preferences_window";
 		public const string OBJ_HEADER_TEXTVIEW = "header_textview";
 		public const string OBJ_DOCUMENT_DIRECTORY_BUTTON = "document_directory_button";
+		public const string OBJ_PAGE_TEMPLATE_BUTTON = "page_template_button";
+		public const string OBJ_LOGO_BUTTON = "logo_button";
 		public const string OBJ_PAGE_PADDING_X_SPINBUTTON = "page_padding_x_spinbutton";
 		public const string OBJ_PAGE_PADDING_Y_SPINBUTTON = "page_padding_y_spinbutton";
 		public const string OBJ_CELL_PADDING_X_SPINBUTTON = "cell_padding_x_spinbutton";

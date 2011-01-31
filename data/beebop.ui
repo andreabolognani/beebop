@@ -1098,12 +1098,14 @@
                     <child>
                       <object class="GtkTable" id="table7">
                         <property name="visible">True</property>
+                        <property name="n_rows">3</property>
                         <property name="n_columns">2</property>
                         <property name="column_spacing">5</property>
                         <property name="row_spacing">2</property>
                         <child>
                           <object class="GtkLabel" id="label33">
                             <property name="visible">True</property>
+                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">Document directory</property>
                           </object>
                           <packing>
@@ -1115,11 +1117,63 @@
                           <object class="GtkFileChooserButton" id="document_directory_button">
                             <property name="visible">True</property>
                             <property name="action">select-folder</property>
-                            <property name="title" translatable="yes">Select Document directory</property>
+                            <property name="title" translatable="yes">Select document directory</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFileChooserButton" id="page_template_button">
+                            <property name="visible">True</property>
+                            <property name="title" translatable="yes">Select page template</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label35">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Page template</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options"></property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label37">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Logo</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                            <property name="x_options"></property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFileChooserButton" id="logo_button">
+                            <property name="visible">True</property>
+                            <property name="title" translatable="yes">Select logo</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
                             <property name="y_options"></property>
                           </packing>
                         </child>
@@ -1133,7 +1187,7 @@
                 <child type="tab">
                   <object class="GtkLabel" id="label46">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Locations</property>
+                    <property name="label" translatable="yes">Paths</property>
                   </object>
                   <packing>
                     <property name="position">4</property>
@@ -1737,39 +1791,41 @@
   </object>
   <object class="GtkSizeGroup" id="main_sizegroup">
     <widgets>
-      <widget name="label1"/>
-      <widget name="label2"/>
-      <widget name="label3"/>
-      <widget name="label18"/>
-      <widget name="label19"/>
-      <widget name="label9"/>
-      <widget name="label10"/>
-      <widget name="label11"/>
-      <widget name="label12"/>
-      <widget name="label13"/>
-      <widget name="label21"/>
-      <widget name="label22"/>
-      <widget name="label23"/>
-      <widget name="label20"/>
-      <widget name="label6"/>
-      <widget name="label7"/>
       <widget name="label8"/>
+      <widget name="label7"/>
+      <widget name="label6"/>
+      <widget name="label20"/>
+      <widget name="label23"/>
+      <widget name="label22"/>
+      <widget name="label21"/>
+      <widget name="label13"/>
+      <widget name="label12"/>
+      <widget name="label11"/>
+      <widget name="label10"/>
+      <widget name="label9"/>
+      <widget name="label19"/>
+      <widget name="label18"/>
+      <widget name="label3"/>
+      <widget name="label2"/>
+      <widget name="label1"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="preferences_sizegroup">
     <widgets>
-      <widget name="label16"/>
-      <widget name="label17"/>
-      <widget name="label30"/>
-      <widget name="label15"/>
-      <widget name="label34"/>
-      <widget name="label36"/>
-      <widget name="label39"/>
-      <widget name="label40"/>
-      <widget name="label41"/>
-      <widget name="label42"/>
-      <widget name="label43"/>
       <widget name="label33"/>
+      <widget name="label43"/>
+      <widget name="label42"/>
+      <widget name="label41"/>
+      <widget name="label40"/>
+      <widget name="label39"/>
+      <widget name="label36"/>
+      <widget name="label34"/>
+      <widget name="label15"/>
+      <widget name="label30"/>
+      <widget name="label17"/>
+      <widget name="label16"/>
+      <widget name="label35"/>
+      <widget name="label37"/>
     </widgets>
   </object>
   <object class="GtkAction" id="save_action">

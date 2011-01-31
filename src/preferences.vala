@@ -25,12 +25,11 @@ namespace Beebop {
 
 		private static Preferences singleton = null;
 
-		public string page_file { get; private set; }
-		public string logo_file { get; private set; }
-
 		public string header_text { get; set; }
 
 		public string document_directory { get; set; }
+		public string page_template { get; set; }
+		public string logo { get; set; }
 
 		public double page_padding_x { get; set; }
 		public double page_padding_y { get; set; }
@@ -53,12 +52,11 @@ namespace Beebop {
 
 		construct {
 
-			page_file = Config.PKGDATADIR + "/page.svg";
-			logo_file = Config.PKGDATADIR + "/logo.svg";
-
 			header_text = "";
 
 			document_directory = Environment.get_user_special_dir (UserDirectory.DOCUMENTS);
+			page_template = Config.PKGDATADIR + "/page.svg";
+			logo = Config.PKGDATADIR + "/logo.svg";
 
 			page_padding_x = 10.0;
 			page_padding_y = 10.0;
@@ -120,9 +118,13 @@ namespace Beebop {
 			header_text = pref.get_string (Const.GROUP,
 			                               Const.KEY_HEADER_TEXT);
 
-			/* Locations */
+			/* Paths */
 			document_directory = pref.get_string (Const.GROUP,
 			                                      Const.KEY_DOCUMENT_DIRECTORY);
+			page_template = pref.get_string (Const.GROUP,
+			                                 Const.KEY_PAGE_TEMPLATE);
+			logo = pref.get_string (Const.GROUP,
+			                        Const.KEY_LOGO);
 
 			/* Sizes */
 			dimensions = pref.get_double_list (Const.GROUP,
@@ -198,10 +200,16 @@ namespace Beebop {
 			                 Const.KEY_HEADER_TEXT,
 			                 header_text);
 
-			/* Locations */
+			/* Paths */
 			pref.set_string (Const.GROUP,
 			                 Const.KEY_DOCUMENT_DIRECTORY,
 			                 document_directory);
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_PAGE_TEMPLATE,
+			                 page_template);
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_LOGO,
+			                 logo);
 
 			/* Sizes */
 			dimensions[0] = page_padding_x;
