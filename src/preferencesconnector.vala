@@ -50,10 +50,27 @@ namespace Beebop {
 		/* Prepare a view for use */
 		private void prepare_view () {
 
+			Gtk.FileFilter filter;
+
 			if (view == null)
 				return;
 
 			update_view ();
+
+			/* Set up file filters */
+			filter = new Gtk.FileFilter ();
+			filter.set_name (_("SVG files"));
+			filter.add_pattern ("*.svg");
+
+			view.page_template_button.add_filter (filter);
+			view.logo_button.add_filter (filter);
+
+			filter = new Gtk.FileFilter ();
+			filter.set_name (_("All files"));
+			filter.add_pattern ("*");
+
+			view.page_template_button.add_filter (filter);
+			view.logo_button.add_filter (filter);
 
 			/* Connect signal handlers */
 			view.preferences_window.delete_event.connect ((e) => {
