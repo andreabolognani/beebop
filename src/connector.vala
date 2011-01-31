@@ -410,9 +410,7 @@ namespace Beebop {
 			/* Suggest a file name for the document  */
 			if (document.filename.collate ("") == 0) {
 
-				/* TODO Suggest a better file name, using the document
-				 *      number and recipient's name */
-				dialog.set_current_name ("Untitled document.beebop");
+				dialog.set_current_name (document.suggest_filename ());
 			}
 			else {
 
@@ -641,7 +639,7 @@ namespace Beebop {
 			}
 			else {
 
-				title = _("Untitled document.beebop");
+				title = _("Untitled document") + ".beebop";
 			}
 
 			/* Visually mark an unsaved document */

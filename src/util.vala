@@ -78,6 +78,22 @@ namespace Beebop {
 			return obj;
 		}
 
+		/* Normalize a filename by removing weird characters */
+		public static string normalize (string original) {
+
+			string valid = "abcdefghijklmnopqrstuvwxyz" +
+			               "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+			               "0123456789" +
+			               "_-,. ";
+			string tmp;
+
+			/* canon modifies the string in-place, so make a copy first */
+			tmp = original.dup ();
+			tmp.canon (valid, '_');
+
+			return tmp;
+		}
+
 		/* Standard GNU GPL copyright notice */
 		public const string license = "\n" +
 		                              "Beebop is free software; you can redistribute it and/or modify\n" +

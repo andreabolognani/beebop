@@ -283,6 +283,46 @@ namespace Beebop {
 			unsaved = false;
 		}
 
+		/* Suggest a filename using the information contained in the document */
+		public string suggest_filename () {
+
+			string suggestion;
+
+			suggestion = "";
+
+			/* Start with the number (if not empty) */
+			if (number.collate ("") != 0) {
+
+				suggestion += number;
+			}
+
+			if (recipient.name.collate ("") != 0) {
+
+				/* Suggestion not empty: add a space */
+				if (suggestion.collate ("") != 0) {
+
+					suggestion += " ";
+				}
+
+				/* Append recipient name */
+				suggestion += recipient.name;
+			}
+
+			/* No suggestion so far */
+			if (suggestion.collate ("") == 0) {
+
+				suggestion = _("Untitled document");
+			}
+
+			/* Add file extension */
+			suggestion += ".beebop";
+
+			/* Normalize filename */
+			suggestion = Util.normalize (suggestion);
+
+			return suggestion;
+		}
+
 		/* Load the contents of the <document> tag */
 		private void load_document (Xml.Node *parent) throws DocumentError {
 
