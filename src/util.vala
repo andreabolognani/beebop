@@ -62,6 +62,22 @@ namespace Beebop {
 			return confirm;
 		}
 
+		/* Get an object out of a UI description, making sure it exists */
+		public static GLib.Object get_object (Gtk.Builder ui, string name) throws ViewError {
+
+			GLib.Object obj;
+
+			/* Look up the object */
+			obj = ui.get_object (name);
+
+			/* If the object is not there, throw an exception */
+			if (obj == null) {
+				throw new ViewError.OBJECT_NOT_FOUND (name);
+			}
+
+			return obj;
+		}
+
 		/* Standard GNU GPL copyright notice */
 		public const string license = "\n" +
 		                              "Beebop is free software; you can redistribute it and/or modify\n" +

@@ -64,64 +64,48 @@ namespace Beebop {
 			}
 
 			/* Look up all required objects */
-			preferences_window = get_object (ui, Const.OBJ_PREFERENCES_WINDOW)
+			preferences_window = Util.get_object (ui, Const.OBJ_PREFERENCES_WINDOW)
 			                     as Gtk.Window;
-			header_textview = get_object (ui, Const.OBJ_HEADER_TEXTVIEW)
+			header_textview = Util.get_object (ui, Const.OBJ_HEADER_TEXTVIEW)
 			                   as Gtk.TextView;
-			document_directory_button = get_object (ui, Const.OBJ_DOCUMENT_DIRECTORY_BUTTON)
+			document_directory_button = Util.get_object (ui, Const.OBJ_DOCUMENT_DIRECTORY_BUTTON)
 			                            as Gtk.FileChooserButton;
-			page_template_button = get_object (ui, Const.OBJ_PAGE_TEMPLATE_BUTTON)
+			page_template_button = Util.get_object (ui, Const.OBJ_PAGE_TEMPLATE_BUTTON)
 			                       as Gtk.FileChooserButton;
-			logo_button = get_object (ui, Const.OBJ_LOGO_BUTTON)
+			logo_button = Util.get_object (ui, Const.OBJ_LOGO_BUTTON)
 			              as Gtk.FileChooserButton;
-			page_padding_x_spinbutton = get_object (ui, Const.OBJ_PAGE_PADDING_X_SPINBUTTON)
+			page_padding_x_spinbutton = Util.get_object (ui, Const.OBJ_PAGE_PADDING_X_SPINBUTTON)
 			                            as Gtk.SpinButton;
-			page_padding_y_spinbutton = get_object (ui, Const.OBJ_PAGE_PADDING_Y_SPINBUTTON)
+			page_padding_y_spinbutton = Util.get_object (ui, Const.OBJ_PAGE_PADDING_Y_SPINBUTTON)
 			                            as Gtk.SpinButton;
-			cell_padding_x_spinbutton = get_object (ui, Const.OBJ_CELL_PADDING_X_SPINBUTTON)
+			cell_padding_x_spinbutton = Util.get_object (ui, Const.OBJ_CELL_PADDING_X_SPINBUTTON)
 			                            as Gtk.SpinButton;
-			cell_padding_y_spinbutton = get_object (ui, Const.OBJ_CELL_PADDING_Y_SPINBUTTON)
+			cell_padding_y_spinbutton = Util.get_object (ui, Const.OBJ_CELL_PADDING_Y_SPINBUTTON)
 			                            as Gtk.SpinButton;
-			elements_spacing_x_spinbutton = get_object (ui, Const.OBJ_ELEMENTS_SPACING_X_SPINBUTTON)
+			elements_spacing_x_spinbutton = Util.get_object (ui, Const.OBJ_ELEMENTS_SPACING_X_SPINBUTTON)
 			                                as Gtk.SpinButton;
-			elements_spacing_y_spinbutton = get_object (ui, Const.OBJ_ELEMENTS_SPACING_Y_SPINBUTTON)
+			elements_spacing_y_spinbutton = Util.get_object (ui, Const.OBJ_ELEMENTS_SPACING_Y_SPINBUTTON)
 			                                as Gtk.SpinButton;
-			address_box_width_spinbutton = get_object (ui, Const.OBJ_ADDRESS_BOX_WIDTH_SPINBUTTON)
+			address_box_width_spinbutton = Util.get_object (ui, Const.OBJ_ADDRESS_BOX_WIDTH_SPINBUTTON)
 			                               as Gtk.SpinButton;
-			fontbutton = get_object (ui, Const.OBJ_FONTBUTTON)
+			fontbutton = Util.get_object (ui, Const.OBJ_FONTBUTTON)
 			             as Gtk.FontButton;
-			line_width_spinbutton = get_object (ui, Const.OBJ_LINE_WIDTH_SPINBUTTON)
+			line_width_spinbutton = Util.get_object (ui, Const.OBJ_LINE_WIDTH_SPINBUTTON)
 			                        as Gtk.SpinButton;
-			default_unit_entry = get_object (ui, Const.OBJ_DEFAULT_UNIT_ENTRY)
+			default_unit_entry = Util.get_object (ui, Const.OBJ_DEFAULT_UNIT_ENTRY)
 			                     as Gtk.Entry;
-			default_reason_entry = get_object (ui, Const.OBJ_DEFAULT_REASON_ENTRY)
+			default_reason_entry = Util.get_object (ui, Const.OBJ_DEFAULT_REASON_ENTRY)
 			                       as Gtk.Entry;
-			default_transported_by_entry = get_object (ui, Const.OBJ_DEFAULT_TRANSPORTED_BY_ENTRY)
+			default_transported_by_entry = Util.get_object (ui, Const.OBJ_DEFAULT_TRANSPORTED_BY_ENTRY)
 			                               as Gtk.Entry;
-			default_carrier_entry = get_object (ui, Const.OBJ_DEFAULT_CARRIER_ENTRY)
+			default_carrier_entry = Util.get_object (ui, Const.OBJ_DEFAULT_CARRIER_ENTRY)
 			                        as Gtk.Entry;
-			default_duties_entry = get_object (ui, Const.OBJ_DEFAULT_DUTIES_ENTRY)
+			default_duties_entry = Util.get_object (ui, Const.OBJ_DEFAULT_DUTIES_ENTRY)
 			                       as Gtk.Entry;
-			preferences_ok_button = get_object (ui, Const.OBJ_PREFERENCES_OK_BUTTON)
+			preferences_ok_button = Util.get_object (ui, Const.OBJ_PREFERENCES_OK_BUTTON)
 			                        as Gtk.Button;
-			preferences_cancel_button = get_object (ui, Const.OBJ_PREFERENCES_CANCEL_BUTTON)
+			preferences_cancel_button = Util.get_object (ui, Const.OBJ_PREFERENCES_CANCEL_BUTTON)
 			                            as Gtk.Button;
-		}
-
-		/* Get an object out of the UI, checking it exists */
-		private GLib.Object get_object (Gtk.Builder ui, string name) throws ViewError {
-
-			GLib.Object obj;
-
-			/* Look up the object */
-			obj = ui.get_object (name);
-
-			/* If the object is not there, throw an exception */
-			if (obj == null) {
-				throw new ViewError.OBJECT_NOT_FOUND (name);
-			}
-
-			return obj;
 		}
 	}
 }

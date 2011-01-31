@@ -83,90 +83,74 @@ namespace Beebop {
 			}
 
 			/* Look up all required objects */
-			window = get_object (ui, Const.OBJ_WINDOW)
+			window = Util.get_object (ui, Const.OBJ_WINDOW)
 			         as Gtk.Window;
-			notebook = get_object (ui, Const.OBJ_NOTEBOOK)
+			notebook = Util.get_object (ui, Const.OBJ_NOTEBOOK)
 			           as Gtk.Notebook;
-			recipient_name_entry = get_object (ui, Const.OBJ_RECIPIENT_NAME_ENTRY)
+			recipient_name_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_NAME_ENTRY)
 			                       as Gtk.Entry;
-			recipient_street_entry = get_object (ui, Const.OBJ_RECIPIENT_STREET_ENTRY)
+			recipient_street_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_STREET_ENTRY)
 			                         as Gtk.Entry;
-			recipient_city_entry = get_object (ui, Const.OBJ_RECIPIENT_CITY_ENTRY)
+			recipient_city_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_CITY_ENTRY)
 			                       as Gtk.Entry;
-			recipient_vatin_entry = get_object (ui, Const.OBJ_RECIPIENT_VATIN_ENTRY)
+			recipient_vatin_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_VATIN_ENTRY)
 			                        as Gtk.Entry;
-			recipient_client_code_entry = get_object (ui, Const.OBJ_RECIPIENT_CLIENT_CODE_ENTRY)
+			recipient_client_code_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_CLIENT_CODE_ENTRY)
 			                              as Gtk.Entry;
-			destination_name_entry = get_object (ui, Const.OBJ_DESTINATION_NAME_ENTRY)
+			destination_name_entry = Util.get_object (ui, Const.OBJ_DESTINATION_NAME_ENTRY)
 			                         as Gtk.Entry;
-			destination_street_entry = get_object (ui, Const.OBJ_DESTINATION_STREET_ENTRY)
+			destination_street_entry = Util.get_object (ui, Const.OBJ_DESTINATION_STREET_ENTRY)
 			                           as Gtk.Entry;
-			destination_city_entry = get_object (ui, Const.OBJ_DESTINATION_CITY_ENTRY)
+			destination_city_entry = Util.get_object (ui, Const.OBJ_DESTINATION_CITY_ENTRY)
 			                         as Gtk.Entry;
-			send_to_recipient_checkbutton = get_object (ui, Const.OBJ_SEND_TO_RECIPIENT_CHECKBUTTON)
+			send_to_recipient_checkbutton = Util.get_object (ui, Const.OBJ_SEND_TO_RECIPIENT_CHECKBUTTON)
 			                                as Gtk.CheckButton;
-			document_number_entry = get_object (ui, Const.OBJ_DOCUMENT_NUMBER_ENTRY)
+			document_number_entry = Util.get_object (ui, Const.OBJ_DOCUMENT_NUMBER_ENTRY)
 			                        as Gtk.Entry;
-			document_date_entry = get_object (ui, Const.OBJ_DOCUMENT_DATE_ENTRY)
+			document_date_entry = Util.get_object (ui, Const.OBJ_DOCUMENT_DATE_ENTRY)
 			                      as Gtk.Entry;
-			goods_appearance_entry = get_object (ui, Const.OBJ_GOODS_APPEARANCE_ENTRY)
+			goods_appearance_entry = Util.get_object (ui, Const.OBJ_GOODS_APPEARANCE_ENTRY)
 			                         as Gtk.Entry;
-			goods_parcels_spinbutton = get_object (ui, Const.OBJ_GOODS_PARCELS_SPINBUTTON)
+			goods_parcels_spinbutton = Util.get_object (ui, Const.OBJ_GOODS_PARCELS_SPINBUTTON)
 			                           as Gtk.SpinButton;
-			goods_weight_entry = get_object (ui, Const.OBJ_GOODS_WEIGHT_ENTRY)
+			goods_weight_entry = Util.get_object (ui, Const.OBJ_GOODS_WEIGHT_ENTRY)
 			                     as Gtk.Entry;
-			shipment_reason_entry = get_object (ui, Const.OBJ_SHIPMENT_REASON_ENTRY)
+			shipment_reason_entry = Util.get_object (ui, Const.OBJ_SHIPMENT_REASON_ENTRY)
 			                        as Gtk.Entry;
-			shipment_transported_by_entry = get_object (ui, Const.OBJ_SHIPMENT_TRANSPORTED_BY_ENTRY)
+			shipment_transported_by_entry = Util.get_object (ui, Const.OBJ_SHIPMENT_TRANSPORTED_BY_ENTRY)
 			                                as Gtk.Entry;
-			shipment_carrier_entry = get_object (ui, Const.OBJ_SHIPMENT_CARRIER_ENTRY)
+			shipment_carrier_entry = Util.get_object (ui, Const.OBJ_SHIPMENT_CARRIER_ENTRY)
 			                         as Gtk.Entry;
-			shipment_duties_entry = get_object (ui, Const.OBJ_SHIPMENT_DUTIES_ENTRY)
+			shipment_duties_entry = Util.get_object (ui, Const.OBJ_SHIPMENT_DUTIES_ENTRY)
 			                        as Gtk.Entry;
-			goods_treeview = get_object (ui, Const.OBJ_GOODS_TREEVIEW)
+			goods_treeview = Util.get_object (ui, Const.OBJ_GOODS_TREEVIEW)
 			                 as Gtk.TreeView;
-			new_action = get_object (ui, Const.OBJ_NEW_ACTION)
+			new_action = Util.get_object (ui, Const.OBJ_NEW_ACTION)
 			             as Gtk.Action;
-			open_action = get_object (ui, Const.OBJ_OPEN_ACTION)
+			open_action = Util.get_object (ui, Const.OBJ_OPEN_ACTION)
 			              as Gtk.Action;
-			save_action = get_object (ui, Const.OBJ_SAVE_ACTION)
+			save_action = Util.get_object (ui, Const.OBJ_SAVE_ACTION)
 			              as Gtk.Action;
-			save_as_action = get_object (ui, Const.OBJ_SAVE_AS_ACTION)
+			save_as_action = Util.get_object (ui, Const.OBJ_SAVE_AS_ACTION)
 			                 as Gtk.Action;
-			print_action = get_object (ui, Const.OBJ_PRINT_ACTION)
+			print_action = Util.get_object (ui, Const.OBJ_PRINT_ACTION)
 			               as Gtk.Action;
-			quit_action = get_object (ui, Const.OBJ_QUIT_ACTION)
+			quit_action = Util.get_object (ui, Const.OBJ_QUIT_ACTION)
 			              as Gtk.Action;
-			cut_action = get_object (ui, Const.OBJ_CUT_ACTION)
+			cut_action = Util.get_object (ui, Const.OBJ_CUT_ACTION)
 			             as Gtk.Action;
-			copy_action = get_object (ui, Const.OBJ_COPY_ACTION)
+			copy_action = Util.get_object (ui, Const.OBJ_COPY_ACTION)
 			              as Gtk.Action;
-			paste_action = get_object (ui, Const.OBJ_PASTE_ACTION)
+			paste_action = Util.get_object (ui, Const.OBJ_PASTE_ACTION)
 			               as Gtk.Action;
-			add_action = get_object (ui, Const.OBJ_ADD_ACTION)
+			add_action = Util.get_object (ui, Const.OBJ_ADD_ACTION)
 			             as Gtk.Action;
-			remove_action = get_object (ui, Const.OBJ_REMOVE_ACTION)
+			remove_action = Util.get_object (ui, Const.OBJ_REMOVE_ACTION)
 			                as Gtk.Action;
-			preferences_action = get_object (ui, Const.OBJ_PREFERENCES_ACTION)
+			preferences_action = Util.get_object (ui, Const.OBJ_PREFERENCES_ACTION)
 			                     as Gtk.Action;
-			about_action = get_object (ui, Const.OBJ_ABOUT_ACTION)
+			about_action = Util.get_object (ui, Const.OBJ_ABOUT_ACTION)
 			               as Gtk.Action;
-		}
-
-		/* Get an object out of the UI, checking it exists */
-		private GLib.Object get_object (Gtk.Builder ui, string name) throws ViewError {
-
-			GLib.Object obj;
-
-			/* Look up the object */
-			obj = ui.get_object (name);
-
-			/* If the object is not there, throw an exception */
-			if (obj == null) {
-				throw new ViewError.OBJECT_NOT_FOUND (name);
-			}
-
-			return obj;
 		}
 	}
 }
