@@ -308,6 +308,9 @@ namespace Beebop {
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
 
+			/* Open files from the document directory by default */
+			dialog.set_current_folder (preferences.document_directory);
+
 			/* Select only .beebop files by default */
 			filter = new Gtk.FileFilter ();
 			filter.set_name (_("Beebop files"));
@@ -399,6 +402,9 @@ namespace Beebop {
 			                                    Gtk.FileChooserAction.SAVE,
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			                                    Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
+
+			/* Save files to the document directory by default */
+			dialog.set_current_folder (preferences.document_directory);
 
 			/* Suggest a file name for the document  */
 			if (document.filename.collate ("") == 0) {
