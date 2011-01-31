@@ -447,9 +447,8 @@ namespace Beebop {
 				handle = File.new_for_path (document.filename + ".pdf");
 
 				/* Launch viewer */
-				Gtk.show_uri (view.window.get_screen (),
-				              handle.get_uri (),
-				              Gdk.CURRENT_TIME);
+				Util.show_uri (view.window.get_screen(),
+				               handle.get_uri ());
 			}
 			catch (Error e) {
 

@@ -1,1 +1,16 @@
-*.c
+const.c
+util.c
+preferences.c
+companyinfo.c
+goodsinfo.c
+shipmentinfo.c
+cell.c
+row.c
+table.c
+document.c
+painter.c
+preferencesview.c
+preferencesconnector.c
+view.c
+connector.c
+application.c

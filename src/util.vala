@@ -94,6 +94,9 @@ namespace Beebop {
 			return tmp;
 		}
 
+		/* Workaround needed because Gtk.show_uri is broken on win32 */
+		public static extern void show_uri (Gdk.Screen screen, string uri) throws Error;
+
 		/* Standard GNU GPL copyright notice */
 		public const string license = "\n" +
 		                              "Beebop is free software; you can redistribute it and/or modify\n" +

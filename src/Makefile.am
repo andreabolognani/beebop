@@ -34,6 +34,7 @@ AM_VALAFLAGS = \
 bin_PROGRAMS = beebop
 
 beebop_SOURCES = \
+	compat.c \
 	const.vala \
 	util.vala \
 	preferences.vala \
