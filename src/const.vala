@@ -110,6 +110,7 @@ namespace Beebop {
 		public const string OBJ_ADD_ACTION = "add_action";
 		public const string OBJ_REMOVE_ACTION = "remove_action";
 		public const string OBJ_PREFERENCES_ACTION = "preferences_action";
+		public const string OBJ_ABOUT_ACTION = "about_action";
 		public const string OBJ_PREFERENCES_WINDOW = "preferences_window";
 		public const string OBJ_HEADER_TEXTVIEW = "header_textview";
 		public const string OBJ_DOCUMENT_DIRECTORY_BUTTON = "document_directory_button";

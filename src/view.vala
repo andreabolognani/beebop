@@ -65,6 +65,7 @@ namespace Beebop {
 		public Gtk.Action add_action { get; private set; }
 		public Gtk.Action remove_action { get; private set; }
 		public Gtk.Action preferences_action { get; private set; }
+		public Gtk.Action about_action { get; private set; }
 
 		public void load () throws ViewError {
 
@@ -148,6 +149,8 @@ namespace Beebop {
 			                as Gtk.Action;
 			preferences_action = get_object (ui, Const.OBJ_PREFERENCES_ACTION)
 			                     as Gtk.Action;
+			about_action = get_object (ui, Const.OBJ_ABOUT_ACTION)
+			               as Gtk.Action;
 		}
 
 		/* Get an object out of the UI, checking it exists */

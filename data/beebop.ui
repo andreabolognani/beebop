@@ -175,6 +175,26 @@
                 </child>
               </object>
             </child>
+            <child>
+              <object class="GtkMenuItem" id="menuitem8">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">_Help</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu3">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem9">
+                        <property name="visible">True</property>
+                        <property name="related_action">about_action</property>
+                        <property name="use_action_appearance">True</property>
+                        <property name="use_stock">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1836,5 +1856,8 @@
   </object>
   <object class="GtkAction" id="new_action">
     <property name="stock_id">gtk-new</property>
+  </object>
+  <object class="GtkAction" id="about_action">
+    <property name="stock_id">gtk-about</property>
   </object>
 </interface>

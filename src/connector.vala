@@ -175,6 +175,7 @@ namespace Beebop {
 			view.add_action.activate.connect (add_row);
 			view.remove_action.activate.connect (remove_row);
 			view.preferences_action.activate.connect (show_preferences);
+			view.about_action.activate.connect (about);
 
 			/* Connect internal signal handlers */
 			view.window.set_focus.connect_after ((focus) => {
@@ -537,6 +538,21 @@ namespace Beebop {
 
 			/* Run preferences connector */
 			preferences_connector.run ();
+		}
+
+		/* Show the about dialog */
+		private void about () {
+
+			string[] authors = {"Andrea Bolognani <andrea.bolognani@roundhousecode.com>",
+			                    null};
+
+			Gtk.show_about_dialog (view.window,
+			                       "title", _("About %s").printf (_("Beebop")),
+			                       "program-name", _("Beebop"),
+			                       "comments", _("Easily create nice-looking shipping lists"),
+			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
+			                       "license", Util.license,
+			                       "authors", authors);
 		}
 
 		/* Update the list store backing the goods.
