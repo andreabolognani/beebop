@@ -92,7 +92,7 @@ namespace Beebop {
 			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-			Environment.set_application_name (_("Beepop"));
+			Environment.set_application_name (_("Beebop"));
 
 			application = new Application ();
 

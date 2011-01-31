@@ -132,7 +132,7 @@ namespace Beebop {
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (Const.KEY_PAGE_PADDING)));
+				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_PAGE_PADDING)));
 			}
 
 			page_padding_x = dimensions[0];
@@ -143,7 +143,7 @@ namespace Beebop {
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (Const.KEY_CELL_PADDING)));
+				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_CELL_PADDING)));
 			}
 
 			cell_padding_x = dimensions[0];
@@ -154,7 +154,7 @@ namespace Beebop {
 
 			if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'.".printf (Const.KEY_ELEMENTS_SPACING)));
+				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_ELEMENTS_SPACING)));
 			}
 
 			elements_spacing_x = dimensions[0];

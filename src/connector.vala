@@ -303,7 +303,7 @@ namespace Beebop {
 				return;
 			}
 
-			dialog = new Gtk.FileChooserDialog (_("Open File"),
+			dialog = new Gtk.FileChooserDialog (_("Open file"),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.OPEN,
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -398,7 +398,7 @@ namespace Beebop {
 
 			Gtk.FileChooserDialog dialog;
 
-			dialog = new Gtk.FileChooserDialog (_("Save As..."),
+			dialog = new Gtk.FileChooserDialog (_("Save as..."),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.SAVE,
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
