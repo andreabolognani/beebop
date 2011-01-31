@@ -46,9 +46,7 @@ namespace Beebop {
 			                                Gtk.MessageType.QUESTION,
 			                                Gtk.ButtonsType.OK_CANCEL,
 			                                _("Discard unsaved changes?"));
-			dialog.format_secondary_text (_("If you continue, all changes " +
-			                                "made to the current document " +
-			                                "will be lost."));
+			dialog.format_secondary_text (_("If you continue, all changes made to the current document will be lost."));
 
 			confirm = false;
 

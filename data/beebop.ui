@@ -209,7 +209,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">new_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton8</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -222,7 +221,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">open_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton5</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -235,7 +233,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">save_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton7</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -257,7 +254,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">print_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton4</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -279,7 +275,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">cut_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton9</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -292,7 +287,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">copy_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton11</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -305,7 +299,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">paste_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton12</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -327,7 +320,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">add_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton1</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -340,7 +332,6 @@
                 <property name="visible">True</property>
                 <property name="related_action">remove_action</property>
                 <property name="use_action_appearance">True</property>
-                <property name="label" translatable="yes">toolbutton2</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
