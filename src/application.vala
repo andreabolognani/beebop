@@ -56,7 +56,7 @@ namespace Beebop {
 			}
 			catch (ViewError.IO e) {
 
-				throw new ApplicationError.FAILED (_("Failed to load view"));
+				throw new ApplicationError.FAILED (_("Failed to load view: %s").printf (e.message));
 			}
 			catch (ViewError.OBJECT_NOT_FOUND e) {
 
