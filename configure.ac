@@ -83,7 +83,7 @@ AC_MSG_CHECKING([if cross-building for win32])
 case "$host" in
 	*-*-mingw*)
 		win32_build=yes
-		OS_CFLAGS="-DPKGDATADIR='\"data\"' -DLOCALEDIR='\"locale\"'"
+		OS_CFLAGS="-DPKGDATADIR='\"share/beebop\"' -DLOCALEDIR='\"share/locale\"'"
 		OS_LDFLAGS='-mwindows'
 	;;
 	*)
