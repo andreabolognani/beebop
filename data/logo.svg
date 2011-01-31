@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="123.84375"
-   height="81"
+   width="91"
+   height="91"
    id="svg2882"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="New document 4">
+   sodipodi:docname="logo.svg">
   <defs
      id="defs2884">
     <inkscape:perspective
@@ -39,16 +39,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="39.676307"
-     inkscape:cy="26.551632"
+     inkscape:zoom="1.979899"
+     inkscape:cx="87.536884"
+     inkscape:cy="46.885698"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="725"
+     inkscape:window-height="749"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="26"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata2887">
@@ -58,7 +58,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -66,23 +66,16 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-135.21875,-177.5625)">
-    <g
-       id="g2949">
-      <path
-         id="rect3655"
-         d="m 171.28125,178.0625 c 0.59974,2.29042 0.9375,4.69107 0.9375,7.15625 0,16.41338 -14.1004,29.71875 -31.5,29.71875 -1.69783,0 -3.37495,-0.13109 -5,-0.375 l 0,43.5 122.84375,0 0,-80 -87.28125,0 z"
-         style="fill:#007cff;fill-opacity:1;stroke:#0026e3;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none" />
-      <text
-         id="text3763"
-         y="241.99391"
-         x="157.0798"
-         style="font-size:30px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
-         xml:space="preserve"><tspan
-           y="241.99391"
-           x="157.0798"
-           id="tspan3765"
-           sodipodi:role="line">LOGO</tspan></text>
-    </g>
+     transform="translate(-146.14732,-166.27678)">
+    <path
+       sodipodi:type="arc"
+       style="fill:#27b7dd;fill-opacity:1;stroke:#0021df;stroke-opacity:1"
+       id="path3683"
+       sodipodi:cx="68.571426"
+       sodipodi:cy="56.357143"
+       sodipodi:rx="45"
+       sodipodi:ry="45"
+       d="m 113.57143,56.357143 c 0,24.852814 -20.14719,44.999997 -45.000004,44.999997 -24.852813,0 -45,-20.147183 -45,-44.999997 0,-24.852813 20.147187,-45 45,-45 24.852814,0 45.000004,20.147187 45.000004,45 z"
+       transform="translate(123.07589,155.41964)" />
   </g>
 </svg>
