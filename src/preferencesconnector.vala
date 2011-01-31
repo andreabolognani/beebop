@@ -145,7 +145,11 @@ namespace Beebop {
 			                                                                false);
 
 			/* Get paths */
-			preferences.document_directory = view.document_directory_button.get_current_folder ();
+			filename = view.document_directory_button.get_filename ();
+			if (filename != null) {
+
+				preferences.document_directory = filename;
+			}
 
 			filename = view.page_template_button.get_filename ();
 			if (filename != null) {
