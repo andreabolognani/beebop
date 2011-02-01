@@ -416,8 +416,9 @@ namespace Beebop {
 				context.restore ();
 			}
 
+			/* Prepare a cell for the header (markup is allowed here) */
 			cell = new Cell ();
-			cell.text = preferences.header_text;
+			cell.markup = preferences.header_text;
 
 			/* Paint the header (usually sender's info). The width of the cell,
 			 * as well as its horizontal starting point, is chosen not to
