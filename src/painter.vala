@@ -308,11 +308,10 @@ namespace Beebop {
 			try {
 
 				/* Read and parse the contents of the page file */
-				handle = File.new_for_path (preferences.page_template);
-				handle.load_contents (null,
-				                      out data,
-				                      out len,
-				                      null);           /* No etag */
+				preferences.page_template.load_contents (null,
+				                                         out data,
+				                                         out len,
+				                                         null);        /* No etag */
 				page = new Rsvg.Handle.from_data ((uchar[]) data, len);
 			}
 			catch (Error e) {
@@ -323,11 +322,10 @@ namespace Beebop {
 			try {
 
 				/* Read and parse the contents of the logo file */
-				handle = File.new_for_path (preferences.logo);
-				handle.load_contents (null,
-				                      out data,
-				                      out len,
-				                      null);           /* No etag */
+				preferences.logo.load_contents (null,
+				                                out data,
+				                                out len,
+				                                null);        /* No etag */
 				logo = new Rsvg.Handle.from_data ((uchar[]) data, len);
 			}
 			catch (Error e) {

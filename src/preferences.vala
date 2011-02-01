@@ -27,9 +27,9 @@ namespace Beebop {
 
 		public string header_text { get; set; }
 
-		public string document_directory { get; set; }
-		public string page_template { get; set; }
-		public string logo { get; set; }
+		public File document_directory { get; set; }
+		public File page_template { get; set; }
+		public File logo { get; set; }
 
 		public double page_padding_x { get; set; }
 		public double page_padding_y { get; set; }
@@ -54,9 +54,9 @@ namespace Beebop {
 
 			header_text = "";
 
-			document_directory = Environment.get_user_special_dir (UserDirectory.DOCUMENTS);
-			page_template = Config.PKGDATADIR + "/page.svg";
-			logo = Config.PKGDATADIR + "/logo.svg";
+			document_directory = File.new_for_path (Environment.get_user_special_dir (UserDirectory.DOCUMENTS));
+			page_template = File.new_for_path (Config.PKGDATADIR + "/page.svg");
+			logo = File.new_for_path (Config.PKGDATADIR + "/logo.svg");
 
 			page_padding_x = 10.0;
 			page_padding_y = 10.0;
@@ -81,6 +81,7 @@ namespace Beebop {
 			File handle;
 			KeyFile pref;
 			double[] dimensions;
+			string uri;
 			string data;
 			size_t len;
 
@@ -119,12 +120,17 @@ namespace Beebop {
 			                               Const.KEY_HEADER_TEXT);
 
 			/* Paths */
-			document_directory = pref.get_string (Const.GROUP,
-			                                      Const.KEY_DOCUMENT_DIRECTORY);
-			page_template = pref.get_string (Const.GROUP,
-			                                 Const.KEY_PAGE_TEMPLATE);
-			logo = pref.get_string (Const.GROUP,
-			                        Const.KEY_LOGO);
+			uri = pref.get_string (Const.GROUP,
+			                       Const.KEY_DOCUMENT_DIRECTORY);
+			document_directory = File.new_for_uri (uri);
+
+			uri = pref.get_string (Const.GROUP,
+			                       Const.KEY_PAGE_TEMPLATE);
+			page_template = File.new_for_uri (uri);
+
+			uri = pref.get_string (Const.GROUP,
+			                       Const.KEY_LOGO);
+			logo = File.new_for_uri (uri);
 
 			/* Sizes */
 			dimensions = pref.get_double_list (Const.GROUP,
@@ -203,13 +209,13 @@ namespace Beebop {
 			/* Paths */
 			pref.set_string (Const.GROUP,
 			                 Const.KEY_DOCUMENT_DIRECTORY,
-			                 document_directory);
+			                 document_directory.get_uri ());
 			pref.set_string (Const.GROUP,
 			                 Const.KEY_PAGE_TEMPLATE,
-			                 page_template);
+			                 page_template.get_uri ());
 			pref.set_string (Const.GROUP,
 			                 Const.KEY_LOGO,
-			                 logo);
+			                 logo.get_uri ());
 
 			/* Sizes */
 			dimensions[0] = page_padding_x;

@@ -91,9 +91,9 @@ namespace Beebop {
 			view.header_textview.buffer.text = preferences.header_text;
 
 			/* Paths */
-			view.document_directory_button.set_current_folder (preferences.document_directory);
-			view.page_template_button.set_filename (preferences.page_template);
-			view.logo_button.set_filename (preferences.logo);
+			view.document_directory_button.set_current_folder_uri (preferences.document_directory.get_uri ());
+			view.page_template_button.set_uri (preferences.page_template.get_uri ());
+			view.logo_button.set_uri (preferences.logo.get_uri ());
 
 			/* Sizes */
 			view.page_padding_x_spinbutton.value = preferences.page_padding_x;
@@ -145,22 +145,22 @@ namespace Beebop {
 			                                                                false);
 
 			/* Get paths */
-			filename = view.document_directory_button.get_filename ();
+			filename = view.document_directory_button.get_uri ();
 			if (filename != null) {
 
-				preferences.document_directory = filename;
+				preferences.document_directory = File.new_for_uri (filename);
 			}
 
-			filename = view.page_template_button.get_filename ();
+			filename = view.page_template_button.get_uri ();
 			if (filename != null) {
 
-				preferences.page_template = filename;
+				preferences.page_template = File.new_for_uri (filename);
 			}
 
-			filename = view.logo_button.get_filename ();
+			filename = view.logo_button.get_uri ();
 			if (filename != null) {
 
-				preferences.logo = filename;
+				preferences.logo = File.new_for_uri (filename);
 			}
 
 			/* Get other values */
