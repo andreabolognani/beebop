@@ -686,11 +686,11 @@ namespace Beebop {
 			text += Markup.escape_text (cell.text);
 
 			height = paint_text (text,
-			                    x + preferences.cell_padding_x,
-			                    y + preferences.cell_padding_y,
-			                    width - (2 * preferences.cell_padding_x),
-			                    height,
-			                    mode);
+			                     x + preferences.cell_padding_x,
+			                     y + preferences.cell_padding_y,
+			                     width - (2 * preferences.cell_padding_x),
+			                     height,
+			                     mode);
 
 			/* Add vertical padding to the text height */
 			height += (2 * preferences.cell_padding_y);
@@ -708,11 +708,11 @@ namespace Beebop {
 		private double paint_cell_with_border (Cell cell, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			height = paint_cell (cell,
-			                    x,
-			                    y,
-			                    width,
-			                    height,
-			                    mode);
+			                     x,
+			                     y,
+			                     width,
+			                     height,
+			                     mode);
 
 			if (mode == PaintMode.PAINT) {
 
@@ -745,11 +745,11 @@ namespace Beebop {
 			cell.text += company.city;
 
 			height = paint_cell_with_border (cell,
-			                                x,
-			                                y,
-			                                width,
-			                                height,
-			                                mode);
+			                                 x,
+			                                 y,
+			                                 width,
+			                                 height,
+			                                 mode);
 
 			/* Check for drawing errors */
 			if (context.status () != Cairo.Status.SUCCESS) {
