@@ -50,24 +50,32 @@ namespace Beebop {
 		public const string TAG_UNIT_OF_MEASUREMENT = "unit_of_measurement";
 		public const string TAG_QUANTITY = "quantity";
 
+		/* Preferences file location */
+		public const string PREFERENCES_DIRECTORY = "beebop";
+		public const string PREFERENCES_FILE = "preferences";
+
 		/* Preferences file groups and keys */
-		public const string GROUP = "Beebop";
-		public const string KEY_HEADER_TEXT = "header_text";
+		public const string GROUP_HEADER = "Header";
+		public const string KEY_MARKUP = "markup";
+		public const string GROUP_PATHS = "Paths";
 		public const string KEY_DOCUMENT_DIRECTORY = "document_directory";
 		public const string KEY_PAGE_TEMPLATE = "page_template";
 		public const string KEY_LOGO = "logo";
+		public const string GROUP_SIZES = "Sizes";
 		public const string KEY_PAGE_PADDING = "page_padding";
 		public const string KEY_CELL_PADDING = "cell_padding";
 		public const string KEY_ELEMENTS_SPACING = "elements_spacing";
 		public const string KEY_ADDRESS_BOX_WIDTH = "address_box_width";
+		public const string GROUP_APPEARANCE = "Appearance";
 		public const string KEY_TEXT_FONT = "text_font";
 		public const string KEY_TITLE_FONT = "title_font";
 		public const string KEY_LINE_WIDTH = "line_width";
-		public const string KEY_DEFAULT_UNIT = "default_unit";
-		public const string KEY_DEFAULT_REASON = "default_reason";
-		public const string KEY_DEFAULT_TRANSPORTED_BY = "default_transported_by";
-		public const string KEY_DEFAULT_CARRIER = "default_carrier";
-		public const string KEY_DEFAULT_DUTIES = "default_duties";
+		public const string GROUP_DEFAULT_VALUES = "Default values";
+		public const string KEY_UNIT_OF_MEASUREMENT = "unit_of_measurement";
+		public const string KEY_REASON = "reason";
+		public const string KEY_TRANSPORTED_BY = "transported_by";
+		public const string KEY_CARRIER = "carrier";
+		public const string KEY_DELIVERY_DUTIES = "delivery_duties";
 
 		/* Goods columns  */
 		public const int COLUMN_CODE = 0;

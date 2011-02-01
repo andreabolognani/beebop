@@ -88,7 +88,7 @@ namespace Beebop {
 				return;
 
 			/* Header */
-			view.header_textview.buffer.text = preferences.header_text;
+			view.header_textview.buffer.text = preferences.header_markup;
 
 			/* Paths */
 			view.document_directory_button.set_current_folder_uri (preferences.document_directory.get_uri ());
@@ -141,9 +141,9 @@ namespace Beebop {
 
 			/* Get header text */
 			view.header_textview.buffer.get_bounds (out start, out end);
-			preferences.header_text = view.header_textview.buffer.get_text (start,
-			                                                                end,
-			                                                                false);
+			preferences.header_markup = view.header_textview.buffer.get_text (start,
+			                                                                  end,
+			                                                                  false);
 
 			/* Get paths */
 			filename = view.document_directory_button.get_uri ();

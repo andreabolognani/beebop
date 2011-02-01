@@ -20,12 +20,9 @@ namespace Beebop {
 
 	public class Preferences : GLib.Object {
 
-		private static string DIR = "beebop";
-		private static string FILE = "preferences";
-
 		private static Preferences singleton = null;
 
-		public string header_text { get; set; }
+		public string header_markup { get; set; }
 
 		public File document_directory { get; set; }
 		public File page_template { get; set; }
@@ -53,7 +50,7 @@ namespace Beebop {
 
 		construct {
 
-			header_text = "";
+			header_markup = "";
 
 			document_directory = File.new_for_path (Environment.get_user_special_dir (UserDirectory.DOCUMENTS));
 			page_template = File.new_for_path (Config.PKGDATADIR + "/page.svg");
@@ -95,8 +92,8 @@ namespace Beebop {
 
 				/* Build the path */
 				handle = File.new_for_path (Environment.get_user_config_dir ());
-				handle = handle.get_child (DIR);
-				handle = handle.get_child (FILE);
+				handle = handle.get_child (Const.PREFERENCES_DIRECTORY);
+				handle = handle.get_child (Const.PREFERENCES_FILE);
 
 				/* Load file contents */
 				handle.load_contents (null,
@@ -115,27 +112,25 @@ namespace Beebop {
 				return;
 			}
 
-			/* Get all the config values */
-
 			/* Header */
-			header_text = pref.get_string (Const.GROUP,
-			                               Const.KEY_HEADER_TEXT);
+			header_markup = pref.get_string (Const.GROUP_HEADER,
+			                                 Const.KEY_MARKUP);
 
 			/* Paths */
-			uri = pref.get_string (Const.GROUP,
+			uri = pref.get_string (Const.GROUP_PATHS,
 			                       Const.KEY_DOCUMENT_DIRECTORY);
 			document_directory = File.new_for_uri (uri);
 
-			uri = pref.get_string (Const.GROUP,
+			uri = pref.get_string (Const.GROUP_PATHS,
 			                       Const.KEY_PAGE_TEMPLATE);
 			page_template = File.new_for_uri (uri);
 
-			uri = pref.get_string (Const.GROUP,
+			uri = pref.get_string (Const.GROUP_PATHS,
 			                       Const.KEY_LOGO);
 			logo = File.new_for_uri (uri);
 
 			/* Sizes */
-			dimensions = pref.get_double_list (Const.GROUP,
+			dimensions = pref.get_double_list (Const.GROUP_SIZES,
 			                                   Const.KEY_PAGE_PADDING);
 
 			if (dimensions.length != 2) {
@@ -146,7 +141,7 @@ namespace Beebop {
 			page_padding_x = dimensions[0];
 			page_padding_y = dimensions[1];
 
-			dimensions = pref.get_double_list (Const.GROUP,
+			dimensions = pref.get_double_list (Const.GROUP_SIZES,
 			                                   Const.KEY_CELL_PADDING);
 
 			if (dimensions.length != 2) {
@@ -157,7 +152,7 @@ namespace Beebop {
 			cell_padding_x = dimensions[0];
 			cell_padding_y = dimensions[1];
 
-			dimensions = pref.get_double_list (Const.GROUP,
+			dimensions = pref.get_double_list (Const.GROUP_SIZES,
 			                                   Const.KEY_ELEMENTS_SPACING);
 
 			if (dimensions.length != 2) {
@@ -168,28 +163,28 @@ namespace Beebop {
 			elements_spacing_x = dimensions[0];
 			elements_spacing_y = dimensions[1];
 
-			address_box_width = pref.get_double (Const.GROUP,
+			address_box_width = pref.get_double (Const.GROUP_SIZES,
 			                                     Const.KEY_ADDRESS_BOX_WIDTH);
 
 			/* Appearance */
-			text_font = pref.get_string (Const.GROUP,
+			text_font = pref.get_string (Const.GROUP_APPEARANCE,
 			                             Const.KEY_TEXT_FONT);
-			title_font = pref.get_string (Const.GROUP,
+			title_font = pref.get_string (Const.GROUP_APPEARANCE,
 			                              Const.KEY_TITLE_FONT);
-			line_width = pref.get_double (Const.GROUP,
+			line_width = pref.get_double (Const.GROUP_APPEARANCE,
 			                              Const.KEY_LINE_WIDTH);
 
-			/* Defaults */
-			default_unit = pref.get_string (Const.GROUP,
-			                                Const.KEY_DEFAULT_UNIT);
-			default_reason = pref.get_string (Const.GROUP,
-			                                  Const.KEY_DEFAULT_REASON);
-			default_transported_by = pref.get_string (Const.GROUP,
-			                                          Const.KEY_DEFAULT_TRANSPORTED_BY);
-			default_carrier = pref.get_string (Const.GROUP,
-			                                   Const.KEY_DEFAULT_CARRIER);
-			default_duties = pref.get_string (Const.GROUP,
-			                                  Const.KEY_DEFAULT_DUTIES);
+			/* Default values */
+			default_unit = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+			                                Const.KEY_UNIT_OF_MEASUREMENT);
+			default_reason = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+			                                  Const.KEY_REASON);
+			default_transported_by = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+			                                          Const.KEY_TRANSPORTED_BY);
+			default_carrier = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+			                                   Const.KEY_CARRIER);
+			default_duties = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+			                                  Const.KEY_DELIVERY_DUTIES);
 		}
 
 		public void save () throws Error {
@@ -203,73 +198,71 @@ namespace Beebop {
 			pref = new KeyFile ();
 			dimensions = new double[2];
 
-			/* Set preferences */
-
 			/* Header */
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_HEADER_TEXT,
-			                 header_text);
+			pref.set_string (Const.GROUP_HEADER,
+			                 Const.KEY_MARKUP,
+			                 header_markup);
 
 			/* Paths */
-			pref.set_string (Const.GROUP,
+			pref.set_string (Const.GROUP_PATHS,
 			                 Const.KEY_DOCUMENT_DIRECTORY,
 			                 document_directory.get_uri ());
-			pref.set_string (Const.GROUP,
+			pref.set_string (Const.GROUP_PATHS,
 			                 Const.KEY_PAGE_TEMPLATE,
 			                 page_template.get_uri ());
-			pref.set_string (Const.GROUP,
+			pref.set_string (Const.GROUP_PATHS,
 			                 Const.KEY_LOGO,
 			                 logo.get_uri ());
 
 			/* Sizes */
 			dimensions[0] = page_padding_x;
 			dimensions[1] = page_padding_y;
-			pref.set_double_list (Const.GROUP,
+			pref.set_double_list (Const.GROUP_SIZES,
 			                      Const.KEY_PAGE_PADDING,
 			                      dimensions);
 
 			dimensions[0] = cell_padding_x;
 			dimensions[1] = cell_padding_y;
-			pref.set_double_list (Const.GROUP,
+			pref.set_double_list (Const.GROUP_SIZES,
 			                      Const.KEY_CELL_PADDING,
 			                      dimensions);
 
 			dimensions[0] = elements_spacing_x;
 			dimensions[1] = elements_spacing_y;
-			pref.set_double_list (Const.GROUP,
+			pref.set_double_list (Const.GROUP_SIZES,
 			                      Const.KEY_ELEMENTS_SPACING,
 			                      dimensions);
 
-			pref.set_double (Const.GROUP,
+			pref.set_double (Const.GROUP_SIZES,
 			                 Const.KEY_ADDRESS_BOX_WIDTH,
 			                 address_box_width);
 
 			/* Appearance */
-			pref.set_string (Const.GROUP,
+			pref.set_string (Const.GROUP_APPEARANCE,
 			                 Const.KEY_TEXT_FONT,
 			                 text_font);
-			pref.set_string (Const.GROUP,
+			pref.set_string (Const.GROUP_APPEARANCE,
 			                 Const.KEY_TITLE_FONT,
 			                 title_font);
-			pref.set_double (Const.GROUP,
+			pref.set_double (Const.GROUP_APPEARANCE,
 			                 Const.KEY_LINE_WIDTH,
 			                 line_width);
 
-			/* Defaults */
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_DEFAULT_UNIT,
+			/* Default values */
+			pref.set_string (Const.GROUP_DEFAULT_VALUES,
+			                 Const.KEY_UNIT_OF_MEASUREMENT,
 			                 default_unit);
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_DEFAULT_REASON,
+			pref.set_string (Const.GROUP_DEFAULT_VALUES,
+			                 Const.KEY_REASON,
 			                 default_reason);
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_DEFAULT_TRANSPORTED_BY,
+			pref.set_string (Const.GROUP_DEFAULT_VALUES,
+			                 Const.KEY_TRANSPORTED_BY,
 			                 default_transported_by);
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_DEFAULT_CARRIER,
+			pref.set_string (Const.GROUP_DEFAULT_VALUES,
+			                 Const.KEY_CARRIER,
 			                 default_carrier);
-			pref.set_string (Const.GROUP,
-			                 Const.KEY_DEFAULT_DUTIES,
+			pref.set_string (Const.GROUP_DEFAULT_VALUES,
+			                 Const.KEY_DELIVERY_DUTIES,
 			                 default_duties);
 
 			/* Get textual representation of the keyfile */
@@ -277,7 +270,7 @@ namespace Beebop {
 
 			/* Build directory path */
 			handle = File.new_for_path (Environment.get_user_config_dir ());
-			handle = handle.get_child (DIR);
+			handle = handle.get_child (Const.PREFERENCES_DIRECTORY);
 
 			/* Create the configuration directory (if it doesn't already exist) */
 			if (!handle.query_exists (null)) {
@@ -286,7 +279,7 @@ namespace Beebop {
 			}
 
 			/* Build file path */
-			handle = handle.get_child (FILE);
+			handle = handle.get_child (Const.PREFERENCES_FILE);
 
 			/* Replace the old preferences file (if any) */
 			handle.replace_contents (data,
