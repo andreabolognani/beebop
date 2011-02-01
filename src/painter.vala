@@ -279,6 +279,16 @@ namespace Beebop {
 
 				/* Append an empty row */
 				row = new Row (table.columns);
+				cell = row.get_cell (0);
+				cell.text = " ";
+				cell = row.get_cell (1);
+				cell.text = " ";
+				cell = row.get_cell (2);
+				cell.text = " ";
+				cell = row.get_cell (3);
+				cell.text = " ";
+				cell = row.get_cell (4);
+				cell.text = " ";
 
 				table.append_row (row);
 
@@ -676,30 +686,49 @@ namespace Beebop {
 		/* Paint a cell (with no border) */
 		private double paint_cell (Cell cell, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
-			string text;
+			double text_x;
+			double text_y;
+			double text_width;
+			double text_height;
 
-			text = "";
+			text_x = x + preferences.cell_padding_x;
+			text_y = y + preferences.cell_padding_y;
+			text_width = width - (2 * preferences.cell_padding_x);
+			text_height = Const.AUTOMATIC_SIZE;
 
-			/* Add the title before the text, if a title is set */
+			height = 0.0;
+
+			/* Paint the title before the text, if a title is set */
 			if (cell.title.collate ("") != 0) {
 
-				text += "<b>" + Markup.escape_text (cell.title) + "</b>";
+				height += paint_text (Markup.escape_text (cell.title),
+				                      title_font,
+				                      text_x,
+				                      text_y,
+				                      text_width,
+				                      text_height,
+				                      mode);
 
-				/* Start a new line after the title only if there is some text */
+				/* If there is text after the title, add some spacing */
 				if (cell.text.collate ("") != 0) {
-					text += "\n";
+
+					height += preferences.cell_padding_y;
 				}
+
+				text_y += height;
 			}
 
-			text += Markup.escape_text (cell.text);
+			/* Paint the text, if any */
+			if (cell.text.collate ("") != 0) {
 
-			height = paint_text (text,
-			                     text_font,
-			                     x + preferences.cell_padding_x,
-			                     y + preferences.cell_padding_y,
-			                     width - (2 * preferences.cell_padding_x),
-			                     height,
-			                     mode);
+				height += paint_text (Markup.escape_text (cell.text),
+				                      text_font,
+				                      text_x,
+				                      text_y,
+				                      text_width,
+				                      text_height,
+				                      mode);
+			}
 
 			/* Add vertical padding to the text height */
 			height += (2 * preferences.cell_padding_y);
