@@ -60,7 +60,8 @@ namespace Beebop {
 		public const string KEY_CELL_PADDING = "cell_padding";
 		public const string KEY_ELEMENTS_SPACING = "elements_spacing";
 		public const string KEY_ADDRESS_BOX_WIDTH = "address_box_width";
-		public const string KEY_FONT = "font";
+		public const string KEY_TEXT_FONT = "text_font";
+		public const string KEY_TITLE_FONT = "title_font";
 		public const string KEY_LINE_WIDTH = "line_width";
 		public const string KEY_DEFAULT_UNIT = "default_unit";
 		public const string KEY_DEFAULT_REASON = "default_reason";
@@ -123,7 +124,8 @@ namespace Beebop {
 		public const string OBJ_ELEMENTS_SPACING_X_SPINBUTTON = "elements_spacing_x_spinbutton";
 		public const string OBJ_ELEMENTS_SPACING_Y_SPINBUTTON = "elements_spacing_y_spinbutton";
 		public const string OBJ_ADDRESS_BOX_WIDTH_SPINBUTTON = "address_box_width_spinbutton";
-		public const string OBJ_FONTBUTTON = "fontbutton";
+		public const string OBJ_TEXT_FONTBUTTON = "text_fontbutton";
+		public const string OBJ_TITLE_FONTBUTTON = "title_fontbutton";
 		public const string OBJ_LINE_WIDTH_SPINBUTTON = "line_width_spinbutton";
 		public const string OBJ_DEFAULT_UNIT_ENTRY = "default_unit_entry";
 		public const string OBJ_DEFAULT_REASON_ENTRY = "default_reason_entry";

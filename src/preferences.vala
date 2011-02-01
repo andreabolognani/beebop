@@ -39,7 +39,8 @@ namespace Beebop {
 		public double elements_spacing_y { get; set; }
 		public double address_box_width { get; set; }
 
-		public string font { get; set; }
+		public string text_font { get; set; }
+		public string title_font { get; set; }
 		public double line_width { get; set; }
 
 		public string default_unit { get; set; }
@@ -66,7 +67,8 @@ namespace Beebop {
 			elements_spacing_y = 10.0;
 			address_box_width = 350.0;
 
-			font = "Sans 8";
+			text_font = "Sans 10";
+			title_font = "Sans Bold 9";
 			line_width = 1.0;
 
 			default_unit = "";
@@ -170,8 +172,10 @@ namespace Beebop {
 			                                     Const.KEY_ADDRESS_BOX_WIDTH);
 
 			/* Appearance */
-			font = pref.get_string (Const.GROUP,
-			                        Const.KEY_FONT);
+			text_font = pref.get_string (Const.GROUP,
+			                             Const.KEY_TEXT_FONT);
+			title_font = pref.get_string (Const.GROUP,
+			                              Const.KEY_TITLE_FONT);
 			line_width = pref.get_double (Const.GROUP,
 			                              Const.KEY_LINE_WIDTH);
 
@@ -242,8 +246,11 @@ namespace Beebop {
 
 			/* Appearance */
 			pref.set_string (Const.GROUP,
-			                 Const.KEY_FONT,
-			                 font);
+			                 Const.KEY_TEXT_FONT,
+			                 text_font);
+			pref.set_string (Const.GROUP,
+			                 Const.KEY_TITLE_FONT,
+			                 title_font);
 			pref.set_double (Const.GROUP,
 			                 Const.KEY_LINE_WIDTH,
 			                 line_width);

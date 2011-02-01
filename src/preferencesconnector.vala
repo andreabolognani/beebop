@@ -105,7 +105,8 @@ namespace Beebop {
 			view.address_box_width_spinbutton.value = preferences.address_box_width;
 
 			/* Appearance */
-			view.fontbutton.font_name = preferences.font;
+			view.text_fontbutton.font_name = preferences.text_font;
+			view.title_fontbutton.font_name = preferences.title_font;
 			view.line_width_spinbutton.value = preferences.line_width;
 
 			/* Defaults */
@@ -171,7 +172,8 @@ namespace Beebop {
 			preferences.elements_spacing_x = view.elements_spacing_x_spinbutton.value;
 			preferences.elements_spacing_y = view.elements_spacing_y_spinbutton.value;
 			preferences.address_box_width = view.address_box_width_spinbutton.value;
-			preferences.font = view.fontbutton.font_name;
+			preferences.text_font = view.text_fontbutton.font_name;
+			preferences.title_font = view.title_fontbutton.font_name;
 			preferences.line_width = view.line_width_spinbutton.value;
 			preferences.default_unit = view.default_unit_entry.text;
 			preferences.default_reason = view.default_reason_entry.text;

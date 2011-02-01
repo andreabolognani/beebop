@@ -36,7 +36,8 @@ namespace Beebop {
 		public Gtk.SpinButton elements_spacing_y_spinbutton { get; private set; }
 		public Gtk.SpinButton address_box_width_spinbutton { get; private set; }
 
-		public Gtk.FontButton fontbutton { get; private set; }
+		public Gtk.FontButton text_fontbutton { get; private set; }
+		public Gtk.FontButton title_fontbutton { get; private set; }
 		public Gtk.SpinButton line_width_spinbutton { get; private set; }
 
 		public Gtk.Entry default_unit_entry { get; private set; }
@@ -88,8 +89,10 @@ namespace Beebop {
 			                                as Gtk.SpinButton;
 			address_box_width_spinbutton = Util.get_object (ui, Const.OBJ_ADDRESS_BOX_WIDTH_SPINBUTTON)
 			                               as Gtk.SpinButton;
-			fontbutton = Util.get_object (ui, Const.OBJ_FONTBUTTON)
-			             as Gtk.FontButton;
+			text_fontbutton = Util.get_object (ui, Const.OBJ_TEXT_FONTBUTTON)
+			                  as Gtk.FontButton;
+			title_fontbutton = Util.get_object (ui, Const.OBJ_TITLE_FONTBUTTON)
+			                   as Gtk.FontButton;
 			line_width_spinbutton = Util.get_object (ui, Const.OBJ_LINE_WIDTH_SPINBUTTON)
 			                        as Gtk.SpinButton;
 			default_unit_entry = Util.get_object (ui, Const.OBJ_DEFAULT_UNIT_ENTRY)
