@@ -547,6 +547,7 @@ namespace Beebop {
 			                       "title", _("About %s").printf (_("Beebop")),
 			                       "program-name", _("Beebop"),
 			                       "version", Config.VERSION,
+			                       "logo-icon-name", "beebop",
 			                       "comments", _("Easily create nice-looking shipping lists"),
 			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
 			                       "license", Util.license,

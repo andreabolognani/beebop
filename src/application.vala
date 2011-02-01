@@ -93,6 +93,7 @@ namespace Beebop {
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
 			Environment.set_application_name (_("Beebop"));
+			Gtk.Window.set_default_icon_name ("beebop");
 
 			application = new Application ();
 

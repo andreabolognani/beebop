@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Beebop
+GenericName=Shipping lists creator
+GenericName[it]=Creatore di documenti di trasporto
+Comment=Easily create nice-looking shipping lists
+Comment[it]=Crea facilmente documenti di trasporto
+TryExec=beebop
+Exec=beebop
+Terminal=false
+Type=Application
+Icon=beebop
+Categories=GTK;Office;
