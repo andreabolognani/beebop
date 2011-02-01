@@ -20,8 +20,29 @@ namespace Beebop {
 
 	public class Cell : GLib.Object {
 
+		private string _markup;
+
 		public string title { get; set; }
-		public string text { get; set; }
+		public string text {
+
+			get {
+				return _markup;
+			}
+
+			set {
+				_markup = Markup.escape_text (value);
+			}
+		}
+		public string markup {
+
+			get {
+				return _markup;
+			}
+
+			set {
+				_markup = value;
+			}
+		}
 
 		construct {
 

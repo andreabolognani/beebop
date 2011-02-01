@@ -701,7 +701,7 @@ namespace Beebop {
 			/* Paint the title before the text, if a title is set */
 			if (cell.title.collate ("") != 0) {
 
-				height += paint_text (Markup.escape_text (cell.title),
+				height += paint_text (cell.title,
 				                      title_font,
 				                      text_x,
 				                      text_y,
@@ -721,7 +721,7 @@ namespace Beebop {
 			/* Paint the text, if any */
 			if (cell.text.collate ("") != 0) {
 
-				height += paint_text (Markup.escape_text (cell.text),
+				height += paint_text (cell.markup,
 				                      text_font,
 				                      text_x,
 				                      text_y,
@@ -774,13 +774,16 @@ namespace Beebop {
 		private double paint_company_address (string title, CompanyInfo company, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			Cell cell;
+			string text;
+
+			text = company.name + "\n" +
+			       company.street + "\n" +
+			       company.city;;
 
 			cell = new Cell ();
 
 			cell.title = title;
-			cell.text = company.name + "\n";
-			cell.text += company.street + "\n";
-			cell.text += company.city;
+			cell.text = text;
 
 			height = paint_cell_with_border (cell,
 			                                 x,
