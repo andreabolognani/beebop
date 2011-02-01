@@ -30,6 +30,8 @@ namespace Beebop {
 		private Cairo.Surface surface;
 		private Cairo.Context context;
 
+		private Pango.FontDescription document_font;
+
 		private Rsvg.Handle page;
 		private Rsvg.Handle logo;
 
@@ -74,6 +76,10 @@ namespace Beebop {
 			                                page_width,
 			                                page_height);
 			context = new Cairo.Context (surface);
+
+			/* Prepare document font */
+			document_font = new Pango.FontDescription ();
+			document_font = document_font.from_string (preferences.font);
 
 			/* Set some appearance properties */
 			context.set_line_width (preferences.line_width);
@@ -301,7 +307,6 @@ namespace Beebop {
 		/* Load required resources */
 		private void load_resources () throws DocumentError {
 
-			File handle;
 			string data;
 			size_t len;
 
@@ -686,6 +691,7 @@ namespace Beebop {
 			text += Markup.escape_text (cell.text);
 
 			height = paint_text (text,
+			                     document_font,
 			                     x + preferences.cell_padding_x,
 			                     y + preferences.cell_padding_y,
 			                     width - (2 * preferences.cell_padding_x),
@@ -923,16 +929,11 @@ namespace Beebop {
 		}
 
 		/* Paint text */
-		private double paint_text (string text, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
+		private double paint_text (string text, Pango.FontDescription font, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
 			Pango.Layout layout;
-			Pango.FontDescription font_description;
 			int text_width;
 			int text_height;
-
-			/* Set text properties */
-			font_description = new Pango.FontDescription ();
-			font_description = font_description.from_string (preferences.font);
 
 			/* Create a new layout in the selected spot */
 			context.save ();
@@ -940,7 +941,7 @@ namespace Beebop {
 			layout = Pango.cairo_create_layout (context);
 
 			/* Set layout properties */
-			layout.set_font_description (font_description);
+			layout.set_font_description (font);
 			layout.set_width ((int) (width * Pango.SCALE));
 			layout.set_markup (text, -1);
 
