@@ -22,6 +22,9 @@ namespace Beebop {
 
 		private static Preferences singleton = null;
 
+		private Pango.FontDescription _text_font;
+		private Pango.FontDescription _title_font;
+
 		public string header_markup { get; set; }
 
 		public File document_directory { get; set; }
@@ -36,8 +39,26 @@ namespace Beebop {
 		public double elements_spacing_y { get; set; }
 		public double address_box_width { get; set; }
 
-		public string text_font { get; set; }
-		public string title_font { get; set; }
+		public Pango.FontDescription text_font {
+
+			get {
+				return _text_font;
+			}
+
+			set {
+				_text_font = value.copy ();
+			}
+		}
+		public Pango.FontDescription title_font {
+
+			get {
+				return _title_font;
+			}
+
+			set {
+				_title_font = value.copy ();
+			}
+		}
 		public double line_width { get; set; }
 
 		public string default_unit { get; set; }
@@ -64,8 +85,10 @@ namespace Beebop {
 			elements_spacing_y = 10.0;
 			address_box_width = 350.0;
 
-			text_font = "Sans 10";
-			title_font = "Sans Bold 9";
+			text_font = new Pango.FontDescription ();
+			text_font = text_font.from_string ("Sans 10");
+			title_font = new Pango.FontDescription ();
+			title_font = title_font.from_string ("Sans Bold 9");
 			line_width = 1.0;
 
 			default_unit = "";
@@ -80,7 +103,7 @@ namespace Beebop {
 			File handle;
 			KeyFile pref;
 			double[] dimensions;
-			string uri;
+			string text;
 			string data;
 			size_t len;
 
@@ -117,17 +140,17 @@ namespace Beebop {
 			                                 Const.KEY_MARKUP);
 
 			/* Paths */
-			uri = pref.get_string (Const.GROUP_PATHS,
-			                       Const.KEY_DOCUMENT_DIRECTORY);
-			document_directory = File.new_for_uri (uri);
+			text = pref.get_string (Const.GROUP_PATHS,
+			                        Const.KEY_DOCUMENT_DIRECTORY);
+			document_directory = File.new_for_uri (text);
 
-			uri = pref.get_string (Const.GROUP_PATHS,
-			                       Const.KEY_PAGE_TEMPLATE);
-			page_template = File.new_for_uri (uri);
+			text = pref.get_string (Const.GROUP_PATHS,
+			                        Const.KEY_PAGE_TEMPLATE);
+			page_template = File.new_for_uri (text);
 
-			uri = pref.get_string (Const.GROUP_PATHS,
+			text = pref.get_string (Const.GROUP_PATHS,
 			                       Const.KEY_LOGO);
-			logo = File.new_for_uri (uri);
+			logo = File.new_for_uri (text);
 
 			/* Sizes */
 			dimensions = pref.get_double_list (Const.GROUP_SIZES,
@@ -167,10 +190,16 @@ namespace Beebop {
 			                                     Const.KEY_ADDRESS_BOX_WIDTH);
 
 			/* Appearance */
-			text_font = pref.get_string (Const.GROUP_APPEARANCE,
-			                             Const.KEY_TEXT_FONT);
-			title_font = pref.get_string (Const.GROUP_APPEARANCE,
-			                              Const.KEY_TITLE_FONT);
+			text = pref.get_string (Const.GROUP_APPEARANCE,
+			                        Const.KEY_TEXT_FONT);
+			text_font = new Pango.FontDescription ();
+			text_font = text_font.from_string (text);
+
+			text = pref.get_string (Const.GROUP_APPEARANCE,
+			                        Const.KEY_TITLE_FONT);
+			title_font = new Pango.FontDescription ();
+			title_font = title_font.from_string (text);
+
 			line_width = pref.get_double (Const.GROUP_APPEARANCE,
 			                              Const.KEY_LINE_WIDTH);
 
@@ -240,10 +269,10 @@ namespace Beebop {
 			/* Appearance */
 			pref.set_string (Const.GROUP_APPEARANCE,
 			                 Const.KEY_TEXT_FONT,
-			                 text_font);
+			                 text_font.to_string ());
 			pref.set_string (Const.GROUP_APPEARANCE,
 			                 Const.KEY_TITLE_FONT,
-			                 title_font);
+			                 title_font.to_string ());
 			pref.set_double (Const.GROUP_APPEARANCE,
 			                 Const.KEY_LINE_WIDTH,
 			                 line_width);

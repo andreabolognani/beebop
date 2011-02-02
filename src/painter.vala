@@ -30,9 +30,6 @@ namespace Beebop {
 		private Cairo.Surface surface;
 		private Cairo.Context context;
 
-		private Pango.FontDescription text_font;
-		private Pango.FontDescription title_font;
-
 		private Rsvg.Handle page;
 		private Rsvg.Handle logo;
 
@@ -77,12 +74,6 @@ namespace Beebop {
 			                                page_width,
 			                                page_height);
 			context = new Cairo.Context (surface);
-
-			/* Prepare document fonts */
-			text_font = new Pango.FontDescription ();
-			text_font = text_font.from_string (preferences.text_font);
-			title_font = new Pango.FontDescription ();
-			title_font = title_font.from_string (preferences.title_font);
 
 			/* Set some appearance properties */
 			context.set_line_width (preferences.line_width);
@@ -703,7 +694,7 @@ namespace Beebop {
 			if (cell.title.collate ("") != 0) {
 
 				height += paint_text (cell.title,
-				                      title_font,
+				                      preferences.title_font,
 				                      text_x,
 				                      text_y,
 				                      text_width,
@@ -723,7 +714,7 @@ namespace Beebop {
 			if (cell.text.collate ("") != 0) {
 
 				height += paint_text (cell.markup,
-				                      text_font,
+				                      preferences.text_font,
 				                      text_x,
 				                      text_y,
 				                      text_width,

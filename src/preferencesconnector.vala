@@ -105,8 +105,8 @@ namespace Beebop {
 			view.address_box_width_spinbutton.value = preferences.address_box_width;
 
 			/* Appearance */
-			view.text_fontbutton.font_name = preferences.text_font;
-			view.title_fontbutton.font_name = preferences.title_font;
+			view.text_fontbutton.font_name = preferences.text_font.to_string ();
+			view.title_fontbutton.font_name = preferences.title_font.to_string ();
 			view.line_width_spinbutton.value = preferences.line_width;
 
 			/* Defaults */
@@ -137,7 +137,7 @@ namespace Beebop {
 
 			Gtk.TextIter start;
 			Gtk.TextIter end;
-			string filename;
+			string text;
 
 			/* Get header text */
 			view.header_textview.buffer.get_bounds (out start, out end);
@@ -146,22 +146,22 @@ namespace Beebop {
 			                                                                  false);
 
 			/* Get paths */
-			filename = view.document_directory_button.get_uri ();
-			if (filename != null) {
+			text = view.document_directory_button.get_uri ();
+			if (text != null) {
 
-				preferences.document_directory = File.new_for_uri (filename);
+				preferences.document_directory = File.new_for_uri (text);
 			}
 
-			filename = view.page_template_button.get_uri ();
-			if (filename != null) {
+			text = view.page_template_button.get_uri ();
+			if (text != null) {
 
-				preferences.page_template = File.new_for_uri (filename);
+				preferences.page_template = File.new_for_uri (text);
 			}
 
-			filename = view.logo_button.get_uri ();
-			if (filename != null) {
+			text = view.logo_button.get_uri ();
+			if (text != null) {
 
-				preferences.logo = File.new_for_uri (filename);
+				preferences.logo = File.new_for_uri (text);
 			}
 
 			/* Get other values */
@@ -172,8 +172,10 @@ namespace Beebop {
 			preferences.elements_spacing_x = view.elements_spacing_x_spinbutton.value;
 			preferences.elements_spacing_y = view.elements_spacing_y_spinbutton.value;
 			preferences.address_box_width = view.address_box_width_spinbutton.value;
-			preferences.text_font = view.text_fontbutton.font_name;
-			preferences.title_font = view.title_fontbutton.font_name;
+			text = view.text_fontbutton.font_name;
+			preferences.text_font = preferences.text_font.from_string (text);
+			text = view.title_fontbutton.font_name;
+			preferences.title_font = preferences.title_font.from_string (text);
 			preferences.line_width = view.line_width_spinbutton.value;
 			preferences.default_unit = view.default_unit_entry.text;
 			preferences.default_reason = view.default_reason_entry.text;
