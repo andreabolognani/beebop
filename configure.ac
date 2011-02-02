@@ -83,12 +83,12 @@ AC_MSG_CHECKING([if cross-building for win32])
 case "$host" in
 	*-*-mingw*)
 		win32_build=yes
-		OS_CFLAGS="-DPKGDATADIR='\"share/beebop\"' -DLOCALEDIR='\"share/locale\"'"
+		OS_CFLAGS="-DDATAROOTDIR='\"share\"' -DPKGDATADIR='\"share/beebop\"' -DLOCALEDIR='\"share/locale\"'"
 		OS_LDFLAGS='-mwindows'
 	;;
 	*)
 		win32_build=no
-		OS_CFLAGS="-DPKGDATADIR='\"\$(pkgdatadir)\"' -DLOCALEDIR='\"\$(localedir)\"'"
+		OS_CFLAGS="-DDATAROOTDIR='\"\$(datarootdir)\"' -DPKGDATADIR='\"\$(pkgdatadir)\"' -DLOCALEDIR='\"\$(localedir)\"'"
 		OS_LDFLAGS=
 	;;
 esac
