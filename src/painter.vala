@@ -162,11 +162,11 @@ namespace Beebop {
 			tables = new List<Table> ();
 
 			/* Column sizes and headings */
-			sizes = {70.0,
-			         100.0,
+			sizes = {150.0,
+			         85.0,
 			         Const.AUTOMATIC_SIZE,
 			         50.0,
-			         100.0};
+			         70.0};
 			headings = {_("Code"),
 			            _("Reference"),
 			            _("Description"),
