@@ -16,10 +16,16 @@ svgicon_DATA = \
 	beebop.svg \
 	$(NULL)
 
+icondir = $(datadir)/icons/hicolor/48x48/apps
+icon_DATA = \
+	beebop.png \
+	$(NULL)
+
 EXTRA_DIST = \
 	$(pkgdata_DATA) \
 	$(desktop_DATA) \
 	$(svgicon_DATA) \
+	$(icon_DATA) \
 	$(NULL)
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
