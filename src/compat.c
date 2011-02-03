@@ -84,3 +84,30 @@ beebop_util_set_default_icon_name (const gchar *name)
 
 #endif
 }
+
+/* Set style properties.
+ *
+ * On win32, make the settings more similar to the ones used by
+ * native applications. On other OSs, obey to the GTK+ configuration */
+void
+beebop_util_set_style_properties ()
+{
+#ifdef G_OS_WIN32
+
+	GtkSettings *settings;
+
+	/* Make sure the classes are initialized */
+	g_type_class_unref (g_type_class_ref (GTK_TYPE_IMAGE_MENU_ITEM));
+	g_type_class_unref (g_type_class_ref (GTK_TYPE_TOOLBAR));
+
+	/* Get default settings */
+	settings = gtk_settings_get_default ();
+
+	/* Set style properties */
+	g_object_set (settings,
+	              "gtk-menu-images", FALSE,
+	              "gtk-toolbar-style", GTK_TOOLBAR_ICONS,
+	              NULL);
+
+#endif
+}

@@ -119,6 +119,9 @@ namespace Beebop {
 		/* Show URI */
 		public static extern void show_uri (Gdk.Screen screen, string uri) throws Error;
 
+		/* Set style properties */
+		public static extern void set_style_properties ();
+
 		/* Standard GNU GPL copyright notice */
 		public const string license = "\n" +
 		                              "Beebop is free software; you can redistribute it and/or modify\n" +

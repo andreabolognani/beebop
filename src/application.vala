@@ -100,6 +100,9 @@ namespace Beebop {
 			Environment.set_application_name (_("Beebop"));
 			Util.set_default_icon_name ("beebop");
 
+			/* Set style properties */
+			Util.set_style_properties ();
+
 			application = new Application ();
 
 			try {
