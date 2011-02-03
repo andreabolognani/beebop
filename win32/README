@@ -1,0 +1,54 @@
+Beebop for win32
+================
+
+Beebop works fine on win32: you can compile it from GNU/Linux using mingw32,
+and create an installer using NSIS under wine.
+
+
+Cross-compilation
+-----------------
+
+The cross-configure script is a small wrapper around configure. Use
+
+	path/to/cross-configure --installdir PATH
+
+from any directory, then run make and make install as usual. You will
+end up with a win32 executable and a bunch of data files in PATH.
+
+
+Installer creation
+------------------
+
+This step is not automated by the build system, but it's trivial to
+perform: after you have run the above commands, copy the beebop.nsi file
+to PATH, cd to PATH and run
+
+	wine path/to/makensis.exe beebop.nsi
+
+to obtain a shiny win32 installer.
+
+
+Deployment
+----------
+
+In order to run Beebop on win32 you'll need the following packages:
+
+  * GTK+ runtime
+      http://gtk-win.sourceforge.net/
+  * librsvg, libcroco and libgsf
+      http://ftp.gnome.org/pub/gnome/binaries/win32/
+  * libiconv
+      ftp://ftp.gnu.org/pub/gnu/libiconv/
+  * libxml2
+      ftp://ftp.zlatkovic.com/libxml/
+
+Install the GTK+ runtime first, then unpack all the other dependencies
+in the same directory as the GTK+ runtime.
+
+Be careful: the libxml2 zip contains all the needed files inside a directory
+called libxml2-x.y.z.win32, so after you have unpacked it you will have to
+move the files out of that directory.
+
+As a last step, you'll have to copy bin\libxml2.dll to bin\libxml2-2.dll so
+that librsvg can find it. Once you've done that, you should be able to run
+Beebop.
