@@ -1,4 +1,5 @@
 [type: gettext/glade]data/beebop.ui
+data/beebop.desktop.in
 src/const.vala
 src/util.vala
 src/preferences.vala

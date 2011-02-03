@@ -7,9 +7,13 @@ pkgdata_DATA = \
 	$(NULL)
 
 desktopdir = $(datadir)/applications
-desktop_DATA = \
-	beebop.desktop \
+desktop_in_files = \
+	beebop.desktop.in \
 	$(NULL)
+desktop_DATA = \
+	$(desktop_in_files:.desktop.in=.desktop) \
+	$(NULL)
+@INTLTOOL_DESKTOP_RULE@
 
 svgicondir = $(datadir)/icons/hicolor/scalable/apps
 svgicon_DATA = \

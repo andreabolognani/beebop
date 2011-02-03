@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-03 11:53+0100\n"
+"POT-Creation-Date: 2011-02-03 12:28+0100\n"
 "PO-Revision-Date: 2011-01-31 21:07+0100\n"
 "Last-Translator: Andrea Bolognani <andrea.bolognani@roundhousecode.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -216,6 +216,14 @@ msgstr "_File"
 msgid "_Help"
 msgstr "A_iuto"
 
+#: ../data/beebop.desktop.in.h:1 ../src/connector.vala:555
+msgid "Easily create nice-looking shipping lists"
+msgstr "Crea facilmente documenti di trasporto"
+
+#: ../data/beebop.desktop.in.h:2
+msgid "Shipping lists creator"
+msgstr "Creatore di documenti di trasporto"
+
 #: ../src/util.vala:48
 msgid "Discard unsaved changes?"
 msgstr "Scartare le modifiche?"
@@ -383,10 +391,6 @@ msgstr "Impossibile mostrare le preferenze"
 #, c-format
 msgid "About %s"
 msgstr "Informazioni su %s"
-
-#: ../src/connector.vala:555
-msgid "Easily create nice-looking shipping lists"
-msgstr "Crea facilmente documenti di trasporto"
 
 #: ../src/connector.vala:642
 msgid "Unknown"

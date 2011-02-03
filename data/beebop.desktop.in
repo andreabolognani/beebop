@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Beebop
+_GenericName=Shipping lists creator
+_Comment=Easily create nice-looking shipping lists
+TryExec=beebop
+Exec=beebop
+Terminal=false
+Type=Application
+Icon=beebop
+Categories=GTK;Office;
