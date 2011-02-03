@@ -1,3 +1,6 @@
+; Include Modern UI
+!include "MUI2.nsh"
+
 ; Package information (taken from configure)
 !define PACKAGE_NAME "@PACKAGE_NAME@"
 !define PACKAGE_TARNAME "@PACKAGE_TARNAME@"
@@ -11,6 +14,15 @@ RequestExecutionLevel admin
 
 ; Set default installation directory
 InstallDir "$PROGRAMFILES\${PACKAGE_NAME}"
+
+; Installer language
+!insertmacro MUI_LANGUAGE "English"
+
+; Pages
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
 
 ; Install section
 Section "Install"
