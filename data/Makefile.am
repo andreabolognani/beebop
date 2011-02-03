@@ -1,11 +1,5 @@
 NULL =
 
-pkgdata_DATA = \
-	beebop.ui \
-	page.svg \
-	logo.svg \
-	$(NULL)
-
 desktopdir = $(datadir)/applications
 desktop_in_files = \
 	beebop.desktop.in \
@@ -14,6 +8,12 @@ desktop_DATA = \
 	$(desktop_in_files:.desktop.in=.desktop) \
 	$(NULL)
 @INTLTOOL_DESKTOP_RULE@
+
+pkgdata_DATA = \
+	beebop.ui \
+	page.svg \
+	logo.svg \
+	$(NULL)
 
 svgicondir = $(datadir)/icons/hicolor/scalable/apps
 svgicon_DATA = \
@@ -26,10 +26,14 @@ icon_DATA = \
 	$(NULL)
 
 EXTRA_DIST = \
+	$(desktop_in_files) \
 	$(pkgdata_DATA) \
-	$(desktop_DATA) \
 	$(svgicon_DATA) \
 	$(icon_DATA) \
+	$(NULL)
+
+DISTCLEANFILES = \
+	$(desktop_DATA) \
 	$(NULL)
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
