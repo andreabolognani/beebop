@@ -92,6 +92,27 @@ namespace Beebop {
 			return tmp;
 		}
 
+		/* Add more icons search paths (mostly for win32) */
+		public static void add_icon_search_paths () {
+
+			Gtk.IconTheme theme;
+			File directory;
+
+			theme = Gtk.IconTheme.get_default ();
+
+			directory = File.new_for_path (Config.DATAROOTDIR + "/icons");
+			theme.append_search_path (directory.get_path ());
+			directory = File.new_for_path (Config.DATAROOTDIR + "/icons/hicolor");
+			theme.append_search_path (directory.get_path ());
+			directory = File.new_for_path (Config.DATAROOTDIR + "/icons/hicolor/48x48");
+			theme.append_search_path (directory.get_path ());
+			directory = File.new_for_path (Config.DATAROOTDIR + "/icons/hicolor/48x48/apps");
+			theme.append_search_path (directory.get_path ());
+
+			/* Rescan the theme if needed */
+			theme.rescan_if_needed ();
+		}
+
 		/* Workaround needed because Gtk.show_uri is broken on win32 */
 		public static extern void show_uri (Gdk.Screen screen, string uri) throws Error;
 

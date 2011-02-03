@@ -82,8 +82,6 @@ namespace Beebop {
 		public static int main (string[] args) {
 
 			Application application;
-			Gtk.IconTheme theme;
-			File directory;
 
 			Gtk.init (ref args);
 			Xml.Parser.init ();
@@ -94,12 +92,10 @@ namespace Beebop {
 			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-			/* Add icons search paths */
-			theme = Gtk.IconTheme.get_default ();
-			directory = File.new_for_path (Config.DATAROOTDIR + "/icons");
-			theme.append_search_path (directory.get_path ());
-			theme.rescan_if_needed ();
+			/* Add more icons search paths */
+			Util.add_icon_search_paths ();
 
+			/* Add more icons search paths (mostly for ) */
 			/* Set application and icon name */
 			Environment.set_application_name (_("Beebop"));
 			Gtk.Window.set_default_icon_name ("beebop");
