@@ -17,6 +17,7 @@
  */
 
 #include <glib.h>
+#include <gio/gio.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
@@ -24,6 +25,9 @@
 #include <windows.h>
 #endif /* G_OS_WIN32 */
 
+/* Show URI.
+ *
+ * Workaround needed because Gtk.show_uri is broken on win32 */
 void
 beebop_util_show_uri (GdkScreen   *screen,
                       const char  *uri,
@@ -36,9 +40,47 @@ beebop_util_show_uri (GdkScreen   *screen,
 	              uri,
 	              GDK_CURRENT_TIME,
 	              error);
+
 #else
 
 	/* Show URI using whatever win32 uses */
 	ShellExecute(NULL, "open", uri, NULL, NULL, SW_SHOWNORMAL);
-#endif /* !G_OS_WIN32 */
+
+#endif
+}
+
+/* Set default icon.
+ *
+ * Workaround needed because win32 doesn't seem to be able to
+ * correctly lookup icons by name */
+void
+beebop_util_set_default_icon_name (const gchar *name)
+{
+	GFile *handle;
+	gchar *filename;
+
+#ifndef G_OS_WIN32
+
+	/* Set icon name and let GTK+ figure out the filename */
+	gtk_window_set_default_icon_name (name);
+
+#else
+
+	/* win32 apparentely is unable to load SVG icons, so point
+	 * it to the fallback pixmap */
+	filename = g_strdup_printf ("%s/icons/hicolor/48x48/apps/%s.png",
+	                            DATAROOTDIR,
+	                            name);
+
+	handle = g_file_new_for_path (filename);
+	g_free (filename);
+
+	/* Set the default icon */
+	filename = g_file_get_path (handle);
+	gtk_window_set_default_icon_from_file (filename, NULL);
+
+	g_free (filename);
+	g_object_unref (handle);
+
+#endif
 }

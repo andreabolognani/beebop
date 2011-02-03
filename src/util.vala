@@ -113,7 +113,10 @@ namespace Beebop {
 			theme.rescan_if_needed ();
 		}
 
-		/* Workaround needed because Gtk.show_uri is broken on win32 */
+		/* Set default icon */
+		public static extern void set_default_icon_name (string name);
+
+		/* Show URI */
 		public static extern void show_uri (Gdk.Screen screen, string uri) throws Error;
 
 		/* Standard GNU GPL copyright notice */
