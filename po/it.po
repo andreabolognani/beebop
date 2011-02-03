@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-01 15:22+0100\n"
+"POT-Creation-Date: 2011-02-03 11:53+0100\n"
 "PO-Revision-Date: 2011-01-31 21:07+0100\n"
 "Last-Translator: Andrea Bolognani <andrea.bolognani@roundhousecode.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -25,13 +25,14 @@ msgstr "Caselle indirizzo"
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: ../data/beebop.ui.h:3 ../src/connector.vala:547 ../src/connector.vala:548
-#: ../src/application.vala:95
+#. Set application and icon name
+#: ../data/beebop.ui.h:3 ../src/connector.vala:551 ../src/connector.vala:552
+#: ../src/application.vala:99
 #, c-format
 msgid "Beebop"
 msgstr "Beebop"
 
-#: ../data/beebop.ui.h:4 ../src/painter.vala:601
+#: ../data/beebop.ui.h:4 ../src/painter.vala:592
 msgid "Carrier"
 msgstr "Vettore"
 
@@ -43,11 +44,11 @@ msgstr "Margine casella"
 msgid "City"
 msgstr "Città"
 
-#: ../data/beebop.ui.h:7 ../src/painter.vala:520
+#: ../data/beebop.ui.h:7 ../src/painter.vala:511
 msgid "Client code"
 msgstr "Codice cliente"
 
-#: ../data/beebop.ui.h:8 ../src/painter.vala:493
+#: ../data/beebop.ui.h:8 ../src/painter.vala:484
 msgid "Date"
 msgstr "Data"
 
@@ -55,11 +56,11 @@ msgstr "Data"
 msgid "Default values"
 msgstr "Valori predefiniti"
 
-#: ../data/beebop.ui.h:10 ../src/painter.vala:526
+#: ../data/beebop.ui.h:10 ../src/painter.vala:517
 msgid "Delivery duties"
 msgstr "Porto"
 
-#: ../data/beebop.ui.h:11 ../src/painter.vala:465
+#: ../data/beebop.ui.h:11 ../src/painter.vala:456
 msgid "Destination"
 msgstr "Luogo di destinazione"
 
@@ -76,98 +77,102 @@ msgid "Elements spacing"
 msgstr "Spaziatura tra elementi"
 
 #: ../data/beebop.ui.h:15
+msgid "First line"
+msgstr "Prima riga"
+
+#: ../data/beebop.ui.h:16
 msgid "Goods"
 msgstr "Beni"
 
-#: ../data/beebop.ui.h:16
+#: ../data/beebop.ui.h:17
 msgid "Header"
 msgstr "Intestazione"
 
-#: ../data/beebop.ui.h:17
+#: ../data/beebop.ui.h:18
 msgid "Horizontal"
 msgstr "Orizzontale"
 
-#: ../data/beebop.ui.h:18
+#: ../data/beebop.ui.h:19
 msgid "Line width"
 msgstr "Spessore linea"
 
-#: ../data/beebop.ui.h:19
+#: ../data/beebop.ui.h:20
 msgid "Logo"
 msgstr "Logo"
 
-#: ../data/beebop.ui.h:20
+#: ../data/beebop.ui.h:21
 msgid "Name"
-msgstr "Spett.le Ditta"
+msgstr "Nome"
 
-#: ../data/beebop.ui.h:21 ../src/painter.vala:490
+#: ../data/beebop.ui.h:22 ../src/painter.vala:481
 msgid "Number"
 msgstr "Numero"
 
-#: ../data/beebop.ui.h:22 ../src/painter.vala:632
+#: ../data/beebop.ui.h:23 ../src/painter.vala:623
 msgid "Number of parcels"
 msgstr "Numero colli"
 
-#: ../data/beebop.ui.h:23 ../src/painter.vala:604
+#: ../data/beebop.ui.h:24 ../src/painter.vala:595
 msgid "Outside appearance"
 msgstr "Aspetto esteriore"
 
-#: ../data/beebop.ui.h:24
+#: ../data/beebop.ui.h:25
 msgid "Page padding"
 msgstr "Margine pagina"
 
-#: ../data/beebop.ui.h:25
+#: ../data/beebop.ui.h:26
 msgid "Page template"
 msgstr "Template pagina"
 
-#: ../data/beebop.ui.h:26
+#: ../data/beebop.ui.h:27
 msgid "Paths"
 msgstr "Percorsi"
 
-#: ../data/beebop.ui.h:27
+#: ../data/beebop.ui.h:28
 msgid "Preferences"
 msgstr "Preferenze"
 
-#: ../data/beebop.ui.h:28 ../src/painter.vala:595
+#: ../data/beebop.ui.h:29 ../src/painter.vala:586
 msgid "Reason"
 msgstr "Causale"
 
-#: ../data/beebop.ui.h:29 ../src/painter.vala:454
+#: ../data/beebop.ui.h:30 ../src/painter.vala:445
 msgid "Recipient"
 msgstr "Destinatario"
 
-#: ../data/beebop.ui.h:30
+#: ../data/beebop.ui.h:31
 msgid "Select document directory"
 msgstr "Selezionare directory dei documenti"
 
-#: ../data/beebop.ui.h:31
+#: ../data/beebop.ui.h:32
 msgid "Select logo"
 msgstr "Selezionare logo"
 
-#: ../data/beebop.ui.h:32
+#: ../data/beebop.ui.h:33
 msgid "Select page template"
 msgstr "Selezionare template pagina"
 
-#: ../data/beebop.ui.h:33
+#: ../data/beebop.ui.h:34
 msgid "Send to recipient"
 msgstr "Spedizione presso il destinatario"
 
-#: ../data/beebop.ui.h:34
+#: ../data/beebop.ui.h:35
 msgid "Shipment"
 msgstr "Spedizione"
 
-#: ../data/beebop.ui.h:35
+#: ../data/beebop.ui.h:36
 msgid "Sizes"
 msgstr "Dimensioni"
 
-#: ../data/beebop.ui.h:36
+#: ../data/beebop.ui.h:37
 msgid "Street"
 msgstr "Via"
 
-#: ../data/beebop.ui.h:37
+#: ../data/beebop.ui.h:38
 msgid "Text font"
 msgstr "Font testo"
 
-#: ../data/beebop.ui.h:38
+#: ../data/beebop.ui.h:39
 msgid ""
 "The <b>, <i> and <u> tags can be used to make part of the text bold, italic "
 "or underlined."
@@ -175,39 +180,39 @@ msgstr ""
 "I tag <b>, <i> e <u> possono essere usati per rendere parte del testo "
 "grassetto, corsivo o sottolineato."
 
-#: ../data/beebop.ui.h:39
+#: ../data/beebop.ui.h:40
 msgid "Title font"
 msgstr "Font titolo"
 
-#: ../data/beebop.ui.h:40 ../src/painter.vala:598
+#: ../data/beebop.ui.h:41 ../src/painter.vala:589
 msgid "Transported by"
 msgstr "Trasporto a mezzo"
 
-#: ../data/beebop.ui.h:41
+#: ../data/beebop.ui.h:42
 msgid "Unit of measurement"
 msgstr "Unità di misura"
 
-#: ../data/beebop.ui.h:42 ../src/painter.vala:523
+#: ../data/beebop.ui.h:43 ../src/painter.vala:514
 msgid "VATIN"
 msgstr "Partita IVA"
 
-#: ../data/beebop.ui.h:43
+#: ../data/beebop.ui.h:44
 msgid "Vertical"
 msgstr "Verticale"
 
-#: ../data/beebop.ui.h:44 ../src/painter.vala:635
+#: ../data/beebop.ui.h:45 ../src/painter.vala:626
 msgid "Weight"
 msgstr "Peso"
 
-#: ../data/beebop.ui.h:45
+#: ../data/beebop.ui.h:46
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../data/beebop.ui.h:46
+#: ../data/beebop.ui.h:47
 msgid "_File"
 msgstr "_File"
 
-#: ../data/beebop.ui.h:47
+#: ../data/beebop.ui.h:48
 msgid "_Help"
 msgstr "A_iuto"
 
@@ -219,114 +224,114 @@ msgstr "Scartare le modifiche?"
 msgid "If you continue, all changes made to the current document will be lost."
 msgstr "Se si continua, le modifiche apportate al documento andranno perse."
 
-#: ../src/preferences.vala:143 ../src/preferences.vala:154
-#: ../src/preferences.vala:165
+#: ../src/preferences.vala:163 ../src/preferences.vala:174
+#: ../src/preferences.vala:185
 #, c-format
 msgid "Wrong number of values for key '%s'"
 msgstr "Numero errato di valori per la chiave '%s'"
 
-#: ../src/document.vala:211
+#: ../src/document.vala:215
 msgid "Malformed document"
 msgstr "Documento contenente errori"
 
-#: ../src/document.vala:220
+#: ../src/document.vala:224
 msgid "No root element"
 msgstr "Nessun elemento radice"
 
-#: ../src/document.vala:226
+#: ../src/document.vala:230
 msgid "Invalid root element"
 msgstr "Elemento radice non valido"
 
-#: ../src/document.vala:250 ../src/document.vala:314 ../src/connector.vala:642
+#: ../src/document.vala:254 ../src/document.vala:318 ../src/connector.vala:647
 msgid "Untitled document"
 msgstr "Documento senza titolo"
 
-#: ../src/document.vala:364 ../src/document.vala:403 ../src/document.vala:434
-#: ../src/document.vala:469 ../src/document.vala:511 ../src/document.vala:559
+#: ../src/document.vala:368 ../src/document.vala:411 ../src/document.vala:446
+#: ../src/document.vala:481 ../src/document.vala:523 ../src/document.vala:571
 #, c-format
 msgid "Unrecognized element inside '%s'"
 msgstr "Elemento non riconosciuto dentro '%s'"
 
 #. Paint header
-#: ../src/painter.vala:119
+#: ../src/painter.vala:110
 #, c-format
 msgid "%d of %d"
 msgstr "%d di %d"
 
-#: ../src/painter.vala:149 ../src/painter.vala:314 ../src/painter.vala:545
-#: ../src/painter.vala:681 ../src/painter.vala:740 ../src/painter.vala:769
-#: ../src/painter.vala:799 ../src/painter.vala:899 ../src/painter.vala:961
-#: ../src/painter.vala:997
+#: ../src/painter.vala:140 ../src/painter.vala:305 ../src/painter.vala:536
+#: ../src/painter.vala:672 ../src/painter.vala:731 ../src/painter.vala:760
+#: ../src/painter.vala:798 ../src/painter.vala:898 ../src/painter.vala:960
+#: ../src/painter.vala:996
 msgid "Drawing error"
 msgstr "Errore di disegno"
 
-#: ../src/painter.vala:179 ../src/connector.vala:95
+#: ../src/painter.vala:170 ../src/connector.vala:95
 msgid "Code"
 msgstr "Codice"
 
-#: ../src/painter.vala:180 ../src/connector.vala:107
+#: ../src/painter.vala:171 ../src/connector.vala:107
 msgid "Reference"
 msgstr "Riferimento"
 
-#: ../src/painter.vala:181 ../src/connector.vala:119
+#: ../src/painter.vala:172 ../src/connector.vala:119
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../src/painter.vala:182 ../src/connector.vala:132
+#: ../src/painter.vala:173 ../src/connector.vala:132
 msgid "U.M."
 msgstr "U.M."
 
-#: ../src/painter.vala:183 ../src/connector.vala:152
+#: ../src/painter.vala:174 ../src/connector.vala:152
 msgid "Quantity"
 msgstr "Quantità"
 
-#: ../src/painter.vala:337
+#: ../src/painter.vala:328
 #, c-format
 msgid "Could not load page template file: %s"
 msgstr "Impossibile caricare il file del template pagina: %s"
 
-#: ../src/painter.vala:351
+#: ../src/painter.vala:342
 #, c-format
 msgid "Could not load logo template file: %s"
 msgstr "Impossibile caricare il file del logo: %s"
 
-#: ../src/painter.vala:487
+#: ../src/painter.vala:478
 msgid "Document type"
 msgstr "Tipo di documento"
 
-#: ../src/painter.vala:488
+#: ../src/painter.vala:479
 msgid "BOP"
 msgstr "DDT"
 
-#: ../src/painter.vala:496
+#: ../src/painter.vala:487
 msgid "Page"
 msgstr "Pagina"
 
-#: ../src/painter.vala:569
+#: ../src/painter.vala:560
 msgid "Notes"
 msgstr "Note"
 
-#: ../src/painter.vala:626
+#: ../src/painter.vala:617
 msgid "Shipping date and time"
 msgstr "Data e ora inizio trasporto"
 
-#: ../src/painter.vala:629
+#: ../src/painter.vala:620
 msgid "Delivery date and time"
 msgstr "Data e ora ritiro"
 
-#: ../src/painter.vala:656
+#: ../src/painter.vala:647
 msgid "Driver’s signature"
 msgstr "Firma conducente"
 
-#: ../src/painter.vala:659
+#: ../src/painter.vala:650
 msgid "Carrier’s signature"
 msgstr "Firma vettore"
 
-#: ../src/painter.vala:662
+#: ../src/painter.vala:653
 msgid "Recipient’s signature"
 msgstr "Firma destinatario"
 
-#: ../src/preferencesview.vala:64 ../src/view.vala:82
+#: ../src/preferencesview.vala:65 ../src/view.vala:84
 msgid "Could not load UI file"
 msgstr "Impossibile caricare file di interfaccia"
 
@@ -334,56 +339,56 @@ msgstr "Impossibile caricare file di interfaccia"
 msgid "SVG files"
 msgstr "File SVG"
 
-#: ../src/preferencesconnector.vala:69 ../src/connector.vala:323
+#: ../src/preferencesconnector.vala:69 ../src/connector.vala:327
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../src/preferencesconnector.vala:191
+#: ../src/preferencesconnector.vala:199
 #, c-format
 msgid "Could not save preferences: %s"
 msgstr "Impossibile salvare le preferenze: %s"
 
-#: ../src/connector.vala:306
+#: ../src/connector.vala:310
 msgid "Open file"
 msgstr "Apri file"
 
-#: ../src/connector.vala:317
+#: ../src/connector.vala:321
 msgid "Beebop files"
 msgstr "File Beebop"
 
-#: ../src/connector.vala:346
+#: ../src/connector.vala:350
 #, c-format
 msgid "Could not load document: %s"
 msgstr "Impossibile caricare documento: %s"
 
-#: ../src/connector.vala:389
+#: ../src/connector.vala:393
 #, c-format
 msgid "Could not save document: %s"
 msgstr "Impossibile salvare documento: %s"
 
-#: ../src/connector.vala:401
+#: ../src/connector.vala:405
 msgid "Save as..."
 msgstr "Salva come..."
 
-#: ../src/connector.vala:456
+#: ../src/connector.vala:460
 #, c-format
 msgid "Unable to launch viewer: %s"
 msgstr "Impossibile eseguire il visualizzatore: %s"
 
-#: ../src/connector.vala:528
+#: ../src/connector.vala:532
 msgid "Failed to show preferences view"
 msgstr "Impossibile mostrare le preferenze"
 
-#: ../src/connector.vala:547
+#: ../src/connector.vala:551
 #, c-format
 msgid "About %s"
 msgstr "Informazioni su %s"
 
-#: ../src/connector.vala:550
+#: ../src/connector.vala:555
 msgid "Easily create nice-looking shipping lists"
 msgstr "Crea facilmente documenti di trasporto"
 
-#: ../src/connector.vala:637
+#: ../src/connector.vala:642
 msgid "Unknown"
 msgstr "Sconosciuto"
 

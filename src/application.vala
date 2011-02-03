@@ -95,7 +95,6 @@ namespace Beebop {
 			/* Add more icons search paths */
 			Util.add_icon_search_paths ();
 
-			/* Add more icons search paths (mostly for ) */
 			/* Set application and icon name */
 			Environment.set_application_name (_("Beebop"));
 			Util.set_default_icon_name ("beebop");
