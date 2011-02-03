@@ -183,11 +183,13 @@ namespace Beebop {
 					update_controls ();
 				}
 			});
+			view.recipient_first_line_entry.event.connect (recipient_first_line_changed);
 			view.recipient_name_entry.event.connect (recipient_name_changed);
 			view.recipient_street_entry.event.connect (recipient_street_changed);
 			view.recipient_city_entry.event.connect (recipient_city_changed);
 			view.recipient_vatin_entry.event.connect (recipient_vatin_changed);
 			view.recipient_client_code_entry.event.connect (recipient_client_code_changed);
+			view.destination_first_line_entry.event.connect (destination_first_line_changed);
 			view.destination_name_entry.event.connect (destination_name_changed);
 			view.destination_street_entry.event.connect (destination_street_changed);
 			view.destination_city_entry.event.connect (destination_city_changed);
@@ -233,6 +235,7 @@ namespace Beebop {
 			toggle_send_to_recipient (same);
 
 			/* Recipient info */
+			view.recipient_first_line_entry.text = document.recipient.first_line;
 			view.recipient_name_entry.text = document.recipient.name;
 			view.recipient_street_entry.text = document.recipient.street;
 			view.recipient_city_entry.text = document.recipient.city;
@@ -240,6 +243,7 @@ namespace Beebop {
 			view.recipient_client_code_entry.text = document.recipient.client_code;
 
 			/* Destination info */
+			view.destination_first_line_entry.text = document.destination.first_line;
 			view.destination_name_entry.text = document.destination.name;
 			view.destination_street_entry.text = document.destination.street;
 			view.destination_city_entry.text = document.destination.city;
@@ -727,6 +731,7 @@ namespace Beebop {
 			view.send_to_recipient_checkbutton.active = val;
 
 			/* Disable destination fields if checkbutton is active */
+			view.destination_first_line_entry.sensitive = !val;
 			view.destination_name_entry.sensitive = !val;
 			view.destination_city_entry.sensitive = !val;
 			view.destination_street_entry.sensitive = !val;
@@ -734,6 +739,7 @@ namespace Beebop {
 			if (val) {
 
 				/* Copy destination info from recipient */
+				view.destination_first_line_entry.text = view.recipient_first_line_entry.text;
 				view.destination_name_entry.text = view.recipient_name_entry.text;
 				view.destination_street_entry.text = view.recipient_street_entry.text;
 				view.destination_city_entry.text = view.recipient_city_entry.text;
@@ -741,6 +747,7 @@ namespace Beebop {
 			else {
 
 				/* Reset destination info */
+				view.destination_first_line_entry.text = "";
 				view.destination_name_entry.text = "";
 				view.destination_street_entry.text = "";
 				view.destination_city_entry.text = "";
@@ -787,6 +794,24 @@ namespace Beebop {
 				widget = view.window.get_focus () as Gtk.Widget;
 				(widget as Gtk.Editable).paste_clipboard ();
 			}
+		}
+
+		/* React to changes to the recipient's first line */
+		private bool recipient_first_line_changed (Gdk.Event ev) {
+
+			/* Update document */
+			document.recipient.first_line = view.recipient_first_line_entry.text;
+
+			/* Update the destination if sending to recipient */
+			if (send_to_recipient_is_active ()) {
+
+				view.destination_first_line_entry.text = view.recipient_first_line_entry.text;
+			}
+
+			/* Update view controls */
+			update_controls ();
+
+			return false;
 		}
 
 		/* React to changes of the recipient's name */
@@ -860,6 +885,18 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.client_code = view.recipient_client_code_entry.text;
+
+			/* Update view controls */
+			update_controls ();
+
+			return false;
+		}
+
+		/* React to changes to the destination's first line */
+		private bool destination_first_line_changed (Gdk.Event ev) {
+
+			/* Update document */
+			document.destination.first_line = view.destination_first_line_entry.text;
 
 			/* Update view controls */
 			update_controls ();

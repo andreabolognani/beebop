@@ -142,6 +142,10 @@ namespace Beebop {
 			goods_info = new GoodsInfo ();
 			shipment_info = new ShipmentInfo ();
 
+			/* Use default value for first line */
+			recipient.first_line = preferences.default_first_line;
+			destination.first_line = preferences.default_first_line;
+
 			/* Use default values for shipment info */
 			shipment_info.reason = preferences.default_reason;
 			shipment_info.transported_by = preferences.default_transported_by;
@@ -378,7 +382,11 @@ namespace Beebop {
 					continue;
 				}
 
-				if ((node->name).collate (Const.TAG_NAME) == 0) {
+				if ((node->name).collate (Const.TAG_FIRST_LINE) == 0) {
+
+					recipient.first_line = node->get_content ();
+				}
+				else if ((node->name).collate (Const.TAG_NAME) == 0) {
 
 					recipient.name = node->get_content ();
 				}
@@ -417,7 +425,11 @@ namespace Beebop {
 					continue;
 				}
 
-				if ((node->name).collate (Const.TAG_NAME) == 0) {
+				if ((node->name).collate (Const.TAG_FIRST_LINE) == 0) {
+
+					destination.first_line = node->get_content ();
+				}
+				else if ((node->name).collate (Const.TAG_NAME) == 0) {
 
 					destination.name = node->get_content ();
 				}
@@ -602,6 +614,9 @@ namespace Beebop {
 		private void save_recipient (Xml.Node *parent) throws DocumentError {
 
 			parent->new_text_child (null,
+			                        Const.TAG_FIRST_LINE,
+			                        recipient.first_line);
+			parent->new_text_child (null,
 			                        Const.TAG_NAME,
 			                        recipient.name);
 			parent->new_text_child (null,
@@ -621,6 +636,9 @@ namespace Beebop {
 		/* Save the contents of the <destination> tag */
 		private void save_destination (Xml.Node *parent) throws DocumentError {
 
+			parent->new_text_child (null,
+			                        Const.TAG_FIRST_LINE,
+			                        destination.first_line);
 			parent->new_text_child (null,
 			                        Const.TAG_NAME,
 			                        destination.name);

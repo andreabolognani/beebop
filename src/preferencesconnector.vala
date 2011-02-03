@@ -110,6 +110,7 @@ namespace Beebop {
 			view.line_width_spinbutton.value = preferences.line_width;
 
 			/* Defaults */
+			view.default_first_line_entry.text = preferences.default_first_line;
 			view.default_unit_entry.text = preferences.default_unit;
 			view.default_reason_entry.text = preferences.default_reason;
 			view.default_transported_by_entry.text = preferences.default_transported_by;
@@ -139,13 +140,13 @@ namespace Beebop {
 			Gtk.TextIter end;
 			string text;
 
-			/* Get header text */
+			/* Header */
 			view.header_textview.buffer.get_bounds (out start, out end);
 			preferences.header_markup = view.header_textview.buffer.get_text (start,
 			                                                                  end,
 			                                                                  false);
 
-			/* Get paths */
+			/* Paths */
 			text = view.document_directory_button.get_uri ();
 			if (text != null) {
 
@@ -164,7 +165,7 @@ namespace Beebop {
 				preferences.logo = File.new_for_uri (text);
 			}
 
-			/* Get other values */
+			/* Sizes */
 			preferences.page_padding_x = view.page_padding_x_spinbutton.value;
 			preferences.page_padding_y = view.page_padding_y_spinbutton.value;
 			preferences.cell_padding_x = view.cell_padding_x_spinbutton.value;
@@ -172,11 +173,16 @@ namespace Beebop {
 			preferences.elements_spacing_x = view.elements_spacing_x_spinbutton.value;
 			preferences.elements_spacing_y = view.elements_spacing_y_spinbutton.value;
 			preferences.address_box_width = view.address_box_width_spinbutton.value;
+
+			/* Appearance */
 			text = view.text_fontbutton.font_name;
 			preferences.text_font = preferences.text_font.from_string (text);
 			text = view.title_fontbutton.font_name;
 			preferences.title_font = preferences.title_font.from_string (text);
 			preferences.line_width = view.line_width_spinbutton.value;
+
+			/* Default values */
+			preferences.default_first_line = view.default_first_line_entry.text;
 			preferences.default_unit = view.default_unit_entry.text;
 			preferences.default_reason = view.default_reason_entry.text;
 			preferences.default_transported_by = view.default_transported_by_entry.text;

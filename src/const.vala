@@ -31,6 +31,7 @@ namespace Beebop {
 		public const string TAG_DESTINATION = "destination";
 		public const string TAG_SHIPMENT = "shipment";
 		public const string TAG_GOODS = "goods";
+		public const string TAG_FIRST_LINE = "first_line";
 		public const string TAG_NAME = "name";
 		public const string TAG_STREET = "street";
 		public const string TAG_CITY = "city";
@@ -71,6 +72,7 @@ namespace Beebop {
 		public const string KEY_TITLE_FONT = "title_font";
 		public const string KEY_LINE_WIDTH = "line_width";
 		public const string GROUP_DEFAULT_VALUES = "Default values";
+		public const string KEY_FIRST_LINE = "first_line";
 		public const string KEY_UNIT_OF_MEASUREMENT = "unit_of_measurement";
 		public const string KEY_REASON = "reason";
 		public const string KEY_TRANSPORTED_BY = "transported_by";
@@ -88,11 +90,13 @@ namespace Beebop {
 		/* Object names */
 		public const string OBJ_WINDOW = "window";
 		public const string OBJ_NOTEBOOK = "notebook";
+		public const string OBJ_RECIPIENT_FIRST_LINE_ENTRY = "recipient_first_line_entry";
 		public const string OBJ_RECIPIENT_NAME_ENTRY = "recipient_name_entry";
 		public const string OBJ_RECIPIENT_STREET_ENTRY = "recipient_street_entry";
 		public const string OBJ_RECIPIENT_CITY_ENTRY = "recipient_city_entry";
 		public const string OBJ_RECIPIENT_VATIN_ENTRY = "recipient_vatin_entry";
 		public const string OBJ_RECIPIENT_CLIENT_CODE_ENTRY = "recipient_client_code_entry";
+		public const string OBJ_DESTINATION_FIRST_LINE_ENTRY = "destination_first_line_entry";
 		public const string OBJ_DESTINATION_NAME_ENTRY = "destination_name_entry";
 		public const string OBJ_DESTINATION_STREET_ENTRY = "destination_street_entry";
 		public const string OBJ_DESTINATION_CITY_ENTRY = "destination_city_entry";
@@ -135,6 +139,7 @@ namespace Beebop {
 		public const string OBJ_TEXT_FONTBUTTON = "text_fontbutton";
 		public const string OBJ_TITLE_FONTBUTTON = "title_fontbutton";
 		public const string OBJ_LINE_WIDTH_SPINBUTTON = "line_width_spinbutton";
+		public const string OBJ_DEFAULT_FIRST_LINE_ENTRY = "default_first_line_entry";
 		public const string OBJ_DEFAULT_UNIT_ENTRY = "default_unit_entry";
 		public const string OBJ_DEFAULT_REASON_ENTRY = "default_reason_entry";
 		public const string OBJ_DEFAULT_TRANSPORTED_BY_ENTRY = "default_transported_by_entry";

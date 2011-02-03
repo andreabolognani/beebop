@@ -768,9 +768,17 @@ namespace Beebop {
 			Cell cell;
 			string text;
 
-			text = company.name + "\n" +
-			       company.street + "\n" +
-			       company.city;;
+			text = "";
+
+			/* If there is a first line, add it to the text */
+			if (company.first_line.collate ("") != 0) {
+
+				text += company.first_line + "\n";
+			}
+
+			text += company.name + "\n" +
+			        company.street + "\n" +
+			        company.city;;
 
 			cell = new Cell ();
 

@@ -20,6 +20,7 @@ namespace Beebop {
 
 	public class CompanyInfo : GLib.Object {
 
+		private string _first_line;
 		private string _name;
 		private string _street;
 		private string _city;
@@ -27,6 +28,20 @@ namespace Beebop {
 		private string _client_code;
 
 		public bool unsaved { get; set; }
+
+		public string first_line {
+
+			get {
+				return _first_line;
+			}
+
+			set {
+				if (value.collate (_first_line) != 0) {
+					_first_line = value;
+					unsaved = true;
+				}
+			}
+		}
 
 		public string name {
 
@@ -100,6 +115,7 @@ namespace Beebop {
 
 		construct {
 
+			_first_line = "";
 			_name = "";
 			_street = "";
 			_city = "";

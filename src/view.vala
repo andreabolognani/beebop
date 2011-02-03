@@ -29,12 +29,14 @@ namespace Beebop {
 
 		public Gtk.Notebook notebook { get; private set; }
 
+		public Gtk.Entry recipient_first_line_entry { get; private set; }
 		public Gtk.Entry recipient_name_entry { get; private set; }
 		public Gtk.Entry recipient_street_entry { get; private set; }
 		public Gtk.Entry recipient_city_entry { get; private set; }
 		public Gtk.Entry recipient_vatin_entry { get; private set; }
 		public Gtk.Entry recipient_client_code_entry { get; private set; }
 
+		public Gtk.Entry destination_first_line_entry { get; private set; }
 		public Gtk.Entry destination_name_entry { get; private set; }
 		public Gtk.Entry destination_street_entry { get; private set; }
 		public Gtk.Entry destination_city_entry { get; private set; }
@@ -87,6 +89,8 @@ namespace Beebop {
 			         as Gtk.Window;
 			notebook = Util.get_object (ui, Const.OBJ_NOTEBOOK)
 			           as Gtk.Notebook;
+			recipient_first_line_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_FIRST_LINE_ENTRY)
+			                             as Gtk.Entry;
 			recipient_name_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_NAME_ENTRY)
 			                       as Gtk.Entry;
 			recipient_street_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_STREET_ENTRY)
@@ -97,6 +101,8 @@ namespace Beebop {
 			                        as Gtk.Entry;
 			recipient_client_code_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_CLIENT_CODE_ENTRY)
 			                              as Gtk.Entry;
+			destination_first_line_entry = Util.get_object (ui, Const.OBJ_DESTINATION_FIRST_LINE_ENTRY)
+			                               as Gtk.Entry;
 			destination_name_entry = Util.get_object (ui, Const.OBJ_DESTINATION_NAME_ENTRY)
 			                         as Gtk.Entry;
 			destination_street_entry = Util.get_object (ui, Const.OBJ_DESTINATION_STREET_ENTRY)

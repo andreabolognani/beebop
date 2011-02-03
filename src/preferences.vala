@@ -61,6 +61,7 @@ namespace Beebop {
 		}
 		public double line_width { get; set; }
 
+		public string default_first_line { get; set; }
 		public string default_unit { get; set; }
 		public string default_reason { get; set; }
 		public string default_transported_by { get; set; }
@@ -91,6 +92,7 @@ namespace Beebop {
 			title_font = title_font.from_string ("Sans Bold 9");
 			line_width = 1.0;
 
+			default_first_line = "";
 			default_unit = "";
 			default_reason = "";
 			default_transported_by = "";
@@ -204,6 +206,8 @@ namespace Beebop {
 			                              Const.KEY_LINE_WIDTH);
 
 			/* Default values */
+			default_first_line = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+			                                      Const.KEY_FIRST_LINE);
 			default_unit = pref.get_string (Const.GROUP_DEFAULT_VALUES,
 			                                Const.KEY_UNIT_OF_MEASUREMENT);
 			default_reason = pref.get_string (Const.GROUP_DEFAULT_VALUES,
@@ -278,6 +282,9 @@ namespace Beebop {
 			                 line_width);
 
 			/* Default values */
+			pref.set_string (Const.GROUP_DEFAULT_VALUES,
+			                 Const.KEY_FIRST_LINE,
+			                 default_first_line);
 			pref.set_string (Const.GROUP_DEFAULT_VALUES,
 			                 Const.KEY_UNIT_OF_MEASUREMENT,
 			                 default_unit);
