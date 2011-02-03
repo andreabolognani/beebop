@@ -35,6 +35,11 @@ Section "Install"
 	SetOutPath "$INSTDIR\share"
 	File /r "share\*.*"
 
+	; Create menu shortcut
+	CreateDirectory "$SMPROGRAMS\Beebop"
+	CreateShortcut "$SMPROGRAMS\Beebop\Beebop.lnk" \
+	               "$INSTDIR\beebop.exe"
+
 	; Create uninstaller
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 
@@ -42,6 +47,9 @@ SectionEnd
 
 ; Uninstall section
 Section "Uninstall"
+
+	; Delete menu shortcut
+	RMDir /r "$SMPROGRAMS\Beebop"
 
 	; Delete installation directory
 	RMDir /r "$INSTDIR"
