@@ -27,22 +27,22 @@ InstallDir "$PROGRAMFILES\${PACKAGE_NAME}"
 ; Install section
 Section "Install"
 
-	; Install program icon
+	; Install program and icon
 	SetOutPath "$INSTDIR"
-	File "beebop.ico"
-
-	; Install program
 	File "beebop.exe"
-
-	; Create menu shortcut
-	CreateDirectory "$SMPROGRAMS\Beebop"
-	CreateShortcut "$SMPROGRAMS\Beebop\Beebop.lnk" \
-	               "$INSTDIR\beebop.exe" "" \
-	               "$INSTDIR\beebop.ico"
+	File "beebop.ico"
 
 	; Install data files
 	SetOutPath "$INSTDIR\share"
 	File /r "share\*.*"
+
+	; Create menu shortcuts
+	CreateDirectory "$SMPROGRAMS\Beebop"
+	CreateShortcut "$SMPROGRAMS\Beebop\Beebop.lnk" \
+	               "$INSTDIR\beebop.exe" "" \
+	               "$INSTDIR\beebop.ico"
+	CreateShortcut "$SMPROGRAMS\Beebop\Uninstall Beebop.lnk" \
+	               "$INSTDIR\uninstall.exe"
 
 	; Create uninstaller
 	WriteUninstaller "$INSTDIR\uninstall.exe"
@@ -52,7 +52,7 @@ SectionEnd
 ; Uninstall section
 Section "Uninstall"
 
-	; Delete menu shortcut
+	; Delete menu shortcuts
 	RMDir /r "$SMPROGRAMS\Beebop"
 
 	; Delete installation directory
