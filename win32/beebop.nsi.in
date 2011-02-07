@@ -27,18 +27,22 @@ InstallDir "$PROGRAMFILES\${PACKAGE_NAME}"
 ; Install section
 Section "Install"
 
-	; Install program
+	; Install program icon
 	SetOutPath "$INSTDIR"
-	File "beebop.exe"
+	File "beebop.ico"
 
-	; Install data files
-	SetOutPath "$INSTDIR\share"
-	File /r "share\*.*"
+	; Install program
+	File "beebop.exe"
 
 	; Create menu shortcut
 	CreateDirectory "$SMPROGRAMS\Beebop"
 	CreateShortcut "$SMPROGRAMS\Beebop\Beebop.lnk" \
-	               "$INSTDIR\beebop.exe"
+	               "$INSTDIR\beebop.exe" "" \
+	               "$INSTDIR\beebop.ico"
+
+	; Install data files
+	SetOutPath "$INSTDIR\share"
+	File /r "share\*.*"
 
 	; Create uninstaller
 	WriteUninstaller "$INSTDIR\uninstall.exe"

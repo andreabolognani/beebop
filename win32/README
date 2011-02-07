@@ -20,8 +20,10 @@ Installer creation
 ------------------
 
 This step is not automated by the build system, but it's trivial to
-perform: after you have run the above commands, copy the beebop.nsi file
-to PATH, cd to PATH and run
+perform: after you have run the above commands, copy the beebop.nsi and
+beebop.ico files from the win32/ directory (if you have used a separate
+build directory, you'll find beebop.nsi in the win32/ subdirectory of
+your build directory) to PATH, cd to PATH and run
 
 	wine path/to/makensis.exe beebop.nsi
 
