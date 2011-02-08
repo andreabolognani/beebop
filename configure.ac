@@ -1,4 +1,4 @@
-AC_INIT([Beebop], [0.0.1], [andrea.bolognani@roundhousecode.com], [beebop])
+AC_INIT([Beebop], [1.0.0], [andrea.bolognani@roundhousecode.com], [beebop])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 AM_MAINTAINER_MODE
