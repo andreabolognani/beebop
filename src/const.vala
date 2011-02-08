@@ -153,7 +153,7 @@ namespace Beebop {
 
 		/* Range constants */
 		public const double QUANTITY_MIN = 1.0;
-		public const double QUANTITY_MAX = 999.0;
+		public const double QUANTITY_MAX = 9999.0;
 		public const double QUANTITY_DEFAULT = 1.0;
 	}
 }
