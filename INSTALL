@@ -1,0 +1,23 @@
+Prerequisites
+=============
+
+Beebop depends on the following libraries:
+
+  * GTK+
+  * Cairo (with PDF support)
+  * Pango (with Cairo support)
+  * libxml2
+  * librsvg
+
+If any of these libraries is missing or outdated, the configure
+script should warn you.
+
+
+Installation
+============
+
+After running configure, use make to compile the program and make install
+to install it.
+
+Depending on the selected installation path (see configure --help for more
+information about that) you might need to run the last command as root.
