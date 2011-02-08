@@ -9,7 +9,7 @@ dnl ----------------------------------------------
 dnl Required version of various tools and packages
 dnl ----------------------------------------------
 
-VALA_REQUIRED=0.7.0
+VALA_REQUIRED=0.8.1
 GLIB_REQUIRED=2.12.0
 GTK_REQUIRED=2.14.0
 CAIRO_REQUIRED=1.8.0
