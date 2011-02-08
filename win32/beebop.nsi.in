@@ -37,6 +37,7 @@ Section "Install"
 	File /r "share\*.*"
 
 	; Create menu shortcuts
+	SetOutPath "$INSTDIR"
 	CreateDirectory "$SMPROGRAMS\Beebop"
 	CreateShortcut "$SMPROGRAMS\Beebop\Beebop.lnk" \
 	               "$INSTDIR\beebop.exe" "" \
