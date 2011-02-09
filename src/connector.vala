@@ -490,6 +490,9 @@ namespace Beebop {
 			/* Enable / disable row deletion based on the number of rows */
 			rows = document.goods.iter_n_children (null);
 			view.remove_action.sensitive = (rows > 1);
+
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* Remove a row from the goods tree view */
@@ -510,6 +513,9 @@ namespace Beebop {
 			/* Enable / disable row deletion based on the number of rows */
 			rows--;
 			view.remove_action.sensitive = (rows > 1);
+
+			/* Update view controls */
+			update_controls ();
 		}
 
 		/* Show preferences view */
