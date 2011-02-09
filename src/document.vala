@@ -99,6 +99,12 @@ namespace Beebop {
 				_goods.row_changed.connect ((path, iter) => {
 					unsaved = true;
 				});
+				_goods.row_inserted.connect ((path, iter) => {
+					unsaved = true;
+				});
+				_goods.row_deleted.connect ((path) => {
+					unsaved = true;
+				});
 			}
 		}
 
