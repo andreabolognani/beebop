@@ -163,12 +163,12 @@ namespace Beebop {
 
 			/* Column sizes and headings */
 			sizes = {150.0,
-			         85.0,
+			         35.0,
 			         Const.AUTOMATIC_SIZE,
 			         50.0,
 			         70.0};
 			headings = {_("Code"),
-			            _("Reference"),
+			            _("Ref."),
 			            _("Description"),
 			            _("U.M."),
 			            _("Quantity")};
@@ -242,9 +242,9 @@ namespace Beebop {
 			cell = row.get_cell (0);
 			cell.text = "*****";
 			cell = row.get_cell (1);
-			cell.text = "*****";
+			cell.text = "***";
 			cell = row.get_cell (2);
-			cell.text = "*****";
+			cell.text = "**********";
 			cell = row.get_cell (3);
 			cell.text = "*****";
 			cell = row.get_cell (4);
