@@ -151,102 +151,180 @@ namespace Beebop {
 				return;
 			}
 
-			/* Header */
-			text = pref.get_string (Const.GROUP_HEADER,
-			                        Const.KEY_MARKUP);
+			try {
 
-			/* Try to parse the header */
-			doc = Xml.Parser.parse_doc ("<header>" + text + "</header>");
+				/* Header */
+				text = pref.get_string (Const.GROUP_HEADER,
+				                        Const.KEY_MARKUP);
 
-			if (doc == null) {
+				/* Try to parse the header */
+				doc = Xml.Parser.parse_doc ("<header>" + text + "</header>");
 
-				throw new KeyFileError.INVALID_VALUE (_("Malformed header"));
+				if (doc == null) {
+
+					throw new KeyFileError.INVALID_VALUE (_("Malformed header"));
+				}
+
+				header_markup = text;
 			}
+			catch (Error e) {}
 
-			header_markup = text;
 
 			/* Paths */
-			text = pref.get_string (Const.GROUP_PATHS,
-			                        Const.KEY_DOCUMENT_DIRECTORY);
-			document_directory = File.new_for_uri (text);
+			try {
 
-			text = pref.get_string (Const.GROUP_PATHS,
-			                        Const.KEY_PAGE_TEMPLATE);
-			page_template = File.new_for_uri (text);
+				text = pref.get_string (Const.GROUP_PATHS,
+				                        Const.KEY_DOCUMENT_DIRECTORY);
+				document_directory = File.new_for_uri (text);
+			}
+			catch (Error e) {}
 
-			text = pref.get_string (Const.GROUP_PATHS,
-			                       Const.KEY_LOGO);
-			logo = File.new_for_uri (text);
+			try {
+
+				text = pref.get_string (Const.GROUP_PATHS,
+				                        Const.KEY_PAGE_TEMPLATE);
+				page_template = File.new_for_uri (text);
+			}
+			catch (Error e) {}
+
+			try {
+
+				text = pref.get_string (Const.GROUP_PATHS,
+				                       Const.KEY_LOGO);
+				logo = File.new_for_uri (text);
+			}
+			catch (Error e) {}
 
 			/* Sizes */
-			dimensions = pref.get_double_list (Const.GROUP_SIZES,
-			                                   Const.KEY_PAGE_PADDING);
+			try {
 
-			if (dimensions.length != 2) {
+				dimensions = pref.get_double_list (Const.GROUP_SIZES,
+				                                   Const.KEY_PAGE_PADDING);
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_PAGE_PADDING)));
+				if (dimensions.length != 2) {
+
+					throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_PAGE_PADDING)));
+				}
+
+				page_padding_x = dimensions[0];
+				page_padding_y = dimensions[1];
 			}
+			catch (Error e) {}
 
-			page_padding_x = dimensions[0];
-			page_padding_y = dimensions[1];
+			try {
 
-			dimensions = pref.get_double_list (Const.GROUP_SIZES,
-			                                   Const.KEY_CELL_PADDING);
+				dimensions = pref.get_double_list (Const.GROUP_SIZES,
+				                                   Const.KEY_CELL_PADDING);
 
-			if (dimensions.length != 2) {
+				if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_CELL_PADDING)));
+					throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_CELL_PADDING)));
+				}
+
+				cell_padding_x = dimensions[0];
+				cell_padding_y = dimensions[1];
 			}
+			catch (Error e) {}
 
-			cell_padding_x = dimensions[0];
-			cell_padding_y = dimensions[1];
+			try {
 
-			dimensions = pref.get_double_list (Const.GROUP_SIZES,
-			                                   Const.KEY_ELEMENTS_SPACING);
+				dimensions = pref.get_double_list (Const.GROUP_SIZES,
+				                                   Const.KEY_ELEMENTS_SPACING);
 
-			if (dimensions.length != 2) {
+				if (dimensions.length != 2) {
 
-				throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_ELEMENTS_SPACING)));
+					throw new KeyFileError.INVALID_VALUE (_("Wrong number of values for key '%s'".printf (Const.KEY_ELEMENTS_SPACING)));
+				}
+
+				elements_spacing_x = dimensions[0];
+				elements_spacing_y = dimensions[1];
 			}
+			catch (Error e) {}
 
-			elements_spacing_x = dimensions[0];
-			elements_spacing_y = dimensions[1];
+			try {
 
-			address_box_width = pref.get_double (Const.GROUP_SIZES,
-			                                     Const.KEY_ADDRESS_BOX_WIDTH);
+				address_box_width = pref.get_double (Const.GROUP_SIZES,
+				                                     Const.KEY_ADDRESS_BOX_WIDTH);
+			}
+			catch (Error e) {}
 
 			/* Appearance */
-			text = pref.get_string (Const.GROUP_APPEARANCE,
-			                        Const.KEY_TEXT_FONT);
-			text_font = new Pango.FontDescription ();
-			text_font = text_font.from_string (text);
+			try {
 
-			text = pref.get_string (Const.GROUP_APPEARANCE,
-			                        Const.KEY_TITLE_FONT);
-			title_font = new Pango.FontDescription ();
-			title_font = title_font.from_string (text);
+				text = pref.get_string (Const.GROUP_APPEARANCE,
+				                        Const.KEY_TEXT_FONT);
+				text_font = new Pango.FontDescription ();
+				text_font = text_font.from_string (text);
+			}
+			catch (Error e) {}
 
-			text = pref.get_string (Const.GROUP_APPEARANCE,
-			                        Const.KEY_HEADER_FONT);
-			header_font = new Pango.FontDescription ();
-			header_font = header_font.from_string (text);
+			try {
 
-			line_width = pref.get_double (Const.GROUP_APPEARANCE,
-			                              Const.KEY_LINE_WIDTH);
+				text = pref.get_string (Const.GROUP_APPEARANCE,
+				                        Const.KEY_TITLE_FONT);
+				title_font = new Pango.FontDescription ();
+				title_font = title_font.from_string (text);
+			}
+			catch (Error e) {}
+
+			try {
+
+				text = pref.get_string (Const.GROUP_APPEARANCE,
+				                        Const.KEY_HEADER_FONT);
+				header_font = new Pango.FontDescription ();
+				header_font = header_font.from_string (text);
+			}
+			catch (Error e) {}
+
+			try {
+
+				line_width = pref.get_double (Const.GROUP_APPEARANCE,
+				                              Const.KEY_LINE_WIDTH);
+			}
+			catch (Error e) {}
 
 			/* Default values */
-			default_first_line = pref.get_string (Const.GROUP_DEFAULT_VALUES,
-			                                      Const.KEY_FIRST_LINE);
-			default_unit = pref.get_string (Const.GROUP_DEFAULT_VALUES,
-			                                Const.KEY_UNIT_OF_MEASUREMENT);
-			default_reason = pref.get_string (Const.GROUP_DEFAULT_VALUES,
-			                                  Const.KEY_REASON);
-			default_transported_by = pref.get_string (Const.GROUP_DEFAULT_VALUES,
-			                                          Const.KEY_TRANSPORTED_BY);
-			default_carrier = pref.get_string (Const.GROUP_DEFAULT_VALUES,
-			                                   Const.KEY_CARRIER);
-			default_duties = pref.get_string (Const.GROUP_DEFAULT_VALUES,
-			                                  Const.KEY_DELIVERY_DUTIES);
+			try {
+
+				default_first_line = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+				                                      Const.KEY_FIRST_LINE);
+			}
+			catch (Error e) {}
+
+			try {
+
+				default_unit = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+				                                Const.KEY_UNIT_OF_MEASUREMENT);
+			}
+			catch (Error e) {}
+
+			try {
+
+				default_reason = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+				                                  Const.KEY_REASON);
+			}
+			catch (Error e) {}
+
+			try {
+
+				default_transported_by = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+				                                          Const.KEY_TRANSPORTED_BY);
+			}
+			catch (Error e) {}
+
+			try {
+
+				default_carrier = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+				                                   Const.KEY_CARRIER);
+			}
+			catch (Error e) {}
+
+			try {
+
+				default_duties = pref.get_string (Const.GROUP_DEFAULT_VALUES,
+				                                  Const.KEY_DELIVERY_DUTIES);
+			}
+			catch (Error e) {}
 		}
 
 		public void save () throws Error {
