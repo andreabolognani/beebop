@@ -138,13 +138,29 @@ namespace Beebop {
 
 			Gtk.TextIter start;
 			Gtk.TextIter end;
+			Xml.Doc *doc;
 			string text;
 
 			/* Header */
-			view.header_textview.buffer.get_bounds (out start, out end);
-			preferences.header_markup = view.header_textview.buffer.get_text (start,
-			                                                                  end,
-			                                                                  false);
+			view.header_textview.buffer.get_bounds (out start,
+			                                        out end);
+			text = view.header_textview.buffer.get_text (start,
+			                                             end,
+			                                             false);
+
+			/* Try to parse the header to make sure is well formed */
+			doc = Xml.Parser.parse_doc ("<header>" + text + "</header>");
+
+			if (doc == null) {
+
+				/* If the header is malformed, show an error message */
+				Util.show_error (view.preferences_window,
+				                 _("Malformed header"));
+
+				return;
+			}
+
+			preferences.header_markup = text;
 
 			/* Paths */
 			text = view.document_directory_button.get_uri ();

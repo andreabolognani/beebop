@@ -7,6 +7,8 @@ Overview of changes from Beebop 1.0.0 to 1.0.1
 
   * Save PDF files to a separate directory.
 
+  * Check header markup for validity.
+
 
 Overview of changes in Beebop 1.0.0
 ===================================

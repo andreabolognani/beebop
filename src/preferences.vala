@@ -102,6 +102,7 @@ namespace Beebop {
 
 		private void load () throws Error {
 
+			Xml.Doc *doc;
 			File handle;
 			KeyFile pref;
 			double[] dimensions;
@@ -138,8 +139,18 @@ namespace Beebop {
 			}
 
 			/* Header */
-			header_markup = pref.get_string (Const.GROUP_HEADER,
-			                                 Const.KEY_MARKUP);
+			text = pref.get_string (Const.GROUP_HEADER,
+			                        Const.KEY_MARKUP);
+
+			/* Try to parse the header */
+			doc = Xml.Parser.parse_doc ("<header>" + text + "</header>");
+
+			if (doc == null) {
+
+				throw new KeyFileError.INVALID_VALUE (_("Malformed header"));
+			}
+
+			header_markup = text;
 
 			/* Paths */
 			text = pref.get_string (Const.GROUP_PATHS,
