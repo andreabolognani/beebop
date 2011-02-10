@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-03 12:28+0100\n"
-"PO-Revision-Date: 2011-01-31 21:07+0100\n"
+"POT-Creation-Date: 2011-02-10 14:08+0100\n"
+"PO-Revision-Date: 2011-02-10 14:10+0100\n"
 "Last-Translator: Andrea Bolognani <andrea.bolognani@roundhousecode.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -26,7 +26,7 @@ msgid "Appearance"
 msgstr "Aspetto"
 
 #. Set application and icon name
-#: ../data/beebop.ui.h:3 ../src/connector.vala:551 ../src/connector.vala:552
+#: ../data/beebop.ui.h:3 ../src/connector.vala:557 ../src/connector.vala:558
 #: ../src/application.vala:99
 #, c-format
 msgid "Beebop"
@@ -216,7 +216,7 @@ msgstr "_File"
 msgid "_Help"
 msgstr "A_iuto"
 
-#: ../data/beebop.desktop.in.h:1 ../src/connector.vala:555
+#: ../data/beebop.desktop.in.h:1 ../src/connector.vala:561
 msgid "Easily create nice-looking shipping lists"
 msgstr "Crea facilmente documenti di trasporto"
 
@@ -238,24 +238,24 @@ msgstr "Se si continua, le modifiche apportate al documento andranno perse."
 msgid "Wrong number of values for key '%s'"
 msgstr "Numero errato di valori per la chiave '%s'"
 
-#: ../src/document.vala:215
+#: ../src/document.vala:221
 msgid "Malformed document"
 msgstr "Documento contenente errori"
 
-#: ../src/document.vala:224
+#: ../src/document.vala:230
 msgid "No root element"
 msgstr "Nessun elemento radice"
 
-#: ../src/document.vala:230
+#: ../src/document.vala:236
 msgid "Invalid root element"
 msgstr "Elemento radice non valido"
 
-#: ../src/document.vala:254 ../src/document.vala:318 ../src/connector.vala:647
+#: ../src/document.vala:260 ../src/document.vala:324 ../src/connector.vala:653
 msgid "Untitled document"
 msgstr "Documento senza titolo"
 
-#: ../src/document.vala:368 ../src/document.vala:411 ../src/document.vala:446
-#: ../src/document.vala:481 ../src/document.vala:523 ../src/document.vala:571
+#: ../src/document.vala:374 ../src/document.vala:417 ../src/document.vala:452
+#: ../src/document.vala:487 ../src/document.vala:529 ../src/document.vala:577
 #, c-format
 msgid "Unrecognized element inside '%s'"
 msgstr "Elemento non riconosciuto dentro '%s'"
@@ -277,9 +277,9 @@ msgstr "Errore di disegno"
 msgid "Code"
 msgstr "Codice"
 
-#: ../src/painter.vala:171 ../src/connector.vala:107
-msgid "Reference"
-msgstr "Riferimento"
+#: ../src/painter.vala:171
+msgid "Ref."
+msgstr "Rif."
 
 #: ../src/painter.vala:172 ../src/connector.vala:119
 msgid "Description"
@@ -356,6 +356,10 @@ msgstr "Tutti i file"
 msgid "Could not save preferences: %s"
 msgstr "Impossibile salvare le preferenze: %s"
 
+#: ../src/connector.vala:107
+msgid "Reference"
+msgstr "Riferimento"
+
 #: ../src/connector.vala:310
 msgid "Open file"
 msgstr "Apri file"
@@ -383,16 +387,16 @@ msgstr "Salva come..."
 msgid "Unable to launch viewer: %s"
 msgstr "Impossibile eseguire il visualizzatore: %s"
 
-#: ../src/connector.vala:532
+#: ../src/connector.vala:538
 msgid "Failed to show preferences view"
 msgstr "Impossibile mostrare le preferenze"
 
-#: ../src/connector.vala:551
+#: ../src/connector.vala:557
 #, c-format
 msgid "About %s"
 msgstr "Informazioni su %s"
 
-#: ../src/connector.vala:642
+#: ../src/connector.vala:648
 msgid "Unknown"
 msgstr "Sconosciuto"
 
