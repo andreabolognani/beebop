@@ -953,7 +953,7 @@ namespace Beebop {
 				 *     this can't be done earlier because the actual column
 				 *     width is not known until paint_table is called for
 				 *     column with AUTOMATIC_SIZE */
-				if (cell.text.collate (Const.CLOSING_ROW_TEXT) == 0) {
+				if (cell.markup.collate (Const.CLOSING_ROW_TEXT) == 0) {
 
 					cell.text = fill_column ("*",
 					                         preferences.text_font,
