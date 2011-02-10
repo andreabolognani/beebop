@@ -70,6 +70,7 @@ namespace Beebop {
 		public const string GROUP_APPEARANCE = "Appearance";
 		public const string KEY_TEXT_FONT = "text_font";
 		public const string KEY_TITLE_FONT = "title_font";
+		public const string KEY_HEADER_FONT = "header_font";
 		public const string KEY_LINE_WIDTH = "line_width";
 		public const string GROUP_DEFAULT_VALUES = "Default values";
 		public const string KEY_FIRST_LINE = "first_line";
@@ -138,6 +139,7 @@ namespace Beebop {
 		public const string OBJ_ADDRESS_BOX_WIDTH_SPINBUTTON = "address_box_width_spinbutton";
 		public const string OBJ_TEXT_FONTBUTTON = "text_fontbutton";
 		public const string OBJ_TITLE_FONTBUTTON = "title_fontbutton";
+		public const string OBJ_HEADER_FONTBUTTON = "header_fontbutton";
 		public const string OBJ_LINE_WIDTH_SPINBUTTON = "line_width_spinbutton";
 		public const string OBJ_DEFAULT_FIRST_LINE_ENTRY = "default_first_line_entry";
 		public const string OBJ_DEFAULT_UNIT_ENTRY = "default_unit_entry";

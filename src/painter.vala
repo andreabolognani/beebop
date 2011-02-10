@@ -427,26 +427,21 @@ namespace Beebop {
 				context.restore ();
 			}
 
-			/* Prepare a cell for the header (markup is allowed here) */
-			cell = new Cell ();
-			cell.markup = preferences.header_markup;
-
 			/* Paint the header (usually sender's info). The width of the cell,
 			 * as well as its horizontal starting point, is chosen not to
 			 * overlap with either the address boxes or the logo */
 			box_x = preferences.page_padding_x +
 			        logo_width +
-			        preferences.elements_spacing_x -
-			        preferences.cell_padding_x;
-			box_y = preferences.page_padding_y - preferences.cell_padding_y;
+			        preferences.elements_spacing_x;
+			box_y = preferences.page_padding_y;
 			box_width = page_width -
 			            box_x -
 			            preferences.address_box_width -
 			            preferences.page_padding_x -
-						preferences.elements_spacing_x +
-			            preferences.cell_padding_x;
+						preferences.elements_spacing_x;
 			box_height = Const.AUTOMATIC_SIZE;
-			offset = paint_cell (cell,
+			offset = paint_text (preferences.header_markup,
+			                     preferences.header_font,
 			                     box_x,
 			                     box_y,
 			                     box_width,

@@ -107,6 +107,7 @@ namespace Beebop {
 			/* Appearance */
 			view.text_fontbutton.font_name = preferences.text_font.to_string ();
 			view.title_fontbutton.font_name = preferences.title_font.to_string ();
+			view.header_fontbutton.font_name = preferences.header_font.to_string ();
 			view.line_width_spinbutton.value = preferences.line_width;
 
 			/* Defaults */
@@ -195,6 +196,8 @@ namespace Beebop {
 			preferences.text_font = preferences.text_font.from_string (text);
 			text = view.title_fontbutton.font_name;
 			preferences.title_font = preferences.title_font.from_string (text);
+			text = view.header_fontbutton.font_name;
+			preferences.header_font = preferences.header_font.from_string (text);
 			preferences.line_width = view.line_width_spinbutton.value;
 
 			/* Default values */

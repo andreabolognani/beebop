@@ -24,6 +24,7 @@ namespace Beebop {
 
 		private Pango.FontDescription _text_font;
 		private Pango.FontDescription _title_font;
+		private Pango.FontDescription _header_font;
 
 		public string header_markup { get; set; }
 
@@ -59,6 +60,16 @@ namespace Beebop {
 				_title_font = value.copy ();
 			}
 		}
+		public Pango.FontDescription header_font {
+
+			get {
+				return _header_font;
+			}
+
+			set {
+				_header_font = value.copy ();
+			}
+		}
 		public double line_width { get; set; }
 
 		public string default_first_line { get; set; }
@@ -90,6 +101,8 @@ namespace Beebop {
 			text_font = text_font.from_string ("Sans 10");
 			title_font = new Pango.FontDescription ();
 			title_font = title_font.from_string ("Sans Bold 9");
+			header_font = new Pango.FontDescription ();
+			header_font = header_font.from_string ("Sans 9");
 			line_width = 1.0;
 
 			default_first_line = "";
@@ -213,6 +226,11 @@ namespace Beebop {
 			title_font = new Pango.FontDescription ();
 			title_font = title_font.from_string (text);
 
+			text = pref.get_string (Const.GROUP_APPEARANCE,
+			                        Const.KEY_HEADER_FONT);
+			header_font = new Pango.FontDescription ();
+			header_font = header_font.from_string (text);
+
 			line_width = pref.get_double (Const.GROUP_APPEARANCE,
 			                              Const.KEY_LINE_WIDTH);
 
@@ -288,6 +306,9 @@ namespace Beebop {
 			pref.set_string (Const.GROUP_APPEARANCE,
 			                 Const.KEY_TITLE_FONT,
 			                 title_font.to_string ());
+			pref.set_string (Const.GROUP_APPEARANCE,
+			                 Const.KEY_HEADER_FONT,
+			                 header_font.to_string ());
 			pref.set_double (Const.GROUP_APPEARANCE,
 			                 Const.KEY_LINE_WIDTH,
 			                 line_width);
