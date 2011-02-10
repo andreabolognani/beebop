@@ -51,6 +51,8 @@ namespace Beebop {
 		public void paint () throws DocumentError {
 
 			Rsvg.DimensionData dimensions;
+			File outfile;
+			File outdir;
 			List<Table> tables;
 			Table table;
 			double page_width;
@@ -61,16 +63,34 @@ namespace Beebop {
 			int len;
 			int i;
 
-			dimensions = Rsvg.DimensionData ();
-
 			load_resources ();
+
+			/* Get print filename*/
+			outfile = File.new_for_path (document.get_print_filename ());
+
+			outdir = outfile.get_parent ();
+
+			/* Create print file directory if it doesn't exist */
+			if (!outdir.query_exists (null)) {
+
+				try  {
+
+					outdir.make_directory_with_parents (null);
+				}
+				catch (GLib.Error e) {
+
+					throw new DocumentError.IO (e.message);
+				}
+			}
+
+			dimensions = Rsvg.DimensionData ();
 
 			/* Get page size */
 			page.get_dimensions (dimensions);
 			page_width = dimensions.width;
 			page_height = dimensions.height;
 
-			surface = new Cairo.PdfSurface (document.filename + ".pdf",
+			surface = new Cairo.PdfSurface (outfile.get_path (),
 			                                page_width,
 			                                page_height);
 			context = new Cairo.Context (surface);

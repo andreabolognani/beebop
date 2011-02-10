@@ -333,6 +333,30 @@ namespace Beebop {
 			return suggestion;
 		}
 
+		/* Get the filename for the print file for the document */
+		public string get_print_filename () {
+
+			File directory;
+			File file;
+			string basename;
+
+			/* Split the document's filename in directory and path */
+			file = File.new_for_path (filename);
+			directory = file.get_parent ();
+			basename = file.get_basename ();
+
+			/* The print file directory is a subdirectory of the
+			 * document directory called print */
+			directory = directory.get_child ("print");
+
+			/* The print filename is the same name as the document
+			 * with a .pdf extensions appended */
+			file = directory.get_child (basename + ".pdf");
+
+			return file.get_path ();
+		}
+
+
 		/* Load the contents of the <document> tag */
 		private void load_document (Xml.Node *parent) throws DocumentError {
 

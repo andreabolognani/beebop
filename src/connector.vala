@@ -448,7 +448,7 @@ namespace Beebop {
 			try {
 
 				/* Build file path */
-				handle = File.new_for_path (document.filename + ".pdf");
+				handle = File.new_for_path (document.get_print_filename ());
 
 				/* Launch viewer */
 				Util.show_uri (view.window.get_screen(),

@@ -3,7 +3,9 @@ Overview of changes from Beebop 1.0.0 to 1.0.1
 
   * Correctly update controls as rows are added or removed.
 
-  * Fill the closing row with asterisks.
+  * Fill closing row with asterisks.
+
+  * Save PDF files to a separate directory.
 
 
 Overview of changes in Beebop 1.0.0
