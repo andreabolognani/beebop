@@ -151,6 +151,13 @@ namespace Beebop {
 		/* Size constants */
 		public const double AUTOMATIC_SIZE = -1.0;
 
+		/* Magic string constants.
+		 *
+		 * XXX We can be sure these magic strings never appear in user's
+		 *     input because angle brackets are automatically escaped
+		 *     when entered by the user */
+		public const string CLOSING_ROW_TEXT = "<*****>";
+
 		/* Range constants */
 		public const double QUANTITY_MIN = 1.0;
 		public const double QUANTITY_MAX = 9999.0;

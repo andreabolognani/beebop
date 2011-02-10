@@ -240,15 +240,15 @@ namespace Beebop {
 			/* Create a closing row */
 			row = new Row (table.columns);
 			cell = row.get_cell (0);
-			cell.text = "*****";
+			cell.markup = Const.CLOSING_ROW_TEXT;
 			cell = row.get_cell (1);
-			cell.text = "***";
+			cell.markup = Const.CLOSING_ROW_TEXT;
 			cell = row.get_cell (2);
-			cell.text = "**********";
+			cell.markup = Const.CLOSING_ROW_TEXT;
 			cell = row.get_cell (3);
-			cell.text = "*****";
+			cell.markup = Const.CLOSING_ROW_TEXT;
 			cell = row.get_cell (4);
-			cell.text = "*****";
+			cell.markup = Const.CLOSING_ROW_TEXT;
 
 			table.append_row (row);
 
@@ -904,6 +904,7 @@ namespace Beebop {
 		/* Paint a table row */
 		private double paint_row (Row row, double[] sizes, double x, double y, double width, double height, PaintMode mode) throws DocumentError {
 
+			Cell cell;
 			double box_x;
 			double box_y;
 			double box_width;
@@ -923,7 +924,23 @@ namespace Beebop {
 
 				box_width = sizes[i];
 
-				offset = paint_cell (row.get_cell (i),
+				cell = row.get_cell (i);
+
+				/* If the cell contains the magic string CLOSING_ROW_TEXT,
+				 * fill it with asterisks.
+				 *
+				 * XXX It would be nice not to use magic strings here, but
+				 *     this can't be done earlier because the actual column
+				 *     width is not known until paint_table is called for
+				 *     column with AUTOMATIC_SIZE */
+				if (cell.text.collate (Const.CLOSING_ROW_TEXT) == 0) {
+
+					cell.text = fill_column ("*",
+					                         preferences.text_font,
+					                         box_width);
+				}
+
+				offset = paint_cell (cell,
 				                     box_x,
 				                     box_y,
 				                     box_width,
@@ -997,6 +1014,47 @@ namespace Beebop {
 			}
 
 			return (text_height / Pango.SCALE);
+		}
+
+		/* Fill a column with a pattern */
+		private string fill_column (string fill, Pango.FontDescription font, double width) {
+
+			Pango.Layout layout;
+			string text;
+			int text_width;
+			int text_height;
+
+			/* Remove cell padding from the width */
+			width -= (2 * preferences.cell_padding_x);
+
+			context.save ();
+			context.move_to (0.0, 0.0);
+
+			/* Create a layout and set font */
+			layout = Pango.cairo_create_layout (context);
+			layout.set_font_description (font);
+
+			text = "";
+			text_width = 0;
+
+			do {
+
+				/* Try adding the text pattern one more time */
+				layout.set_markup (text + fill, -1);
+				layout.get_size (out text_width,
+				                 out text_height);
+
+				/* If it fits, append the pattern */
+				if ((text_width / Pango.SCALE) <= width) {
+
+					text += fill;
+				}
+			}
+			while ((text_width / Pango.SCALE) <= width);
+
+			context.restore ();
+
+			return text;
 		}
 	}
 }
