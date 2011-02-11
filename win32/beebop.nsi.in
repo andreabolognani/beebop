@@ -31,6 +31,7 @@ Section "Install"
 	SetOutPath "$INSTDIR"
 	File "beebop.exe"
 	File "beebop.ico"
+	File "beebop-document.ico"
 
 	; Install data files
 	SetOutPath "$INSTDIR\share"
@@ -49,17 +50,17 @@ Section "Install"
 	WriteRegStr HKLM \
 	            "Software\Classes\.beebop" \
 	            "" \
-	            "BeebopFile"
+	            "BeebopDocument"
 	WriteRegStr HKLM \
-	            "Software\Classes\BeebopFile" \
+	            "Software\Classes\BeebopDocument" \
 	            "" \
-	            "Beebop file"
+	            "Beebop document"
 	WriteRegStr HKLM \
-	            "Software\Classes\BeebopFile\DefaultIcon" \
+	            "Software\Classes\BeebopDocument\DefaultIcon" \
 	            "" \
-	            "$INSTDIR\beebop.ico"
+	            "$INSTDIR\beebop-document.ico"
 	WriteRegStr HKLM \
-	            "Software\Classes\BeebopFile\shell\open\command" \
+	            "Software\Classes\BeebopDocument\shell\open\command" \
 	            "" \
 	            "$\"$INSTDIR\beebop.exe$\" $\"%1$\""
 
@@ -75,7 +76,7 @@ Section "Uninstall"
 	DeleteRegKey HKLM \
 	             "Software\Classes\.beebop"
 	DeleteRegKey HKLM \
-	             "Software\Classes\BeebopFile"
+	             "Software\Classes\BeebopDocument"
 
 	; Delete menu shortcuts
 	RMDir /r "$SMPROGRAMS\Beebop"

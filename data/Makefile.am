@@ -30,6 +30,7 @@ EXTRA_DIST = \
 	$(pkgdata_DATA) \
 	$(svgicon_DATA) \
 	$(icon_DATA) \
+	beebop-document.svg \
 	$(NULL)
 
 DISTCLEANFILES = \
