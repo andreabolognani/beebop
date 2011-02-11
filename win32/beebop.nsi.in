@@ -45,6 +45,24 @@ Section "Install"
 	CreateShortcut "$SMPROGRAMS\Beebop\Uninstall Beebop.lnk" \
 	               "$INSTDIR\uninstall.exe"
 
+	; Create file association
+	WriteRegStr HKLM \
+	            "Software\Classes\.beebop" \
+	            "" \
+	            "BeebopFile"
+	WriteRegStr HKLM \
+	            "Software\Classes\BeebopFile" \
+	            "" \
+	            "Beebop file"
+	WriteRegStr HKLM \
+	            "Software\Classes\BeebopFile\DefaultIcon" \
+	            "" \
+	            "$INSTDIR\beebop.ico"
+	WriteRegStr HKLM \
+	            "Software\Classes\BeebopFile\shell\open\command" \
+	            "" \
+	            "$\"$INSTDIR\beebop.exe$\" $\"%1$\""
+
 	; Create uninstaller
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 
@@ -52,6 +70,12 @@ SectionEnd
 
 ; Uninstall section
 Section "Uninstall"
+
+	; Delete file association
+	DeleteRegKey HKLM \
+	             "Software\Classes\.beebop"
+	DeleteRegKey HKLM \
+	             "Software\Classes\BeebopFile"
 
 	; Delete menu shortcuts
 	RMDir /r "$SMPROGRAMS\Beebop"
