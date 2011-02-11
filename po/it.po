@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-11 11:26+0100\n"
-"PO-Revision-Date: 2011-02-11 11:27+0100\n"
+"POT-Creation-Date: 2011-02-11 23:46+0100\n"
+"PO-Revision-Date: 2011-02-11 23:46+0100\n"
 "Last-Translator: Andrea Bolognani <andrea.bolognani@roundhousecode.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -26,8 +26,8 @@ msgid "Appearance"
 msgstr "Aspetto"
 
 #. Set application and icon name
-#: ../data/beebop.ui.h:3 ../src/connector.vala:574 ../src/connector.vala:575
-#: ../src/application.vala:101
+#: ../data/beebop.ui.h:3 ../src/connector.vala:577 ../src/connector.vala:578
+#: ../src/application.vala:115
 #, c-format
 msgid "Beebop"
 msgstr "Beebop"
@@ -220,7 +220,7 @@ msgstr "_File"
 msgid "_Help"
 msgstr "A_iuto"
 
-#: ../data/beebop.desktop.in.h:1 ../src/connector.vala:578
+#: ../data/beebop.desktop.in.h:1 ../src/connector.vala:581
 msgid "Easily create nice-looking shipping lists"
 msgstr "Crea facilmente documenti di trasporto"
 
@@ -258,7 +258,7 @@ msgstr "Nessun elemento radice"
 msgid "Invalid root element"
 msgstr "Elemento radice non valido"
 
-#: ../src/document.vala:262 ../src/document.vala:326 ../src/connector.vala:671
+#: ../src/document.vala:262 ../src/document.vala:326 ../src/connector.vala:674
 msgid "Untitled document"
 msgstr "Documento senza titolo"
 
@@ -355,7 +355,7 @@ msgstr "Impossibile caricare file di interfaccia"
 msgid "SVG files"
 msgstr "File SVG"
 
-#: ../src/preferencesconnector.vala:71 ../src/connector.vala:329
+#: ../src/preferencesconnector.vala:71 ../src/connector.vala:332
 msgid "All files"
 msgstr "Tutti i file"
 
@@ -368,48 +368,48 @@ msgstr "Impossibile salvare le preferenze: %s"
 msgid "Reference"
 msgstr "Riferimento"
 
-#: ../src/connector.vala:312
+#: ../src/connector.vala:315
 msgid "Open file"
 msgstr "Apri file"
 
-#: ../src/connector.vala:323
-msgid "Beebop files"
-msgstr "File Beebop"
+#: ../src/connector.vala:326
+msgid "Beebop documents"
+msgstr "Documenti Beebop"
 
-#: ../src/connector.vala:352
+#: ../src/connector.vala:355 ../src/application.vala:63
 #, c-format
 msgid "Could not load document: %s"
 msgstr "Impossibile caricare documento: %s"
 
-#: ../src/connector.vala:395
+#: ../src/connector.vala:398
 #, c-format
 msgid "Could not save document: %s"
 msgstr "Impossibile salvare documento: %s"
 
-#: ../src/connector.vala:407
+#: ../src/connector.vala:410
 msgid "Save as..."
 msgstr "Salva come..."
 
-#: ../src/connector.vala:462
+#: ../src/connector.vala:465
 #, c-format
 msgid "Unable to launch viewer: %s"
 msgstr "Impossibile eseguire il visualizzatore: %s"
 
-#: ../src/connector.vala:540
+#: ../src/connector.vala:543
 msgid "Failed to show preferences view"
 msgstr "Impossibile mostrare le preferenze"
 
-#: ../src/connector.vala:569
+#: ../src/connector.vala:572
 #, c-format
 msgid "Unable to open website: %s"
 msgstr "Impossibile aprire il sito: %s"
 
-#: ../src/connector.vala:574
+#: ../src/connector.vala:577
 #, c-format
 msgid "About %s"
 msgstr "Informazioni su %s"
 
-#: ../src/connector.vala:666
+#: ../src/connector.vala:669
 msgid "Unknown"
 msgstr "Sconosciuto"
 
@@ -418,17 +418,17 @@ msgstr "Sconosciuto"
 msgid "Failed to load preferences: %s"
 msgstr "Impossibile caricare le preferenze: %s"
 
-#: ../src/application.vala:61
+#: ../src/application.vala:75
 #, c-format
 msgid "Failed to load view: %s"
 msgstr "Impossibile caricare l'interfaccia: %s"
 
-#: ../src/application.vala:65
+#: ../src/application.vala:79
 #, c-format
 msgid "Required object '%s' not found"
 msgstr "Oggetto '%s' non trovato"
 
-#: ../src/application.vala:69
+#: ../src/application.vala:83
 #, c-format
 msgid "Unknown error: %s"
 msgstr "Errore sconosciuto: %s"
