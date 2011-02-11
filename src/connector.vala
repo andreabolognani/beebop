@@ -832,6 +832,7 @@ namespace Beebop {
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
+				document.destination.first_line = document.recipient.first_line;
 				view.destination_first_line_entry.text = view.recipient_first_line_entry.text;
 			}
 
@@ -850,6 +851,7 @@ namespace Beebop {
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
+				document.destination.name = document.recipient.name;
 				view.destination_name_entry.text = view.recipient_name_entry.text;
 			}
 
@@ -868,6 +870,7 @@ namespace Beebop {
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
+				document.destination.street = document.recipient.street;
 				view.destination_street_entry.text = view.recipient_street_entry.text;
 			}
 
@@ -886,6 +889,7 @@ namespace Beebop {
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
+				document.destination.city = document.recipient.city;
 				view.destination_city_entry.text = view.recipient_city_entry.text;
 			}
 
