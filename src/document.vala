@@ -281,7 +281,7 @@ namespace Beebop {
 				handle.replace_contents (data,
 				                         len,
 				                         null,      /* No etag */
-				                         true,      /* Create backup */
+				                         false,     /* Don't create backup */
 				                         FileCreateFlags.NONE,
 				                         null,      /* No new etag */
 				                         null);
