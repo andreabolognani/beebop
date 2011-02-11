@@ -22,9 +22,6 @@ namespace Beebop {
 
 	public class Const : GLib.Object {
 
-		/* Resource paths */
-		public const string UI_FILE = Config.PKGDATADIR + "/beebop.ui";
-
 		/* Document file tags */
 		public const string TAG_DOCUMENT = "document";
 		public const string TAG_NUMBER = "number";

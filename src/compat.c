@@ -22,10 +22,75 @@
 #include <gio/gio.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
+#include <config.h>
 
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif /* G_OS_WIN32 */
+
+gchar*
+beebop_util_get_pkgdatadir (void)
+{
+	gchar *pkgdatadir;
+	gchar *temp;
+
+#ifndef G_OS_WIN32
+
+	pkgdatadir = g_strdup (PKGDATADIR);
+
+#else
+
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	pkgdatadir = g_strdup_printf ("%s/%s", temp, PKGDATADIR);
+	g_free (temp);
+
+#endif
+
+	return pkgdatadir;
+}
+
+gchar*
+beebop_util_get_datarootdir (void)
+{
+	gchar *datarootdir;
+	gchar *temp;
+
+#ifndef G_OS_WIN32
+
+	datarootdir = g_strdup (DATAROOTDIR);
+
+#else
+
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	datarootdir = g_strdup_printf ("%s/%s", temp, DATAROOTDIR);
+	g_free (temp);
+
+#endif
+
+	return datarootdir;
+}
+
+gchar*
+beebop_util_get_localedir (void)
+{
+	gchar *localedir;
+	gchar *temp;
+
+#ifndef G_OS_WIN32
+
+	localedir = g_strdup (LOCALEDIR);
+
+#else
+
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	localedir = g_strdup_printf ("%s/%s", temp, LOCALEDIR);
+	g_free (temp);
+
+#endif
+
+	return localedir;
+	return g_strdup (LOCALEDIR);
+}
 
 /* Show URI.
  *
@@ -60,6 +125,7 @@ beebop_util_set_default_icon_name (const gchar *name)
 {
 	GFile *handle;
 	gchar *filename;
+	gchar *temp;
 
 #ifndef G_OS_WIN32
 
@@ -70,12 +136,14 @@ beebop_util_set_default_icon_name (const gchar *name)
 
 	/* win32 apparentely is unable to load SVG icons, so point
 	 * it to the fallback pixmap */
+	temp = beebop_util_get_datarootdir ();
 	filename = g_strdup_printf ("%s/icons/hicolor/48x48/apps/%s.png",
-	                            DATAROOTDIR,
+	                            temp,
 	                            name);
 
 	handle = g_file_new_for_path (filename);
 	g_free (filename);
+	g_free (temp);
 
 	/* Set the default icon */
 	filename = g_file_get_path (handle);

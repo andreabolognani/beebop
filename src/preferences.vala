@@ -88,8 +88,8 @@ namespace Beebop {
 			header_markup = "";
 
 			document_directory = File.new_for_path (Environment.get_user_special_dir (UserDirectory.DOCUMENTS));
-			page_template = File.new_for_path (Config.PKGDATADIR + "/page.svg");
-			logo = File.new_for_path (Config.PKGDATADIR + "/logo.svg");
+			page_template = File.new_for_path (Util.get_pkgdatadir () + "/page.svg");
+			logo = File.new_for_path (Util.get_pkgdatadir () + "/logo.svg");
 
 			page_padding_x = 10.0;
 			page_padding_y = 10.0;

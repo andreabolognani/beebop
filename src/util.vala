@@ -102,18 +102,23 @@ namespace Beebop {
 
 			theme = Gtk.IconTheme.get_default ();
 
-			directory = File.new_for_path (Config.DATAROOTDIR + "/icons");
+			directory = File.new_for_path (Util.get_datarootdir () + "/icons");
 			theme.append_search_path (directory.get_path ());
-			directory = File.new_for_path (Config.DATAROOTDIR + "/icons/hicolor");
+			directory = File.new_for_path (Util.get_datarootdir () + "/icons/hicolor");
 			theme.append_search_path (directory.get_path ());
-			directory = File.new_for_path (Config.DATAROOTDIR + "/icons/hicolor/48x48");
+			directory = File.new_for_path (Util.get_datarootdir () + "/icons/hicolor/48x48");
 			theme.append_search_path (directory.get_path ());
-			directory = File.new_for_path (Config.DATAROOTDIR + "/icons/hicolor/48x48/apps");
+			directory = File.new_for_path (Util.get_datarootdir () + "/icons/hicolor/48x48/apps");
 			theme.append_search_path (directory.get_path ());
 
 			/* Rescan the theme if needed */
 			theme.rescan_if_needed ();
 		}
+
+		/* Installation directories, detected at runtime */
+		public static extern string get_pkgdatadir ();
+		public static extern string get_datarootdir ();
+		public static extern string get_localedir ();
 
 		/* Set default icon */
 		public static extern void set_default_icon_name (string name);
