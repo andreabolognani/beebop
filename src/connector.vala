@@ -323,7 +323,7 @@ namespace Beebop {
 
 			/* Select only .beebop files by default */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("Beebop files"));
+			filter.set_name (_("Beebop documents"));
 			filter.add_pattern ("*.beebop");
 			dialog.add_filter (filter);
 
