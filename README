@@ -13,9 +13,23 @@ The program offers a pretty good degree of configurability, so you
 can make your shipping lists look just the way you like them.
 
 
+Obtaining Beebop
+----------------
+
+The latest stable release of Beebop can be obtained from the project's
+homepage
+
+	http://roundhousecode.com/software/beebop
+
+If you'd like to contribute to Beebop's development you can grab a copy
+of the source code from the git repository
+
+	http://git.roundhousecode.com/beebop.git
+
+
 Contact information
-===================
+-------------------
 
 You can contact me anytime at the mail address
 <andrea.bolognani@roundhousecode.com> if you need any information about
-Beebop. Suggestions are greatly appreciated.
+Beebop. Suggestions and bug reports are greatly appreciated.

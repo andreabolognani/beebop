@@ -14,6 +14,8 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Homepage: http://roundhousecode.com/software/beebop
  */
 
 namespace Beebop {
@@ -553,6 +555,21 @@ namespace Beebop {
 			string[] authors = {"Andrea Bolognani <andrea.bolognani@roundhousecode.com>",
 			                    null};
 
+			/* Show the website when the link is clicked */
+			Gtk.AboutDialog.set_url_hook ((dialog, uri) => {
+
+				try {
+
+					Util.show_uri (dialog.get_screen (),
+					               uri);
+				}
+				catch (Error e) {
+
+					Util.show_error (dialog,
+					                 _("Unable to open website: %s").printf (e.message));
+				}
+			});
+
 			Gtk.show_about_dialog (view.window,
 			                       "title", _("About %s").printf (_("Beebop")),
 			                       "program-name", _("Beebop"),
@@ -560,6 +577,7 @@ namespace Beebop {
 			                       "logo-icon-name", "beebop",
 			                       "comments", _("Easily create nice-looking shipping lists"),
 			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
+			                       "website", "http://roundhousecode.com/software/beebop",
 			                       "license", Util.license,
 			                       "authors", authors);
 		}
