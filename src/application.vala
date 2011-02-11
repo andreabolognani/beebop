@@ -30,7 +30,7 @@ namespace Beebop {
 		private Connector connector;
 
 		/* Prepare the application to run */
-		public void prepare () throws ApplicationError {
+		public void prepare (string filename) throws ApplicationError {
 
 			Document document;
 			View view;
@@ -49,6 +49,20 @@ namespace Beebop {
 
 			/* Create an empty document */
 			document = new Document ();
+
+			/* Optionally load the file on the command line */
+			if (filename.collate ("") != 0) {
+
+				try {
+
+					document.filename = filename;
+					document.load ();
+				}
+				catch (DocumentError e) {
+
+					throw new ApplicationError.FAILED (_("Could not load document: %s").printf (e.message));
+				}
+			}
 
 			try {
 
@@ -108,8 +122,15 @@ namespace Beebop {
 
 			try {
 
-				/* Prepare the application */
-				application.prepare ();
+				/* Prepare the application (possibly loading a file) */
+				if (args.length > 1) {
+
+					application.prepare (args[1]);
+				}
+				else {
+
+					application.prepare ("");
+				}
 			}
 			catch (Error e) {
 
