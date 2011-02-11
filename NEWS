@@ -8,6 +8,7 @@ Overview of changes from Beebop 1.0.0 to 1.2.0
     * Make the header font configurable.
 
   [Bug fixes]
+    * Correctly detect when sending to recipient.
     * Correctly update controls as rows are added or removed.
     * Check header markup for validity.
 

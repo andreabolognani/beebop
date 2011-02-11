@@ -222,6 +222,9 @@ namespace Beebop {
 
 			/* Compare all the info shared by both the recipient
 			 * and the destination */
+			if (document.recipient.first_line.collate (document.destination.first_line) != 0) {
+				same = false;
+			}
 			if (document.recipient.name.collate (document.destination.name) != 0) {
 				same = false;
 			}
