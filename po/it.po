@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-11 23:46+0100\n"
-"PO-Revision-Date: 2011-02-11 23:46+0100\n"
+"POT-Creation-Date: 2011-02-12 17:30+0100\n"
+"PO-Revision-Date: 2011-02-12 17:31+0100\n"
 "Last-Translator: Andrea Bolognani <andrea.bolognani@roundhousecode.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -27,7 +27,7 @@ msgstr "Aspetto"
 
 #. Set application and icon name
 #: ../data/beebop.ui.h:3 ../src/connector.vala:577 ../src/connector.vala:578
-#: ../src/application.vala:115
+#: ../src/application.vala:112
 #, c-format
 msgid "Beebop"
 msgstr "Beebop"
@@ -196,9 +196,9 @@ msgstr "Trasporto a mezzo"
 msgid "Unit of measurement"
 msgstr "Unità di misura"
 
-#: ../data/beebop.ui.h:44 ../src/painter.vala:531
-msgid "VATIN"
-msgstr "Partita IVA"
+#: ../data/beebop.ui.h:44
+msgid "VATIN or SSN"
+msgstr "Partita IVA o Codice Fiscale"
 
 #: ../data/beebop.ui.h:45
 msgid "Vertical"
@@ -322,6 +322,10 @@ msgstr "DDT"
 #: ../src/painter.vala:504
 msgid "Page"
 msgstr "Pagina"
+
+#: ../src/painter.vala:531
+msgid "VATIN"
+msgstr "Partita IVA"
 
 #: ../src/painter.vala:577
 msgid "Notes"

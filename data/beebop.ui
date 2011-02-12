@@ -479,7 +479,7 @@
                                   <object class="GtkLabel" id="label18">
                                     <property name="visible">True</property>
                                     <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">VATIN</property>
+                                    <property name="label" translatable="yes">VATIN or SSN</property>
                                   </object>
                                   <packing>
                                     <property name="top_attach">4</property>
@@ -1965,46 +1965,46 @@
   </object>
   <object class="GtkSizeGroup" id="main_sizegroup">
     <widgets>
-      <widget name="label8"/>
-      <widget name="label7"/>
-      <widget name="label6"/>
-      <widget name="label20"/>
-      <widget name="label23"/>
-      <widget name="label22"/>
-      <widget name="label21"/>
-      <widget name="label13"/>
-      <widget name="label12"/>
-      <widget name="label11"/>
-      <widget name="label10"/>
-      <widget name="label9"/>
-      <widget name="label19"/>
-      <widget name="label18"/>
-      <widget name="label3"/>
-      <widget name="label2"/>
-      <widget name="label1"/>
-      <widget name="label47"/>
       <widget name="label49"/>
+      <widget name="label47"/>
+      <widget name="label1"/>
+      <widget name="label2"/>
+      <widget name="label3"/>
+      <widget name="label18"/>
+      <widget name="label19"/>
+      <widget name="label9"/>
+      <widget name="label10"/>
+      <widget name="label11"/>
+      <widget name="label12"/>
+      <widget name="label13"/>
+      <widget name="label21"/>
+      <widget name="label22"/>
+      <widget name="label23"/>
+      <widget name="label20"/>
+      <widget name="label6"/>
+      <widget name="label7"/>
+      <widget name="label8"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="preferences_sizegroup">
     <widgets>
-      <widget name="label38"/>
-      <widget name="label33"/>
-      <widget name="label43"/>
-      <widget name="label42"/>
-      <widget name="label41"/>
-      <widget name="label40"/>
-      <widget name="label39"/>
-      <widget name="label36"/>
-      <widget name="label34"/>
-      <widget name="label15"/>
-      <widget name="label30"/>
-      <widget name="label17"/>
-      <widget name="label16"/>
-      <widget name="label35"/>
-      <widget name="label37"/>
-      <widget name="label50"/>
       <widget name="label51"/>
+      <widget name="label50"/>
+      <widget name="label37"/>
+      <widget name="label35"/>
+      <widget name="label16"/>
+      <widget name="label17"/>
+      <widget name="label30"/>
+      <widget name="label15"/>
+      <widget name="label34"/>
+      <widget name="label36"/>
+      <widget name="label39"/>
+      <widget name="label40"/>
+      <widget name="label41"/>
+      <widget name="label42"/>
+      <widget name="label43"/>
+      <widget name="label33"/>
+      <widget name="label38"/>
     </widgets>
   </object>
   <object class="GtkAction" id="save_action">
