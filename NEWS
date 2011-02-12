@@ -2,7 +2,7 @@ Overview of changes from Beebop 1.0.0 to 1.2.0
 ==============================================
 
   [New features]
-    * Open files from the command line.
+    * Open files from the command line or file browser.
     * Save PDF files to a separate directory.
     * Fill closing row with asterisks.
     * Make the header font configurable.
