@@ -21,7 +21,6 @@
 #include <glib.h>
 #include <gio/gio.h>
 #include <gdk/gdk.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 #include <config.h>
 
@@ -141,7 +140,6 @@ beebop_util_show_uri (GdkScreen   *screen,
 void
 beebop_util_set_default_icon_name (const gchar *name)
 {
-	GdkPixbuf *icon;
 	GFile *directory;
 	GFile *child;
 	gchar *temp;
@@ -174,13 +172,9 @@ beebop_util_set_default_icon_name (const gchar *name)
 
 	temp = g_file_get_path (child);
 
-	/* Load icon from file */
-	icon = gdk_pixbuf_new_from_file (temp, NULL);
-
 	/* Set default icon */
-	gtk_window_set_default_icon (icon);
+	gtk_window_set_default_icon_from_file (temp, NULL);
 
-	g_object_unref (icon);
 	g_object_unref (directory);
 	g_free (temp);
 }
