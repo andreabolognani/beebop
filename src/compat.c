@@ -32,20 +32,30 @@
 gchar*
 beebop_util_get_pkgdatadir (void)
 {
+	GFile *directory;
+	GFile *temp;
 	gchar *pkgdatadir;
-	gchar *temp;
 
 #ifndef G_OS_WIN32
 
-	pkgdatadir = g_strdup (PKGDATADIR);
+	directory = g_file_new_for_path (PKGDATADIR);
 
 #else
 
-	temp = g_win32_get_package_installation_directory_of_module (NULL);
-	pkgdatadir = g_strdup_printf ("%s/%s", temp, PKGDATADIR);
-	g_free (temp);
+	pkgdatadir = g_win32_get_package_installation_directory_of_module (NULL);
+	directory = g_file_new_for_path (pkgdatadir);
+	g_free (pkgdatadir);
+
+	temp = g_file_get_child (directory, PKGDATADIR);
+	g_object_unref (directory);
+
+	directory = temp;
 
 #endif
+
+	pkgdatadir = g_file_get_path (directory);
+
+	g_object_unref (directory);
 
 	return pkgdatadir;
 }
@@ -53,20 +63,30 @@ beebop_util_get_pkgdatadir (void)
 gchar*
 beebop_util_get_datarootdir (void)
 {
+	GFile *directory;
+	GFile *temp;
 	gchar *datarootdir;
-	gchar *temp;
 
 #ifndef G_OS_WIN32
 
-	datarootdir = g_strdup (DATAROOTDIR);
+	directory = g_file_new_for_path (DATAROOTDIR);
 
 #else
 
-	temp = g_win32_get_package_installation_directory_of_module (NULL);
-	datarootdir = g_strdup_printf ("%s/%s", temp, DATAROOTDIR);
-	g_free (temp);
+	datarootdir = g_win32_get_package_installation_directory_of_module (NULL);
+	directory = g_file_new_for_path (datarootdir);
+	g_free (datarootdir);
+
+	temp = g_file_get_child (directory, DATAROOTDIR);
+	g_object_unref (directory);
+
+	directory = temp;
 
 #endif
+
+	datarootdir = g_file_get_path (directory);
+
+	g_object_unref (directory);
 
 	return datarootdir;
 }
@@ -74,23 +94,33 @@ beebop_util_get_datarootdir (void)
 gchar*
 beebop_util_get_localedir (void)
 {
+	GFile *directory;
+	GFile *temp;
 	gchar *localedir;
-	gchar *temp;
 
 #ifndef G_OS_WIN32
 
-	localedir = g_strdup (LOCALEDIR);
+	directory = g_file_new_for_path (LOCALEDIR);
 
 #else
 
-	temp = g_win32_get_package_installation_directory_of_module (NULL);
-	localedir = g_strdup_printf ("%s/%s", temp, LOCALEDIR);
-	g_free (temp);
+	localedir = g_win32_get_package_installation_directory_of_module (NULL);
+	directory = g_file_new_for_path (localedir);
+	g_free (localedir);
+
+	temp = g_file_get_child (directory, LOCALEDIR);
+	g_object_unref (directory);
+
+	directory = temp;
+
 
 #endif
 
+	localedir = g_file_get_path (directory);
+
+	g_object_unref (directory);
+
 	return localedir;
-	return g_strdup (LOCALEDIR);
 }
 
 /* Show URI.
