@@ -9,10 +9,9 @@ desktop_DATA = \
 	$(NULL)
 @INTLTOOL_DESKTOP_RULE@
 
-pkgdata_DATA = \
-	beebop.ui \
-	page.svg \
-	logo.svg \
+mimedir = $(datadir)/mime/packages
+mime_DATA = \
+	beebop.xml \
 	$(NULL)
 
 svgicondir = $(datadir)/icons/hicolor/scalable/apps
@@ -25,9 +24,16 @@ icon_DATA = \
 	beebop.png \
 	$(NULL)
 
+pkgdata_DATA = \
+	beebop.ui \
+	page.svg \
+	logo.svg \
+	$(NULL)
+
 EXTRA_DIST = \
 	$(desktop_in_files) \
 	$(pkgdata_DATA) \
+	$(mime_DATA) \
 	$(svgicon_DATA) \
 	$(icon_DATA) \
 	beebop-document.svg \
@@ -36,6 +42,18 @@ EXTRA_DIST = \
 DISTCLEANFILES = \
 	$(desktop_DATA) \
 	$(NULL)
+
+update_mime_database = update-mime-database $(datadir)/mime
+install-data-hook: update-mime-database
+uninstall-hook: update-mime-database
+update-mime-database:
+	@-if test -z "$(DESTDIR)"; then \
+		echo "Updating MIME database."; \
+		$(update_mime_database); \
+	else \
+		echo "*** MIME database not updated.  After (un)install, run this:"; \
+		echo "***   $(update_mime_database)"; \
+	fi
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 install-data-hook: update-icon-cache
