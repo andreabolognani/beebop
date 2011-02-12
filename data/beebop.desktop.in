@@ -9,3 +9,4 @@ Terminal=false
 Type=Application
 Icon=beebop
 Categories=GTK;Office;
+MimeType=application/x-beebop;

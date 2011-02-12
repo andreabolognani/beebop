@@ -44,15 +44,18 @@ DISTCLEANFILES = \
 	$(NULL)
 
 update_mime_database = update-mime-database $(datadir)/mime
-install-data-hook: update-mime-database
-uninstall-hook: update-mime-database
-update-mime-database:
+update_desktop_database = update-desktop-database
+install-data-hook: update-mime-and-desktop-databases
+uninstall-hook: update-mime-and-desktop-databases
+update-mime-and-desktop-databases:
 	@-if test -z "$(DESTDIR)"; then \
-		echo "Updating MIME database."; \
+		echo "Updating MIME and desktop databases."; \
 		$(update_mime_database); \
+		$(update_desktop_database); \
 	else \
-		echo "*** MIME database not updated.  After (un)install, run this:"; \
+		echo "*** MIME and desktop databases not updated.  After (un)install, run this:"; \
 		echo "***   $(update_mime_database)"; \
+		echo "***   $(update_desktop_database)"; \
 	fi
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
