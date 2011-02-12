@@ -338,7 +338,7 @@ namespace Beebop {
 
 				/* Create a new document */
 				tmp = new Document ();
-				tmp.filename = dialog.get_filename ();
+				tmp.location = dialog.get_file ();
 
 				/* Destroy the dialog */
 				dialog.destroy ();
@@ -372,9 +372,9 @@ namespace Beebop {
 
 			Painter painter;
 
-			/* If no filename has been chosen for the document,
+			/* If no location has been chosen for the document,
 			 * make the user choose one */
-			if (document.filename.collate ("") == 0) {
+			if (document.location.equal (preferences.document_directory)) {
 
 				save_as ();
 				return;
@@ -413,17 +413,24 @@ namespace Beebop {
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			                                    Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
 
-			/* Save files to the document directory by default */
-			dialog.set_current_folder_uri (preferences.document_directory.get_uri ());
+			/* Suggest a location for the document  */
+			if (document.location.equal (preferences.document_directory)) {
 
-			/* Suggest a file name for the document  */
-			if (document.filename.collate ("") == 0) {
+				try {
 
-				dialog.set_current_name (document.suggest_filename ());
+					/* Save files to the document directory by default */
+					dialog.set_current_folder_file (preferences.document_directory);
+					dialog.set_current_name (document.suggest_location ().get_basename ());
+				}
+				catch (Error e) {}
 			}
 			else {
 
-				dialog.set_filename (document.filename);
+				try {
+
+					dialog.set_file (document.location);
+				}
+				catch (Error e) {}
 			}
 
 			/* Enable overwrite confirmation */
@@ -432,8 +439,8 @@ namespace Beebop {
 			/* Display the dialog */
 			if (dialog.run () == Gtk.ResponseType.ACCEPT) {
 
-				/* Get selected filename */
-				document.filename = dialog.get_filename ();
+				/* Get selected location */
+				document.location = dialog.get_file ();
 				dialog.destroy ();
 
 				/* Save document */
@@ -448,16 +455,11 @@ namespace Beebop {
 		/* Print the current document */
 		private void print () {
 
-			File handle;
-
 			try {
-
-				/* Build file path */
-				handle = File.new_for_path (document.get_print_filename ());
 
 				/* Launch viewer */
 				Util.show_uri (view.window.get_screen(),
-				               handle.get_uri ());
+				               document.get_print_location ().get_uri ());
 			}
 			catch (Error e) {
 
@@ -646,22 +648,20 @@ namespace Beebop {
 
 			Gtk.Clipboard clipboard;
 			Gtk.Widget widget;
-			File handle;
 			FileInfo info;
 			string title;
 			bool editable;
 			int start;
 			int end;
 
-			if (document.filename.collate ("") != 0) {
+			if (!document.location.equal (preferences.document_directory)) {
 
 				/* Get the display name using GIO */
 				try {
 
-					handle = File.new_for_path (document.filename);
-					info = handle.query_info (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
-					                          FileQueryInfoFlags.NONE,
-					                          null);
+					info = document.location.query_info (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+					                                     FileQueryInfoFlags.NONE,
+					                                     null);
 					title = info.get_attribute_string (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
 				}
 				catch (Error e) {
@@ -687,7 +687,7 @@ namespace Beebop {
 			 * changes or have never been saved */
 			view.print_action.sensitive = false;
 
-			if (!document.unsaved && document.filename.collate ("") != 0) {
+			if (!document.unsaved && !document.location.equal (preferences.document_directory)) {
 
 				view.print_action.sensitive = true;
 			}

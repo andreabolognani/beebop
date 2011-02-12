@@ -68,7 +68,7 @@ namespace Beebop {
 			load_resources ();
 
 			/* Get print filename*/
-			outfile = File.new_for_path (document.get_print_filename ());
+			outfile = document.get_print_location ();
 
 			outdir = outfile.get_parent ();
 

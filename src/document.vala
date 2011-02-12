@@ -55,7 +55,7 @@ namespace Beebop {
 			}
 		}
 
-		public string filename { get; set; }
+		public File location { get; set; }
 
 		public string number {
 
@@ -140,7 +140,7 @@ namespace Beebop {
 			today.set_time_val (TimeVal ());
 			today.to_time (out now);
 
-			filename = "";
+			location = preferences.document_directory;
 
 			_number = "";
 			_date = now.format ("%d/%m/%Y");
@@ -185,30 +185,27 @@ namespace Beebop {
 		 * and edited at a later time. */
 		public void load () throws DocumentError {
 
-			File handle;
+			File temp;
 			Xml.Doc *doc;
 			Xml.Node *node;
-			string tmp_filename;
 			string data;
 			size_t len;
 
-			tmp_filename = filename;
+			temp = location;
 
 			/* Clear the document and delete the first row of
-			 * goods, then restore the filename */
+			 * goods, then restore the location */
 			clear ();
 			goods.clear ();
-			filename = tmp_filename;
-
-			handle = File.new_for_path (filename);
+			location = temp;
 
 			try {
 
 				/* Load file contents */
-				handle.load_contents (null,
-				                      out data,
-				                      out len,
-				                      null);
+				location.load_contents (null,
+				                        out data,
+				                        out len,
+				                        null);
 			}
 			catch (Error e) {
 
@@ -252,12 +249,11 @@ namespace Beebop {
 
 			Xml.Doc *doc;
 			Xml.Node *node;
-			File handle;
 			string data;
 			size_t len;
 
 			/* Can't save an untitled document */
-			if (filename.collate ("") == 0) {
+			if (location.equal (preferences.document_directory)) {
 
 				throw new DocumentError.IO (_("Untitled document"));
 			}
@@ -274,17 +270,14 @@ namespace Beebop {
 
 			try {
 
-				/* Build file path */
-				handle = File.new_for_path (filename);
-
 				/* Write file contents */
-				handle.replace_contents (data,
-				                         len,
-				                         null,      /* No etag */
-				                         false,     /* Don't create backup */
-				                         FileCreateFlags.NONE,
-				                         null,      /* No new etag */
-				                         null);
+				location.replace_contents (data,
+				                           len,
+				                           null,      /* No etag */
+				                           false,     /* Don't create backup */
+				                           FileCreateFlags.NONE,
+				                           null,      /* No new etag */
+				                           null);
 			}
 			catch (Error e) {
 
@@ -295,8 +288,8 @@ namespace Beebop {
 			unsaved = false;
 		}
 
-		/* Suggest a filename using the information contained in the document */
-		public string suggest_filename () {
+		/* Suggest a location using the information contained in the document */
+		public File suggest_location () {
 
 			string suggestion;
 
@@ -332,20 +325,19 @@ namespace Beebop {
 			/* Normalize filename */
 			suggestion = Util.normalize (suggestion);
 
-			return suggestion;
+			return File.new_for_path (suggestion);
 		}
 
-		/* Get the filename for the print file for the document */
-		public string get_print_filename () {
+		/* Get the location for the print file for the document */
+		public File get_print_location () {
 
 			File directory;
 			File file;
 			string basename;
 
-			/* Split the document's filename in directory and path */
-			file = File.new_for_path (filename);
-			directory = file.get_parent ();
-			basename = file.get_basename ();
+			/* Split the document's location in directory and path */
+			directory = location.get_parent ();
+			basename = location.get_basename ();
 
 			/* The print file directory is a subdirectory of the
 			 * document directory called print */
@@ -355,7 +347,7 @@ namespace Beebop {
 			 * with a .pdf extensions appended */
 			file = directory.get_child (basename + ".pdf");
 
-			return file.get_path ();
+			return file;
 		}
 
 

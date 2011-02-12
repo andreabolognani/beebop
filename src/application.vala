@@ -55,7 +55,7 @@ namespace Beebop {
 
 				try {
 
-					document.filename = filename;
+					document.location = File.new_for_commandline_arg (filename);
 					document.load ();
 				}
 				catch (DocumentError e) {
