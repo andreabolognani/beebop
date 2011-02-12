@@ -29,12 +29,12 @@
 #include <windows.h>
 #endif /* G_OS_WIN32 */
 
-gchar*
+GFile*
 beebop_util_get_pkgdatadir (void)
 {
 	GFile *directory;
-	GFile *temp;
-	gchar *pkgdatadir;
+	GFile *child;
+	gchar *temp;
 
 #ifndef G_OS_WIN32
 
@@ -42,30 +42,26 @@ beebop_util_get_pkgdatadir (void)
 
 #else
 
-	pkgdatadir = g_win32_get_package_installation_directory_of_module (NULL);
-	directory = g_file_new_for_path (pkgdatadir);
-	g_free (pkgdatadir);
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	directory = g_file_new_for_path (temp);
+	g_free (temp);
 
-	temp = g_file_get_child (directory, PKGDATADIR);
+	child = g_file_get_child (directory, PKGDATADIR);
 	g_object_unref (directory);
 
-	directory = temp;
+	directory = child;
 
 #endif
 
-	pkgdatadir = g_file_get_path (directory);
-
-	g_object_unref (directory);
-
-	return pkgdatadir;
+	return directory;
 }
 
-gchar*
+GFile*
 beebop_util_get_datarootdir (void)
 {
 	GFile *directory;
-	GFile *temp;
-	gchar *datarootdir;
+	GFile *child;
+	gchar *temp;
 
 #ifndef G_OS_WIN32
 
@@ -73,30 +69,26 @@ beebop_util_get_datarootdir (void)
 
 #else
 
-	datarootdir = g_win32_get_package_installation_directory_of_module (NULL);
-	directory = g_file_new_for_path (datarootdir);
-	g_free (datarootdir);
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	directory = g_file_new_for_path (temp);
+	g_free (temp);
 
-	temp = g_file_get_child (directory, DATAROOTDIR);
+	child = g_file_get_child (directory, DATAROOTDIR);
 	g_object_unref (directory);
 
-	directory = temp;
+	directory = child;
 
 #endif
 
-	datarootdir = g_file_get_path (directory);
-
-	g_object_unref (directory);
-
-	return datarootdir;
+	return directory;
 }
 
-gchar*
+GFile*
 beebop_util_get_localedir (void)
 {
 	GFile *directory;
-	GFile *temp;
-	gchar *localedir;
+	GFile *child;
+	gchar *temp;
 
 #ifndef G_OS_WIN32
 
@@ -104,23 +96,18 @@ beebop_util_get_localedir (void)
 
 #else
 
-	localedir = g_win32_get_package_installation_directory_of_module (NULL);
-	directory = g_file_new_for_path (localedir);
-	g_free (localedir);
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	directory = g_file_new_for_path (temp);
+	g_free (temp);
 
-	temp = g_file_get_child (directory, LOCALEDIR);
+	child = g_file_get_child (directory, LOCALEDIR);
 	g_object_unref (directory);
 
-	directory = temp;
-
+	directory = child;
 
 #endif
 
-	localedir = g_file_get_path (directory);
-
-	g_object_unref (directory);
-
-	return localedir;
+	return directory;
 }
 
 /* Show URI.
@@ -155,39 +142,47 @@ void
 beebop_util_set_default_icon_name (const gchar *name)
 {
 	GdkPixbuf *icon;
-	gchar *filename;
+	GFile *directory;
+	GFile *child;
 	gchar *temp;
 
 #ifndef G_OS_WIN32
 
 	/* Use the SVG icon where possible */
-	temp = beebop_util_get_datarootdir ();
-	filename = g_strdup_printf ("%s/icons/hicolor/scalable/apps/%s.svg",
-	                            temp,
-	                            name);
+	directory = beebop_util_get_datarootdir ();
+
+	temp = g_strdup_printf ("icons/hicolor/scalable/apps/%s.svg", name);
+	child = g_file_get_child (directory, temp);
+
 	g_free (temp);
 
 #else
 
-
 	/* win32 apparentely is unable to load SVG icons, so point
 	 * it to a fallback pixmap */
 	temp = g_win32_get_package_installation_directory_of_module (NULL);
-	filename = g_strdup_printf ("%s/%s.ico",
-	                            temp,
-	                            name);
+	directory = g_file_new_for_path (temp);
+	g_free (temp);
+
+	temp = g_strdup_printf ("%s.ico", name);
+	child = g_file_get_child (directory, temp);
+
+	g_object_unref (directory);
 	g_free (temp);
 
 #endif
 
+	temp = g_file_get_path (child);
+
 	/* Load icon from file */
-	icon = gdk_pixbuf_new_from_file (filename, NULL);
+	icon = gdk_pixbuf_new_from_file (temp, NULL);
 
 	/* Set default icon */
 	gtk_window_set_default_icon (icon);
 
 	g_object_unref (icon);
-	g_free (filename);
+	g_object_unref (directory);
+	g_free (temp);
 }
 
 /* Set style properties.

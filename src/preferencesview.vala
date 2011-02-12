@@ -61,7 +61,7 @@ namespace Beebop {
 
 				/* Load UI definition */
 				ui = new Gtk.Builder ();
-				ui.add_from_file (Util.get_pkgdatadir () + "/beebop.ui");
+				ui.add_from_file (Util.get_pkgdatadir ().get_child ("beebop.ui").get_path ());
 			}
 			catch (Error e) {
 

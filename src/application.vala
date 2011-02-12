@@ -104,7 +104,7 @@ namespace Beebop {
 			Rsvg.init ();
 
 			/* Set up internationalization */
-			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Util.get_localedir ());
+			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Util.get_localedir ().get_path ());
 			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 

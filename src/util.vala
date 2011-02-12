@@ -95,9 +95,9 @@ namespace Beebop {
 		}
 
 		/* Installation directories, detected at runtime */
-		public static extern string get_pkgdatadir ();
-		public static extern string get_datarootdir ();
-		public static extern string get_localedir ();
+		public static extern File get_pkgdatadir ();
+		public static extern File get_datarootdir ();
+		public static extern File get_localedir ();
 
 		/* Set default icon */
 		public static extern void set_default_icon_name (string name);
