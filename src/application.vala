@@ -108,9 +108,6 @@ namespace Beebop {
 			Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
 			Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-			/* Add more icons search paths */
-			Util.add_icon_search_paths ();
-
 			/* Set application and icon name */
 			Environment.set_application_name (_("Beebop"));
 			Util.set_default_icon_name ("beebop");

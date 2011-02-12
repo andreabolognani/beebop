@@ -94,27 +94,6 @@ namespace Beebop {
 			return tmp;
 		}
 
-		/* Add more icons search paths (mostly for win32) */
-		public static void add_icon_search_paths () {
-
-			Gtk.IconTheme theme;
-			File directory;
-
-			theme = Gtk.IconTheme.get_default ();
-
-			directory = File.new_for_path (Util.get_datarootdir () + "/icons");
-			theme.append_search_path (directory.get_path ());
-			directory = File.new_for_path (Util.get_datarootdir () + "/icons/hicolor");
-			theme.append_search_path (directory.get_path ());
-			directory = File.new_for_path (Util.get_datarootdir () + "/icons/hicolor/48x48");
-			theme.append_search_path (directory.get_path ());
-			directory = File.new_for_path (Util.get_datarootdir () + "/icons/hicolor/48x48/apps");
-			theme.append_search_path (directory.get_path ());
-
-			/* Rescan the theme if needed */
-			theme.rescan_if_needed ();
-		}
-
 		/* Installation directories, detected at runtime */
 		public static extern string get_pkgdatadir ();
 		public static extern string get_datarootdir ();
