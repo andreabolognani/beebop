@@ -14,13 +14,18 @@ mime_DATA = \
 	beebop.xml \
 	$(NULL)
 
-svgicondir = $(datadir)/icons/hicolor/scalable/apps
-svgicon_DATA = \
+svgappsicondir = $(datadir)/icons/hicolor/scalable/apps
+svgappsicon_DATA = \
 	beebop.svg \
 	$(NULL)
 
-icondir = $(datadir)/icons/hicolor/48x48/apps
-icon_DATA = \
+svgmimetypesicondir = $(datadir)/icons/hicolor/scalable/mimetypes
+svgmimetypesicon_DATA = \
+	application-x-beebop.svg \
+	$(NULL)
+
+appsicondir = $(datadir)/icons/hicolor/48x48/apps
+appsicon_DATA = \
 	beebop.png \
 	$(NULL)
 
@@ -34,9 +39,9 @@ EXTRA_DIST = \
 	$(desktop_in_files) \
 	$(pkgdata_DATA) \
 	$(mime_DATA) \
-	$(svgicon_DATA) \
-	$(icon_DATA) \
-	beebop-document.svg \
+	$(svgappsicon_DATA) \
+	$(svgmimetypesicon_DATA) \
+	$(appsicon_DATA) \
 	$(NULL)
 
 DISTCLEANFILES = \
