@@ -31,7 +31,7 @@ Section "Install"
 	SetOutPath "$INSTDIR"
 	File "beebop.exe"
 	File "beebop.ico"
-	File "beebop-document.ico"
+	File "application-x-beebop.ico"
 
 	; Install data files
 	SetOutPath "$INSTDIR\share"
@@ -58,7 +58,7 @@ Section "Install"
 	WriteRegStr HKLM \
 	            "Software\Classes\BeebopDocument\DefaultIcon" \
 	            "" \
-	            "$INSTDIR\beebop-document.ico"
+	            "$INSTDIR\application-x-beebop.ico"
 	WriteRegStr HKLM \
 	            "Software\Classes\BeebopDocument\shell\open\command" \
 	            "" \
