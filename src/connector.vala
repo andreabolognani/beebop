@@ -406,12 +406,25 @@ namespace Beebop {
 		private void save_as () {
 
 			Gtk.FileChooserDialog dialog;
+			Gtk.FileFilter filter;
 
 			dialog = new Gtk.FileChooserDialog (_("Save as..."),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.SAVE,
 			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			                                    Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
+
+			/* Show only .beebop files by default */
+			filter = new Gtk.FileFilter ();
+			filter.set_name (_("Beebop documents"));
+			filter.add_pattern ("*.beebop");
+			dialog.add_filter (filter);
+
+			/* Let the user see any file if he wants to */
+			filter = new Gtk.FileFilter ();
+			filter.set_name (_("All files"));
+			filter.add_pattern ("*");
+			dialog.add_filter (filter);
 
 			/* Suggest a location for the document  */
 			if (document.location.equal (preferences.document_directory)) {
