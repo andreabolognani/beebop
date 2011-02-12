@@ -21,6 +21,7 @@
 #include <glib.h>
 #include <gio/gio.h>
 #include <gdk/gdk.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 #include <config.h>
 
@@ -123,36 +124,40 @@ beebop_util_show_uri (GdkScreen   *screen,
 void
 beebop_util_set_default_icon_name (const gchar *name)
 {
-	GFile *handle;
+	GdkPixbuf *icon;
 	gchar *filename;
 	gchar *temp;
 
 #ifndef G_OS_WIN32
 
-	/* Set icon name and let GTK+ figure out the filename */
-	gtk_window_set_default_icon_name (name);
+	/* Use the SVG icon where possible */
+	temp = beebop_util_get_datarootdir ();
+	filename = g_strdup_printf ("%s/icons/hicolor/scalable/apps/%s.svg",
+	                            temp,
+	                            name);
+	g_free (temp);
 
 #else
 
+
 	/* win32 apparentely is unable to load SVG icons, so point
-	 * it to the fallback pixmap */
-	temp = beebop_util_get_datarootdir ();
-	filename = g_strdup_printf ("%s/icons/hicolor/48x48/apps/%s.png",
+	 * it to a fallback pixmap */
+	temp = g_win32_get_package_installation_directory_of_module (NULL);
+	filename = g_strdup_printf ("%s/%s.ico",
 	                            temp,
 	                            name);
-
-	handle = g_file_new_for_path (filename);
-	g_free (filename);
 	g_free (temp);
 
-	/* Set the default icon */
-	filename = g_file_get_path (handle);
-	gtk_window_set_default_icon_from_file (filename, NULL);
-
-	g_free (filename);
-	g_object_unref (handle);
-
 #endif
+
+	/* Load icon from file */
+	icon = gdk_pixbuf_new_from_file (filename, NULL);
+
+	/* Set default icon */
+	gtk_window_set_default_icon (icon);
+
+	g_object_unref (icon);
+	g_free (filename);
 }
 
 /* Set style properties.

@@ -24,11 +24,6 @@ svgmimetypesicon_DATA = \
 	application-x-beebop.svg \
 	$(NULL)
 
-appsicondir = $(datadir)/icons/hicolor/48x48/apps
-appsicon_DATA = \
-	beebop.png \
-	$(NULL)
-
 pkgdata_DATA = \
 	beebop.ui \
 	page.svg \
@@ -41,7 +36,6 @@ EXTRA_DIST = \
 	$(mime_DATA) \
 	$(svgappsicon_DATA) \
 	$(svgmimetypesicon_DATA) \
-	$(appsicon_DATA) \
 	$(NULL)
 
 DISTCLEANFILES = \
