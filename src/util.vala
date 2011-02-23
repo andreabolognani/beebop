@@ -78,6 +78,40 @@ namespace Beebop {
 			return obj;
 		}
 
+
+		/* Ensure a string only spans a single line */
+		public static string single_line (string original) {
+
+			Regex regex;
+			string pattern;
+			string replacement;
+			string tmp;
+
+			pattern = "\r|\n";
+			replacement = "";
+
+			try {
+
+				regex = new Regex (pattern,
+				                   0,
+				                   RegexMatchFlags.NEWLINE_ANY);
+
+				tmp = regex.replace_literal (original,
+				                             -1,
+				                             0,
+				                             replacement,
+				                             RegexMatchFlags.NEWLINE_ANY);
+			}
+			catch (Error e) {
+
+				/* The above replacement will never fail; in the unlikely
+				 * event it fails, just return the original string */
+				tmp = original;
+			}
+
+			return tmp;
+		}
+
 		/* Normalize a filename by removing weird characters */
 		public static string normalize (string original) {
 

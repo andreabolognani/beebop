@@ -36,7 +36,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_appearance) != 0) {
-					_appearance = value;
+					_appearance = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -50,7 +50,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_parcels) != 0) {
-					_parcels = value;
+					_parcels = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -64,7 +64,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_weight) != 0) {
-					_weight = value;
+					_weight = Util.single_line (value);
 					unsaved = true;
 				}
 			}

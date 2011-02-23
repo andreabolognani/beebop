@@ -39,7 +39,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_first_line) != 0) {
-					_first_line = value;
+					_first_line = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -53,7 +53,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_name) != 0) {
-					_name = value;
+					_name = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -67,7 +67,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_street) != 0) {
-					_street = value;
+					_street = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -81,7 +81,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_city) != 0) {
-					_city = value;
+					_city = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -95,7 +95,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_vatin) != 0) {
-					_vatin = value;
+					_vatin = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -109,7 +109,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_client_code) != 0) {
-					_client_code = value;
+					_client_code = Util.single_line (value);
 					unsaved = true;
 				}
 			}

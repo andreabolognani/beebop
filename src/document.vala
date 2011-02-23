@@ -151,14 +151,14 @@ namespace Beebop {
 			shipment_info = new ShipmentInfo ();
 
 			/* Use default value for first line */
-			recipient.first_line = preferences.default_first_line;
-			destination.first_line = preferences.default_first_line;
+			recipient.first_line = Util.single_line (preferences.default_first_line);
+			destination.first_line = Util.single_line (preferences.default_first_line);
 
 			/* Use default values for shipment info */
-			shipment_info.reason = preferences.default_reason;
-			shipment_info.transported_by = preferences.default_transported_by;
-			shipment_info.carrier = preferences.default_carrier;
-			shipment_info.duties = preferences.default_duties;
+			shipment_info.reason = Util.single_line (preferences.default_reason);
+			shipment_info.transported_by = Util.single_line (preferences.default_transported_by);
+			shipment_info.carrier = Util.single_line (preferences.default_carrier);
+			shipment_info.duties = Util.single_line (preferences.default_duties);
 
 			goods = new Gtk.ListStore (Const.LAST_COLUMN,
 			                           typeof (string),
@@ -173,7 +173,7 @@ namespace Beebop {
 			           Const.COLUMN_CODE, "",
 			           Const.COLUMN_REFERENCE, "",
 			           Const.COLUMN_DESCRIPTION, "",
-			           Const.COLUMN_UNIT, preferences.default_unit,
+			           Const.COLUMN_UNIT, Util.single_line (preferences.default_unit),
 			           Const.COLUMN_QUANTITY, 1);
 
 			unsaved = false;
@@ -365,11 +365,11 @@ namespace Beebop {
 
 				if ((node->name).collate (Const.TAG_NUMBER) == 0) {
 
-					number = node->get_content ();
+					number = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_DATE) == 0) {
 
-					date = node->get_content ();
+					date = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_RECIPIENT) == 0) {
 
@@ -408,27 +408,27 @@ namespace Beebop {
 
 				if ((node->name).collate (Const.TAG_FIRST_LINE) == 0) {
 
-					recipient.first_line = node->get_content ();
+					recipient.first_line = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_NAME) == 0) {
 
-					recipient.name = node->get_content ();
+					recipient.name = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_STREET) == 0) {
 
-					recipient.street = node->get_content ();
+					recipient.street = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_CITY) == 0) {
 
-					recipient.city = node->get_content ();
+					recipient.city = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_VATIN) == 0) {
 
-					recipient.vatin = node->get_content ();
+					recipient.vatin = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_CLIENT_CODE) == 0) {
 
-					recipient.client_code = node->get_content ();
+					recipient.client_code = Util.single_line (node->get_content ());
 				}
 				else {
 
@@ -451,19 +451,19 @@ namespace Beebop {
 
 				if ((node->name).collate (Const.TAG_FIRST_LINE) == 0) {
 
-					destination.first_line = node->get_content ();
+					destination.first_line = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_NAME) == 0) {
 
-					destination.name = node->get_content ();
+					destination.name = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_STREET) == 0) {
 
-					destination.street = node->get_content ();
+					destination.street = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_CITY) == 0) {
 
-					destination.city = node->get_content ();
+					destination.city = Util.single_line (node->get_content ());
 				}
 				else {
 
@@ -486,19 +486,19 @@ namespace Beebop {
 
 				if ((node->name).collate (Const.TAG_REASON) == 0) {
 
-					shipment_info.reason = node->get_content ();
+					shipment_info.reason = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_TRANSPORTED_BY) == 0) {
 
-					shipment_info.transported_by = node->get_content ();
+					shipment_info.transported_by = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_CARRIER) == 0) {
 
-					shipment_info.carrier = node->get_content ();
+					shipment_info.carrier = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_DELIVERY_DUTIES) == 0) {
 
-					shipment_info.duties = node->get_content ();
+					shipment_info.duties = Util.single_line (node->get_content ());
 				}
 				else {
 
@@ -521,15 +521,15 @@ namespace Beebop {
 
 				if ((node->name).collate (Const.TAG_OUTSIDE_APPEARANCE) == 0) {
 
-					goods_info.appearance = node->get_content ();
+					goods_info.appearance = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_NUMBER_OF_PARCELS) == 0) {
 
-					goods_info.parcels = node->get_content ();
+					goods_info.parcels = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_WEIGHT) == 0) {
 
-					goods_info.weight = node->get_content ();
+					goods_info.weight = Util.single_line (node->get_content ());
 				}
 				else if ((node->name).collate (Const.TAG_GOOD) == 0) {
 
@@ -568,22 +568,22 @@ namespace Beebop {
 				if ((node->name).collate (Const.TAG_CODE) == 0) {
 
 					goods.set (iter,
-					           Const.COLUMN_CODE, node->get_content ());
+					           Const.COLUMN_CODE, Util.single_line (node->get_content ()));
 				}
 				else if ((node->name).collate (Const.TAG_REFERENCE) == 0) {
 
 					goods.set (iter,
-					           Const.COLUMN_REFERENCE, node->get_content ());
+					           Const.COLUMN_REFERENCE, Util.single_line (node->get_content ()));
 				}
 				else if ((node->name).collate (Const.TAG_DESCRIPTION) == 0) {
 
 					goods.set (iter,
-					           Const.COLUMN_DESCRIPTION, node->get_content ());
+					           Const.COLUMN_DESCRIPTION, Util.single_line (node->get_content ()));
 				}
 				else if ((node->name).collate (Const.TAG_UNIT_OF_MEASUREMENT) == 0) {
 
 					goods.set (iter,
-					           Const.COLUMN_UNIT, node->get_content ());
+					           Const.COLUMN_UNIT, Util.single_line (node->get_content ()));
 				}
 				else if ((node->name).collate (Const.TAG_QUANTITY) == 0) {
 

@@ -504,7 +504,7 @@ namespace Beebop {
 			                    Const.COLUMN_CODE, "",
 			                    Const.COLUMN_REFERENCE, "",
 			                    Const.COLUMN_DESCRIPTION, "",
-			                    Const.COLUMN_UNIT, preferences.default_unit,
+			                    Const.COLUMN_UNIT, Util.single_line (preferences.default_unit),
 			                    Const.COLUMN_QUANTITY, 1);
 
 			/* Enable / disable row deletion based on the number of rows */
@@ -608,6 +608,7 @@ namespace Beebop {
 			Gtk.TreeIter iter;
 			Gtk.TreePath path;
 			string current;
+			string temp;
 			int quantity;
 
 			/* Get an iter to the modified row */
@@ -642,14 +643,16 @@ namespace Beebop {
 				document.goods.get (iter,
 				                    column, out current);
 
+				temp = Util.single_line (val);
+
 				/* The value is the same: make no changes */
-				if (current.collate (val) == 0) {
+				if (current.collate (temp) == 0) {
 					return;
 				}
 
 				/* Store the new value */
 				document.goods.set (iter,
-				                    column, val);
+				                    column, temp);
 			}
 		}
 
@@ -841,12 +844,13 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.first_line = view.recipient_first_line_entry.text;
+			view.recipient_first_line_entry.text = document.recipient.first_line;
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
 				document.destination.first_line = document.recipient.first_line;
-				view.destination_first_line_entry.text = view.recipient_first_line_entry.text;
+				view.destination_first_line_entry.text = document.recipient.first_line;
 			}
 
 			/* Update view controls */
@@ -860,12 +864,13 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.name = view.recipient_name_entry.text;
+			view.recipient_name_entry.text = document.recipient.name;
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
 				document.destination.name = document.recipient.name;
-				view.destination_name_entry.text = view.recipient_name_entry.text;
+				view.destination_name_entry.text = document.recipient.name;
 			}
 
 			/* Update view controls */
@@ -879,6 +884,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.street = view.recipient_street_entry.text;
+			view.recipient_street_entry.text = document.recipient.street;
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
@@ -898,6 +904,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.city = view.recipient_city_entry.text;
+			view.recipient_city_entry.text = document.recipient.city;
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
@@ -917,6 +924,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.vatin = view.recipient_vatin_entry.text;
+			view.recipient_vatin_entry.text = document.recipient.vatin;
 
 			/* Update view controls */
 			update_controls ();
@@ -929,6 +937,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.client_code = view.recipient_client_code_entry.text;
+			view.recipient_client_code_entry.text = document.recipient.client_code;
 
 			/* Update view controls */
 			update_controls ();
@@ -941,6 +950,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.first_line = view.destination_first_line_entry.text;
+			view.destination_first_line_entry.text = document.destination.first_line;
 
 			/* Update view controls */
 			update_controls ();
@@ -953,6 +963,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.name = view.destination_name_entry.text;
+			view.destination_name_entry.text = document.destination.name;
 
 			/* Update view controls */
 			update_controls ();
@@ -965,6 +976,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.street = view.destination_street_entry.text;
+			view.destination_street_entry.text = document.destination.street;
 
 			/* Update view controls */
 			update_controls ();
@@ -977,6 +989,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.city = view.destination_city_entry.text;
+			view.destination_city_entry.text = document.destination.city;
 
 			/* Update view controls */
 			update_controls ();
@@ -989,6 +1002,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.number = view.document_number_entry.text;
+			view.document_number_entry.text = document.number;
 
 			/* Update view controls */
 			update_controls ();
@@ -1001,6 +1015,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.date = view.document_date_entry.text;
+			view.document_date_entry.text = document.date;
 
 			/* Update view controls */
 			update_controls ();
@@ -1013,6 +1028,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.goods_info.appearance = view.goods_appearance_entry.text;
+			view.goods_appearance_entry.text = document.goods_info.appearance;
 
 			/* Update view controls */
 			update_controls ();
@@ -1037,6 +1053,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.goods_info.weight = view.goods_weight_entry.text;
+			view.goods_weight_entry.text = document.goods_info.weight;
 
 			/* Update view controls */
 			update_controls ();
@@ -1049,6 +1066,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.shipment_info.reason = view.shipment_reason_entry.text;
+			view.shipment_reason_entry.text = document.shipment_info.reason;
 
 			/* Update view controls */
 			update_controls ();
@@ -1061,6 +1079,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.shipment_info.transported_by = view.shipment_transported_by_entry.text;
+			view.shipment_transported_by_entry.text = document.shipment_info.transported_by;
 
 			/* Update view controls */
 			update_controls ();
@@ -1073,6 +1092,7 @@ namespace Beebop {
 
 			/* Update document */
 			document.shipment_info.carrier = view.shipment_carrier_entry.text;
+			view.shipment_carrier_entry.text = document.shipment_info.carrier;
 
 			/* Update view controls */
 			update_controls ();
@@ -1082,9 +1102,11 @@ namespace Beebop {
 
 		/* React to changes to the shipment's delivery duties */
 		private bool shipment_duties_changed (Gdk.Event ev) {
+			view.shipment_duties_entry.text = Util.single_line (view.shipment_duties_entry.text);
 
 			/* Update document */
 			document.shipment_info.duties = view.shipment_duties_entry.text;
+			view.shipment_duties_entry.text = document.shipment_info.duties;
 
 			/* Update view controls */
 			update_controls ();

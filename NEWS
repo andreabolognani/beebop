@@ -1,3 +1,12 @@
+Overview of changes from Beebop 1.2.0 to 1.2.1
+==============================================
+
+  [Bug fixes]
+    * Make sure all values that are supposed to fit a single line
+      contain no embedded newlines, even when pasting from an
+      external source.
+
+
 Overview of changes from Beebop 1.0.0 to 1.2.0
 ==============================================
 

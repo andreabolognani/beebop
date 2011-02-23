@@ -37,7 +37,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_reason) != 0) {
-					_reason = value;
+					_reason = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -51,7 +51,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_transported_by) != 0) {
-					_transported_by = value;
+					_transported_by = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -65,7 +65,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_carrier) != 0) {
-					_carrier = value;
+					_carrier = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -79,7 +79,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_duties) != 0) {
-					_duties = value;
+					_duties = Util.single_line (value);
 					unsaved = true;
 				}
 			}
