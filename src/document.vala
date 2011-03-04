@@ -65,7 +65,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_number) != 0) {
-					_number = value;
+					_number = Util.single_line (value);
 					unsaved = true;
 				}
 			}
@@ -79,7 +79,7 @@ namespace Beebop {
 
 			set {
 				if (value.collate (_date) != 0) {
-					_date = value;
+					_date = Util.single_line (value);
 					unsaved = true;
 				}
 			}

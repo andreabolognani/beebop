@@ -839,18 +839,41 @@ namespace Beebop {
 			}
 		}
 
+		/* Replace the contents of an entry, adjusting the cursor
+		 * position in a sensible way */
+		private void replace_entry_text (Gtk.Entry entry, string text) {
+
+			long position;
+
+			/* Save the initial (negative) cursor position */
+			position = entry.get_position ();
+			position -= entry.text.length;
+
+			/* Replace the entry text */
+			entry.text = text;
+
+			/* Update the cursor postion */
+			position += entry.text.length;
+			entry.set_position ((int) position);
+		}
+
 		/* React to changes to the recipient's first line */
 		private bool recipient_first_line_changed (Gdk.Event ev) {
 
 			/* Update document */
 			document.recipient.first_line = view.recipient_first_line_entry.text;
-			view.recipient_first_line_entry.text = document.recipient.first_line;
+
+			/* Update entry text, if needed */
+			if (view.recipient_first_line_entry.text.collate (document.recipient.first_line) != 0) {
+
+				replace_entry_text (view.recipient_first_line_entry, document.recipient.first_line);
+			}
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
-				document.destination.first_line = document.recipient.first_line;
 				view.destination_first_line_entry.text = document.recipient.first_line;
+				destination_first_line_changed (ev);
 			}
 
 			/* Update view controls */
@@ -864,13 +887,18 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.name = view.recipient_name_entry.text;
-			view.recipient_name_entry.text = document.recipient.name;
+
+			/* Update entry text, if needed */
+			if (view.recipient_name_entry.text.collate (document.recipient.name) != 0) {
+
+				replace_entry_text (view.recipient_name_entry, document.recipient.name);
+			}
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
-				document.destination.name = document.recipient.name;
 				view.destination_name_entry.text = document.recipient.name;
+				destination_name_changed (ev);
 			}
 
 			/* Update view controls */
@@ -884,13 +912,18 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.street = view.recipient_street_entry.text;
-			view.recipient_street_entry.text = document.recipient.street;
+
+			/* Update entry text, if needed */
+			if (view.recipient_street_entry.text.collate (document.recipient.street) != 0) {
+
+				replace_entry_text (view.recipient_street_entry, document.recipient.street);
+			}
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
-				document.destination.street = document.recipient.street;
-				view.destination_street_entry.text = view.recipient_street_entry.text;
+				view.destination_street_entry.text = document.recipient.street;
+				destination_street_changed (ev);
 			}
 
 			/* Update view controls */
@@ -904,13 +937,18 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.city = view.recipient_city_entry.text;
-			view.recipient_city_entry.text = document.recipient.city;
+
+			/* Update entry text, if needed */
+			if (view.recipient_city_entry.text.collate (document.recipient.city) != 0) {
+
+				replace_entry_text (view.recipient_city_entry, document.recipient.city);
+			}
 
 			/* Update the destination if sending to recipient */
 			if (send_to_recipient_is_active ()) {
 
-				document.destination.city = document.recipient.city;
-				view.destination_city_entry.text = view.recipient_city_entry.text;
+				view.destination_city_entry.text = document.recipient.city;
+				destination_city_changed (ev);
 			}
 
 			/* Update view controls */
@@ -924,7 +962,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.vatin = view.recipient_vatin_entry.text;
-			view.recipient_vatin_entry.text = document.recipient.vatin;
+
+			/* Update entry text, if needed */
+			if (view.recipient_vatin_entry.text.collate (document.recipient.vatin) != 0) {
+
+				replace_entry_text (view.recipient_vatin_entry, document.recipient.vatin);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -937,7 +980,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.recipient.client_code = view.recipient_client_code_entry.text;
-			view.recipient_client_code_entry.text = document.recipient.client_code;
+
+			/* Update entry text, if needed */
+			if (view.recipient_client_code_entry.text.collate (document.recipient.client_code) != 0) {
+
+				replace_entry_text (view.recipient_client_code_entry, document.recipient.client_code);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -950,7 +998,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.first_line = view.destination_first_line_entry.text;
-			view.destination_first_line_entry.text = document.destination.first_line;
+
+			/* Update entry text, if needed */
+			if (view.destination_first_line_entry.text.collate (document.destination.first_line) != 0) {
+
+				replace_entry_text (view.destination_first_line_entry, document.destination.first_line);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -963,7 +1016,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.name = view.destination_name_entry.text;
-			view.destination_name_entry.text = document.destination.name;
+
+			/* Update entry text, if needed */
+			if (view.destination_name_entry.text.collate (document.destination.name) != 0) {
+
+				replace_entry_text (view.destination_name_entry, document.destination.name);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -976,7 +1034,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.street = view.destination_street_entry.text;
-			view.destination_street_entry.text = document.destination.street;
+
+			/* Update entry text, if needed */
+			if (view.destination_street_entry.text.collate (document.destination.street) != 0) {
+
+				replace_entry_text (view.destination_street_entry, document.destination.street);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -989,7 +1052,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.destination.city = view.destination_city_entry.text;
-			view.destination_city_entry.text = document.destination.city;
+
+			/* Update entry text, if needed */
+			if (view.destination_city_entry.text.collate (document.destination.city) != 0) {
+
+				replace_entry_text (view.destination_city_entry, document.destination.city);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1002,7 +1070,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.number = view.document_number_entry.text;
-			view.document_number_entry.text = document.number;
+
+			/* Update entry text, if needed */
+			if (view.document_number_entry.text.collate (document.number) != 0) {
+
+				replace_entry_text (view.document_number_entry, document.number);
+			}
 
 			/* Update view controls */
 			update_controls ();
