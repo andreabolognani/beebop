@@ -1088,7 +1088,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.date = view.document_date_entry.text;
-			view.document_date_entry.text = document.date;
+
+			/* Update entry text, if needed */
+			if (view.document_date_entry.text.collate (document.date) != 0) {
+
+				replace_entry_text (view.document_date_entry, document.date);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1101,7 +1106,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.goods_info.appearance = view.goods_appearance_entry.text;
-			view.goods_appearance_entry.text = document.goods_info.appearance;
+
+			/* Update entry text, if needed */
+			if (view.goods_appearance_entry.text.collate (document.goods_info.appearance) != 0) {
+
+				replace_entry_text (view.goods_appearance_entry, document.goods_info.appearance);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1126,7 +1136,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.goods_info.weight = view.goods_weight_entry.text;
-			view.goods_weight_entry.text = document.goods_info.weight;
+
+			/* Update entry text, if needed */
+			if (view.goods_weight_entry.text.collate (document.goods_info.weight) != 0) {
+
+				replace_entry_text (view.goods_weight_entry, document.goods_info.weight);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1139,7 +1154,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.shipment_info.reason = view.shipment_reason_entry.text;
-			view.shipment_reason_entry.text = document.shipment_info.reason;
+
+			/* Update entry text, if needed */
+			if (view.shipment_reason_entry.text.collate (document.shipment_info.reason) != 0) {
+
+				replace_entry_text (view.shipment_reason_entry, document.shipment_info.reason);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1152,7 +1172,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.shipment_info.transported_by = view.shipment_transported_by_entry.text;
-			view.shipment_transported_by_entry.text = document.shipment_info.transported_by;
+
+			/* Update entry text, if needed */
+			if (view.shipment_transported_by_entry.text.collate (document.shipment_info.transported_by) != 0) {
+
+				replace_entry_text (view.shipment_transported_by_entry, document.shipment_info.transported_by);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1165,7 +1190,12 @@ namespace Beebop {
 
 			/* Update document */
 			document.shipment_info.carrier = view.shipment_carrier_entry.text;
-			view.shipment_carrier_entry.text = document.shipment_info.carrier;
+
+			/* Update entry text, if needed */
+			if (view.shipment_carrier_entry.text.collate (document.shipment_info.carrier) != 0) {
+
+				replace_entry_text (view.shipment_carrier_entry, document.shipment_info.carrier);
+			}
 
 			/* Update view controls */
 			update_controls ();
@@ -1175,11 +1205,15 @@ namespace Beebop {
 
 		/* React to changes to the shipment's delivery duties */
 		private bool shipment_duties_changed (Gdk.Event ev) {
-			view.shipment_duties_entry.text = Util.single_line (view.shipment_duties_entry.text);
 
 			/* Update document */
 			document.shipment_info.duties = view.shipment_duties_entry.text;
-			view.shipment_duties_entry.text = document.shipment_info.duties;
+
+			/* Update entry text, if needed */
+			if (view.shipment_duties_entry.text.collate (document.shipment_info.duties) != 0) {
+
+				replace_entry_text (view.shipment_duties_entry, document.shipment_info.duties);
+			}
 
 			/* Update view controls */
 			update_controls ();
