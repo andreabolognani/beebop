@@ -500,6 +500,10 @@ namespace Beebop {
 
 					shipment_info.duties = Util.single_line (node->get_content ());
 				}
+				else if ((node->name).collate (Const.TAG_NOTES) == 0) {
+
+					shipment_info.notes = Util.single_line (node->get_content ());
+				}
 				else {
 
 					throw new DocumentError.FORMAT (_("Unrecognized element inside '%s'").printf (Const.TAG_SHIPMENT));
@@ -689,6 +693,9 @@ namespace Beebop {
 			parent->new_text_child (null,
 			                        Const.TAG_DELIVERY_DUTIES,
 			                        shipment_info.duties);
+			parent->new_text_child (null,
+			                        Const.TAG_NOTES,
+			                        shipment_info.notes);
 		}
 
 		/* Save the contents of the <goods> tag */

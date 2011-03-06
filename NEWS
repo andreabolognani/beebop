@@ -1,5 +1,8 @@
-Overview of changes from Beebop 1.2.1 to 1.2.2
+Overview of changes from Beebop 1.2.1 to 1.4.0
 ==============================================
+
+  [New features]
+    * Optionally fill in the Notes field.
 
   [Bug fixes]
     * Correctly handle cursor position when pasting.

@@ -204,6 +204,7 @@ namespace Beebop {
 			view.shipment_transported_by_entry.event.connect (shipment_transported_by_changed);
 			view.shipment_carrier_entry.event.connect (shipment_carrier_changed);
 			view.shipment_duties_entry.event.connect (shipment_duties_changed);
+			view.shipment_notes_entry.event.connect (shipment_notes_changed);
 		}
 
 		/* Update the view to match the document */
@@ -267,6 +268,7 @@ namespace Beebop {
 			view.shipment_transported_by_entry.text = document.shipment_info.transported_by;
 			view.shipment_carrier_entry.text = document.shipment_info.carrier;
 			view.shipment_duties_entry.text = document.shipment_info.duties;
+			view.shipment_notes_entry.text = document.shipment_info.notes;
 
 			/* Goods */
 			view.goods_treeview.model = document.goods;
@@ -1213,6 +1215,24 @@ namespace Beebop {
 			if (view.shipment_duties_entry.text.collate (document.shipment_info.duties) != 0) {
 
 				replace_entry_text (view.shipment_duties_entry, document.shipment_info.duties);
+			}
+
+			/* Update view controls */
+			update_controls ();
+
+			return false;
+		}
+
+		/* React to changes to the shipment's notes */
+		private bool shipment_notes_changed (Gdk.Event ev) {
+
+			/* Update document */
+			document.shipment_info.notes = view.shipment_notes_entry.text;
+
+			/* Update entry text, if needed */
+			if (view.shipment_notes_entry.text.collate (document.shipment_info.notes) != 0) {
+
+				replace_entry_text (view.shipment_notes_entry, document.shipment_info.notes);
 			}
 
 			/* Update view controls */

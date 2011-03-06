@@ -907,7 +907,7 @@
                             <child>
                               <object class="GtkTable" id="table1">
                                 <property name="visible">True</property>
-                                <property name="n_rows">4</property>
+                                <property name="n_rows">5</property>
                                 <property name="n_columns">2</property>
                                 <property name="column_spacing">5</property>
                                 <property name="row_spacing">2</property>
@@ -1012,6 +1012,33 @@
                                   </object>
                                   <packing>
                                     <property name="x_options"></property>
+                                    <property name="y_options"></property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label52">
+                                    <property name="visible">True</property>
+                                    <property name="xalign">0</property>
+                                    <property name="label" translatable="yes">Notes</property>
+                                  </object>
+                                  <packing>
+                                    <property name="top_attach">4</property>
+                                    <property name="bottom_attach">5</property>
+                                    <property name="x_options"></property>
+                                    <property name="y_options"></property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="shipment_notes_entry">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="invisible_char">&#x25CF;</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                    <property name="top_attach">4</property>
+                                    <property name="bottom_attach">5</property>
                                     <property name="y_options"></property>
                                   </packing>
                                 </child>
@@ -1965,46 +1992,47 @@
   </object>
   <object class="GtkSizeGroup" id="main_sizegroup">
     <widgets>
-      <widget name="label49"/>
-      <widget name="label47"/>
-      <widget name="label1"/>
-      <widget name="label2"/>
-      <widget name="label3"/>
-      <widget name="label18"/>
-      <widget name="label19"/>
-      <widget name="label9"/>
-      <widget name="label10"/>
-      <widget name="label11"/>
-      <widget name="label12"/>
-      <widget name="label13"/>
-      <widget name="label21"/>
-      <widget name="label22"/>
-      <widget name="label23"/>
-      <widget name="label20"/>
-      <widget name="label6"/>
-      <widget name="label7"/>
       <widget name="label8"/>
+      <widget name="label7"/>
+      <widget name="label6"/>
+      <widget name="label20"/>
+      <widget name="label23"/>
+      <widget name="label22"/>
+      <widget name="label21"/>
+      <widget name="label13"/>
+      <widget name="label12"/>
+      <widget name="label11"/>
+      <widget name="label10"/>
+      <widget name="label9"/>
+      <widget name="label19"/>
+      <widget name="label18"/>
+      <widget name="label3"/>
+      <widget name="label2"/>
+      <widget name="label1"/>
+      <widget name="label47"/>
+      <widget name="label49"/>
+      <widget name="label52"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="preferences_sizegroup">
     <widgets>
-      <widget name="label51"/>
-      <widget name="label50"/>
-      <widget name="label37"/>
-      <widget name="label35"/>
-      <widget name="label16"/>
-      <widget name="label17"/>
-      <widget name="label30"/>
-      <widget name="label15"/>
-      <widget name="label34"/>
-      <widget name="label36"/>
-      <widget name="label39"/>
-      <widget name="label40"/>
-      <widget name="label41"/>
-      <widget name="label42"/>
-      <widget name="label43"/>
-      <widget name="label33"/>
       <widget name="label38"/>
+      <widget name="label33"/>
+      <widget name="label43"/>
+      <widget name="label42"/>
+      <widget name="label41"/>
+      <widget name="label40"/>
+      <widget name="label39"/>
+      <widget name="label36"/>
+      <widget name="label34"/>
+      <widget name="label15"/>
+      <widget name="label30"/>
+      <widget name="label17"/>
+      <widget name="label16"/>
+      <widget name="label35"/>
+      <widget name="label37"/>
+      <widget name="label50"/>
+      <widget name="label51"/>
     </widgets>
   </object>
   <object class="GtkAction" id="save_action">

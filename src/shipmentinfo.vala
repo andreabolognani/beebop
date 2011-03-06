@@ -26,6 +26,7 @@ namespace Beebop {
 		private string _transported_by;
 		private string _carrier;
 		private string _duties;
+		private string _notes;
 
 		public bool unsaved { get; set; }
 
@@ -85,12 +86,27 @@ namespace Beebop {
 			}
 		}
 
+		public string notes {
+
+			get {
+				return _notes;
+			}
+
+			set {
+				if (value.collate (_notes) != 0) {
+					_notes = Util.single_line (value);
+					unsaved = true;
+				}
+			}
+		}
+
 		construct {
 
 			_reason = "";
 			_transported_by = "";
 			_carrier = "";
 			_duties = "";
+			_notes = "";
 
 			unsaved = false;
 		}

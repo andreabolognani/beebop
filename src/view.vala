@@ -54,6 +54,7 @@ namespace Beebop {
 		public Gtk.Entry shipment_transported_by_entry { get; private set; }
 		public Gtk.Entry shipment_carrier_entry { get; private set; }
 		public Gtk.Entry shipment_duties_entry { get; private set; }
+		public Gtk.Entry shipment_notes_entry { get; private set; }
 
 		public Gtk.TreeView goods_treeview { get; private set; }
 
@@ -131,6 +132,8 @@ namespace Beebop {
 			                         as Gtk.Entry;
 			shipment_duties_entry = Util.get_object (ui, Const.OBJ_SHIPMENT_DUTIES_ENTRY)
 			                        as Gtk.Entry;
+			shipment_notes_entry = Util.get_object (ui, Const.OBJ_SHIPMENT_NOTES_ENTRY)
+			                       as Gtk.Entry;
 			goods_treeview = Util.get_object (ui, Const.OBJ_GOODS_TREEVIEW)
 			                 as Gtk.TreeView;
 			new_action = Util.get_object (ui, Const.OBJ_NEW_ACTION)

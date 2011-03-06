@@ -575,7 +575,12 @@ namespace Beebop {
 			row = new Row (table.columns);
 			cell = row.get_cell (0);
 			cell.title = _("Notes");
-			cell.text = "\n";
+			if (document.shipment_info.notes.collate ("") != 0) {
+				cell.text = document.shipment_info.notes;
+			}
+			else {
+				cell.text = "\n";
+			}
 
 			table.append_row (row);
 

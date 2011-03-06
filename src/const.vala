@@ -39,6 +39,7 @@ namespace Beebop {
 		public const string TAG_REASON = "reason";
 		public const string TAG_TRANSPORTED_BY = "transported_by";
 		public const string TAG_CARRIER = "carrier";
+		public const string TAG_NOTES = "notes";
 		public const string TAG_DELIVERY_DUTIES = "delivery_duties";
 		public const string TAG_OUTSIDE_APPEARANCE = "outside_appearance";
 		public const string TAG_NUMBER_OF_PARCELS = "number_of_parcels";
@@ -110,6 +111,7 @@ namespace Beebop {
 		public const string OBJ_SHIPMENT_TRANSPORTED_BY_ENTRY = "shipment_transported_by_entry";
 		public const string OBJ_SHIPMENT_CARRIER_ENTRY = "shipment_carrier_entry";
 		public const string OBJ_SHIPMENT_DUTIES_ENTRY = "shipment_duties_entry";
+		public const string OBJ_SHIPMENT_NOTES_ENTRY = "shipment_notes_entry";
 		public const string OBJ_GOODS_TREEVIEW = "goods_treeview";
 		public const string OBJ_NEW_ACTION = "new_action";
 		public const string OBJ_OPEN_ACTION = "open_action";
