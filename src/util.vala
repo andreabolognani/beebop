@@ -78,6 +78,46 @@ namespace Beebop {
 			return obj;
 		}
 
+		/* Convert a string to a number.
+		 *
+		 * This assumes the string contains a positive number: if that is
+		 * not the case, -1 is returned */
+		public static int string_to_number (string number)
+		{
+			string temp;
+			unichar c;
+			int num;
+			int pow;
+
+			num = 0;
+			pow = 1;
+			temp = number.reverse ();
+
+			c = temp.get_char ();
+
+			while (true) {
+
+				c = temp.get_char ();
+
+				if (c == '\0') {
+					break;
+				}
+
+				/* If a non-digit char is found, stop
+				 * and return -1 */
+				if (!c.isdigit ()) {
+					num = -1;
+					break;
+				}
+
+				num = num + (c.digit_value () * pow);
+
+				pow = pow * 10;
+				temp = temp.next_char ();
+			}
+
+			return num;
+		}
 
 		/* Ensure a string only spans a single line */
 		public static string single_line (string original) {

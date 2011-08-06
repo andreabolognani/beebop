@@ -1,3 +1,10 @@
+Overview of changes from Beebop 1.4.0 to 1.6.0
+==============================================
+
+  [New features]
+    * Suggest a number for new documents whenever it's possible.
+
+
 Overview of changes from Beebop 1.2.1 to 1.4.0
 ==============================================
 
