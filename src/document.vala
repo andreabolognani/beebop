@@ -142,7 +142,7 @@ namespace Beebop {
 
 			location = preferences.document_directory;
 
-			_number = "";
+			_number = suggest_number ();
 			_date = now.format ("%d/%m/%Y");
 
 			recipient = new CompanyInfo ();
@@ -286,6 +286,100 @@ namespace Beebop {
 
 			/* Reset unsaved flag */
 			unsaved = false;
+		}
+
+		/* Extract the document number from the filename, assuming
+		 * the default filename template has been used.
+		 *
+		 * The returned string might not represent a number at all */
+		private static string extract_number (string name)
+		{
+			string number;
+			string temp;
+			unichar c;
+			int offset;
+
+			offset = 0;
+			temp = name;
+
+			while (true) {
+
+				c = temp.get_char ();
+
+				/* Stop as soon as a space is found, or at the end
+				 * of the string */
+				if (c == ' ' || c == '\0') {
+					break;
+				}
+
+				temp = temp.next_char ();
+				offset++;
+			}
+
+			/* Make a copy of string, up to the space */
+			number = name.substring (0, offset);
+
+			return number;
+		}
+
+		/* Suggest a document number by looking at the documents that
+		 * have already been created in the document directory.
+		 *
+		 * Note that this procedure does not load load every single
+		 * document contained in the document directory: it merely scans
+		 * the filename. So if the filename used to save a document
+		 * does not match the default pattern, no suggestion will be made */
+		private string suggest_number () {
+
+			FileEnumerator children;
+			FileInfo info;
+			string suggestion;
+			string name;
+			int number;
+			int max;
+
+			suggestion = "";
+			max = -1;
+
+			try {
+
+				/* Enumerate all children of the document directory */
+				children = preferences.document_directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+				                                                              FileQueryInfoFlags.NONE,
+				                                                              null);
+				info = null;
+
+				while (true) {
+
+					info = children.next_file (null);
+
+					/* Stop after listing all the children */
+					if (info == null) {
+						break;
+					}
+
+					/* Scan for document number, assuming default template was used */
+					name = info.get_attribute_as_string (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
+					number = Util.string_to_number (extract_number (name));
+
+					if (number > max) {
+						max = number;
+					}
+				}
+
+				children.close (null);
+			}
+			catch (Error e) {
+				max = -1;
+			}
+
+			if (max > 0) {
+
+				/* Make a string out of the suggestion */
+				suggestion = "%d".printf (max + 1);
+			}
+
+			return suggestion;
 		}
 
 		/* Suggest a location using the information contained in the document */
