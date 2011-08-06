@@ -575,21 +575,6 @@ namespace Beebop {
 			string[] authors = {"Andrea Bolognani <andrea.bolognani@roundhousecode.com>",
 			                    null};
 
-			/* Show the website when the link is clicked */
-			Gtk.AboutDialog.set_url_hook ((dialog, uri) => {
-
-				try {
-
-					Util.show_uri (dialog.get_screen (),
-					               uri);
-				}
-				catch (Error e) {
-
-					Util.show_error (dialog,
-					                 _("Unable to open website: %s").printf (e.message));
-				}
-			});
-
 			Gtk.show_about_dialog (view.window,
 			                       "title", _("About %s").printf (_("Beebop")),
 			                       "program-name", _("Beebop"),
