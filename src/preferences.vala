@@ -89,7 +89,9 @@ namespace Beebop {
 
 			document_directory = File.new_for_path (Environment.get_user_special_dir (UserDirectory.DOCUMENTS));
 			page_template = Util.get_pkgdatadir ().get_child ("page.svg");
-			logo = Util.get_pkgdatadir ().get_child ("logo.svg");
+			logo = Util.get_datarootdir ().get_child ("icons");
+			logo = logo.get_child ("hicolor").get_child ("scalable");
+			logo = logo.get_child ("apps").get_child ("beebop.svg");
 
 			page_padding_x = 10.0;
 			page_padding_y = 10.0;
