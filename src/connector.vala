@@ -325,13 +325,13 @@ namespace Beebop {
 
 			/* Select only .beebop files by default */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("Beebop documents"));
+			filter.set_filter_name (_("Beebop documents"));
 			filter.add_pattern ("*.beebop");
 			dialog.add_filter (filter);
 
 			/* Let the user chose any file if he wants to */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("All files"));
+			filter.set_filter_name (_("All files"));
 			filter.add_pattern ("*");
 			dialog.add_filter (filter);
 
@@ -418,13 +418,13 @@ namespace Beebop {
 
 			/* Show only .beebop files by default */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("Beebop documents"));
+			filter.set_filter_name (_("Beebop documents"));
 			filter.add_pattern ("*.beebop");
 			dialog.add_filter (filter);
 
 			/* Let the user see any file if he wants to */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("All files"));
+			filter.set_filter_name (_("All files"));
 			filter.add_pattern ("*");
 			dialog.add_filter (filter);
 
