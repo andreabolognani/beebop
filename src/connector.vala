@@ -583,7 +583,7 @@ namespace Beebop {
 			                       "comments", _("Easily create nice-looking shipping lists"),
 			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
 			                       "website", "http://roundhousecode.com/software/beebop",
-			                       "license", Util.license,
+			                       "license_type", Gtk.License.GPL_2_0,
 			                       "authors", authors);
 		}
 
