@@ -260,7 +260,7 @@ namespace Beebop {
 
 			/* Goods info */
 			view.goods_appearance_entry.text = document.goods_info.appearance;
-			view.goods_parcels_spinbutton.value = document.goods_info.parcels.to_double ();
+			view.goods_parcels_spinbutton.value = double.parse (document.goods_info.parcels);
 			view.goods_weight_entry.text = document.goods_info.weight;
 
 			/* Shipment info  */
@@ -317,8 +317,8 @@ namespace Beebop {
 			dialog = new Gtk.FileChooserDialog (_("Open file"),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.OPEN,
-			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+			                                    Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.Stock.OPEN, Gtk.ResponseType.ACCEPT);
 
 			/* Open files from the document directory by default */
 			dialog.set_current_folder_uri (preferences.document_directory.get_uri ());
@@ -413,8 +413,8 @@ namespace Beebop {
 			dialog = new Gtk.FileChooserDialog (_("Save as..."),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.SAVE,
-			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
+			                                    Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.Stock.SAVE, Gtk.ResponseType.ACCEPT);
 
 			/* Show only .beebop files by default */
 			filter = new Gtk.FileFilter ();
@@ -611,11 +611,11 @@ namespace Beebop {
 				                    column, out quantity);
 
 				/* The value is the same: make no changes */
-				if (quantity == val.to_int ()) {
+				if (quantity == int.parse (val)) {
 					return;
 				}
 
-				quantity = val.to_int ();
+				quantity = int.parse (val);
 
 				/* Use the new value only if it is within range */
 				if (quantity >= Const.QUANTITY_MIN && quantity <= Const.QUANTITY_MAX) {
