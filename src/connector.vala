@@ -773,6 +773,10 @@ namespace Beebop {
 				view.destination_name_entry.text = view.recipient_name_entry.text;
 				view.destination_street_entry.text = view.recipient_street_entry.text;
 				view.destination_city_entry.text = view.recipient_city_entry.text;
+
+				/* Collapse the destination expander and make it not sensitive */
+				view.destination_expander.sensitive = false;
+				view.destination_expander.expanded = false;
 			}
 			else {
 
@@ -781,6 +785,10 @@ namespace Beebop {
 				view.destination_name_entry.text = "";
 				view.destination_street_entry.text = "";
 				view.destination_city_entry.text = "";
+
+				/* Expand the destination expander */
+				view.destination_expander.sensitive = true;
+				view.destination_expander.expanded = true;
 			}
 		}
 

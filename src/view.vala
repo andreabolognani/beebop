@@ -36,6 +36,8 @@ namespace Beebop {
 		public Gtk.Entry recipient_vatin_entry { get; private set; }
 		public Gtk.Entry recipient_client_code_entry { get; private set; }
 
+		public Gtk.Expander destination_expander { get; private set; }
+
 		public Gtk.Entry destination_first_line_entry { get; private set; }
 		public Gtk.Entry destination_name_entry { get; private set; }
 		public Gtk.Entry destination_street_entry { get; private set; }
@@ -100,6 +102,8 @@ namespace Beebop {
 			                        as Gtk.Entry;
 			recipient_client_code_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_CLIENT_CODE_ENTRY)
 			                              as Gtk.Entry;
+			destination_expander = Util.get_object (ui, Const.OBJ_DESTINATION_EXPANDER)
+			                       as Gtk.Expander;
 			destination_first_line_entry = Util.get_object (ui, Const.OBJ_DESTINATION_FIRST_LINE_ENTRY)
 			                               as Gtk.Entry;
 			destination_name_entry = Util.get_object (ui, Const.OBJ_DESTINATION_NAME_ENTRY)

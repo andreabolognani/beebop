@@ -96,6 +96,7 @@ namespace Beebop {
 		public const string OBJ_RECIPIENT_CITY_ENTRY = "recipient_city_entry";
 		public const string OBJ_RECIPIENT_VATIN_ENTRY = "recipient_vatin_entry";
 		public const string OBJ_RECIPIENT_CLIENT_CODE_ENTRY = "recipient_client_code_entry";
+		public const string OBJ_DESTINATION_EXPANDER = "destination_expander";
 		public const string OBJ_DESTINATION_FIRST_LINE_ENTRY = "destination_first_line_entry";
 		public const string OBJ_DESTINATION_NAME_ENTRY = "destination_name_entry";
 		public const string OBJ_DESTINATION_STREET_ENTRY = "destination_street_entry";
