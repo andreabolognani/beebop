@@ -1373,7 +1373,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="orientation">vertical</property>
                                 <child>
-                                  <object class="GtkExpander" id="expander1">
+                                  <object class="GtkExpander" id="recipient_expander">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="expanded">True</property>
@@ -1765,7 +1765,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkExpander" id="expander3">
+                                  <object class="GtkExpander" id="document_expander">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="expanded">True</property>
@@ -1863,7 +1863,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkExpander" id="expander4">
+                                  <object class="GtkExpander" id="goods_expander">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="expanded">True</property>
@@ -1992,7 +1992,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkExpander" id="expander5">
+                                  <object class="GtkExpander" id="shipment_expander">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="expanded">True</property>

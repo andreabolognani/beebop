@@ -37,6 +37,7 @@ namespace Beebop {
 
 			set {
 				_document = value;
+				reset_view ();
 				update_view ();
 			}
 		}
@@ -278,6 +279,22 @@ namespace Beebop {
 			view.remove_action.sensitive = (rows > 1);
 		}
 
+		/* Reset some parts of the interface.
+		 *
+		 * Use this when the document changes */
+		private void reset_view () {
+
+			if (view == null)
+				return;
+
+			/* Restore all expanders to the default state */
+			view.recipient_expander.expanded = true;
+			view.destination_expander.expanded = false;
+			view.document_expander.expanded = true;
+			view.goods_expander.expanded = true;
+			view.shipment_expander.expanded = true;
+		}
+
 		/* Show the main application window and wait for user
 		 * interaction */
 		public void run () {
@@ -299,7 +316,7 @@ namespace Beebop {
 			document = new Document ();
 
 			/* Update view controls */
-			update_controls ();
+			//update_controls ();
 		}
 
 		/* Open a document and load its contents */
