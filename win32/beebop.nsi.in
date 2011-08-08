@@ -27,9 +27,12 @@ InstallDir "$PROGRAMFILES\${PACKAGE_NAME}"
 ; Install section
 Section "Install"
 
-	; Install program and icon
+	; Install program and libraries
+	SetOutPath "$INSTDIR\bin"
+	File /r "bin\*.*"
+
+	; Install icons
 	SetOutPath "$INSTDIR"
-	File "beebop.exe"
 	File "beebop.ico"
 	File "application-x-beebop.ico"
 
@@ -41,10 +44,10 @@ Section "Install"
 	SetOutPath "$INSTDIR"
 	CreateDirectory "$SMPROGRAMS\Beebop"
 	CreateShortcut "$SMPROGRAMS\Beebop\Beebop.lnk" \
-	               "$INSTDIR\beebop.exe" "" \
+	               "$INSTDIR\bin\beebop.exe" "" \
 	               "$INSTDIR\beebop.ico"
 	CreateShortcut "$SMPROGRAMS\Beebop\Uninstall Beebop.lnk" \
-	               "$INSTDIR\uninstall.exe"
+	               "$INSTDIR\bin\uninstall.exe"
 
 	; Create file association
 	WriteRegStr HKLM \
@@ -65,7 +68,7 @@ Section "Install"
 	            "$\"$INSTDIR\beebop.exe$\" $\"%1$\""
 
 	; Create uninstaller
-	WriteUninstaller "$INSTDIR\uninstall.exe"
+	WriteUninstaller "$INSTDIR\bin\uninstall.exe"
 
 SectionEnd
 

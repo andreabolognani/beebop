@@ -46,5 +46,4 @@ shift
 `dirname "${0}"`/../configure \
 	--host "${HOST}" \
 	--prefix "${INSTALLDIR}" \
-	--bindir "${INSTALLDIR}" \
 	${*}
