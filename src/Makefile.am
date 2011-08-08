@@ -65,6 +65,6 @@ beebop_LDFLAGS = \
 
 # Hack needed for out-of-tree development builds
 $(srcdir)/beebop_vala.stamp: $(beebop_SOURCES)
-	$(am__cd) $(srcdir) \
-		&& $(AM_V_VALAC)$(VALAC) $(AM_VALAFLAGS) $(VALAFLAGS) -C $(beebop_SOURCES)
+	$(AM_V_VALAC)$(am__cd) $(srcdir) \
+		&& $(VALAC) $(AM_VALAFLAGS) $(VALAFLAGS) -C $(beebop_SOURCES)
 	$(AM_V_at)touch $@
