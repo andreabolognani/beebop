@@ -9,9 +9,9 @@ dnl ----------------------------------------------
 dnl Required version of various tools and packages
 dnl ----------------------------------------------
 
-VALA_REQUIRED=0.8.1
+VALA_REQUIRED=0.12.0
 GLIB_REQUIRED=2.12.0
-GTK_REQUIRED=2.14.0
+GTK_REQUIRED=3.0.0
 CAIRO_REQUIRED=1.8.0
 PANGO_REQUIRED=1.20.0
 LIBXML_REQUIRED=2.7.0
@@ -48,8 +48,8 @@ dnl ---------------------------
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED
                         gobject-2.0 >= $GLIB_REQUIRED
                         gio-2.0 >= $GLIB_REQUIRED)
-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= $GTK_REQUIRED
-                       gdk-2.0 >= $GTK_REQUIRED)
+PKG_CHECK_MODULES(GTK, gtk+-3.0 >= $GTK_REQUIRED
+                       gdk-3.0 >= $GTK_REQUIRED)
 PKG_CHECK_MODULES(CAIRO, cairo >= $CAIRO_REQUIRED
                          cairo-pdf >= $CAIRO_REQUIRED)
 PKG_CHECK_MODULES(PANGO, pango >= $PANGO_REQUIRED

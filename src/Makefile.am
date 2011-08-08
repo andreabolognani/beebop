@@ -19,8 +19,8 @@ AM_CPPFLAGS = \
 
 AM_VALAFLAGS = \
 	--pkg gio-2.0 \
-	--pkg gdk-2.0 \
-	--pkg gtk+-2.0 \
+	--pkg gdk-3.0 \
+	--pkg gtk+-3.0 \
 	--pkg cairo \
 	--pkg pango \
 	--pkg pangocairo \

@@ -686,7 +686,7 @@ namespace Beebop {
 				else if ((node->name).collate (Const.TAG_QUANTITY) == 0) {
 
 					goods.set (iter,
-					           Const.COLUMN_QUANTITY, (node->get_content ()).to_int ());
+					           Const.COLUMN_QUANTITY, (int.parse (node->get_content ())));
 				}
 				else {
 

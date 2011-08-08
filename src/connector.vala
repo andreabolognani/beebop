@@ -37,6 +37,7 @@ namespace Beebop {
 
 			set {
 				_document = value;
+				reset_view ();
 				update_view ();
 			}
 		}
@@ -260,7 +261,7 @@ namespace Beebop {
 
 			/* Goods info */
 			view.goods_appearance_entry.text = document.goods_info.appearance;
-			view.goods_parcels_spinbutton.value = document.goods_info.parcels.to_double ();
+			view.goods_parcels_spinbutton.value = double.parse (document.goods_info.parcels);
 			view.goods_weight_entry.text = document.goods_info.weight;
 
 			/* Shipment info  */
@@ -276,6 +277,22 @@ namespace Beebop {
 			/* Enable / disable row deletion based on the number of rows */
 			rows = document.goods.iter_n_children (null);
 			view.remove_action.sensitive = (rows > 1);
+		}
+
+		/* Reset some parts of the interface.
+		 *
+		 * Use this when the document changes */
+		private void reset_view () {
+
+			if (view == null)
+				return;
+
+			/* Restore all expanders to the default state */
+			view.recipient_expander.expanded = true;
+			view.destination_expander.expanded = false;
+			view.document_expander.expanded = true;
+			view.goods_expander.expanded = true;
+			view.shipment_expander.expanded = true;
 		}
 
 		/* Show the main application window and wait for user
@@ -299,7 +316,7 @@ namespace Beebop {
 			document = new Document ();
 
 			/* Update view controls */
-			update_controls ();
+			//update_controls ();
 		}
 
 		/* Open a document and load its contents */
@@ -317,21 +334,21 @@ namespace Beebop {
 			dialog = new Gtk.FileChooserDialog (_("Open file"),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.OPEN,
-			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+			                                    Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.Stock.OPEN, Gtk.ResponseType.ACCEPT);
 
 			/* Open files from the document directory by default */
 			dialog.set_current_folder_uri (preferences.document_directory.get_uri ());
 
 			/* Select only .beebop files by default */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("Beebop documents"));
+			filter.set_filter_name (_("Beebop documents"));
 			filter.add_pattern ("*.beebop");
 			dialog.add_filter (filter);
 
 			/* Let the user chose any file if he wants to */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("All files"));
+			filter.set_filter_name (_("All files"));
 			filter.add_pattern ("*");
 			dialog.add_filter (filter);
 
@@ -413,18 +430,18 @@ namespace Beebop {
 			dialog = new Gtk.FileChooserDialog (_("Save as..."),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.SAVE,
-			                                    Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
+			                                    Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+			                                    Gtk.Stock.SAVE, Gtk.ResponseType.ACCEPT);
 
 			/* Show only .beebop files by default */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("Beebop documents"));
+			filter.set_filter_name (_("Beebop documents"));
 			filter.add_pattern ("*.beebop");
 			dialog.add_filter (filter);
 
 			/* Let the user see any file if he wants to */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("All files"));
+			filter.set_filter_name (_("All files"));
 			filter.add_pattern ("*");
 			dialog.add_filter (filter);
 
@@ -575,21 +592,6 @@ namespace Beebop {
 			string[] authors = {"Andrea Bolognani <andrea.bolognani@roundhousecode.com>",
 			                    null};
 
-			/* Show the website when the link is clicked */
-			Gtk.AboutDialog.set_url_hook ((dialog, uri) => {
-
-				try {
-
-					Util.show_uri (dialog.get_screen (),
-					               uri);
-				}
-				catch (Error e) {
-
-					Util.show_error (dialog,
-					                 _("Unable to open website: %s").printf (e.message));
-				}
-			});
-
 			Gtk.show_about_dialog (view.window,
 			                       "title", _("About %s").printf (_("Beebop")),
 			                       "program-name", _("Beebop"),
@@ -598,7 +600,7 @@ namespace Beebop {
 			                       "comments", _("Easily create nice-looking shipping lists"),
 			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
 			                       "website", "http://roundhousecode.com/software/beebop",
-			                       "license", Util.license,
+			                       "license_type", Gtk.License.GPL_2_0,
 			                       "authors", authors);
 		}
 
@@ -626,11 +628,11 @@ namespace Beebop {
 				                    column, out quantity);
 
 				/* The value is the same: make no changes */
-				if (quantity == val.to_int ()) {
+				if (quantity == int.parse (val)) {
 					return;
 				}
 
-				quantity = val.to_int ();
+				quantity = int.parse (val);
 
 				/* Use the new value only if it is within range */
 				if (quantity >= Const.QUANTITY_MIN && quantity <= Const.QUANTITY_MAX) {
@@ -788,6 +790,10 @@ namespace Beebop {
 				view.destination_name_entry.text = view.recipient_name_entry.text;
 				view.destination_street_entry.text = view.recipient_street_entry.text;
 				view.destination_city_entry.text = view.recipient_city_entry.text;
+
+				/* Collapse the destination expander and make it not sensitive */
+				view.destination_expander.sensitive = false;
+				view.destination_expander.expanded = false;
 			}
 			else {
 
@@ -796,6 +802,10 @@ namespace Beebop {
 				view.destination_name_entry.text = "";
 				view.destination_street_entry.text = "";
 				view.destination_city_entry.text = "";
+
+				/* Expand the destination expander */
+				view.destination_expander.sensitive = true;
+				view.destination_expander.expanded = true;
 			}
 		}
 

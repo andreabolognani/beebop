@@ -90,23 +90,27 @@ namespace Beebop {
 
 		/* Object names */
 		public const string OBJ_WINDOW = "window";
-		public const string OBJ_NOTEBOOK = "notebook";
+		public const string OBJ_RECIPIENT_EXPANDER = "recipient_expander";
 		public const string OBJ_RECIPIENT_FIRST_LINE_ENTRY = "recipient_first_line_entry";
 		public const string OBJ_RECIPIENT_NAME_ENTRY = "recipient_name_entry";
 		public const string OBJ_RECIPIENT_STREET_ENTRY = "recipient_street_entry";
 		public const string OBJ_RECIPIENT_CITY_ENTRY = "recipient_city_entry";
 		public const string OBJ_RECIPIENT_VATIN_ENTRY = "recipient_vatin_entry";
 		public const string OBJ_RECIPIENT_CLIENT_CODE_ENTRY = "recipient_client_code_entry";
+		public const string OBJ_SEND_TO_RECIPIENT_CHECKBUTTON = "send_to_recipient_checkbutton";
+		public const string OBJ_DESTINATION_EXPANDER = "destination_expander";
 		public const string OBJ_DESTINATION_FIRST_LINE_ENTRY = "destination_first_line_entry";
 		public const string OBJ_DESTINATION_NAME_ENTRY = "destination_name_entry";
 		public const string OBJ_DESTINATION_STREET_ENTRY = "destination_street_entry";
 		public const string OBJ_DESTINATION_CITY_ENTRY = "destination_city_entry";
-		public const string OBJ_SEND_TO_RECIPIENT_CHECKBUTTON = "send_to_recipient_checkbutton";
+		public const string OBJ_DOCUMENT_EXPANDER = "document_expander";
 		public const string OBJ_DOCUMENT_NUMBER_ENTRY = "document_number_entry";
 		public const string OBJ_DOCUMENT_DATE_ENTRY = "document_date_entry";
+		public const string OBJ_GOODS_EXPANDER = "goods_expander";
 		public const string OBJ_GOODS_APPEARANCE_ENTRY = "goods_appearance_entry";
 		public const string OBJ_GOODS_PARCELS_SPINBUTTON = "goods_parcels_spinbutton";
 		public const string OBJ_GOODS_WEIGHT_ENTRY = "goods_weight_entry";
+		public const string OBJ_SHIPMENT_EXPANDER = "shipment_expander";
 		public const string OBJ_SHIPMENT_REASON_ENTRY = "shipment_reason_entry";
 		public const string OBJ_SHIPMENT_TRANSPORTED_BY_ENTRY = "shipment_transported_by_entry";
 		public const string OBJ_SHIPMENT_CARRIER_ENTRY = "shipment_carrier_entry";

@@ -61,14 +61,14 @@ namespace Beebop {
 
 			/* Set up file filters */
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("SVG files"));
+			filter.set_filter_name (_("SVG files"));
 			filter.add_pattern ("*.svg");
 
 			view.page_template_button.add_filter (filter);
 			view.logo_button.add_filter (filter);
 
 			filter = new Gtk.FileFilter ();
-			filter.set_name (_("All files"));
+			filter.set_filter_name (_("All files"));
 			filter.add_pattern ("*");
 
 			view.page_template_button.add_filter (filter);

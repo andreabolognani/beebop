@@ -1,8 +1,8 @@
 #!/bin/sh
 
-HOST="i586-mingw32msvc"
+HOST="i686-w64-mingw32"
 
-export PREFIX="/usr/${HOST}"
+export PREFIX="/usr/${HOST}/sys-root/mingw"
 export PKG_CONFIG_PATH="${PREFIX}/lib/pkgconfig"
 
 usage() {
@@ -43,8 +43,7 @@ shift
 shift
 
 # Call configure
-`dirname ${0}`/../configure \
+`dirname "${0}"`/../configure \
 	--host "${HOST}" \
 	--prefix "${INSTALLDIR}" \
-	--bindir "${INSTALLDIR}" \
 	${*}
