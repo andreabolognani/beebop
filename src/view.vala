@@ -29,8 +29,6 @@ namespace Beebop {
 
 		public Gtk.Window window { get; private set; }
 
-		public Gtk.Notebook notebook { get; private set; }
-
 		public Gtk.Entry recipient_first_line_entry { get; private set; }
 		public Gtk.Entry recipient_name_entry { get; private set; }
 		public Gtk.Entry recipient_street_entry { get; private set; }
@@ -90,8 +88,6 @@ namespace Beebop {
 			/* Look up all required objects */
 			window = Util.get_object (ui, Const.OBJ_WINDOW)
 			         as Gtk.Window;
-			notebook = Util.get_object (ui, Const.OBJ_NOTEBOOK)
-			           as Gtk.Notebook;
 			recipient_first_line_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_FIRST_LINE_ENTRY)
 			                             as Gtk.Entry;
 			recipient_name_entry = Util.get_object (ui, Const.OBJ_RECIPIENT_NAME_ENTRY)

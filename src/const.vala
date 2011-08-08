@@ -90,7 +90,6 @@ namespace Beebop {
 
 		/* Object names */
 		public const string OBJ_WINDOW = "window";
-		public const string OBJ_NOTEBOOK = "notebook";
 		public const string OBJ_RECIPIENT_FIRST_LINE_ENTRY = "recipient_first_line_entry";
 		public const string OBJ_RECIPIENT_NAME_ENTRY = "recipient_name_entry";
 		public const string OBJ_RECIPIENT_STREET_ENTRY = "recipient_street_entry";
