@@ -4,6 +4,11 @@ Overview of changes from Beebop 1.4.0 to 1.6.0
   [New features]
     * Suggest a number for new documents whenever it's possible.
 
+  [Other]
+    * Use GTK+ 3 for the interface.
+    * Ship required libraries on win32.
+    * Redraw application icon.
+
 
 Overview of changes from Beebop 1.2.1 to 1.4.0
 ==============================================
