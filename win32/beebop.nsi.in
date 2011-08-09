@@ -84,7 +84,8 @@ Section "Uninstall"
 	; Delete menu shortcuts
 	RMDir /r "$SMPROGRAMS\Beebop"
 
-	; Delete installation directory
-	RMDir /r "$INSTDIR"
+	; Delete installation directory (one
+	; level up from where the uninstaller is)
+	RMDir /r "$INSTDIR\.."
 
 SectionEnd
