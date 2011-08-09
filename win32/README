@@ -1,56 +1,160 @@
 Beebop for win32
 ================
 
-Beebop works fine on win32: you can compile it from GNU/Linux using mingw32,
-and create an installer using NSIS under wine.
+Beebop works fine on win32; in fact, win32 is the only platform it's
+required to support. Since I don't use (or like) win32, the development
+happens entirely on Debian, using a mixture of cross-compilation tools
+and native win32 applications through wine.
+
+This document explains how to setup a cross-compilation environment
+suitable for building Beebop for win32 on Debian, and how to actually
+build a Beebop installer starting from a release tarball.
+
+Thorough this document some environment variables will be assumed to be
+set:
+
+	* $SRCDIR   - directory containing the Beebop sources
+	* $BUILDDIR - directory where Beebob is being built; can be the same
+	              as $SRCDIR, but out-of-tree builds are preferred
+	* $INSTDIR  - staging directory where files used to build the installer
+	              are stored and prepared
+	* $MINGWDIR - base directory for win32 binaries and libraries
 
 
-Cross-compilation
------------------
 
-The cross-configure script is a small wrapper around configure. Use
+1 Environment preparation
+=========================
 
-	path/to/cross-configure --installdir PATH
-
-from any directory, then run make and make install as usual. You will
-end up with a win32 executable and a bunch of data files in PATH.
-
-
-Installer creation
+1.1 Cross-compiler
 ------------------
 
-This step is not automated by the build system, but it's trivial to
-perform: after you have run the above commands, copy  beebop.nsi and all
-the .ico files from the win32/ directory (if you have used a separate
-build directory, you'll find beebop.nsi in the win32/ subdirectory of
-your build directory) to PATH, cd to PATH and run
-
-	wine path/to/makensis.exe beebop.nsi
-
-to obtain a shiny win32 installer.
+The compiler used to build Beebop is mingw-w64, which can be obtained
+installing the Debian package with the same name.
 
 
-Deployment
+1.2 Libraries
+-------------
+
+Beebop requires a bunch of libraries to work, and win32 version of these
+libraries must be available in the cross-compilation environment for
+compilation to succeed.
+
+The best way to obtain the libraries is to use download-mingw-rpm.py[1], a
+script written by Maarten Bosman which downloads the requested win32
+libraries from the openSUSE Build Service[2], automatically resolving
+dependencies.
+
+To download most of the libraries Beebop uses, run the following command:
+
+	$ ./download-mingw-rpm.py --deps -z gtk3 \
+	                                    gtk3-devel \
+	                                    librsvg \
+	                                    librsvg-devel \
+	                                    libxml2-devel
+
+This will create a big .zip file (gtk3-VERSION.zip) in the current directory.
+
+We are still missing libiconv, which is not available on the openSUSE Build
+Service: luckily, the gnuwin32 project provides the binary files we need.
+From the libiconv page[3] grab both the binaries (libiconv-VERSION-bin.zip)
+and the developer files (libiconv-VERSION-lib.zip).
+
+These .zip files are to be unpacked under the mingw-w64 installation
+directory; create the required directories using
+
+	$ cd /usr/i686-w64-mingw32
+	$ sudo mkdir -p sys-root/mingw
+
+The directory you've just created will be referred to as $MINGWDIR: enter
+that directory and unzip the files as root.
+
+
+
+2 Beebop compilation
+====================
+
+2.1 Configuration and compilation
+---------------------------------
+
+The cross-configure script is a small wrapper around configure which sets
+some environment variables and adds some flags to make cross-compilation
+work. Use
+
+	$SRCDIR/win32/cross-configure --installdir $INSTDIR
+
+from any directory, then run make and make install as usual. You will
+end up with a win32 executable and a bunch of data files in $INSTDIR.
+
+
+2.2 Other required files
+------------------------
+
+You need to copy over all the libraries Beebop needs, so that they can
+be included in the installer: the command to do so is
+
+	$ cp $MINGWDIR/bin/*.dll $INSTDIR/bin/
+
+You also need to copy over and compile the GSettings schema used by
+Gtk.FileChooser:
+
+	$ mkdir $INSTDIR/share/glib-2.0
+	$ cp -rf $MINGWDIR/share/glib-2.0/schemas \
+	         $INSTDIR/share/glib-2.0/
+	$ glib-compile-schemas $INSTDIR/share/glib-2.0/schemas
+
+You'll want to include the localized GTK+ strings for every language
+Beebop is available in (as of this writing, Italian only); just copy
+the appropriate message catalogs:
+
+	$ cp $MINGWDIR/share/locale/$LOCALE/LC_MESSAGES/*.mo \
+	     $INSTDIR/lib/locale/$LOCALE/LC_MESSAGES/
+
+With all these files in place, Beebop can run from $INSTDIR. As gathering
+these files can be quite boring and error-prone, I recommend copying them
+to an empty skeleton directory and then simply copy all the contents of the
+skeleton directory to $INSTDIR.
+
+
+2.3 Installer creation
+----------------------
+
+Now you need to bring over the win32 icons (.ico format, as opposed to
+the .svg format used on GNU/Linux systems) and the installer description:
+
+	$ cp $SRCDIR/win32/*.ico \
+	     $INSTDIR/
+	$ cp $BUILDDIR/win32/beebop.nsi \
+	     $INSTDIR/
+
+Everything should be ready to create the installer. You need to have wine
+and NSIS[4] installed for this to work; assuming you have not changed
+NSIS's installation directory, running the command
+
+	$ wine ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe \
+	       beebop.nsi
+
+should complete without errors when run from inside $INSTDIR, and result in
+a shiny win32 installer.
+
+
+2.4 Deployment
+--------------
+
+The installer contains everything you need to run Beebop on win32: just
+go through the setup procedure and run Beebop either from the Start menu,
+or double-clicking on a Beebop document.
+
+If you have a recent enough version of wine installed (the wine-unstable
+Debian package contains such a version) you can test the installer without
+leaving your cozy Debian environment. At least one test run on an actual
+win32 install is recommended before deployment.
+
+
+
+References
 ----------
 
-In order to run Beebop on win32 you'll need the following packages:
-
-  * GTK+ runtime
-      http://gtk-win.sourceforge.net/
-  * librsvg, libcroco and libgsf
-      http://ftp.gnome.org/pub/gnome/binaries/win32/
-  * libiconv
-      ftp://ftp.gnu.org/pub/gnu/libiconv/
-  * libxml2
-      ftp://ftp.zlatkovic.com/libxml/
-
-Install the GTK+ runtime first, then unpack all the other dependencies
-in the same directory as the GTK+ runtime.
-
-Be careful: the libxml2 zip contains all the needed files inside a directory
-called libxml2-x.y.z.win32, so after you have unpacked it you will have to
-move the files out of that directory.
-
-As a last step, you'll have to copy bin\libxml2.dll to bin\libxml2-2.dll so
-that librsvg can find it. Once you've done that, you should be able to run
-Beebop.
+[1] http://bosmans.ch/pulseaudio/download-mingw-rpm.py
+[2] http://build.opensuse.org/
+[3] http://gnuwin32.sourceforge.net/packages/libiconv.htm
+[4] http://nsis.sourceforge.net/
