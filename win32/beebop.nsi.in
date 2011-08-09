@@ -65,7 +65,7 @@ Section "Install"
 	WriteRegStr HKLM \
 	            "Software\Classes\BeebopDocument\shell\open\command" \
 	            "" \
-	            "$\"$INSTDIR\beebop.exe$\" $\"%1$\""
+	            "$\"$INSTDIR\bin\beebop.exe$\" $\"%1$\""
 
 	; Create uninstaller
 	WriteUninstaller "$INSTDIR\bin\uninstall.exe"
