@@ -547,7 +547,7 @@ namespace Beebop {
 			document.goods.get_iter (out iter, path);
 
 			/* Remove the last row */
-			document.goods.remove (iter);
+			document.goods.remove (ref iter);
 
 			/* Enable / disable row deletion based on the number of rows */
 			rows--;

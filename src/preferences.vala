@@ -123,13 +123,11 @@ namespace Beebop {
 			File handle;
 			KeyFile pref;
 			double[] dimensions;
+			uint8[] bytes;
 			string text;
 			string data;
-			size_t len;
 
 			pref = new KeyFile ();
-
-			data = "";
 
 			try {
 
@@ -140,13 +138,13 @@ namespace Beebop {
 
 				/* Load file contents */
 				handle.load_contents (null,
-				                      out data,
-				                      out len,
+				                      out bytes,
 				                      null);    /* No etag */
+				data = (string) bytes;
 
 				/* Parse the contents of the preferences file */
 				pref.load_from_data (data,
-				                     len,
+				                     data.length,
 				                     KeyFileFlags.NONE);
 			}
 			catch (IOError.NOT_FOUND e) {
@@ -432,8 +430,7 @@ namespace Beebop {
 			handle = handle.get_child (Const.PREFERENCES_FILE);
 
 			/* Replace the old preferences file (if any) */
-			handle.replace_contents (data,
-			                         len,
+			handle.replace_contents (data.data,
 			                         null,    /* No etag */
 			                         true,    /* Create backup */
 			                         FileCreateFlags.NONE,

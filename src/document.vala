@@ -188,8 +188,7 @@ namespace Beebop {
 			File temp;
 			Xml.Doc *doc;
 			Xml.Node *node;
-			string data;
-			size_t len;
+			uint8[] bytes;
 
 			temp = location;
 
@@ -203,8 +202,7 @@ namespace Beebop {
 
 				/* Load file contents */
 				location.load_contents (null,
-				                        out data,
-				                        out len,
+				                        out bytes,
 				                        null);
 			}
 			catch (Error e) {
@@ -213,7 +211,7 @@ namespace Beebop {
 			}
 
 			/* Parse the file */
-			doc = Xml.Parser.parse_doc (data);
+			doc = Xml.Parser.parse_doc ((string) bytes);
 
 			if (doc == null) {
 
@@ -271,8 +269,7 @@ namespace Beebop {
 			try {
 
 				/* Write file contents */
-				location.replace_contents (data,
-				                           len,
+				location.replace_contents (data.data,
 				                           null,      /* No etag */
 				                           false,     /* Don't create backup */
 				                           FileCreateFlags.NONE,

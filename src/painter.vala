@@ -88,7 +88,7 @@ namespace Beebop {
 			dimensions = Rsvg.DimensionData ();
 
 			/* Get page size */
-			page.get_dimensions (dimensions);
+			dimensions = page.get_dimensions ();
 			page_width = dimensions.width;
 			page_height = dimensions.height;
 
@@ -333,35 +333,32 @@ namespace Beebop {
 		/* Load required resources */
 		private void load_resources () throws DocumentError {
 
-			string data;
-			size_t len;
+			uint8[] bytes;
 
 			try {
 
 				/* Read and parse the contents of the page file */
 				preferences.page_template.load_contents (null,
-				                                         out data,
-				                                         out len,
+				                                         out bytes,
 				                                         null);        /* No etag */
-				page = new Rsvg.Handle.from_data ((uchar[]) data, len);
+				page = new Rsvg.Handle.from_data ((uchar[]) bytes);
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO (_("Could not load page template file: %s").printf (preferences.page_template));
+				throw new DocumentError.IO (_("Could not load page template file: %s").printf (preferences.page_template.get_parse_name()));
 			}
 
 			try {
 
 				/* Read and parse the contents of the logo file */
 				preferences.logo.load_contents (null,
-				                                out data,
-				                                out len,
+				                                out bytes,
 				                                null);        /* No etag */
-				logo = new Rsvg.Handle.from_data ((uchar[]) data, len);
+				logo = new Rsvg.Handle.from_data ((uchar[]) bytes);
 			}
 			catch (Error e) {
 
-				throw new DocumentError.IO (_("Could not load logo template file: %s").printf (preferences.logo));
+				throw new DocumentError.IO (_("Could not load logo template file: %s").printf (preferences.logo.get_parse_name()));
 			}
 		}
 
@@ -386,7 +383,7 @@ namespace Beebop {
 			dimensions = Rsvg.DimensionData ();
 
 			/* Get logo template dimensions */
-			logo.get_dimensions (dimensions);
+			dimensions = logo.get_dimensions ();
 			logo_width = dimensions.width;
 			logo_height = dimensions.height;
 
