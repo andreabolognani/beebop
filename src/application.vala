@@ -99,6 +99,9 @@ namespace Beebop {
 
 			Application application;
 
+			/* Fix environment so that GSettings can be found */
+			Util.fix_environment ();
+
 			Gtk.init (ref args);
 			Xml.Parser.init ();
 

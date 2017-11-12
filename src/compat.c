@@ -109,6 +109,33 @@ beebop_util_get_localedir (void)
 	return directory;
 }
 
+/**
+ * Fix environment.
+ *
+ * The mingw32 version of GTK+ is not configured to look for its data inside
+ * the installation directory, and as such fails to find the GSettings schemas
+ * and aborts the application. Changing the value of $XDG_DATA_DIRS in the
+ * environment works around the issue.
+ */
+void
+beebop_util_fix_environment (void)
+{
+#ifdef G_OS_WIN32
+
+	GFile *file;
+	gchar *path;
+
+	file = beebop_util_get_datarootdir ();
+	path = g_file_get_path(file);
+
+	g_setenv ("XDG_DATA_DIRS", path, TRUE);
+
+	g_free (path);
+	g_object_unref(file);
+
+#endif
+}
+
 /* Show URI.
  *
  * Workaround needed because Gtk.show_uri is broken on win32 */

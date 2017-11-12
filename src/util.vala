@@ -168,6 +168,9 @@ namespace Beebop {
 			return tmp;
 		}
 
+		/* Fix environment */
+		public static extern void fix_environment ();
+
 		/* Installation directories, detected at runtime */
 		public static extern File get_pkgdatadir ();
 		public static extern File get_datarootdir ();
