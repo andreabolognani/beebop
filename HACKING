@@ -2,5 +2,4 @@ Hacking Beebop
 ==============
 
 Beebop is written in Vala, so if you want to hack on it you'll need the Vala
-compiler. Before trying to compile Beebop from a git clone, be sure to check
-out the contents of the patches/ directory.
+compiler.

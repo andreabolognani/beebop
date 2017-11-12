@@ -102,7 +102,6 @@ AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
 	vapi/Makefile
-	patches/Makefile
 	win32/beebop.nsi
 	win32/Makefile
 	po/Makefile.in

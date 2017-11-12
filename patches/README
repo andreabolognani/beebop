@@ -1,9 +1,0 @@
-vapi patches
-============
-
-The patches contained in this directory fix some vapi bugs and nuisances.
-
-You only need to apply these patches if you are hacking on Beebop:
-compiling from a release tarball doesn't require Vala.
-
-The patches are needed as of Vala 0.12.
