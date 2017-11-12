@@ -1,7 +1,7 @@
 # Italian translation for Beebop
 # Copyright (C) 2011
 # This file is distributed under the same license as the Beebop package.
-# Andrea Bolognani <andrea.bolognani@roundhousecode.com>, 2011.
+# Andrea Bolognani <eof@kiyuko.org>, 2011.
 #
 #, fuzzy
 msgid ""
@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-12 17:30+0100\n"
 "PO-Revision-Date: 2011-02-12 17:31+0100\n"
-"Last-Translator: Andrea Bolognani <andrea.bolognani@roundhousecode.com>\n"
+"Last-Translator: Andrea Bolognani <eof@kiyuko.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"

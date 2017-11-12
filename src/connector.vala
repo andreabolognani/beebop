@@ -1,5 +1,5 @@
 /* Beebop -- Easily create nice-looking shipping lists
- * Copyright (C) 2010-2011  Andrea Bolognani <andrea.bolognani@roundhousecode.com>
+ * Copyright (C) 2010-2011  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- * Homepage: http://roundhousecode.com/software/beebop
+ * Homepage: https://kiyuko.org/software/beebop
  */
 
 namespace Beebop {
@@ -589,7 +589,7 @@ namespace Beebop {
 		/* Show the about dialog */
 		private void about () {
 
-			string[] authors = {"Andrea Bolognani <andrea.bolognani@roundhousecode.com>",
+			string[] authors = {"Andrea Bolognani <eof@kiyuko.org>",
 			                    null};
 
 			Gtk.show_about_dialog (view.window,
@@ -599,7 +599,7 @@ namespace Beebop {
 			                       "logo", null,
 			                       "comments", _("Easily create nice-looking shipping lists"),
 			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
-			                       "website", "http://roundhousecode.com/software/beebop",
+			                       "website", "https://kiyuko.org/software/beebop",
 			                       "license_type", Gtk.License.GPL_2_0,
 			                       "authors", authors);
 		}

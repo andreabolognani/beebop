@@ -15,7 +15,7 @@ EXTRA_DIST = \
 	HACKING \
 	INSTALL \
 	NEWS \
-	README \
+	README.markdown \
 	$(NULL)
 
 DISTCLEANFILES = \

@@ -19,17 +19,17 @@ Obtaining Beebop
 The latest stable release of Beebop can be obtained from the project's
 homepage
 
-	http://roundhousecode.com/software/beebop
+	https://kiyuko.org/software/beebop
 
 If you'd like to contribute to Beebop's development you can grab a copy
 of the source code from the git repository
 
-	http://git.roundhousecode.com/beebop.git
+	https://git.kiyuko.org/beebop
 
 
 Contact information
 -------------------
 
-You can contact me anytime at the mail address
-<andrea.bolognani@roundhousecode.com> if you need any information about
-Beebop. Suggestions and bug reports are greatly appreciated.
+You can contact me anytime at the mail address <eof@kiyuko.org> if you
+need any information about Beebop. Suggestions and bug reports are
+greatly appreciated.
