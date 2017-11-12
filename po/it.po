@@ -1,7 +1,7 @@
 # Italian translation for Beebop
-# Copyright (C) 2011
+# Copyright (C) 2010-2017
 # This file is distributed under the same license as the Beebop package.
-# Andrea Bolognani <eof@kiyuko.org>, 2011.
+# Andrea Bolognani <eof@kiyuko.org>, 2010-2017.
 #
 #, fuzzy
 msgid ""

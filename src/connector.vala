@@ -1,5 +1,5 @@
 /* Beebop -- Easily create nice-looking shipping lists
- * Copyright (C) 2010-2011  Andrea Bolognani <eof@kiyuko.org>
+ * Copyright (C) 2010-2017  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -597,7 +597,7 @@ namespace Beebop {
 			about.set_program_name (_("Beebop"));
 			about.set_version (Config.VERSION);
 			about.set_comments (_("Easily create nice-looking shipping lists"));
-			about.set_copyright ("Copyright \xc2\xa9 2010-2011 Andrea Bolognani");
+			about.set_copyright ("Copyright \xc2\xa9 2010-2017 Andrea Bolognani");
 			about.set_website ("https://kiyuko.org/software/beebop");
 			about.set_license_type (Gtk.License.GPL_2_0);
 			about.set_authors (authors);
