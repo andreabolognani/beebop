@@ -334,8 +334,8 @@ namespace Beebop {
 			dialog = new Gtk.FileChooserDialog (_("Open file"),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.OPEN,
-			                                    Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.Stock.OPEN, Gtk.ResponseType.ACCEPT);
+			                                    _("_Cancel"), Gtk.ResponseType.CANCEL,
+			                                    _("_Open"), Gtk.ResponseType.ACCEPT);
 
 			/* Open files from the document directory by default */
 			dialog.set_current_folder_uri (preferences.document_directory.get_uri ());
@@ -430,8 +430,8 @@ namespace Beebop {
 			dialog = new Gtk.FileChooserDialog (_("Save as..."),
 			                                    view.window,
 			                                    Gtk.FileChooserAction.SAVE,
-			                                    Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
-			                                    Gtk.Stock.SAVE, Gtk.ResponseType.ACCEPT);
+			                                    _("_Cancel"), Gtk.ResponseType.CANCEL,
+			                                    _("_Save"), Gtk.ResponseType.ACCEPT);
 
 			/* Show only .beebop files by default */
 			filter = new Gtk.FileFilter ();
@@ -679,10 +679,10 @@ namespace Beebop {
 				/* Get the display name using GIO */
 				try {
 
-					info = document.location.query_info (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+					info = document.location.query_info (FileAttribute.STANDARD_DISPLAY_NAME,
 					                                     FileQueryInfoFlags.NONE,
 					                                     null);
-					title = info.get_attribute_string (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
+					title = info.get_attribute_string (FileAttribute.STANDARD_DISPLAY_NAME);
 				}
 				catch (Error e) {
 

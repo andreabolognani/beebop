@@ -195,11 +195,11 @@ namespace Beebop {
 
 			/* Appearance */
 			text = view.text_fontbutton.font_name;
-			preferences.text_font = preferences.text_font.from_string (text);
+			preferences.text_font = Pango.FontDescription.from_string (text);
 			text = view.title_fontbutton.font_name;
-			preferences.title_font = preferences.title_font.from_string (text);
+			preferences.title_font = Pango.FontDescription.from_string (text);
 			text = view.header_fontbutton.font_name;
-			preferences.header_font = preferences.header_font.from_string (text);
+			preferences.header_font = Pango.FontDescription.from_string (text);
 			preferences.line_width = view.line_width_spinbutton.value;
 
 			/* Default values */

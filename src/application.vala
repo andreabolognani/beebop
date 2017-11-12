@@ -101,7 +101,6 @@ namespace Beebop {
 
 			Gtk.init (ref args);
 			Xml.Parser.init ();
-			Rsvg.init ();
 
 			/* Set up internationalization */
 			Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Util.get_localedir ().get_path ());

@@ -341,7 +341,7 @@ namespace Beebop {
 			try {
 
 				/* Enumerate all children of the document directory */
-				children = preferences.document_directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+				children = preferences.document_directory.enumerate_children (FileAttribute.STANDARD_DISPLAY_NAME,
 				                                                              FileQueryInfoFlags.NONE,
 				                                                              null);
 				info = null;
@@ -356,7 +356,7 @@ namespace Beebop {
 					}
 
 					/* Scan for document number, assuming default template was used */
-					name = info.get_attribute_as_string (FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME);
+					name = info.get_attribute_as_string (FileAttribute.STANDARD_DISPLAY_NAME);
 					number = Util.string_to_number (extract_number (name));
 
 					if (number > max) {
