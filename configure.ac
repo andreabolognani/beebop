@@ -10,13 +10,13 @@ dnl ----------------------------------------------
 dnl Required version of various tools and packages
 dnl ----------------------------------------------
 
-VALA_REQUIRED=0.12.0
-GLIB_REQUIRED=2.12.0
-GTK_REQUIRED=3.0.0
-CAIRO_REQUIRED=1.8.0
-PANGO_REQUIRED=1.20.0
-LIBXML_REQUIRED=2.7.0
-LIBRSVG_REQUIRED=2.14.0
+VALA_REQUIRED=0.30.0
+GLIB_REQUIRED=2.48.0
+GTK_REQUIRED=3.18.0
+CAIRO_REQUIRED=1.14.0
+PANGO_REQUIRED=1.38.0
+LIBXML_REQUIRED=2.9.0
+LIBRSVG_REQUIRED=2.40.0
 
 
 dnl ---------------------
