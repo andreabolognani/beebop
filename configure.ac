@@ -1,4 +1,4 @@
-AC_INIT([Beebop], [1.6.0], [eof@kiyuko.org], [beebop])
+AC_INIT([Beebop], [1.6.1], [eof@kiyuko.org], [beebop])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 AM_MAINTAINER_MODE
