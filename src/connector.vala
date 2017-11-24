@@ -589,19 +589,35 @@ namespace Beebop {
 		/* Show the about dialog */
 		private void about () {
 
-			string[] authors = {"Andrea Bolognani <eof@kiyuko.org>",
-			                    null};
+			Gtk.AboutDialog about = new Gtk.AboutDialog ();
+			const string[] authors = {"Andrea Bolognani <eof@kiyuko.org>", null};
 
-			Gtk.show_about_dialog (view.window,
-			                       "title", _("About %s").printf (_("Beebop")),
-			                       "program-name", _("Beebop"),
-			                       "version", Config.VERSION,
-			                       "logo", null,
-			                       "comments", _("Easily create nice-looking shipping lists"),
-			                       "copyright", "Copyright \xc2\xa9 2010-2011 Andrea Bolognani",
-			                       "website", "https://kiyuko.org/software/beebop",
-			                       "license_type", Gtk.License.GPL_2_0,
-			                       "authors", authors);
+			about.set_title (_("About %s").printf (_("Beebop")));
+			about.set_logo (null);
+			about.set_program_name (_("Beebop"));
+			about.set_version (Config.VERSION);
+			about.set_comments (_("Easily create nice-looking shipping lists"));
+			about.set_copyright ("Copyright \xc2\xa9 2010-2011 Andrea Bolognani");
+			about.set_website ("https://kiyuko.org/software/beebop");
+			about.set_license_type (Gtk.License.GPL_2_0);
+			about.set_authors (authors);
+
+			about.activate_link.connect ((uri) => {
+				try {
+					Util.show_uri (view.window.get_screen (), uri);
+				}
+				catch (Error e) {
+					Util.show_error (view.window,
+					                 _("Unable to open website: %s").printf (e.message));
+				}
+				return true;
+			});
+
+			about.set_modal (true);
+			about.set_transient_for (view.window);
+
+			about.run ();
+			about.destroy ();
 		}
 
 		/* Update the list store backing the goods.
