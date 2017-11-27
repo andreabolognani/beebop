@@ -38,7 +38,7 @@ distclean-local:
 ChangeLog:
 	@echo Creating $@
 	@if test -d "$(top_srcdir)/.git"; then \
-	  (GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run git log --stat) > $@.tmp \
+	  (GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run git log --stat --color=never) > $@.tmp \
 	  && mv -f $@.tmp $@ \
 	  || ($(RM) $@.tmp; \
 	  echo Failed to generate ChangeLog, your ChangeLog may be outdated >&2; \
